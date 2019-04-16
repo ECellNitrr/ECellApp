@@ -2,7 +2,7 @@
 Official repo of ECell Android application made in 2k19.
 
 Contributors:
-Viren Manoj Khatri
-Prateek Kochher
-Rishabh Vishwakarma
+Viren Manoj Khatri,
+Prateek Kochher,
+Rishabh Vishwakarma,
 Bhushan Thakre
