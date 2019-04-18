@@ -2,8 +2,9 @@
 This is the Official repository of Entrepreneurship Cell, NIT Raipur Android application.
 
 ## Table of Contents
-* [Contributors](#contributors)
+
 * [Technologies](#technologies)
+* [Contributors](#contributors)
 
 ## Technologies
 #### Project is created with :
