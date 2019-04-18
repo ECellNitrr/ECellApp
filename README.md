@@ -1,8 +1,19 @@
-# ECellApp
-Official repo of ECell Android application.
+# E Cell Android Application
+This is the Official repository of Entrepreneurship Cell, NIT Raipur Android application.
 
-Contributors:
-Viren Manoj Khatri,
-Prateek Kochher,
-Rishabh Vishwakarma,
-Bhushan Thakre
+## Table of Contents
+* [Contributors](#contributors)
+* [Technologies](#technologies)
+
+## Technologies
+#### Project is created with :
+* Java version: 1.8
+
+
+
+## Contributors:
+
+[Viren Manoj Khatri](https://github.com/werainkhatri),
+[Prateek Kochher](https://github.com/prateekk2001),
+[Rishabh Vishwakarma](https://github.com/thepseudoartist),
+[Bhushan Thakre](https://github.com/bhushan-7)
