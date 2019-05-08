@@ -15,6 +15,6 @@ This is the Official repository of Entrepreneurship Cell, NIT Raipur Android app
 ## Contributors:
 
 [Viren Manoj Khatri](https://github.com/werainkhatri),
-[Prateek Kochher](https://github.com/prateekk2001),
+[Prateek Kocher](https://github.com/prateekk2001),
 [Rishabh Vishwakarma](https://github.com/thepseudoartist),
 [Bhushan Thakre](https://github.com/bhushan-7)
