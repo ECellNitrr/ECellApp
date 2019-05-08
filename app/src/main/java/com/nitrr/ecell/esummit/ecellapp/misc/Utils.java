@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import java.util.logging.LogRecord;
 
 public class Utils {
 
