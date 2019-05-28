@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ECellApp</string>
+    <string name="app_name">E - Cell</string>
+    <string name="accesstoken">access_token</string>
 </resources>

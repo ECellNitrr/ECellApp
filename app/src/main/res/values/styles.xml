@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CircularButton" parent="Widget.AppCompat.Button">
+
+    </style>
+
 </resources>
