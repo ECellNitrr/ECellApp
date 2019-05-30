@@ -14,11 +14,4 @@
         android:left="500dp"
         android:right="500dp"/>
 
-    <item
-        android:drawable="@drawable/ic_lower_polygon"
-        android:left="-200dp"
-        android:right="-200dp"
-        android:top="1400dp"
-        android:bottom="-2500dp"/>
-
 </layer-list>

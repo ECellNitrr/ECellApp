@@ -13,30 +13,52 @@
     android:background="@color/colorBackground"
     tools:context=".activities.Login">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
     <ImageView
         android:id="@+id/main_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/login_background" />
+        android:src="@drawable/login_background"
+        app:layout_constraintBottom_toBottomOf="@+id/upper_poly"
+        app:layout_constraintTop_toTopOf="@+id/upper_poly"
+        tools:layout_editor_absoluteX="35dp" />
 
     <ImageView
         android:id="@+id/upper_poly"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignTop="@+id/main_background"
-        android:src="@drawable/login_upper_poly"/>
+        android:src="@drawable/login_upper_poly" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35"
+        app:layout_constraintGuide_begin="20dp" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
         android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/upper_poly"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -69,75 +91,121 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
         android:layout_marginStart="230dp"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="2dp"
         android:text="Forgot?"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="460dp"
+        android:layout_marginStart="190dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="13dp"
         android:background="@drawable/button_signin"
         android:text="Sign in"
         android:textColor="#FFFFFF"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="470dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/login_lower_poly"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <ImageButton
+        android:id="@+id/fbButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="510dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
         android:background="@color/transparent"
         android:src="@drawable/ic_facebook"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <ImageButton
+        android:id="@+id/googleButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="550dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="120dp"
         android:background="@color/transparent"
         android:src="@drawable/login_google"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fbButton"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.7" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="670dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
         android:text="Register"
         android:textSize="32sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <ImageButton
+        android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="670dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/transparent"
         android:src="@drawable/login_circle_right"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="1.0" />
 
 </android.support.constraint.ConstraintLayout>
 
