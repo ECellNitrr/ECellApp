@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,6 +17,8 @@ public class Login extends AppCompatActivity {
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build();
+    EditText user;
+    EditText pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
