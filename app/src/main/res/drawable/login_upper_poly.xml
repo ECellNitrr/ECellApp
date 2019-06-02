@@ -5,11 +5,11 @@
         android:left="-200dp"
         android:right="-200dp"
         android:top="-700dp"
-        android:bottom="-500dp"/>
+        android:bottom="-570dp"/>
 
     <item
         android:drawable="@drawable/ic_ecell"
-        android:top="-300dp"
+        android:top="-360dp"
         android:bottom="1200dp"
         android:left="500dp"
         android:right="500dp"/>

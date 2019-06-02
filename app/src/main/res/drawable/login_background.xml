@@ -2,17 +2,17 @@
 
 
     <item
-        android:top="-10dp"
-        android:bottom="45dp"
-        android:left="-10dp"
-        android:right="0dp"
+        android:top="-35dp"
+        android:bottom="46dp"
+        android:left="-18dp"
+        android:right="-1dp"
         android:drawable="@drawable/login_circle_left"/>
 
     <item
-        android:top="50dp"
-        android:left="40dp"
-        android:right="-30dp"
-        android:bottom="5dp"
+        android:top="38dp"
+        android:left="33dp"
+        android:right="-25dp"
+        android:bottom="3dp"
         android:drawable="@drawable/login_circle_right"/>
 
 
