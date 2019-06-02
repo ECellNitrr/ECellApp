@@ -68,7 +68,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
+                android:hint="@string/username"
                 android:maxLines="1"
                 android:textSize="20sp" />
         </android.support.design.widget.TextInputLayout>
@@ -82,7 +82,7 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textSize="20sp" />
@@ -99,7 +99,7 @@
         android:layout_marginStart="230dp"
         android:layout_marginTop="160dp"
         android:layout_marginBottom="2dp"
-        android:text="Forgot?"
+        android:text="@string/forgot"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="13dp"
         android:background="@drawable/button_signin"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:textColor="#FFFFFF"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -125,7 +125,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="470dp"
+        android:layout_width="510dp"
         android:layout_height="300dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -178,7 +178,7 @@
         android:layout_marginTop="170dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="10dp"
-        android:text="Register"
+        android:text="@string/register"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/imageButton2"
@@ -197,7 +197,20 @@
         android:src="@drawable/login_circle_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" >
+    </ImageButton>
+
+    <ImageView
+        android:rotation="90"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_arrow_pointing_to_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
