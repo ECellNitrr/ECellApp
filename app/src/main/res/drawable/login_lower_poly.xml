@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
-        <shape android:shape="rectangle">
-            <size android:height="1dp"
-                android:width="10dp"/>
-            <solid android:color="@color/transparent"/>
-        </shape>
-    </item>
+
 
     <item
         android:drawable="@drawable/ic_lower_polygon"
-        android:bottom="-15dp"/>
+        android:left="-400dp"
+        android:right="-400dp"
+        android:top="-800dp"
+        android:bottom="-1900dp"/>
+
+    <item
+        android:id="@+id/lowerpoly_ic_Ecell"
+    android:drawable="@drawable/ic_ecell"
+    android:top="-50dp"
+    android:left="100dp"
+    android:right="1000dp"/>
+
+
+
 
 </layer-list>
