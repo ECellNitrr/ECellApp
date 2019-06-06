@@ -4,20 +4,6 @@
 
 
     <item
-        android:drawable="@drawable/ic_lower_polygon"
-        android:left="-400dp"
-        android:right="-400dp"
-        android:top="-800dp"
-        android:bottom="-1900dp"/>
-
-    <item
-        android:id="@+id/lowerpoly_ic_Ecell"
-    android:drawable="@drawable/ic_ecell"
-    android:top="-50dp"
-    android:left="100dp"
-    android:right="1000dp"/>
-
-
-
+        android:drawable="@drawable/ic_upper_polygon"/>
 
 </layer-list>

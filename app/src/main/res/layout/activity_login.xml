@@ -37,8 +37,8 @@
         android:layout_height="match_parent"
         android:layout_alignTop="@+id/main_background"
         android:src="@drawable/login_upper_poly"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-9dp" />
+        tools:layout_editor_absoluteX="-1050dp"
+        tools:layout_editor_absoluteY="-69dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline5"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:id="@+id/upper_poly_password"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:textSize="18sp" />
         </android.support.design.widget.TextInputLayout>
@@ -95,28 +95,28 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
-        android:layout_marginStart="290dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="180dp"
         android:layout_marginBottom="2dp"
         android:text="@string/forgot"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/signinbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signinbutton"
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
-        android:layout_marginStart="220dp"
+        android:layout_marginStart="180dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="13dp"
         android:background="@drawable/button_signin"
@@ -125,14 +125,14 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/forgot" />
 
 
 
     <ImageButton
         android:id="@+id/googleButton"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_marginStart="60dp"
@@ -145,7 +145,7 @@
     <ImageButton
         android:id="@+id/fbbutton"
         android:layout_width="80dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_marginStart="20dp"
@@ -166,9 +166,9 @@
         app:layout_constraintGuide_percent="0.7" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_height="300dp"
-        android:layout_marginTop="105dp"
+        android:id="@+id/lower_poly"
+        android:layout_height="750dp"
+        android:layout_marginTop="80dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:src="@drawable/login_lower_poly"
@@ -181,57 +181,73 @@
         android:id="@+id/linearLayoutLowerPolygon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="50dp"
+        android:layout_alignStart="@+id/lower_poly"
+        android:layout_alignTop="@+id/lower_poly"
+        android:layout_alignEnd="@+id/lower_poly"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="300dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/lower_poly"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3">
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="60dp">
 
             <android.support.design.widget.TextInputEditText
+                 android:id="@+id/lower_poly_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
                 android:maxLines="1"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/lower_poly_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:inputType="text"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp">
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/lower_poly_password"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textSize="16sp"
+                android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/register_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="170dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="14dp"
         android:text="@string/register"
-        android:textSize="28sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/imageButton2"
         app:layout_constraintHorizontal_bias="1.0"
@@ -242,9 +258,9 @@
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="170dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="135dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/transparent"
         android:src="@drawable/login_circle_right"
         android:onClick="ontransiton"
@@ -254,16 +270,73 @@
     </ImageButton>
 
     <ImageView
+        android:id="@+id/registerscreen_transitionbutton_arrow"
         android:rotation="90"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="174dp"
-        android:layout_marginTop="170dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="140.3dp"
+        android:layout_marginTop="160dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_arrow_pointing_to_right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"/>
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="58dp"
+        android:background="@color/transparent"
+        android:src="@drawable/login_circle_right"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline" >
+    </ImageButton>
+
+    <ImageView
+        android:id="@+id/signinscreen_transitionbutton_arrow"
+        android:rotation="-90"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="36.3dp"
+        android:layout_marginTop="55dp"
+        android:onClick="onsigninintransition"
+        android:src="@drawable/ic_arrow_pointing_to_right"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline"/>
+
+    <TextView
+        android:id="@+id/signinText"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/sign_in"
+        android:textSize="24sp"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton1"
+        app:layout_constraintTop_toBottomOf="@+id/guideline"
+        />
+
+    <Button
+        android:id="@+id/registerbutton"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_alignStart="@+id/lower_poly"
+        android:layout_alignTop="@+id/lower_poly"
+        android:layout_alignEnd="@+id/lower_poly"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_signin"
+        android:text="@string/register"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLowerPolygon" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
