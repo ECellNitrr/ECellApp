@@ -4,6 +4,8 @@
 
 
     <item
-        android:drawable="@drawable/ic_upper_polygon"/>
+        android:drawable="@drawable/ic_upperpolygon"
+        android:left="-65dp"
+        android:right="-65dp"/>
 
 </layer-list>

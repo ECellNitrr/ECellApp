@@ -20,6 +20,7 @@ public class Login extends AppCompatActivity {
 
     ImageView image;
     ImageView signinScreenTransitionArrow;
+    ImageView lowerpoly_ic_Ecell;
     ImageButton signinTransitionButtonBackground;
     TextView signinText;
     LinearLayout registeredittexts;
@@ -56,13 +57,13 @@ public class Login extends AppCompatActivity {
         signinTransitionButtonBackground = findViewById(R.id.imageButton1);
         signinText = findViewById(R.id.signinText);
         registeredittexts = findViewById(R.id.linearLayoutLowerPolygon);
+        lowerpoly_ic_Ecell = findViewById(R.id.ic_lower_ecell);
 
         registeredittexts.setEnabled(false);
         signinText.setVisibility(View.GONE);
         signinTransitionButtonBackground.setVisibility(View.GONE);
         signinScreenTransitionArrow.setVisibility(View.GONE);
-        image = findViewById(R.id.lowerpoly_ic_Ecell);
-        //image.setVisibility(View.INVISIBLE);    //TODO(1) image is a null object so getting a nullpointException
+        lowerpoly_ic_Ecell.setVisibility(View.INVISIBLE);
     }
 
     public void onsigninintransition(View view) {
