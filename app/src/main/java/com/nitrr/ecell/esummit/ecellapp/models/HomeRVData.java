@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class LoginRVData implements Serializable {
+public class HomeRVData implements Serializable {
     private String name;
-    private String image;
+    private int image;
 
     public String getName() {
         return name;
@@ -16,11 +16,11 @@ public class LoginRVData implements Serializable {
         this.name = name;
     }
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         this.image = image;
     }
 }

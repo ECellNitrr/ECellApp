@@ -3,7 +3,6 @@ package com.nitrr.ecell.esummit.ecellapp.misc.Animation;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.transition.Fade;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -34,14 +33,14 @@ public class LoginAnimation {
     Button register;
 
 
-    //Constructor to initilize all the objects that are to be animated
+    //Constructor to initialize all the objects that are to be animated
     public LoginAnimation(Login view){
         upperlinearLayout = view.findViewById(R.id.linearLayout);
         lowerLinearLayout = view.findViewById(R.id.linearLayoutLowerPolygon);
         lowerPoly = view.findViewById(R.id.lower_poly);
         upperPoly = view.findViewById(R.id.upper_poly);
         google = view.findViewById(R.id.googleButton);
-        facebook = view.findViewById(R.id.fbbutton);
+        facebook = view.findViewById(R.id.fbButton);
         forgot = view.findViewById(R.id.forgot);
         registertext = view.findViewById(R.id.register_text);
         signin = view.findViewById(R.id.signinbutton);

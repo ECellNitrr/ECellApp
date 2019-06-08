@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_begin="256dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -145,14 +145,14 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <ImageButton
-        android:id="@+id/fbbutton"
-        android:layout_width="85dp"
-        android:layout_height="80dp"
+        android:id="@+id/fbButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="65dp"
-        android:layout_marginEnd="110dp"
+        android:layout_marginEnd="130dp"
         android:background="@color/transparent"
         android:src="@drawable/ic_facebook"
         app:layout_constraintEnd_toEndOf="parent"
@@ -164,8 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_end="219dp" />
 
     <ImageView
         android:id="@+id/lower_poly"
@@ -177,7 +176,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline3"
-        android:layout_width="310dp" />
+        android:layout_width="345dp" />
     <ImageView
         android:id="@+id/ic_lower_ecell"
         android:layout_width="125dp"
