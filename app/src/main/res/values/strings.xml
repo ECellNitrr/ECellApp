@@ -8,4 +8,5 @@
     <string name="forgot">Forgot?</string>
     <string name="sign_in">Sign in</string>
     <string name="register">Register</string>
+    <string name="sign_out">sign out</string>
 </resources>

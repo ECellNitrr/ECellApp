@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.hamburgeritem;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
 import java.util.ArrayList;
@@ -121,5 +123,10 @@ public class HomeActivity extends AppCompatActivity {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+    }
+
+    public void hamburgerclicked(View view) {
+        hamburgeritem bottomSheet = new hamburgeritem();
+        bottomSheet.show(getSupportFragmentManager(),"exambottomsheet");
     }
 }
