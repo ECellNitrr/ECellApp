@@ -9,7 +9,6 @@ import android.view.View;
 
 public class MySnapHelper extends SnapHelper {
 
-    private boolean run = false;
     @Nullable
     private OrientationHelper mHorizontalHelper;
 
@@ -54,7 +53,7 @@ public class MySnapHelper extends SnapHelper {
         int max = layoutManager.getChildCount();
         int targetPos = currentPos;
 
-        if(run) {
+        if(velX!=0) {
             if(currentPos == max - 1) {
                 if(velX > 0) {
                     targetPos = max - 1;
@@ -76,10 +75,7 @@ public class MySnapHelper extends SnapHelper {
                 }
 
             }
-            run = false;
         }
-        if(velX == 0)
-            run = true;
 
         return targetPos;
     }

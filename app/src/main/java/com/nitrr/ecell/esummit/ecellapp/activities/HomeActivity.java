@@ -32,28 +32,31 @@ public class HomeActivity extends AppCompatActivity {
         bottomSheet = new BottomSheetFragment();
         initializeList();
         recyclerView = findViewById(R.id.home_recycler);
-        recyclerView.hasFixedSize();
         adapter = new HomeRecyclerViewAdapter(this, homeRVDataList);
         setUpRV();
     }
 
     public void initializeList() {
-        HomeRVData data4 = new HomeRVData();
-        data4.setName("BQuiz");
-        data4.setImage(R.drawable.ic_google);
-        homeRVDataList.add(data4);
-        HomeRVData data = new HomeRVData();
-        data.setName("Events");
-        data.setImage(R.drawable.ic_events);
-        homeRVDataList.add(data);
+
+        HomeRVData data1 = new HomeRVData();
+        data1.setName("ESummit");
+        data1.setImage(R.drawable.ic_esummit);
+        homeRVDataList.add(data1);
+
         HomeRVData data2 = new HomeRVData();
-        data2.setName("ESummit");
-        data2.setImage(R.drawable.ic_esummit);
+        data2.setName("Events");
+        data2.setImage(R.drawable.ic_events);
         homeRVDataList.add(data2);
+
         HomeRVData data3 = new HomeRVData();
-        data3.setName("Sponsors");
-        data3.setImage(R.drawable.ic_hand_shake);
+        data3.setName("BQuiz");
+        data3.setImage(R.drawable.ic_google);
         homeRVDataList.add(data3);
+
+        HomeRVData data4 = new HomeRVData();
+        data4.setName("Sponsors");
+        data4.setImage(R.drawable.ic_hand_shake);
+        homeRVDataList.add(data4);
     }
 
     public void setUpRV() {
@@ -72,9 +75,6 @@ public class HomeActivity extends AppCompatActivity {
         bottomSheet.show(getSupportFragmentManager(),bottomSheet.getTag());
     }
 
-    public void closeBS(View view) {
-        bottomSheet.dismiss();
-    }
 }
 
 //Below Code is still being reviewed it was for the changing size of the cards while scrolling.
