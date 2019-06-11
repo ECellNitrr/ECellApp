@@ -8,5 +8,9 @@
     <string name="forgot">Forgot?</string>
     <string name="sign_in">Sign in</string>
     <string name="register">Register</string>
-    <string name="sign_out">sign out</string>
+    <string name="signout">sign out</string>
+    <string name="about_us">About Us</string>
+    <string name="log_out">Log Out</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
 </resources>

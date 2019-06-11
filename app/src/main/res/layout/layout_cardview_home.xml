@@ -10,8 +10,8 @@
         android:id="@+id/relLay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleY="0.75"
-        android:scaleX="0.75">
+        android:scaleY="1"
+        android:scaleX="1">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"

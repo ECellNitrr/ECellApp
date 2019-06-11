@@ -1,45 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehaviour"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fff"
+    style="@style/RoundedBottomSheet"
     android:orientation="vertical"
-    android:layout_marginTop="40dp"
-    android:padding="16dp">
-    <TextView
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="80dp"
+    android:padding="15dp">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="@string/name"
-        android:padding="10dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/email"
-        android:textSize="15sp"
-        android:textStyle="italic"
-        android:padding="10dp"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/about_us"
-        android:background="@color/colorWhite"
-        android:text="About Us"
-        android:textSize="18dp"
-        android:textAlignment="textStart"
-        android:padding="10dp"
-        android:onClick="aboutus_click"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_out"
-        android:text="@string/sign_out"
-        android:background="@color/colorWhite"
-        android:textSize="18dp"
-        android:textAlignment="textStart"
-        android:padding="10dp"
-        android:onClick="Signout_click"
-        />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/settings"
+                android:textStyle="bold"
+                android:textSize="40sp"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/close"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@color/transparent"
+                android:onClick="closeBS"
+                android:src="@drawable/ic_close"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:contentDescription="@string/profile"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_username"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile"
+                android:textSize="27sp"
+                android:layout_weight="20"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:contentDescription="@string/about_us"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_call"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_us"
+                android:textSize="27sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="15"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:contentDescription="@string/log_out"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_log_out"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/log_out"
+                android:textSize="27sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="15"
+                android:layout_marginStart="5dp"/>
+
+        </LinearLayout>
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="18sp"-->
+        <!--android:text="@string/name"-->
+        <!--android:padding="10dp"/>-->
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/email"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textStyle="italic"-->
+        <!--android:padding="10dp"/>-->
+
+        <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/about_us"-->
+        <!--android:layout_marginTop="100dp"-->
+        <!--android:background="@color/colorWhite"-->
+        <!--android:text="@string/about_us"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textAlignment="textStart"-->
+        <!--android:padding="10dp"/>-->
+
+        <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/sign_out"-->
+        <!--android:layout_marginTop="150dp"-->
+        <!--android:text="@string/signout"-->
+        <!--android:background="@color/colorWhite"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textAlignment="textStart"-->
+        <!--android:padding="10dp" />-->
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
