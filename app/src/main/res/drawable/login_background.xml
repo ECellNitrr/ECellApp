@@ -15,14 +15,4 @@
         android:bottom="3dp"
         android:drawable="@drawable/login_circle_right"/>
 
-
-
-    <!--<item-->
-        <!--android:left="-10dp"-->
-        <!--android:right="-10dp"-->
-        <!--android:top="70dp"-->
-        <!--android:bottom="-147dp"-->
-        <!--android:drawable="@drawable/ic_lower_polygon"/>-->
-
-
 </layer-list>
