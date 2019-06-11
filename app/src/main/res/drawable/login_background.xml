@@ -1,0 +1,28 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:top="-35dp"
+        android:bottom="46dp"
+        android:left="-18dp"
+        android:right="-1dp"
+        android:drawable="@drawable/login_circle_left"/>
+
+    <item
+        android:top="38dp"
+        android:left="33dp"
+        android:right="-25dp"
+        android:bottom="3dp"
+        android:drawable="@drawable/login_circle_right"/>
+
+
+
+    <!--<item-->
+        <!--android:left="-10dp"-->
+        <!--android:right="-10dp"-->
+        <!--android:top="70dp"-->
+        <!--android:bottom="-147dp"-->
+        <!--android:drawable="@drawable/ic_lower_polygon"/>-->
+
+
+</layer-list>

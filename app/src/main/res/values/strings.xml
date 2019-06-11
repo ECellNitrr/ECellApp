@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">ECellApp</string>
+    <string name="app_name">E - Cell</string>
+    <string name="accesstoken">access_token</string>
+    <string name="username">Username</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="forgot">Forgot?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="register">Register</string>
+    <string name="signout">sign out</string>
+    <string name="about_us">About Us</string>
+    <string name="log_out">Log Out</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_upperpolygon"
+        android:left="-200dp"
+        android:right="-200dp"
+        android:top="-800dp"
+        android:bottom="-570dp"/>
+
+    <item
+        android:drawable="@drawable/ic_ecell"
+        android:top="-360dp"
+        android:bottom="1200dp"
+        android:left="500dp"
+        android:right="500dp"/>
+
+</layer-list>
