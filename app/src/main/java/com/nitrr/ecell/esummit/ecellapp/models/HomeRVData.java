@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class HomeRVData implements Serializable {
     private String name;
     private int image;
+    private String color;
 
     public String getName() {
         return name;
@@ -22,5 +23,13 @@ public class HomeRVData implements Serializable {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

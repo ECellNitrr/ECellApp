@@ -105,7 +105,6 @@ public class MySnapHelper extends SnapHelper {
                     closestChild = child;
                 }
             }
-
             return closestChild;
         }
     }

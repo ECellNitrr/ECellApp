@@ -26,7 +26,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         View v = inflater.inflate(R.layout.hamburgerbottomsheet,container,false);
         LinearLayout aboutUs = v.findViewById(R.id.about_us);
         LinearLayout signOut = v.findViewById(R.id.sign_out);
-        ImageButton x = v.findViewById(R.id.close);
 
         aboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
