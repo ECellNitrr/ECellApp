@@ -47,13 +47,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         holder.cardName.setText(data.getName());
         Glide.with(context).load(data.getImage()).into(holder.cardImg);
         String color="#FFFFFF";
-        if (i==3)
+        if (i==0)
             color="#48CFAD";
-        else if (i==2)
-            color="#ED5958";
         else if (i==1)
+            color="#ED5958";
+        else if (i==2)
             color="#18A4E9";
-        else if (i==0)
+        else if (i==3)
             color = "#F2B531";
         holder.cardBg.setCardBackgroundColor(Color.parseColor(color));
     }

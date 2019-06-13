@@ -17,7 +17,7 @@
             android:shape="oval"
             android:thickness="5dp">
             <solid
-                android:color="#55d8b7"/>
+                android:color="#5884E1"/>
         </shape>
     </item>
 
@@ -30,7 +30,7 @@
             android:shape="oval"
             android:thickness="5dp">
             <solid
-                android:color="#55d8b7"/>
+                android:color="#5884E1"/>
         </shape>
     </item>
 
@@ -43,7 +43,7 @@
             android:shape="oval"
             android:thickness="5dp">
             <solid
-                android:color="#55d8b7"/>
+                android:color="#5884E1"/>
         </shape>
     </item>
 

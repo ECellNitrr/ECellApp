@@ -27,11 +27,8 @@ public class MySnapHelper extends SnapHelper {
             out[0] = 0;
         }
 
-        if (layoutManager.canScrollVertically()) {
-            out[1] = getDistance(layoutManager, targetView, OrientationHelper.createVerticalHelper(layoutManager));
-        } else {
-            out[1] = 0;
-        }
+            out[1] = 0;   //for y-direction distance
+
         return out;
     }
 
@@ -98,7 +95,7 @@ public class MySnapHelper extends SnapHelper {
 
             for(int i = 0; i < childCount; ++i) {
                 View child = layoutManager.getChildAt(i);
-                int childCenter = helper.getDecoratedStart(child) + helper.getDecoratedMeasurement(child) / 2;
+                int childCenter = (helper.getDecoratedStart(child) + helper.getDecoratedMeasurement(child)) / 2;
                 int absDistance = Math.abs(childCenter - center);
                 if (absDistance < absClosest) {
                     absClosest = absDistance;
@@ -111,12 +108,12 @@ public class MySnapHelper extends SnapHelper {
 
     @NonNull
     private OrientationHelper getHorizontalHelper(@NonNull RecyclerView.LayoutManager layoutManager) {
-        if (this.mHorizontalHelper == null /*|| this.mHorizontalHelper.mLayoutManager != layoutManager*/) {
+        if (this.mHorizontalHelper == null || this.mHorizontalHelper.getLayoutManager() != layoutManager) {
             this.mHorizontalHelper = OrientationHelper.createHorizontalHelper(layoutManager);
         }
 
         return this.mHorizontalHelper;
     }
-    //The commented region in the () above showing an error. the error is not shown in LinearSnapHelper.java class where the
+    //By:- Viren ..The commented region in the () above showing an error. the error is not shown in LinearSnapHelper.java class where the
     //same method is there.
 }
