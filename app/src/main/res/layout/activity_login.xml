@@ -1,19 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView-->
-<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--android:background="@color/colorBackground">-->
+<?xml version="1.0" encoding="utf-8"?><!--<ScrollView--><!--xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/colorBackground">-->
 
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".activities.Login">
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:context=".activities.ActivityLogin">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -49,14 +43,14 @@
         app:layout_constraintGuide_begin="256dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/upper_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="50dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@+id/upper_poly"
@@ -69,9 +63,9 @@
             android:layout_height="60dp">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/upper_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/upper_poly_username"
                 android:hint="@string/username"
                 android:inputType="text"
                 android:maxLines="1"
@@ -79,20 +73,28 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/upper_password_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleContentDescription="To Show and Hide Password"
+            app:passwordToggleDrawable="@drawable/login_password_eye"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/upper_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
-                android:id="@+id/upper_poly_password"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:textSize="18sp" />
         </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -100,63 +102,60 @@
         android:id="@+id/forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
-        android:layout_marginStart="260dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="200dp"
         android:layout_marginBottom="2dp"
-        android:textStyle="italic"
+        android:layout_marginEnd="50dp"
         android:text="@string/forgot"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/signinbutton"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
     <Button
-        android:id="@+id/signinbutton"
+        android:id="@+id/sign_in_button"
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_alignStart="@+id/upper_poly"
         android:layout_alignTop="@+id/upper_poly"
         android:layout_alignEnd="@+id/upper_poly"
         android:layout_marginStart="200dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="13dp"
-        android:background="@drawable/button_signin"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_sign_in"
         android:text="@string/sign_in"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorWhite"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgot" />
 
-    <ImageButton
-        android:id="@+id/googleButton"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignStart="@+id/upper_poly"
-        android:layout_alignTop="@+id/upper_poly"
+    <ImageView
+        android:id="@+id/google_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/transparent"
-        android:src="@drawable/login_google"
+        android:layout_marginTop="10dp"
+        style="@style/SignInButton"
+        android:src="@drawable/ic_google"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <ImageButton
-        android:id="@+id/fbButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/upper_poly"
-        android:layout_alignTop="@+id/upper_poly"
+    <ImageView
+        android:id="@+id/fb_button"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="75dp"
         android:layout_marginEnd="130dp"
-        android:background="@color/transparent"
+        style="@style/SignInButton"
         android:src="@drawable/ic_facebook"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/googleButton"
+        app:layout_constraintStart_toEndOf="@+id/google_button"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <android.support.constraint.Guideline
@@ -164,31 +163,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="219dp" />
+        app:layout_constraintGuide_end="226dp" />
 
     <ImageView
         android:id="@+id/lower_poly"
+        android:layout_width="345dp"
         android:layout_height="650dp"
-        android:rotation="180"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:rotation="180"
         android:src="@drawable/login_lower_poly"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline3"
-        android:layout_width="345dp" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline3" />
+
     <ImageView
         android:id="@+id/ic_lower_ecell"
         android:layout_width="125dp"
         android:layout_height="125dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="150dp"
         android:src="@drawable/ic_ecell"
         app:layout_constraintStart_toStartOf="@+id/lower_poly"
-        app:layout_constraintTop_toBottomOf="@+id/guideline3"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="150dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/guideline3" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutLowerPolygon"
+        android:id="@+id/lower_polygon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/lower_poly"
@@ -207,7 +207,7 @@
             android:layout_height="60dp">
 
             <android.support.design.widget.TextInputEditText
-                 android:id="@+id/lower_poly_name"
+                android:id="@+id/lower_poly_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
@@ -237,14 +237,15 @@
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp">
+
             <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
                 android:id="@+id/lower_poly_password"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:textSize="16sp"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:textSize="16sp" />
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
@@ -261,80 +262,75 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintEnd_toStartOf="@+id/to_register_button"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/to_register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="135dp"
         android:layout_marginTop="160dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="180dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/transparent"
         android:src="@drawable/login_circle_right"
-        android:onClick="ontransiton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" >
-    </ImageButton>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"/>
 
     <ImageView
-        android:id="@+id/registerscreen_transitionbutton_arrow"
-        android:rotation="90"
+        android:id="@+id/down_arrow"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:rotation="90"
         android:src="@drawable/ic_arrow_pointing_to_right"
-        app:layout_constraintEnd_toEndOf="@id/imageButton2"
-        app:layout_constraintBottom_toBottomOf="@id/imageButton2"
-        app:layout_constraintStart_toStartOf="@id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2"/>
+        app:layout_constraintBottom_toBottomOf="@id/to_register_button"
+        app:layout_constraintEnd_toEndOf="@id/to_register_button"
+        app:layout_constraintStart_toStartOf="@id/to_register_button"
+        app:layout_constraintTop_toTopOf="@+id/to_register_button" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/to_sign_in_button"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginEnd="45dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="45dp"
         android:background="@color/transparent"
         android:src="@drawable/login_circle_right"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline" >
-    </ImageButton>
+        app:layout_constraintTop_toBottomOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/signinscreen_transitionbutton_arrow"
-        android:rotation="-90"
+        android:id="@+id/up_arrow"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:onClick="onsigninintransition"
+        android:rotation="-90"
         android:src="@drawable/ic_arrow_pointing_to_right"
-        app:layout_constraintStart_toStartOf="@id/imageButton1"
-        app:layout_constraintBottom_toTopOf="@id/imageButton1"
-        app:layout_constraintEnd_toEndOf="@id/imageButton1"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton1"/>
+        app:layout_constraintBottom_toTopOf="@id/to_sign_in_button"
+        app:layout_constraintEnd_toEndOf="@id/to_sign_in_button"
+        app:layout_constraintStart_toStartOf="@id/to_sign_in_button"
+        app:layout_constraintTop_toBottomOf="@+id/to_sign_in_button" />
 
     <TextView
-        android:id="@+id/signinText"
-        android:layout_height="wrap_content"
+        android:id="@+id/sign_in_text"
         android:layout_width="wrap_content"
-        android:text="@string/sign_in"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton1"
-        app:layout_constraintTop_toBottomOf="@+id/guideline"
-        />
+        android:text="@string/sign_in"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/to_sign_in_button"
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <Button
-        android:id="@+id/registerbutton"
+        android:id="@+id/register_button"
         android:layout_width="150dp"
         android:layout_height="45dp"
         android:layout_alignStart="@+id/lower_poly"
@@ -342,13 +338,13 @@
         android:layout_alignEnd="@+id/lower_poly"
         android:layout_marginStart="160dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_signin"
+        android:background="@drawable/button_sign_in"
         android:text="@string/register"
         android:textColor="#FFFFFF"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLowerPolygon" />
+        app:layout_constraintTop_toBottomOf="@+id/lower_polygon" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"

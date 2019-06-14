@@ -6,54 +6,48 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRecyclerViewAdapter;
-import com.nitrr.ecell.esummit.ecellapp.misc.BottomSheetFragment;
+import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.fragments.BottomSheetFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class ActivityHome extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private HomeRecyclerViewAdapter adapter;
+    private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
-    BottomSheetFragment bottomSheet;
-//    ImageButton x;
-//    SnapHelper snapHelper;
+    BottomSheetFragment bottom_sheet;
+    ImageButton hamburger_button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        bottomSheet = new BottomSheetFragment();
-        initializeList();
+        bottom_sheet = new BottomSheetFragment();
+        initializeList("BQuiz", R.drawable.ic_google);
+        initializeList("Events", R.drawable.ic_events);
+        initializeList("ESummit", R.drawable.ic_esummit);
+        initializeList("Sponsors", R.drawable.ic_hand_shake);
+
+        hamburger_button = findViewById(R.id.hamburgerButton);
+        hamburger_button.setOnClickListener((View view) -> bottom_sheet.show(getSupportFragmentManager(), bottom_sheet.getTag()));
+
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
-        adapter = new HomeRecyclerViewAdapter(this, homeRVDataList);
+        adapter = new HomeRVAdapter(this, homeRVDataList);
         setUpRV();
     }
 
-    public void initializeList() {
-        HomeRVData data4 = new HomeRVData();
-        data4.setName("BQuiz");
-        data4.setImage(R.drawable.ic_google);
-        homeRVDataList.add(data4);
-        HomeRVData data = new HomeRVData();
-        data.setName("Events");
-        data.setImage(R.drawable.ic_events);
+    public void initializeList(String name, int cardImage) {
+        HomeRVData data = new HomeRVData(name, cardImage);
         homeRVDataList.add(data);
-        HomeRVData data2 = new HomeRVData();
-        data2.setName("ESummit");
-        data2.setImage(R.drawable.ic_esummit);
-        homeRVDataList.add(data2);
-        HomeRVData data3 = new HomeRVData();
-        data3.setName("Sponsors");
-        data3.setImage(R.drawable.ic_hand_shake);
-        homeRVDataList.add(data3);
     }
 
     public void setUpRV() {
@@ -66,14 +60,6 @@ public class HomeActivity extends AppCompatActivity {
 
         SnapHelper snapHelper = new MySnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
-    }
-
-    public void hamburgerClicked(View view) {
-        bottomSheet.show(getSupportFragmentManager(),bottomSheet.getTag());
-    }
-
-    public void closeBS(View view) {
-        bottomSheet.dismiss();
     }
 }
 

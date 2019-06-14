@@ -12,11 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".activities.HomeActivity"
+        <activity android:name=".activities.ActivityHome"
             android:theme="@style/AppTheme.FullScreen">
 
         </activity>
-        <activity android:name=".activities.Login"
+        <activity android:name=".activities.ActivityLogin"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

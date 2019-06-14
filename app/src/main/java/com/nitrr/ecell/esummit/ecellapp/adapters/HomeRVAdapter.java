@@ -3,7 +3,6 @@ package com.nitrr.ecell.esummit.ecellapp.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,13 @@ import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder> {
+public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
 
-    public HomeRecyclerViewAdapter(Context context, List<HomeRVData> list) {
+    public HomeRVAdapter(Context context, List<HomeRVData> list) {
         this.context = context;
         this.homeRVDataList = list;
         inflater = LayoutInflater.from(context);

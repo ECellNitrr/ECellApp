@@ -15,11 +15,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="CircularButton" parent="Widget.AppCompat.Button">
-
-    </style>
-
-    <style name="RoundedBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+    <style name="SignInButton">
+        <item name="android:layout_alignStart">@id/upper_poly</item>
+        <item name="android:layout_alignTop">@id/upper_poly</item>
         <item name="android:background">@color/transparent</item>
     </style>
 
