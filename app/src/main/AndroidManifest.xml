@@ -14,17 +14,15 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity
             android:name=".activities.Event"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_event"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.Login"

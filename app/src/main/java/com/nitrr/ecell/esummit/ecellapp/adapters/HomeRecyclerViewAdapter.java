@@ -1,14 +1,10 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +51,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             color="#18A4E9";
         else if (i==3)
             color = "#F2B531";
-        holder.cardBg.setCardBackgroundColor(Color.parseColor(color));
+        holder.cardBg.setCardBackgroundColor(Color.parseColor(data.getColor()));
     }
 
     @Override
