@@ -20,7 +20,7 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHold
 
     private Context context;
     private LayoutInflater inflater;
-    private List<HomeRVData> homeRVDataList = new ArrayList<>();
+    private List<HomeRVData> homeRVDataList;
 
     public HomeRVAdapter(Context context, List<HomeRVData> list) {
         this.context = context;

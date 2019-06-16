@@ -13,4 +13,7 @@
     <string name="log_out">Log Out</string>
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
+
+    <string name="e_summit_19">E SUMMIT \'19</string>
+    <string name="e_summit_detail">Sept 31 and Aug 1, 2019</string>
 </resources>

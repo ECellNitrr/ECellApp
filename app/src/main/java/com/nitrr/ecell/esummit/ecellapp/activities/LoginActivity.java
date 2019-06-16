@@ -1,10 +1,10 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.EditText;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
-public class ActivityLogin extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
-    ImageView lowerIcon, downArrow, fbButton, googleButton;
+    ImageView lowerIcon, upArrow, downArrow, fbButton, googleButton;
     ImageButton signInButton, registerButton;
     TextView signInText;
     LinearLayout register;
@@ -27,14 +28,14 @@ public class ActivityLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initialize();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        loginanimation = new LoginAnimation(this);
 
 
         registerButton = findViewById(R.id.to_register_button);
-        registerButton.setOnClickListener((View v) -> {
-            loginanimation = new LoginAnimation(this);
-            register.setEnabled(true);
-            loginanimation.toRegisterScreen(this);
-        });
+        registerButton.setOnClickListener((View v) -> loginanimation.toRegisterScreen(this));
 
         signInButton = findViewById(R.id.to_sign_in_button);
         signInButton.setOnClickListener((View v) -> loginanimation.toSignInScreen(this));
@@ -47,16 +48,21 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     void initialize(){
+        upArrow = findViewById(R.id.up_arrow);
         downArrow = findViewById(R.id.down_arrow);
-        signInText = findViewById(R.id.sign_in_text);
-        register = findViewById(R.id.lower_polygon);
+        signInText = findViewById(R.id.to_sign_in_text);
+        register = findViewById(R.id.lower_linear_layout);
         signInButton = findViewById(R.id.to_sign_in_button);
+        registerButton = findViewById(R.id.to_register_button);
         lowerIcon = findViewById(R.id.ic_lower_ecell);
 
-        register.setEnabled(false);
-        signInText.setVisibility(View.GONE);
-        signInButton.setVisibility(View.GONE);
-        downArrow.setVisibility(View.GONE);
-        lowerIcon.setVisibility(View.INVISIBLE);
+        signInText.setVisibility(View.INVISIBLE);
+        signInButton.setVisibility(View.INVISIBLE);
+        signInButton.setEnabled(false);
+        registerButton.setEnabled(true);
+        upArrow.setVisibility(View.INVISIBLE);
+
+//        lowerIcon.setVisibility(View.INVISIBLE);
+        lowerIcon.animate().translationY(300f).setDuration(10).setInterpolator(new AccelerateInterpolator()).start();
     }
 }
