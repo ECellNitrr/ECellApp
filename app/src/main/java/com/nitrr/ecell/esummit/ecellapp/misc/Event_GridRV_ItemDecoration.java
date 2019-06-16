@@ -17,7 +17,6 @@ public class Event_GridRV_ItemDecoration extends RecyclerView.ItemDecoration {
     }
 
 
-
     public Event_GridRV_ItemDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
 
         this(context.getResources().getDimensionPixelSize(itemOffsetId));
@@ -25,14 +24,12 @@ public class Event_GridRV_ItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-
-                               RecyclerView.State state) {
-            outRect.left = 0;
-            outRect.right = 0;
-            outRect.bottom = 0;
-            outRect.top = 0;
+        outRect.left = 0;
+        outRect.right = 0;
+        outRect.bottom = 0;
+        outRect.top = 0;
 
         /*super.getItemOffsets(outRect, view, parent, state);
 

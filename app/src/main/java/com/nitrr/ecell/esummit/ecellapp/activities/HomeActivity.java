@@ -1,26 +1,18 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import android.animation.ObjectAnimator;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRecyclerViewAdapter;
-import com.nitrr.ecell.esummit.ecellapp.misc.BottomSheetFragment;
+import com.nitrr.ecell.esummit.ecellapp.misc.MenuCustomAlertDialog;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
@@ -29,16 +21,17 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    int test = 0;
     private RecyclerView recyclerView;
     private HomeRecyclerViewAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
-    private BottomSheetFragment bottomSheet;
+
     private ImageView esummitbg;
     private ImageView eventbg;
     private ImageView bquizbg;
     private ImageView sponsbg;
+
     private int rvpositionx = 0;
+
     private float scrollpos1 = 0;
     private float scrollpos2 = 0;
 
@@ -46,41 +39,53 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        bottomSheet = new BottomSheetFragment();
+
         initializeList();
+
         recyclerView = findViewById(R.id.home_recycler);
+
         esummitbg = findViewById(R.id.home_bg1);
         eventbg = findViewById(R.id.home_bg2);
         bquizbg = findViewById(R.id.home_bg3);
         sponsbg = findViewById(R.id.home_bg4);
+
         adapter = new HomeRecyclerViewAdapter(this, homeRVDataList);
+
         setUpRV();
     }
 
     public void initializeList() {
-        HomeRVData data1 = new HomeRVData();
-        data1.setName("ESummit");
-        data1.setImage(R.drawable.ic_esummit);
-        data1.setColor("#48CFAD");
-        homeRVDataList.add(data1);
+        HomeRVData eSummit = new HomeRVData();
 
-        HomeRVData data2 = new HomeRVData();
-        data2.setName("Events");
-        data2.setImage(R.drawable.ic_events);
-        data2.setColor("#ED5958");
-        homeRVDataList.add(data2);
+        eSummit.setName(getResources().getString(R.string.text_esummit));
+        eSummit.setImage(R.drawable.ic_esummit);
+        eSummit.setColor(this.getString(R.string.color_esummit));
 
-        HomeRVData data3 = new HomeRVData();
-        data3.setName("BQuiz");
-        data3.setImage(R.drawable.ic_google);
-        data3.setColor("#18A45E9");
-        homeRVDataList.add(data3);
+        homeRVDataList.add(eSummit);
 
-        HomeRVData data4 = new HomeRVData();
-        data4.setName("Sponsors");
-        data4.setImage(R.drawable.ic_hand_shake);
-        data4.setColor("#F2B531");
-        homeRVDataList.add(data4);
+        HomeRVData events = new HomeRVData();
+
+        events.setName(getResources().getString(R.string.text_events));
+        events.setImage(R.drawable.ic_events);
+        events.setColor(getResources().getString(R.string.color_events));
+
+        homeRVDataList.add(events);
+
+        HomeRVData bQuiz = new HomeRVData();
+
+        bQuiz.setName(getResources().getString(R.string.text_bquiz));
+        bQuiz.setImage(R.drawable.ic_google);
+        bQuiz.setColor(getResources().getString(R.string.color_bquiz));
+
+        homeRVDataList.add(bQuiz);
+
+        HomeRVData sponsors = new HomeRVData();
+
+        sponsors.setName(getResources().getString(R.string.text_spons));
+        sponsors.setImage(R.drawable.ic_hand_shake);
+        sponsors.setColor(getResources().getString(R.string.color_spons));
+
+        homeRVDataList.add(sponsors);
     }
 
     public void setUpRV() {
@@ -177,8 +182,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void hamburgerClicked(View view) {
-
-        bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+        MenuCustomAlertDialog.getInstance().with(this).build();
     }
 
 }

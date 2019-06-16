@@ -17,4 +17,12 @@
     <string name="title_activity_event">Event</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="text_esummit">ESummit</string>
+    <string name="color_esummit">#48CFAD</string>
+    <string name="text_events">Events</string>
+    <string name="color_events">#ED5958</string>
+    <string name="text_bquiz">BQuiz</string>
+    <string name="color_bquiz">#18A45E9</string>
+    <string name="text_spons">Sponsors</string>
+    <string name="color_spons">#F2B531</string>
 </resources>
