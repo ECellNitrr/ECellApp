@@ -22,7 +22,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     private Context context;
     private LayoutInflater inflater;
-    private List<HomeRVData> homeRVDataList = new ArrayList<>();
+    private List<HomeRVData> homeRVDataList;
 
     public HomeRecyclerViewAdapter(Context context, List<HomeRVData> list) {
         this.context = context;
@@ -42,14 +42,19 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         final HomeRVData data = homeRVDataList.get(i);
         holder.cardName.setText(data.getName());
         Glide.with(context).load(data.getImage()).into(holder.cardImg);
-        String color="#FFFFFF";
-        if (i==0)
-            color="#48CFAD";
-        else if (i==1)
-            color="#ED5958";
-        else if (i==2)
-            color="#18A4E9";
-        else if (i==3)
+
+        String color = "#FFFFFF";
+
+        if (i == 0)
+            color = "#48CFAD";
+
+        else if (i == 1)
+            color = "#ED5958";
+
+        else if (i == 2)
+            color = "#18A4E9";
+
+        else if (i == 3)
             color = "#F2B531";
         holder.cardBg.setCardBackgroundColor(Color.parseColor(color));
     }
