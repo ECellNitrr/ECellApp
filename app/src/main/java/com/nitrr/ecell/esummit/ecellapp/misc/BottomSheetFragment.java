@@ -1,8 +1,10 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,14 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         return v;
     }
 
-//    public interface ButtomSheetListener{
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new BottomSheetDialog(requireContext(),R.style.BottomSheetDialogTheme);
+        return dialog;
+        //return super.onCreateDialog(savedInstanceState);
+    }
+
+    //    public interface ButtomSheetListener{
 //        void OnClicked(String string);
 //    }
 

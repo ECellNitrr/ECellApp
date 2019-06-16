@@ -41,8 +41,6 @@ public class HomeActivity extends AppCompatActivity {
     private int rvpositionx = 0;
     private float scrollpos1 = 0;
     private float scrollpos2 = 0;
-//    ImageButton x;
-//    SnapHelper snapHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +177,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void hamburgerClicked(View view) {
+
         bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
     }
 
