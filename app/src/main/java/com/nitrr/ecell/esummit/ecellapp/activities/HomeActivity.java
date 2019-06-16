@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
+    int test = 0;
     private RecyclerView recyclerView;
     private HomeRecyclerViewAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
@@ -37,9 +39,8 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView bquizbg;
     private ImageView sponsbg;
     private int rvpositionx = 0;
-    private float scrollpos1 =0;
+    private float scrollpos1 = 0;
     private float scrollpos2 = 0;
-    int test=0;
 //    ImageButton x;
 //    SnapHelper snapHelper;
 
@@ -90,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-        recyclerView.setPadding(100,0,100,0);
+        recyclerView.setPadding(100, 0, 100, 0);
 
         SnapHelper snapHelper = new MySnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
@@ -146,28 +147,26 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                Log.w("positionX ","value of revposX = "+rvpositionx);
-                rvpositionx+=dx;
-                if(rvpositionx<885){
-                    scrollpos1=(float)rvpositionx/885;
-                    scrollpos2=1-scrollpos1;
+                Log.w("positionX ", "value of revposX = " + rvpositionx);
+                rvpositionx += dx;
+                if (rvpositionx < 885) {
+                    scrollpos1 = (float) rvpositionx / 885;
+                    scrollpos2 = 1 - scrollpos1;
                     esummitbg.setAlpha(scrollpos2);
                     eventbg.setAlpha(scrollpos1);
                     bquizbg.setAlpha(0f);
                     sponsbg.setAlpha(0f);
 
-                }
-                else if(rvpositionx<1770){
-                    scrollpos1=(float)(rvpositionx-885)/885;
-                    scrollpos2=1-scrollpos1;
+                } else if (rvpositionx < 1770) {
+                    scrollpos1 = (float) (rvpositionx - 885) / 885;
+                    scrollpos2 = 1 - scrollpos1;
                     eventbg.setAlpha(scrollpos2);
                     bquizbg.setAlpha(scrollpos1);
                     esummitbg.setAlpha(0f);
                     sponsbg.setAlpha(0f);
-                }
-                else if(rvpositionx<2655){
-                    scrollpos1=(float)(rvpositionx-1770)/885;
-                    scrollpos2=1-scrollpos1;
+                } else if (rvpositionx < 2655) {
+                    scrollpos1 = (float) (rvpositionx - 1770) / 885;
+                    scrollpos2 = 1 - scrollpos1;
                     bquizbg.setAlpha(scrollpos2);
                     sponsbg.setAlpha(scrollpos1);
                     eventbg.setAlpha(0f);
@@ -180,7 +179,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void hamburgerClicked(View view) {
-        bottomSheet.show(getSupportFragmentManager(),bottomSheet.getTag());
+        bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
     }
 
 }
