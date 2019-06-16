@@ -1,15 +1,10 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import android.graphics.Rect;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
@@ -35,17 +30,8 @@ public class Event extends AppCompatActivity {
     private void setRecycler() {
         GridLayoutManager gridLayoutManager =new GridLayoutManager(this,3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.set(20,0,0,0);
-            super.getItemOffsets(outRect, view, parent, state);
-            }
-        });
         adapter = new EventRecyclerViewAdapter(this,list);
         recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.addItemDecoration(new SpacesItem);
     }
 
     private void initializeList() {
