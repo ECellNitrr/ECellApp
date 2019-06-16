@@ -38,7 +38,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         EventRVData data = list.get(i);
         myViewHolder.eventimg.setImageResource(data.getImage());
         myViewHolder.event.setText(data.getName());
-        //myViewHolder.eventbg.setAlpha(data.getAlpha());
+        myViewHolder.eventbg.setAlpha(data.getAlpha());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             event = itemView.findViewById(R.id.event_name);
-            //eventbg = itemView.findViewById(R.id.event_bg);
+            eventbg = itemView.findViewById(R.id.event_bg);
             eventimg = itemView.findViewById(R.id.event_img);
             itemView.setOnClickListener(this);
         }

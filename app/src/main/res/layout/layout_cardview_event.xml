@@ -14,13 +14,13 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--ImageView
+            <ImageView
                 android:id="@+id/event_bg"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:background="@color/colorWhite"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/-->
+                app:layout_constraintBottom_toBottomOf="parent"/>
         <ImageView
             android:id="@+id/event_img"
             android:layout_width="match_parent"

@@ -51,7 +51,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             color="#18A4E9";
         else if (i==3)
             color = "#F2B531";
-        holder.cardBg.setCardBackgroundColor(Color.parseColor(data.getColor()));
+        holder.cardBg.setCardBackgroundColor(Color.parseColor(color));
     }
 
     @Override
