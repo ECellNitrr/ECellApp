@@ -20,8 +20,6 @@ public class MySnapHelper extends LinearSnapHelper {
             return RecyclerView.NO_POSITION;
         }
 
-        final int currentPosition = layoutManager.getPosition(currentView);
-
-        return currentPosition;
+        return layoutManager.getPosition(currentView);
     }
 }

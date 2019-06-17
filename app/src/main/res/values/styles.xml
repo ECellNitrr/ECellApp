@@ -16,11 +16,6 @@
     </style>
 
     <style name="CircularButton" parent="Widget.AppCompat.Button">
-
-    </style>
-
-
-    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
     </style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
@@ -31,7 +26,6 @@
         <item name="android:windowIsFloating">false</item>
         <item name="bottomSheetStyle">@style/BottomSheet</item>
     </style>
-
 
 
     <style name="FullscreenTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
@@ -46,4 +40,8 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="MenuDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
 </resources>
