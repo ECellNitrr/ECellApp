@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ESummitActivity">
+    tools:context=".activities.ESummitActivity"
+    android:background="@color/colorLightBlack">
 
     <ImageView
         android:id="@+id/e_summit_icon"
@@ -38,18 +39,45 @@
         android:text="@string/e_summit_detail"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/e_summit_text" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/e_summit_date" />
+        app:layout_constraintTop_toBottomOf="@+id/e_summit_date"
+        android:background="@drawable/esummit_rectangle">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:background="@color/colorLightBlack">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="50dp"
+                android:src="@drawable/login_lower_poly"
+                android:paddingStart="-10dp"
+                android:paddingEnd="-10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
