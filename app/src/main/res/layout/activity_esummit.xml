@@ -7,7 +7,7 @@
     tools:context=".activities.ESummitActivity"
     android:background="@color/colorLightBlack">
 
-    <ImageView
+    <!--ImageView
         android:id="@+id/e_summit_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/e_summit_text" />
 
-    <LinearLayout
+    <ScrollView
         android:orientation="vertical"
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             android:background="@color/colorLightBlack">
 
             <ImageView
-                android:layout_width="0dp"
+                android:layout_width="0dp"login_lower_poly
                 android:layout_height="0dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
@@ -78,6 +78,17 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </LinearLayout>
+    </ScrollView-->
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/pager"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>

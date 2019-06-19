@@ -16,4 +16,7 @@
 
     <string name="e_summit_19">E SUMMIT \'19</string>
     <string name="e_summit_detail">Sept 31 and Aug 1, 2019</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
