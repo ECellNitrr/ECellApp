@@ -65,5 +65,6 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     }
 
     public void OnItemClick(View v,int pos){
+        View view = inflater.inflate(R.layout.fragment_event,);
     }
 }
