@@ -1,34 +1,31 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 
 public class EventFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String eventname;
+    private TextView event;
+    private TextView eventdis;
+    private String eventdisc;
+    private ImageView eventimg;
+    private TextView venue;
+    private TextView timefeild;
 
     public EventFragment() {
-        // Required empty public constructor
     }
 
     public static EventFragment newInstance(String param1, String param2) {
         EventFragment fragment = new EventFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,15 +34,32 @@ public class EventFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event, container, false);
+        View view =inflater.inflate(R.layout.fragment_event, container, false);
+        Bundle bundle = this.getArguments();
+        if(bundle!=null){
+            eventname = bundle.get("eventname").toString();
+            initalize(view);
+        }
+        return view;
+    }
+
+    private void initalize(View v) {
+        event = v.findViewById(R.id.event_name);
+        event.setText(eventname);
+        eventimg = v.findViewById(R.id.event_img);
+        eventdis = v.findViewById(R.id.event_text);
+        venue = v.findViewById(R.id.event_venue);
+        timefeild = v.findViewById(R.id.date_time);
+    }
+
+    private void setTime(String time,String date){
+        time="Date: "+date+" | Time: "+time;
+        timefeild.setText(time);
     }
 }
