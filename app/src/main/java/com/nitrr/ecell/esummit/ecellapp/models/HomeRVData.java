@@ -6,7 +6,6 @@ public class HomeRVData implements Serializable {
 
     private String name;
     private String color;
-
     private int image;
 
     public String getName() {
