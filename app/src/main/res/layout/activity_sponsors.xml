@@ -5,6 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.Sponsors">
+
+    <ImageView
+        android:id="@+id/spons_bgcircle_5"
+    android:layout_width="1000dp"
+    android:layout_height="1000dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:src="@drawable/spons_bgcircle5" />
+
+    <ImageView
+        android:id="@+id/spons_bgcircle_4"
+        android:layout_width="750dp"
+        android:layout_height="750dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/spons_bgcircle4" />
+
+    <ImageView
+        android:id="@+id/spons_bgcircle_3"
+        android:layout_width="550dp"
+        android:layout_height="550dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/spons_bgcircle3" />
+
+    <ImageView
+        android:id="@+id/spons_bgcircle_2"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/spons_bgcircle2" />
+
+    <ImageView
+        android:id="@+id/spons_bgcircle_1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/spons_bgcircle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,12 +53,16 @@
         android:paddingStart="15dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
+        android:background="@color/associateSponsBlue"
+        android:alpha="0.4"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/associateSponsBlue"
+        android:alpha="0.4"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
     <android.support.v4.view.ViewPager
@@ -27,45 +71,5 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tab"/>
-
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/spons_bgcircle5"
-                android:layout_marginTop="-800dp"
-                android:layout_marginEnd="-800dp" />
-
-            <!--ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/spons_bgcircle4"
-                android:layout_marginTop="-400dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/spons_bgcircle3"
-                android:layout_marginStart="100dp"
-                android:layout_marginEnd="-300dp"
-                android:layout_marginTop="-300dp"/>
-
-            <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/spons_bgcircle2"
-            android:layout_marginStart="200dp"
-            android:layout_marginEnd="-200dp"
-            android:layout_marginTop="-200dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/spons_bgcircle1"
-            android:layout_marginStart="300dp"
-            android:layout_marginEnd="-100dp"
-            android:layout_marginTop="-100dp"--/>
 
 </android.support.constraint.ConstraintLayout>

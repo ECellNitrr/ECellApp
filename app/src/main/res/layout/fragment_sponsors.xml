@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--tools:context=".activities.SponsorsFragment">-->
-
     <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,47 +7,12 @@
         android:layout_height="match_parent"
         tools:context=".activities.SponsorsFragment">
 
-            <ImageView
-                android:layout_width="1000dp"
-                android:layout_height="1000dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/spons_bgcircle5" />
 
-            <ImageView
-                android:layout_width="750dp"
-                android:layout_height="750dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/spons_bgcircle4" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/spons_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="550dp"
-                android:layout_height="550dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/spons_bgcircle3" />
-
-            <ImageView
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/spons_bgcircle2" />
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/spons_bgcircle1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/spons_recycler"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:padding="10dp" />-->
-
-<!--</FrameLayout>-->
+</android.support.constraint.ConstraintLayout>
