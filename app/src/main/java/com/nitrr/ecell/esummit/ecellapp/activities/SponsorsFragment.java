@@ -22,7 +22,7 @@ public class SponsorsFragment extends Fragment {
     RecyclerView recycler;
     SponsorsRecyclerViewAdapter adapter;
     ArrayList<SponsRVData> list = new ArrayList<SponsRVData>();
-    String type;
+    static String type;
 
 
     public SponsorsFragment() {
@@ -35,6 +35,7 @@ public class SponsorsFragment extends Fragment {
 
         SponsorsFragment fragment = new SponsorsFragment();
         args.putInt("Position",position);
+        type = title;
         args.putString("title",title);
         fragment.setArguments(args);
         return fragment;
@@ -45,13 +46,9 @@ public class SponsorsFragment extends Fragment {
     public  View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_sponsors,container,false);
-        if(savedInstanceState!=null){
         recycler = view.findViewById(R.id.spons_recycler);
-        type = savedInstanceState.get("title").toString();
         setList();
         setRecyclerView();
-        }
-
         return view;
     }
 
