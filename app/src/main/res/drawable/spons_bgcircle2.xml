@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
-    <size
-        android:height="400dp"
-        android:width="400dp"/>
-    <solid
-        android:color="#ADDAEE"/>
-</shape>
+<layer-list  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+        <shape android:shape="rectangle">
+            <size
+                android:height="200dp"
+                android:width="200dp"/>
+            <solid
+                android:color="#ADDAEE"/>
+            <corners android:bottomLeftRadius="200dp"/>
+        </shape>
+    </item>
+</layer-list>
