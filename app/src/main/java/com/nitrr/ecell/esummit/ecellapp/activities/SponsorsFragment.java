@@ -45,6 +45,7 @@ public class SponsorsFragment extends Fragment {
     @Override
     public  View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        list.clear();
         View view=inflater.inflate(R.layout.fragment_sponsors,container,false);
         recycler = view.findViewById(R.id.spons_recycler);
         setList();

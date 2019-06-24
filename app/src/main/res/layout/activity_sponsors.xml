@@ -28,4 +28,44 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tab"/>
 
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/spons_bgcircle5"
+                android:layout_marginTop="-800dp"
+                android:layout_marginEnd="-800dp" />
+
+            <!--ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/spons_bgcircle4"
+                android:layout_marginTop="-400dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/spons_bgcircle3"
+                android:layout_marginStart="100dp"
+                android:layout_marginEnd="-300dp"
+                android:layout_marginTop="-300dp"/>
+
+            <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/spons_bgcircle2"
+            android:layout_marginStart="200dp"
+            android:layout_marginEnd="-200dp"
+            android:layout_marginTop="-200dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/spons_bgcircle1"
+            android:layout_marginStart="300dp"
+            android:layout_marginEnd="-100dp"
+            android:layout_marginTop="-100dp"--/>
+
 </android.support.constraint.ConstraintLayout>
