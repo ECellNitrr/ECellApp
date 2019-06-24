@@ -53,11 +53,11 @@ public class SponsorsFragment extends Fragment {
     }
 
     private void setList() {
-        SponsRVData data = new SponsRVData("Resonance",type,R.color.colorPrimaryDark,null);
+        SponsRVData data = new SponsRVData("Resonance",type,R.drawable.spons_cardbg_1,null);
         list.add(data);
-        data = new SponsRVData("Saavan",type,R.color.colorBackground,null);
+        data = new SponsRVData("Saavan",type,R.drawable.spons_cardbg_2,null);
         list.add(data);
-        data = new SponsRVData("Nesley",type,R.color.colorPrimary,null);
+        data = new SponsRVData("Nesley",type,R.drawable.spons_cardbg_3,null);
         list.add(data);
 
     }
