@@ -9,7 +9,7 @@ import com.nitrr.ecell.esummit.ecellapp.activities.SponsorsFragment;
 
 public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
-    private String tabname[] = {"Associate Sponsors","Platinum Sponsors", "Gold sponsors"};
+    private String tabname[] = { "Associate","Platinum", "Gold"};
 
     public SponsViewPagerAdapter(FragmentManager fm) {
         super(fm);

@@ -17,8 +17,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
 import java.util.ArrayList;
 
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder>{
-    ArrayList<SponsRVData> list;
-    Context context;
+    private ArrayList<SponsRVData> list;
+    private Context context;
 
     public SponsorsRecyclerViewAdapter(Context context,ArrayList<SponsRVData> list) {
         this.context = context;
@@ -37,7 +37,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         SponsRVData data = list.get(i);
         holder.name.setText(data.getName());
         holder.category.setText(data.getType());
-        Glide.with(context).load(R.color.black_overlay).into(holder.image);
+        //Glide.with(context).load(R.color.black_overlay).into(holder.image);
         holder.card.setBackgroundResource(data.getRes());
     }
 
