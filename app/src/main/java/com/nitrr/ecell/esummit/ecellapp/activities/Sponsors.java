@@ -86,7 +86,8 @@ public class Sponsors extends AppCompatActivity {
                     toolbar.setBackgroundColor(Color.rgb(130,87,0));
                     circle1.setColorFilter(Color.rgb(255,228,164));
                     circle2.setColorFilter(Color.rgb(255,222,129));
-                    circle4.setColorFilter(Color.rgb(255,212,110));
+                    circle3.setColorFilter(Color.rgb(255,212,110));
+                    circle4.setColorFilter(Color.rgb(255,191,109));
                     circle5.setColorFilter(Color.rgb(255,164,46));
                 }
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
