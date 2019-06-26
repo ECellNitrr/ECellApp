@@ -5,23 +5,32 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.common.internal.GetServiceRequest;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsorsRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SponsorsFragment extends Fragment {
 
     RecyclerView recycler;
     SponsorsRecyclerViewAdapter adapter;
-    ArrayList<SponsRVData> list = new ArrayList<SponsRVData>();
+    List<SponsRVData> list = new ArrayList<SponsRVData>();
     static String type;
 
 
@@ -48,8 +57,21 @@ public class SponsorsFragment extends Fragment {
         list.clear();
         View view=inflater.inflate(R.layout.fragment_sponsors,container,false);
         recycler = view.findViewById(R.id.spons_recycler);
+        APIServices service = AppClient.getRetrofitInstance().create(APIServices.class);
+        Call<List<SponsRVData>> call =service.getAllPhotos();
+        call.enqueue(new Callback<List<SponsRVData>>() {
+            @Override
+            public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {
+                list=response.body();
+                setRecyclerView();
+            }
+
+            @Override
+            public void onFailure(Call<List<SponsRVData>> call, Throwable t) {
+                Log.e("Retrofit info","Something went wrong!!");
+            }
+        });
         setList();
-        setRecyclerView();
         return view;
     }
 

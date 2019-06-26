@@ -1,14 +1,19 @@
 package com.nitrr.ecell.esummit.ecellapp.models;
 
-import android.net.Uri;
 
-public class SponsRVData {
+import com.google.gson.annotations.SerializedName;
+
+
+public class SponsRVData{
+    @SerializedName("title")
     String name;
+    @SerializedName("id")
     String type;
     int res;
-    Uri img;
+    @SerializedName("thumbnailUrl")
+    String img;
 
-    public SponsRVData(String name, String type, int res, Uri img) {
+    public SponsRVData(String name, String type, int res, String img) {
         this.name = name;
         this.type = type;
         this.res = res;
@@ -24,7 +29,7 @@ public class SponsRVData {
     public int getRes(){
         return res;
     }
-    public Uri getImg(){
+    public String getImg(){
         return img;
     }
 }

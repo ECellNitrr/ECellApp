@@ -11,16 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder>{
-    private ArrayList<SponsRVData> list;
+    private List<SponsRVData> list;
     private Context context;
 
-    public SponsorsRecyclerViewAdapter(Context context,ArrayList<SponsRVData> list) {
+    public SponsorsRecyclerViewAdapter(Context context,List<SponsRVData> list) {
         this.context = context;
         this.list = list;
     }
@@ -35,10 +38,40 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         SponsRVData data = list.get(i);
+//        Picasso.Builder builder= new Picasso.Builder(context);
+//        builder.downloader(new OkHttpDownloader(context));
+//        builder.build().load(data.getImg()).
+//                placeholder(R.drawable.ic_placeholder)
+//                .error(R.drawable.ic_placeholder)
+//        .into(holder.image);
+        switch(i%5){
+            case 0:{
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
+                break;
+            }
+            case 1:{
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_2);
+                break;
+            }
+            case 2:{
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_3);
+                break;
+            }
+            case 3:{
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
+                break;
+            }
+            case 4:{
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
+                break;
+            }
+        }
+
         holder.name.setText(data.getName());
         holder.category.setText(data.getType());
-        //Glide.with(context).load(R.color.black_overlay).into(holder.image);
-        holder.card.setBackgroundResource(data.getRes());
+        //Picasso.with(context).load(data.getImg()).placeholder(R.drawable.ic_hand_shake);
+        Glide.with(context).load(data.getImg()).placeholder(R.drawable.ic_hand_shake).transform(new CircleCrop()).into(holder.image);
+        //holder.card.setBackgroundResource(data.getRes());
     }
 
     @Override
