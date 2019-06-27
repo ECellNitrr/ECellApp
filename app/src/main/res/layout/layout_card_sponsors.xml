@@ -36,7 +36,8 @@
             android:text="SponsorA"
             android:textSize="24sp"
             android:textColor="@color/colorWhite"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/spons_type"
