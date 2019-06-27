@@ -70,8 +70,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         holder.name.setText(data.getName());
         holder.category.setText(data.getType());
         //Picasso.with(context).load(data.getImg()).placeholder(R.drawable.ic_hand_shake);
-        Glide.with(context).load(data.getImg()).placeholder(R.drawable.loading1).transform(new CircleCrop()).into(holder.image);
-
+        Glide.with(context).asGif().load(data.getImg()).placeholder(R.drawable.loading1).transform(new CircleCrop()).into(holder.image);
     }
 
     @Override
