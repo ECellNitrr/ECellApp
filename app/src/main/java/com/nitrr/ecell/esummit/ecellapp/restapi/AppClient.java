@@ -1,22 +1,24 @@
-//package com.nitrr.ecell.esummit.ecellapp.restapi;
-//
-//
-//import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
-//import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-//
-//import java.io.IOException;
-//import java.util.concurrent.TimeUnit;
-//
-//import okhttp3.Interceptor;
-//import okhttp3.OkHttpClient;
-//import okhttp3.Request;
-//import okhttp3.Response;
-//import okhttp3.logging.HttpLoggingInterceptor;
-//import retrofit2.Retrofit;
-//import retrofit2.converter.gson.GsonConverterFactory;
-//
-//public class AppClient {
-//
+package com.nitrr.ecell.esummit.ecellapp.restapi;
+
+
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
+
+import java.io.IOException;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class AppClient {
+
 //<<<<<<< HEAD
 //    private static AppClient mInstance;
 //    private static SharedPref sharedPrefs;
@@ -74,20 +76,18 @@
 //            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 //            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 //            httpClient.addInterceptor(httpLoggingInterceptor);
-//=======
-//    private static Retrofit retrofit=null;
-//    private static String BASE_URL="http://jsonplaceholder.typicode.com";
-//
-//    public static Retrofit getRetrofitInstance(){
-//        if(retrofit==null){
-//            retrofit= new retrofit2.Retrofit.Builder()
-//                    .baseUrl(BASE_URL)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build();
-//>>>>>>> dev
-//        }
-//        return retrofit;
-//    }
-//
-//
 //}
+//        return httpClient;
+    private static Retrofit retrofit=null;
+    private static String BASE_URL="http://jsonplaceholder.typicode.com";
+
+    public static Retrofit getRetrofitInstance(){
+        if(retrofit==null) {
+            retrofit = new retrofit2.Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+            return retrofit;
+    }
+}
