@@ -1,13 +1,17 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
-import com.nitrr.ecell.esummit.ecellapp.misc.AppConstants;
+import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
 
-import retrofit2.http.Body;
+import java.util.List;
+
+import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface APIServices {
+
+    @GET("/photos")
+    Call<List<SponsRVData>> getAllPhotos();
+
 //    @POST(AppConstants.SIGN_UP_URL)
 //    Call<AuthenticationResponse> sendRegisterDetails(@Body UserDetails userDetails);
 //

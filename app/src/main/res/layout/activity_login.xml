@@ -153,7 +153,6 @@
         android:layout_height="40dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
-        style="@style/SignInButton"
         android:src="@drawable/ic_google"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
@@ -165,7 +164,6 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="75dp"
         android:layout_marginEnd="130dp"
-        style="@style/SignInButton"
         android:src="@drawable/ic_facebook"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/google_button"
@@ -363,7 +361,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
 
 </android.support.constraint.ConstraintLayout>

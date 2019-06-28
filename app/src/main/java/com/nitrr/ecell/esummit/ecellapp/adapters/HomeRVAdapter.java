@@ -1,7 +1,9 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +42,21 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHold
         final HomeRVData data = homeRVDataList.get(i);
         holder.cardName.setText(data.getName());
         Glide.with(context).load(data.getImage()).into(holder.cardImg);
+
+        String color = "#FFFFFF";
+
+        if (i == 0)
+            color = "#48CFAD";
+
+        else if (i == 1)
+            color = "#ED5958";
+
+        else if (i == 2)
+            color = "#18A4E9";
+
+        else if (i == 3)
+            color = "#F2B531";
+        holder.cardBg.setCardBackgroundColor(Color.parseColor(color));
     }
 
     @Override
@@ -52,11 +69,14 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHold
 
         TextView cardName;
         ImageView cardImg;
+        CardView cardBg;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             cardName = itemView.findViewById(R.id.card_name);
             cardImg = itemView.findViewById(R.id.card_image);
+            cardBg = itemView.findViewById(R.id.home_cardbg);
         }
     }
 }
