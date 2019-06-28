@@ -101,7 +101,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         CardView card;
         TextView name;
         TextView category;
-        ImageView loadingimg;
+        GifImageView loadingimg;
         ImageView image;
 
         public MyViewHolder(@NonNull View view) {

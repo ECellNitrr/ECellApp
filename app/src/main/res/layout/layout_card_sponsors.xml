@@ -26,13 +26,14 @@
         android:id="@+id/spons_img"
         android:layout_width="100dp"
         android:layout_height="100dp" />
-        <ImageView
-        android:id="@+id/spons_loading"
-        android:src="@drawable/loading1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="0dp"
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/spons_loading"
+            android:src="@drawable/loading1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
             />
     </RelativeLayout>
     <LinearLayout
