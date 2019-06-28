@@ -33,7 +33,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="70dp"
-        android:src="@drawable/login_lower_poly"
+        android:src="@drawable/login_polygon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -176,7 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="226dp" />
+        app:layout_constraintGuide_percent="0.69220245" />
 
     <ImageView
         android:id="@+id/lower_poly"
@@ -186,7 +186,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
         android:rotation="180"
-        android:src="@drawable/login_lower_poly"
+        android:src="@drawable/login_polygon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline3" />

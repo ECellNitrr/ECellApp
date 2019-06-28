@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/ic_upperpolygon"
+        android:drawable="@drawable/ic_polygon"
         android:left="-65dp"
         android:right="-65dp"/>
 

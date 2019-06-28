@@ -15,8 +15,11 @@
     <string name="settings">Settings</string>
 
     <string name="e_summit_19">E SUMMIT \'19</string>
-    <string name="e_summit_detail">Sept 31 and Aug 1, 2019</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="es_intro">The Entrepreneurship Summit is not just and event to provide platform where the students, faculty, investors, participants, speakers and start-ups can interact with each other and gain traction to improve them. We believe in a growth where everyone grows together and hence is this summit. The bright minds shall gain the motivation, resources and the pathway to realise their potential and convert their ideas to innovative start-ups.</string>
+    <string name="about_es_19">ABOUT ES \'19</string>
+    <string name="speakers">SPEAKERS</string>
+    <string name="es_date"><![CDATA[31 Aug & 1 Sept, 2k19 | NIT Raipur]]></string>
 </resources>

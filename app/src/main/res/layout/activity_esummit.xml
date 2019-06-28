@@ -4,19 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ESummitActivity"
-    android:background="@color/colorWhite">
+    android:background="@color/es_bg_color"
+    tools:context=".activities.ESummitActivity">
 
-    <!--ImageView
+    <ImageView
         android:id="@+id/e_summit_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="100dp"
         android:src="@drawable/ic_esummit"
-        app:layout_constraintBottom_toTopOf="@+id/e_summit_text"
+        app:layout_constraintBottom_toTopOf="@id/upper_guide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/upper_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18" />
 
     <TextView
         android:id="@+id/e_summit_text"
@@ -24,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="@string/e_summit_19"
         android:textColor="#000"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/e_summit_date"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,59 +46,140 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/noto_sans_bold"
-        android:text="@string/e_summit_detail"
+        android:lines="1"
+        android:text="@string/es_date"
         android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/es_inner_constraint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/e_summit_text" />
 
-    <ScrollView
-        android:orientation="vertical"
-        android:id="@+id/view"
+    <ImageView
+        android:id="@+id/es_triangle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/es_triangle"
+        app:layout_constraintBottom_toTopOf="@id/guide_triangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/e_summit_date"
-        android:background="@drawable/esummit_rectangle">
+        app:layout_constraintTop_toBottomOf="@id/e_summit_date" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
-            android:background="@color/colorLightBlack">
+    <android.support.constraint.Guideline
+        android:id="@+id/guide_triangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".5" />
 
-            <ImageView
-                android:layout_width="0dp"login_lower_poly
-                android:layout_height="0dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="50dp"
-                android:src="@drawable/login_lower_poly"
-                android:paddingStart="-10dp"
-                android:paddingEnd="-10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </ScrollView-->
-    <android.support.v4.view.ViewPager
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/es_inner_constraint"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/pager"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/e_summit_date">
 
+        <ImageView
+            android:id="@+id/es_upper_poly"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:scaleX="-1"
+            android:src="@drawable/es_poly"
+            app:layout_constraintBottom_toTopOf="@id/guide_upoly"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_upoly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <TextView
+            android:id="@+id/es_about"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="100dp"
+            android:autoSizeTextType="uniform"
+            android:lines="14"
+            android:text="@string/es_intro"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/es_upper_poly"
+            app:layout_constraintEnd_toEndOf="@id/es_upper_poly"
+            app:layout_constraintStart_toStartOf="@id/es_upper_poly"
+            app:layout_constraintTop_toTopOf="@id/es_upper_poly" />
+
+        <TextView
+            android:id="@+id/to_about_es"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="100dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/about_es_19"
+            android:textColor="#000"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@id/es_upper_poly"
+            app:layout_constraintStart_toStartOf="@id/es_upper_poly" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_lpoly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.72" />
+
+        <ImageView
+            android:id="@+id/es_lower_poly"
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="-100dp"
+            android:rotation="180"
+            android:scaleX="-1"
+            android:src="@drawable/es_poly"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guide_lpoly" />
+
+        <TextView
+            android:id="@+id/to_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="30dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/speakers"
+            android:textColor="#000"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/es_lower_poly" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="160dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="@id/es_lower_poly"
+            app:layout_constraintEnd_toEndOf="@id/es_lower_poly"
+            app:layout_constraintStart_toStartOf="@id/es_lower_poly"
+            app:layout_constraintTop_toTopOf="@id/es_lower_poly" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

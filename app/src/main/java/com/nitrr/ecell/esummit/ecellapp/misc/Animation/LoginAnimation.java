@@ -88,7 +88,7 @@ public class LoginAnimation {
     }
 
 
-    public void toSignInScreen(LoginActivity loginActivity) {
+    public void toSignInScreen(Context context) {
         doTranslationY(lowerPoly, 0f);
         doTranslationY(upperPoly, 0f);
         doTranslationY(lowerLinearLayout, 0f);
@@ -149,35 +149,3 @@ public class LoginAnimation {
 
     }
 }
-
-//        ObjectAnimator lowerPolyAnimator = ObjectAnimator.ofFloat(lowerPoly,"translationY",-1300f);
-//        ObjectAnimator upperPolyAnimator = ObjectAnimator.ofFloat(upperPoly,"translationY",-1300f);
-//        ObjectAnimator lowerLinearLayoutAnimator = ObjectAnimator.ofFloat(lowerLinearLayout,"translationY",-1300f);
-//        ObjectAnimator upperLinearLayoutAnimator = ObjectAnimator.ofFloat(upperLinearLayout,"translationY",-1400f);
-//        ObjectAnimator googleAnimator = ObjectAnimator.ofFloat(google,"translationY",-1280f);
-//        ObjectAnimator facebookAnimator = ObjectAnimator.ofFloat(facebook,"translationY",-1280f);
-//        ObjectAnimator forgotAnimator = ObjectAnimator.ofFloat(forgot,"translationY",-1500);
-//        ObjectAnimator registerfadeout = ObjectAnimator.ofFloat(registerText,"alpha", 1f,0);
-//        ObjectAnimator signinAnimator = ObjectAnimator.ofFloat(signInButton,"translationY", -1600);
-//        ObjectAnimator registerTransitionButtonBackground = ObjectAnimator.ofFloat(toRegisterButton, "alpha",1f,0);
-//        ObjectAnimator registerTransitionButtonArrow = ObjectAnimator.ofFloat(downArrow, "alpha",1f,0);
-//        ObjectAnimator registerButtonAnimator = ObjectAnimator.ofFloat(registerButton,"translationY",-1300f);
-//        ObjectAnimator signinTransitionButtonBackgroundAnimator = ObjectAnimator.ofFloat(toSignInButton,View.ALPHA,0,1f);
-//        ObjectAnimator signinScreenTransitionArrowAnimator = ObjectAnimator.ofFloat(upArrow,View.ALPHA,0,1f);
-//        ObjectAnimator signinfadein = ObjectAnimator.ofFloat(signInText,"alpha",0,1f);
-
-//        ObjectAnimator lowerPolyAnimator= ObjectAnimator.ofFloat(lowerPoly,"translationY",0f);
-//        ObjectAnimator upperPolyAnimator= ObjectAnimator.ofFloat(upperPoly,"translationY",0f);
-//        ObjectAnimator lowerLinearLayoutAnimator= ObjectAnimator.ofFloat(lowerLinearLayout,"translationY",0f);
-//        ObjectAnimator upperLinearLayoutAnimator= ObjectAnimator.ofFloat(upperLinearLayout,"translationY",0f);
-//        ObjectAnimator googleAnimator = ObjectAnimator.ofFloat(google,"translationY",0f);
-//        ObjectAnimator facebookAnimator = ObjectAnimator.ofFloat(facebook,"translationY",0f);
-//        ObjectAnimator forgotAnimator = ObjectAnimator.ofFloat(forgot,"translationY",0);
-//        ObjectAnimator registerfadein = ObjectAnimator.ofFloat(registerText,"alpha", 0,1);
-//        ObjectAnimator signinAnimator = ObjectAnimator.ofFloat(signInButton,"translationY", 0);
-//        ObjectAnimator registerTransitionButtonBackground = ObjectAnimator.ofFloat(toRegisterButton, "alpha",0,1);
-//        ObjectAnimator registerTransitionButtonArrow = ObjectAnimator.ofFloat(downArrow, "alpha",0,1);
-//        ObjectAnimator registerButtonAnimator = ObjectAnimator.ofFloat(registerButton,"translationY",0f);
-//        ObjectAnimator signinTransitionButtonBackgroundAnimator = ObjectAnimator.ofFloat(toSignInButton,View.ALPHA,1,0);
-//        ObjectAnimator signinScreenTransitionArrowAnimator = ObjectAnimator.ofFloat(upArrow,View.ALPHA,1,0);
-//        ObjectAnimator signinfadein = ObjectAnimator.ofFloat(signInText,"alpha",1,0);

@@ -9,4 +9,6 @@
     <color name="transparent">#00000000</color>
     <color name="colorLightBlack">#353533</color>
     <color name="border">#FF0000FF</color>
+    <color name="es_bg_color">#55D8B7</color>
+
 </resources>
