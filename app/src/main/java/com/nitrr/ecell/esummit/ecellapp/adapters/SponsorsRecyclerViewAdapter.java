@@ -1,9 +1,12 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +14,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.gifdecoder.GifDecoder;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.Option;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder>{
     private List<SponsRVData> list;
@@ -38,12 +51,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         SponsRVData data = list.get(i);
-//        Picasso.Builder builder= new Picasso.Builder(context);
-//        builder.downloader(new OkHttpDownloader(context));
-//        builder.build().load(data.getImg()).
-//                placeholder(R.drawable.ic_placeholder)
-//                .error(R.drawable.ic_placeholder)
-//        .into(holder.image);
+        //Glide.with(context).load(R.drawable.loading1).transform(new CircleCrop()).into(holder.loadingimg);
         switch(i%5){
             case 0:{
                 holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
@@ -66,11 +74,22 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
                 break;
             }
         }
-
         holder.name.setText(data.getName());
         holder.category.setText(data.getType());
-        //Picasso.with(context).load(data.getImg()).placeholder(R.drawable.ic_hand_shake);
-        Glide.with(context).asGif().load(data.getImg()).placeholder(R.drawable.loading1).transform(new CircleCrop()).into(holder.image);
+        Glide.with(context).load(data.getImg()).transform(new CircleCrop()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                holder.loadingimg.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                holder.loadingimg.setVisibility(View.GONE);
+                return false;
+            }
+        }).into(holder.image);
+
     }
 
     @Override
@@ -82,11 +101,13 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         CardView card;
         TextView name;
         TextView category;
+        ImageView loadingimg;
         ImageView image;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
             card = view.findViewById(R.id.spons_card);
+            loadingimg = view.findViewById(R.id.spons_loading);
             image = view.findViewById(R.id.spons_img);
             name = view.findViewById(R.id.spons_name);
             category = view.findViewById(R.id.spons_type);
