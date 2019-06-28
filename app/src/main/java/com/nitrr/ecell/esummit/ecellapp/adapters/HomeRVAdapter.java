@@ -18,13 +18,13 @@ import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder> {
+public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
     private List<HomeRVData> homeRVDataList;
 
-    public HomeRecyclerViewAdapter(Context context, List<HomeRVData> list) {
+    public HomeRVAdapter(Context context, List<HomeRVData> list) {
         this.context = context;
         this.homeRVDataList = list;
         inflater = LayoutInflater.from(context);

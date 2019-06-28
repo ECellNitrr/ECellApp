@@ -18,6 +18,11 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter></activity>
+        <activity android:name=".activities.LoginActivity" >
+
+        </activity>
+
+
         <activity
             android:name=".activities.Event"
             android:theme="@style/AppTheme.FullScreen">
@@ -29,10 +34,9 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.Login"
-            android:theme="@style/AppTheme.FullScreen"></activity>
-        <activity android:name=".activities.MainActivity" />
-    </application>
 
+        <activity android:name=".activities.ESummitActivity" >
+
+        </activity>
+    </application>
 </manifest>

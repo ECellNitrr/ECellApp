@@ -8,27 +8,22 @@ public class HomeRVData implements Serializable {
     private String color;
     private int image;
 
-    public String getName() {
-        return name;
+    public HomeRVData(String name, int image, String color) {
+        this.name = name;
+        this.image = image;
+        this.color = color;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getName() {
+        return name;
     }
 
     public int getImage() {
         return image;
     }
 
-    public void setImage(int image) {
-        this.image = image;
-    }
-
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
 }

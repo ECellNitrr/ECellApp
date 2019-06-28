@@ -5,7 +5,7 @@
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="forgot">Forgot?</string>
+    <string name="forgot">Forgot Password?</string>
     <string name="sign_in">Sign in</string>
     <string name="register">Register</string>
     <string name="signout">sign out</string>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="80dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@color/transparent"
+        app:cardCornerRadius="50dp">
+
+            <ImageButton
+                android:contentDescription="Close BS"
+                android:id="@+id/close"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@color/transparent"
+                android:onClick="closeBS"
+                android:layout_marginStart="320dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_close"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="70dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:contentDescription="@string/profile"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_username"
+                android:layout_weight="1"
+                android:padding="3dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="27sp"
+                android:layout_weight="20"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:contentDescription="@string/profile"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_email"
+                android:layout_weight="1"
+                android:padding="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="27sp"
+                android:layout_weight="20"
+                android:layout_marginStart="20dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="190dp"
+            android:padding="10dp">
+
+            <ImageView
+                android:contentDescription="@string/about_us"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_call"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/about_us"
+                android:textSize="20sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="15"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="250dp"
+            android:padding="10dp"
+            android:layout_marginBottom="30dp">
+
+            <ImageView
+                android:contentDescription="@string/log_out"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:src="@drawable/ic_log_out"
+                android:layout_weight="1"
+                android:padding="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/log_out"
+                android:textSize="20sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="15"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

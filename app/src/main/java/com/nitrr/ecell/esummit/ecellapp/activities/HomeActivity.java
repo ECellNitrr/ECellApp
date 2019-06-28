@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.MenuCustomAlertDialog;
+import android.widget.ImageButton;
+
+import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.fragments.BottomSheetFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
@@ -22,7 +25,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private HomeRecyclerViewAdapter adapter;
+    private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
 
     private ImageView esummitbg;
@@ -34,13 +37,13 @@ public class HomeActivity extends AppCompatActivity {
 
     private float scrollpos1 = 0;
     private float scrollpos2 = 0;
+    BottomSheetFragment bottom_sheet;
+    ImageButton hamburger_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        initializeList();
 
         recyclerView = findViewById(R.id.home_recycler);
 
@@ -49,43 +52,26 @@ public class HomeActivity extends AppCompatActivity {
         bquizbg = findViewById(R.id.home_bg3);
         sponsbg = findViewById(R.id.home_bg4);
 
-        adapter = new HomeRecyclerViewAdapter(this, homeRVDataList);
+        adapter = new HomeRVAdapter(this, homeRVDataList);
+        bottom_sheet = new BottomSheetFragment();
 
+        initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz));
+        initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events));
+        initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit));
+        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons));
+
+        hamburger_button = findViewById(R.id.hamburgerButton);
+        hamburger_button.setOnClickListener((View view) -> bottom_sheet.show(getSupportFragmentManager(), bottom_sheet.getTag()));
+
+        recyclerView = findViewById(R.id.home_recycler);
+        recyclerView.hasFixedSize();
         setUpRV();
     }
 
-    public void initializeList() {
-        HomeRVData eSummit = new HomeRVData();
 
-        eSummit.setName(getResources().getString(R.string.text_esummit));
-        eSummit.setImage(R.drawable.ic_esummit);
-        eSummit.setColor(this.getString(R.string.color_esummit));
-
-        homeRVDataList.add(eSummit);
-
-        HomeRVData events = new HomeRVData();
-
-        events.setName(getResources().getString(R.string.text_events));
-        events.setImage(R.drawable.ic_events);
-        events.setColor(getResources().getString(R.string.color_events));
-
-        homeRVDataList.add(events);
-
-        HomeRVData bQuiz = new HomeRVData();
-
-        bQuiz.setName(getResources().getString(R.string.text_bquiz));
-        bQuiz.setImage(R.drawable.ic_google);
-        bQuiz.setColor(getResources().getString(R.string.color_bquiz));
-
-        homeRVDataList.add(bQuiz);
-
-        HomeRVData sponsors = new HomeRVData();
-
-        sponsors.setName(getResources().getString(R.string.text_spons));
-        sponsors.setImage(R.drawable.ic_hand_shake);
-        sponsors.setColor(getResources().getString(R.string.color_spons));
-
-        homeRVDataList.add(sponsors);
+    public void initializeList(String name, int cardImage, String color) {
+        HomeRVData data = new HomeRVData(name, cardImage, color);
+        homeRVDataList.add(data);
     }
 
     public void setUpRV() {
@@ -181,8 +167,65 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    public void hamburgerClicked(View view) {
-        MenuCustomAlertDialog.getInstance().with(this).build();
-    }
+
 
 }
+
+//Below Code is still being reviewed it was for the changing size of the cards while scrolling.
+//Error is known. Just wanna figure out how to implement the correction.
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(0);
+//                RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay);
+//                layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
+//
+//            }
+//        }, 100);
+//
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                View v = snapHelper.findSnapView(layoutManager);
+//                int pos = layoutManager.getPosition(v);
+//                int max = layoutManager.getChildCount();
+//
+//                RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(pos);
+//                RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay), layout2 = null, layout3 = null;
+//                if(pos < max) {
+//                    RecyclerView.ViewHolder viewHolder2 = recyclerView.findViewHolderForAdapterPosition(pos+1);
+//                    layout2 = viewHolder2.itemView.findViewById(R.id.relLay);
+//                }
+//                if(pos > 0) {
+//                    RecyclerView.ViewHolder viewHolder3 = recyclerView.findViewHolderForAdapterPosition(pos-1);
+//                    layout3 = viewHolder3.itemView.findViewById(R.id.relLay);
+//                }
+//
+//
+//                if(newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
+//                    if(pos < max) {
+//                        layout2.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
+//                    }
+//                    if(pos > 0) {
+//                        layout3.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
+//                    }
+//                }
+//                else {
+//                    if(pos < max) {
+//                        layout2.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
+//                    }
+//                    if(pos > 0) {
+//                        layout3.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
+//                    }
+//                    layout.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
+//                }
+//            }
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//            }
+//        });

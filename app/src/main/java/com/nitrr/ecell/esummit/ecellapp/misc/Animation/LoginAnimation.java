@@ -1,8 +1,8 @@
 package com.nitrr.ecell.esummit.ecellapp.misc.Animation;
 
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -11,165 +11,173 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.Login;
+import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
 
 public class LoginAnimation {
 
-    LinearLayout upperlinearLayout;
-    LinearLayout lowerLinearLayout;
-    ImageView lowerPoly;
-    ImageView upperPoly;
-    ImageView  registerScreenTransitionArrow;
-    ImageView signinScreenTransitionArrow;
-    ImageView lowerpolyEcell;
-    ImageButton google;
-    ImageButton facebook;
-    ImageButton registerTransitionButtoBackground;
-    ImageButton signinTransitionButtonBackground;
-    TextView forgot;
-    TextView registertext;
-    TextView signinText;
-    Button signin;
-    Button register;
-
+    private LinearLayout upperLinearLayout, lowerLinearLayout;
+    private ImageView google, facebook, lowerPoly, upperPoly, downArrow, upArrow, lowerECell, upperECell;
+    private ImageButton toRegisterButton, toSignInButton;
+    private TextView forgot, toRegisterText, toSignInText;
+    private Button signInButton, registerButton;
+    private float pHeight, nHeight;
 
     //Constructor to initialize all the objects that are to be animated
-    public LoginAnimation(Login view){
-        upperlinearLayout = view.findViewById(R.id.linearLayout);
-        lowerLinearLayout = view.findViewById(R.id.linearLayoutLowerPolygon);
+    public LoginAnimation(LoginActivity view){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        view.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        this.pHeight = displayMetrics.heightPixels * 0.6310f;
+        this.nHeight = -1 * pHeight;
+        upperLinearLayout = view.findViewById(R.id.upper_linear_layout);
+        lowerLinearLayout = view.findViewById(R.id.lower_linear_layout);
         lowerPoly = view.findViewById(R.id.lower_poly);
         upperPoly = view.findViewById(R.id.upper_poly);
-        google = view.findViewById(R.id.googleButton);
-        facebook = view.findViewById(R.id.fbButton);
+        google = view.findViewById(R.id.google_button);
+        facebook = view.findViewById(R.id.fb_button);
         forgot = view.findViewById(R.id.forgot);
-        registertext = view.findViewById(R.id.register_text);
-        signin = view.findViewById(R.id.signinbutton);
-        registerTransitionButtoBackground = view.findViewById(R.id.imageButton2);
-        registerScreenTransitionArrow = view.findViewById(R.id.registerscreen_transitionbutton_arrow);
-        register = view.findViewById(R.id.registerbutton);
-        signinScreenTransitionArrow = view.findViewById(R.id.signinscreen_transitionbutton_arrow);
-        signinTransitionButtonBackground = view.findViewById(R.id.imageButton1);
-        signinText = view.findViewById(R.id.signinText);
-        lowerpolyEcell = view.findViewById(R.id.ic_lower_ecell);
+        toRegisterText = view.findViewById(R.id.to_register_text);
+        signInButton = view.findViewById(R.id.sign_in_button);
+        toRegisterButton = view.findViewById(R.id.to_register_button);
+        downArrow = view.findViewById(R.id.down_arrow);
+        registerButton = view.findViewById(R.id.register_button);
+        upArrow = view.findViewById(R.id.up_arrow);
+        toSignInButton = view.findViewById(R.id.to_sign_in_button);
+        toSignInText = view.findViewById(R.id.to_sign_in_text);
+        upperECell = view.findViewById(R.id.ic_upper_ecell);
+        lowerECell = view.findViewById(R.id.ic_lower_ecell);
     }
 
-    public void toregisterscreen(Context context){
+    public void toRegisterScreen(Context context){
+        doTranslationY(lowerPoly, nHeight);
+        doTranslationY(upperPoly, nHeight);
+        doTranslationY(lowerLinearLayout, nHeight);
+        doTranslationY(upperLinearLayout, nHeight * 1.0769f); //-1400f
+        doTranslationY(google, nHeight * 0.9846f); //-1280f
+        doTranslationY(facebook, nHeight * 0.9846f);
+        doTranslationY(forgot, nHeight * 1.1538f); //-1500f
+        doTranslationY(signInButton, nHeight * 1.2307f); //-1600f
+        doTranslationY(registerButton, nHeight);
 
-        ObjectAnimator lowerPolyAnimator= ObjectAnimator.ofFloat(lowerPoly,"translationY",-1300f);
-        ObjectAnimator upperPolyAnimator= ObjectAnimator.ofFloat(upperPoly,"translationY",-1300f);
-        ObjectAnimator lowerLinearLayoutAnimator= ObjectAnimator.ofFloat(lowerLinearLayout,"translationY",-1300f);
-        ObjectAnimator upperLinearLayoutAnimator= ObjectAnimator.ofFloat(upperlinearLayout,"translationY",-1400f);
-        ObjectAnimator googleAnimator = ObjectAnimator.ofFloat(google,"translationY",-1280f);
-        ObjectAnimator facebookAnimator = ObjectAnimator.ofFloat(facebook,"translationY",-1280f);
-        ObjectAnimator forgotAnimator = ObjectAnimator.ofFloat(forgot,"translationY",-1500);
-        ObjectAnimator registerfadeout = ObjectAnimator.ofFloat(registertext,"alpha", 1f,0);
-        ObjectAnimator signinAnimator = ObjectAnimator.ofFloat(signin,"translationY", -1600);
-        ObjectAnimator registerTransitionButtonBackground = ObjectAnimator.ofFloat(registerTransitionButtoBackground, "alpha",1f,0);
-        ObjectAnimator registerTransitionButtonArrow = ObjectAnimator.ofFloat(registerScreenTransitionArrow, "alpha",1f,0);
-        ObjectAnimator registerButtonAnimator = ObjectAnimator.ofFloat(register,"translationY",-1300f);
-        ObjectAnimator signinTransitionButtonBackgroundAnimator = ObjectAnimator.ofFloat(signinTransitionButtonBackground,View.ALPHA,0,1f);
-        ObjectAnimator signinScreenTransitionArrowAnimator = ObjectAnimator.ofFloat(signinScreenTransitionArrow,View.ALPHA,0,1f);
-        ObjectAnimator signinfadein = ObjectAnimator.ofFloat(signinText,"alpha",0,1f);
-        ObjectAnimator Ecelliconfade = ObjectAnimator.ofFloat(lowerpolyEcell,View.ALPHA,0,1f);
-        ObjectAnimator EcelliconAnimator = ObjectAnimator.ofFloat(lowerpolyEcell,"translationY",-1300f);
-        AnimatorSet ecellIconAnimations = new AnimatorSet();
-        ecellIconAnimations.playTogether(Ecelliconfade,EcelliconAnimator);
+        doAlphaTransition(google, false);
+        doAlphaTransition(facebook, false);
+        doAlphaTransition(toRegisterText, false);
+        doAlphaTransition(downArrow, false);
+        doAlphaTransition(upArrow, true);
+        doAlphaTransition(toRegisterButton, false);
+        doAlphaTransition(toSignInButton, true);
+        doAlphaTransition(toSignInText, true);
 
-        lowerPolyAnimator.setDuration(700);
-        upperPolyAnimator.setDuration(700);
-        lowerLinearLayoutAnimator.setDuration(700);
-        upperLinearLayoutAnimator.setDuration(700);
-        googleAnimator.setDuration(700);
-        facebookAnimator.setDuration(700);
-        forgotAnimator.setDuration(700);
-        registerfadeout.setDuration(700);
-        signinAnimator.setDuration(700);
-        registerTransitionButtonBackground.setDuration(700);
-        registerTransitionButtonArrow.setDuration(700);
-        registerButtonAnimator.setDuration(700);
-        signinTransitionButtonBackgroundAnimator.setDuration(700);
-        signinScreenTransitionArrowAnimator.setDuration(700);
-        signinfadein.setDuration(700);
-        ecellIconAnimations.setDuration(700);
+        doAlphaTransition(upperECell, false);
+        doTranslationY(upperECell, nHeight);
 
-        lowerPolyAnimator.start();
-        upperPolyAnimator.start();
-        lowerLinearLayoutAnimator.start();
-        upperLinearLayoutAnimator.start();
-        googleAnimator.start();
-        facebookAnimator.start();
-        forgotAnimator.start();
-        registerfadeout.start();
-        signinAnimator.start();
-        registerTransitionButtonBackground.start();
-        registerTransitionButtonArrow.start();
-        registerButtonAnimator.start();
-        signinScreenTransitionArrow.setVisibility(View.VISIBLE);
-        signinTransitionButtonBackgroundAnimator.start();
-        signinTransitionButtonBackground.setVisibility(View.VISIBLE);
-        signinScreenTransitionArrowAnimator.start();
-        signinText.setVisibility(View.VISIBLE);
-        signinfadein.start();
-        lowerpolyEcell.setVisibility(View.VISIBLE);
-        ecellIconAnimations.start();
+        doAlphaTransition(lowerECell, true);
+        doTranslationY(lowerECell, nHeight);
+
+        google.setEnabled(false);
+        facebook.setEnabled(false);
+        upArrow.setVisibility(View.VISIBLE);
+        toSignInButton.setVisibility(View.VISIBLE);
+        toSignInButton.setEnabled(true);
+        toSignInText.setVisibility(View.VISIBLE);
+        lowerECell.setVisibility(View.VISIBLE);
+
+        downArrow.setVisibility(View.INVISIBLE);
+        toRegisterButton.setVisibility(View.INVISIBLE);
+        toRegisterButton.setEnabled(false);
+        toRegisterText.setVisibility(View.INVISIBLE);
     }
 
-    public void tosigninscreen(Login login) {
-        ObjectAnimator lowerPolyAnimator= ObjectAnimator.ofFloat(lowerPoly,"translationY",0f);
-        ObjectAnimator upperPolyAnimator= ObjectAnimator.ofFloat(upperPoly,"translationY",0f);
-        ObjectAnimator lowerLinearLayoutAnimator= ObjectAnimator.ofFloat(lowerLinearLayout,"translationY",0f);
-        ObjectAnimator upperLinearLayoutAnimator= ObjectAnimator.ofFloat(upperlinearLayout,"translationY",0f);
-        ObjectAnimator googleAnimator = ObjectAnimator.ofFloat(google,"translationY",0f);
-        ObjectAnimator facebookAnimator = ObjectAnimator.ofFloat(facebook,"translationY",0f);
-        ObjectAnimator forgotAnimator = ObjectAnimator.ofFloat(forgot,"translationY",0);
-        ObjectAnimator registerfadein = ObjectAnimator.ofFloat(registertext,"alpha", 0,1);
-        ObjectAnimator signinAnimator = ObjectAnimator.ofFloat(signin,"translationY", 0);
-        ObjectAnimator registerTransitionButtonBackground = ObjectAnimator.ofFloat(registerTransitionButtoBackground, "alpha",0,1);
-        ObjectAnimator registerTransitionButtonArrow = ObjectAnimator.ofFloat(registerScreenTransitionArrow, "alpha",0,1);
-        ObjectAnimator registerButtonAnimator = ObjectAnimator.ofFloat(register,"translationY",0f);
-        ObjectAnimator signinTransitionButtonBackgroundAnimator = ObjectAnimator.ofFloat(signinTransitionButtonBackground,View.ALPHA,1,0);
-        ObjectAnimator signinScreenTransitionArrowAnimator = ObjectAnimator.ofFloat(signinScreenTransitionArrow,View.ALPHA,1,0);
-        ObjectAnimator signinfadein = ObjectAnimator.ofFloat(signinText,"alpha",1,0);
-        AnimatorSet ecellIconAnimations = new AnimatorSet();
-        ecellIconAnimations.playTogether(
-                ObjectAnimator.ofFloat(lowerpolyEcell,View.ALPHA,1,0),
-                ObjectAnimator.ofFloat(lowerpolyEcell,"translationY",0));
 
-        lowerPolyAnimator.setDuration(700);
-        upperPolyAnimator.setDuration(700);
-        lowerLinearLayoutAnimator.setDuration(700);
-        upperLinearLayoutAnimator.setDuration(700);
-        googleAnimator.setDuration(700);
-        facebookAnimator.setDuration(700);
-        forgotAnimator.setDuration(700);
-        registerfadein.setDuration(700);
-        signinAnimator.setDuration(700);
-        registerTransitionButtonBackground.setDuration(700);
-        registerTransitionButtonArrow.setDuration(700);
-        registerButtonAnimator.setDuration(700);
-        signinTransitionButtonBackgroundAnimator.setDuration(700);
-        signinScreenTransitionArrowAnimator.setDuration(700);
-        signinfadein.setDuration(700);
-        ecellIconAnimations.setDuration(700);
+    public void toSignInScreen(LoginActivity loginActivity) {
+        doTranslationY(lowerPoly, 0f);
+        doTranslationY(upperPoly, 0f);
+        doTranslationY(lowerLinearLayout, 0f);
+        doTranslationY(upperLinearLayout, 0f);
+        doTranslationY(google, 0f);
+        doTranslationY(facebook, 0f);
+        doTranslationY(forgot, 0f);
+        doTranslationY(signInButton, 0f);
+        doTranslationY(registerButton, 0f);
 
-        lowerPolyAnimator.start();
-        upperPolyAnimator.start();
-        lowerLinearLayoutAnimator.start();
-        upperLinearLayoutAnimator.start();
-        googleAnimator.start();
-        facebookAnimator.start();
-        forgotAnimator.start();
-        registerfadein.start();
-        signinAnimator.start();
-        registerTransitionButtonBackground.start();
-        registerTransitionButtonArrow.start();
-        registerButtonAnimator.start();
-        signinScreenTransitionArrow.setVisibility(View.VISIBLE);
-        signinTransitionButtonBackgroundAnimator.start();
-        signinTransitionButtonBackground.setVisibility(View.VISIBLE);
-        signinScreenTransitionArrowAnimator.start();
-        signinText.setVisibility(View.VISIBLE);
-        signinfadein.start();
-        ecellIconAnimations.start();
+        doAlphaTransition(google, true);
+        doAlphaTransition(facebook, true);
+        doAlphaTransition(toRegisterText, true);
+        doAlphaTransition(downArrow, true);
+        doAlphaTransition(upArrow, false);
+        doAlphaTransition(toRegisterButton, true);
+        doAlphaTransition(toSignInButton, false);
+        doAlphaTransition(toSignInText, false);
+        doAlphaTransition(lowerECell, false);
+
+        doAlphaTransition(upperECell, true);
+        doTranslationY(upperECell, 0f);
+
+        doAlphaTransition(lowerECell, false);
+        doTranslationY(lowerECell, 300f);
+
+        google.setEnabled(true);
+        facebook.setEnabled(true);
+        upArrow.setVisibility(View.INVISIBLE);
+        toSignInButton.setVisibility(View.INVISIBLE);
+        toSignInButton.setEnabled(false);
+        toSignInText.setVisibility(View.INVISIBLE);
+
+        toRegisterButton.setEnabled(true);
+        toRegisterButton.setVisibility(View.VISIBLE);
+        downArrow.setVisibility(View.VISIBLE);
+        toRegisterText.setVisibility(View.VISIBLE);
+    }
+
+    private void doTranslationY(View view, float value) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, value);
+        animator.setDuration(700);
+        animator.start();
+    }
+
+    private void doAlphaTransition(View view, boolean direction) {
+        if(direction) {
+            ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1f);
+            animator.setDuration(700);
+            animator.start();
+        } //Appear - true
+
+        else {
+            ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0);
+            animator.setDuration(700);
+            animator.start();
+        } //Disappear - false
+
     }
 }
+
+//        ObjectAnimator lowerPolyAnimator = ObjectAnimator.ofFloat(lowerPoly,"translationY",-1300f);
+//        ObjectAnimator upperPolyAnimator = ObjectAnimator.ofFloat(upperPoly,"translationY",-1300f);
+//        ObjectAnimator lowerLinearLayoutAnimator = ObjectAnimator.ofFloat(lowerLinearLayout,"translationY",-1300f);
+//        ObjectAnimator upperLinearLayoutAnimator = ObjectAnimator.ofFloat(upperLinearLayout,"translationY",-1400f);
+//        ObjectAnimator googleAnimator = ObjectAnimator.ofFloat(google,"translationY",-1280f);
+//        ObjectAnimator facebookAnimator = ObjectAnimator.ofFloat(facebook,"translationY",-1280f);
+//        ObjectAnimator forgotAnimator = ObjectAnimator.ofFloat(forgot,"translationY",-1500);
+//        ObjectAnimator registerfadeout = ObjectAnimator.ofFloat(registerText,"alpha", 1f,0);
+//        ObjectAnimator signinAnimator = ObjectAnimator.ofFloat(signInButton,"translationY", -1600);
+//        ObjectAnimator registerTransitionButtonBackground = ObjectAnimator.ofFloat(toRegisterButton, "alpha",1f,0);
+//        ObjectAnimator registerTransitionButtonArrow = ObjectAnimator.ofFloat(downArrow, "alpha",1f,0);
+//        ObjectAnimator registerButtonAnimator = ObjectAnimator.ofFloat(registerButton,"translationY",-1300f);
+//        ObjectAnimator signinTransitionButtonBackgroundAnimator = ObjectAnimator.ofFloat(toSignInButton,View.ALPHA,0,1f);
+//        ObjectAnimator signinScreenTransitionArrowAnimator = ObjectAnimator.ofFloat(upArrow,View.ALPHA,0,1f);
+//        ObjectAnimator signinfadein = ObjectAnimator.ofFloat(signInText,"alpha",0,1f);
+
+//        ObjectAnimator lowerPolyAnimator= ObjectAnimator.ofFloat(lowerPoly,"translationY",0f);
+//        ObjectAnimator upperPolyAnimator= ObjectAnimator.ofFloat(upperPoly,"translationY",0f);
+//        ObjectAnimator lowerLinearLayoutAnimator= ObjectAnimator.ofFloat(lowerLinearLayout,"translationY",0f);
+//        ObjectAnimator upperLinearLayoutAnimator= ObjectAnimator.ofFloat(upperLinearLayout,"translationY",0f);
+//        ObjectAnimator googleAnimator = ObjectAnimator.ofFloat(google,"translationY",0f);
+//        ObjectAnimator facebookAnimator = ObjectAnimator.ofFloat(facebook,"translationY",0f);
+//        ObjectAnimator forgotAnimator = ObjectAnimator.ofFloat(forgot,"translationY",0);
+//        ObjectAnimator registerfadein = ObjectAnimator.ofFloat(registerText,"alpha", 0,1);
+//        ObjectAnimator signinAnimator = ObjectAnimator.ofFloat(signInButton,"translationY", 0);
+//        ObjectAnimator registerTransitionButtonBackground = ObjectAnimator.ofFloat(toRegisterButton, "alpha",0,1);
+//        ObjectAnimator registerTransitionButtonArrow = ObjectAnimator.ofFloat(downArrow, "alpha",0,1);
+//        ObjectAnimator registerButtonAnimator = ObjectAnimator.ofFloat(registerButton,"translationY",0f);
+//        ObjectAnimator signinTransitionButtonBackgroundAnimator = ObjectAnimator.ofFloat(toSignInButton,View.ALPHA,1,0);
+//        ObjectAnimator signinScreenTransitionArrowAnimator = ObjectAnimator.ofFloat(upArrow,View.ALPHA,1,0);
+//        ObjectAnimator signinfadein = ObjectAnimator.ofFloat(signInText,"alpha",1,0);
