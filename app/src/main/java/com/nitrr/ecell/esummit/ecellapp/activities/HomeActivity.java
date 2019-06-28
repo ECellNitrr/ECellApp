@@ -15,7 +15,6 @@ import com.nitrr.ecell.esummit.ecellapp.misc.MenuCustomAlertDialog;
 import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
-import com.nitrr.ecell.esummit.ecellapp.fragments.BottomSheetFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
@@ -28,16 +27,15 @@ public class HomeActivity extends AppCompatActivity {
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
 
-    private ImageView esummitbg;
-    private ImageView eventbg;
-    private ImageView bquizbg;
-    private ImageView sponsbg;
+    private ImageView esummitBG;
+    private ImageView eventBG;
+    private ImageView bQuizBG;
+    private ImageView sponsBG;
 
     private int rvpositionx = 0;
 
     private float scrollpos1 = 0;
     private float scrollpos2 = 0;
-    BottomSheetFragment bottom_sheet;
     ImageButton hamburger_button;
 
     @Override
@@ -47,21 +45,19 @@ public class HomeActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.home_recycler);
 
-        esummitbg = findViewById(R.id.home_bg1);
-        eventbg = findViewById(R.id.home_bg2);
-        bquizbg = findViewById(R.id.home_bg3);
-        sponsbg = findViewById(R.id.home_bg4);
+        esummitBG = findViewById(R.id.home_bg1);
+        eventBG = findViewById(R.id.home_bg2);
+        bQuizBG = findViewById(R.id.home_bg3);
+        sponsBG = findViewById(R.id.home_bg4);
 
         adapter = new HomeRVAdapter(this, homeRVDataList);
-        bottom_sheet = new BottomSheetFragment();
-
         initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz));
         initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events));
         initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit));
         initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons));
 
         hamburger_button = findViewById(R.id.hamburgerButton);
-        hamburger_button.setOnClickListener((View view) -> bottom_sheet.show(getSupportFragmentManager(), bottom_sheet.getTag()));
+        hamburger_button.setOnClickListener((View view) -> MenuCustomAlertDialog.getInstance().with(this).build());
 
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
@@ -141,27 +137,26 @@ public class HomeActivity extends AppCompatActivity {
                 if (rvpositionx < 885) {
                     scrollpos1 = (float) rvpositionx / 885;
                     scrollpos2 = 1 - scrollpos1;
-                    esummitbg.setAlpha(scrollpos2);
-                    eventbg.setAlpha(scrollpos1);
-                    bquizbg.setAlpha(0f);
-                    sponsbg.setAlpha(0f);
+                    esummitBG.setAlpha(scrollpos2);
+                    eventBG.setAlpha(scrollpos1);
+                    bQuizBG.setAlpha(0f);
+                    sponsBG.setAlpha(0f);
 
                 } else if (rvpositionx < 1770) {
                     scrollpos1 = (float) (rvpositionx - 885) / 885;
                     scrollpos2 = 1 - scrollpos1;
-                    eventbg.setAlpha(scrollpos2);
-                    bquizbg.setAlpha(scrollpos1);
-                    esummitbg.setAlpha(0f);
-                    sponsbg.setAlpha(0f);
+                    eventBG.setAlpha(scrollpos2);
+                    bQuizBG.setAlpha(scrollpos1);
+                    esummitBG.setAlpha(0f);
+                    sponsBG.setAlpha(0f);
                 } else if (rvpositionx < 2655) {
                     scrollpos1 = (float) (rvpositionx - 1770) / 885;
                     scrollpos2 = 1 - scrollpos1;
-                    bquizbg.setAlpha(scrollpos2);
-                    sponsbg.setAlpha(scrollpos1);
-                    eventbg.setAlpha(0f);
-                    esummitbg.setAlpha(0f);
+                    bQuizBG.setAlpha(scrollpos2);
+                    sponsBG.setAlpha(scrollpos1);
+                    eventBG.setAlpha(0f);
+                    esummitBG.setAlpha(0f);
                 }
-
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
