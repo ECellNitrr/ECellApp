@@ -1,19 +1,8 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
-import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-
-import java.io.IOException;
-
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -81,13 +70,13 @@ public class AppClient {
     private static Retrofit retrofit=null;
     private static String BASE_URL="http://jsonplaceholder.typicode.com";
 
-    public static Retrofit getRetrofitInstance(){
+    public static APIServices getRetrofitInstance(){
         if(retrofit==null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-            return retrofit;
+            return retrofit.create(APIServices.class);
     }
 }

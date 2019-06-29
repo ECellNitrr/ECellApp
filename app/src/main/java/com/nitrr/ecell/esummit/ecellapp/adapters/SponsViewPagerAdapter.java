@@ -1,11 +1,11 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.nitrr.ecell.esummit.ecellapp.activities.SponsorsFragment;
+import com.nitrr.ecell.esummit.ecellapp.fragments.SponsorsFragment;
 
 public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
