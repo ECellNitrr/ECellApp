@@ -27,6 +27,7 @@
     <string name="color_spons">#F2B531</string>
 
     <string name="e_summit_19">E SUMMIT \'19</string>
+    <string name="eventdenied">This Event is not approved yet.Sorry for the inconvenicence</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
+import com.nitrr.ecell.esummit.ecellapp.models.EventData;
 import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
 
 import java.util.List;
@@ -11,6 +12,9 @@ public interface APIServices {
 
     @GET("/photos")
     Call<List<SponsRVData>> getAllPhotos();
+
+    @GET("/todos")
+    Call<List<EventData>> getEventDetails();
 
 //    @POST(AppConstants.SIGN_UP_URL)
 //    Call<AuthenticationResponse> sendRegisterDetails(@Body UserDetails userDetails);

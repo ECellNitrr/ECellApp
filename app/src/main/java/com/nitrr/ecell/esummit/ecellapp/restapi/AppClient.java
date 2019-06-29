@@ -70,13 +70,13 @@ public class AppClient {
     private static Retrofit retrofit=null;
     private static String BASE_URL="http://jsonplaceholder.typicode.com";
 
-    public static Retrofit getRetrofitInstance(){
+    public static APIServices getRetrofitInstance(){
         if(retrofit==null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-            return retrofit;
+            return retrofit.create(APIServices.class);
     }
 }

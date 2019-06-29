@@ -24,7 +24,6 @@ import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
 
 import java.util.List;
 
-import pl.droidsonroids.gif.GifImageView;
 
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder>{
     private List<SponsRVData> list;
@@ -95,7 +94,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         CardView card;
         TextView name;
         TextView category;
-        GifImageView loadingimg;
+        ImageView loadingimg;
         ImageView image;
 
         public MyViewHolder(@NonNull View view) {

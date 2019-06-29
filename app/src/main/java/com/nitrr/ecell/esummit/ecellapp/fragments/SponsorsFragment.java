@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.activities;
+package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 
 import android.os.Bundle;
@@ -54,7 +54,7 @@ public class SponsorsFragment extends Fragment {
         list.clear();
         View view=inflater.inflate(R.layout.fragment_sponsors,container,false);
         recycler = view.findViewById(R.id.spons_recycler);
-        APIServices service = AppClient.getRetrofitInstance().create(APIServices.class);
+        APIServices service = AppClient.getRetrofitInstance();
         Call<List<SponsRVData>> call =service.getAllPhotos();
         call.enqueue(new Callback<List<SponsRVData>>() {
             @Override
@@ -65,10 +65,9 @@ public class SponsorsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<SponsRVData>> call, Throwable t) {
-                Log.e("Retrofit info","Something went wrong!!");
+                Log.e("Retrofit info","Something went wrong! erroe is: "+t);
             }
         });
-        setList();
         return view;
     }
 

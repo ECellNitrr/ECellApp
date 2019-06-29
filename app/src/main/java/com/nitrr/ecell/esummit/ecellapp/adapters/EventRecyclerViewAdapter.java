@@ -5,9 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +13,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.EventFragment;
-import com.nitrr.ecell.esummit.ecellapp.models.EventRVData;
+import com.nitrr.ecell.esummit.ecellapp.fragments.EventFragment;
+import com.nitrr.ecell.esummit.ecellapp.models.EventData;
 
 import java.util.List;
 
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.MyViewHolder> {
-    private List<EventRVData> list;
+    private List<EventData> list;
     private LayoutInflater inflater;
     private View.OnClickListener onItemClickListener;
 
 
-    public EventRecyclerViewAdapter(Context context,List<EventRVData> list) {
+    public EventRecyclerViewAdapter(Context context,List<EventData> list) {
         inflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -40,8 +38,8 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        EventRVData data = list.get(i);
-        myViewHolder.eventimg.setImageResource(data.getImage());
+        EventData data = list.get(i);
+        myViewHolder.eventimg.setImageResource(Integer.parseInt(data.getImage()));
         myViewHolder.event.setText(data.getName());
         myViewHolder.eventbg.setAlpha(data.getAlpha());
         myViewHolder.card.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +47,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             public void onClick(View v) {
                 String eventname = data.getName();
                 Bundle bundle = new Bundle();
-                bundle.putString("eventname",eventname);
+                bundle.putInt("position",i);
                 EventFragment fragment = new EventFragment();
                 fragment.setArguments(bundle);
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();

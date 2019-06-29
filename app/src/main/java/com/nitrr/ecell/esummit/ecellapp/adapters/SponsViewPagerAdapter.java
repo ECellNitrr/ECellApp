@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.nitrr.ecell.esummit.ecellapp.activities.SponsorsFragment;
+import com.nitrr.ecell.esummit.ecellapp.fragments.SponsorsFragment;
 
 public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
