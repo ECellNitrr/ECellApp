@@ -1,7 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.misc.threads;
 
 import android.os.Process;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.concurrent.ThreadFactory;
 

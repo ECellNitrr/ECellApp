@@ -1,10 +1,8 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.widget.ImageView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.nitrr.ecell.esummit.ecellapp.fragments.SpeakerFragment;
 

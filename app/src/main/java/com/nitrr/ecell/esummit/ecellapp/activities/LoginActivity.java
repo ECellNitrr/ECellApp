@@ -1,6 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
-import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
 public class LoginActivity extends AppCompatActivity {
 

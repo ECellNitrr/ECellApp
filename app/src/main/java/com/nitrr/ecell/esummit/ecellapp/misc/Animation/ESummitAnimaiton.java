@@ -1,9 +1,9 @@
 package com.nitrr.ecell.esummit.ecellapp.misc.Animation;
 
 import android.animation.ObjectAnimator;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.Guideline;
-import android.support.v4.view.ViewPager;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
+import androidx.viewpager.widget.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;

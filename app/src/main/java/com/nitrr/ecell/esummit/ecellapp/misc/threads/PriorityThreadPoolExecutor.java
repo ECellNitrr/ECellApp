@@ -1,6 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.misc.threads;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
