@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,10 @@ public class TeamRVAdapter extends RecyclerView.Adapter<TeamRVAdapter.MyViewHold
         return 0;
     }
 
-    public class MyViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 }

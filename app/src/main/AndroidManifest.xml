@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.FullScreen">
         <activity
             android:name=".activities.AboutUs"
-            android:label="@string/title_activity_about_us"></activity>
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".activities.Sponsors"
             android:theme="@style/AppTheme.FullScreen"></activity>
