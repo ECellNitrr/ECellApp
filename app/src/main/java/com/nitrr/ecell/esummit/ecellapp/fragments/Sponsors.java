@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SponsorsFragment extends Fragment {
+public class Sponsors extends Fragment {
 
     RecyclerView recycler;
     SponsorsRecyclerViewAdapter adapter;
@@ -31,15 +31,15 @@ public class SponsorsFragment extends Fragment {
     static String type;
 
 
-    public SponsorsFragment() {
+    public Sponsors() {
         // Required empty public constructor
     }
 
-    public static SponsorsFragment newInstance(String title,int position) {
+    public static Sponsors newInstance(String title, int position) {
 
         Bundle args = new Bundle();
 
-        SponsorsFragment fragment = new SponsorsFragment();
+        Sponsors fragment = new Sponsors();
         args.putInt("Position",position);
         type = title;
         args.putString("title",title);

@@ -19,23 +19,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EventFragment extends Fragment {
+public class Event extends Fragment {
 
-    private String eventname;
+
     private TextView event;
     private TextView eventditails;
-    private String eventdisc;
     private ImageView eventimg;
     private TextView venue;
     private TextView timefeild;
     private List<EventData> list;
     private int position;
 
-    public EventFragment() {
+    public Event() {
     }
 
-    public static EventFragment newInstance(String param1, int pos) {
-        EventFragment fragment = new EventFragment();
+    public static Event newInstance(String param1, int pos) {
+        Event fragment = new Event();
         Bundle args = new Bundle();
         args.putInt("position",pos);
         fragment.setArguments(args);
@@ -55,7 +54,6 @@ public class EventFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_event, container, false);
         Bundle bundle = this.getArguments();
         if(bundle!=null){
-            eventname = bundle.getString("eventname");
             position =bundle.getInt("position");
             initalize(view);
         }

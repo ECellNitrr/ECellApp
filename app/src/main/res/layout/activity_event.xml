@@ -27,7 +27,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/event_bghills"
+        app:srcCompat="@drawable/event_bghills"
         android:layout_marginLeft="-40dp"
         android:layout_marginRight="-40dp"
         android:layout_marginBottom="-5dp"

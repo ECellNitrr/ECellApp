@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.fragments.EventFragment;
+import com.nitrr.ecell.esummit.ecellapp.fragments.Event;
 import com.nitrr.ecell.esummit.ecellapp.models.EventData;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
                 String eventname = data.getName();
                 Bundle bundle = new Bundle();
                 bundle.putInt("position",i);
-                EventFragment fragment = new EventFragment();
+                Event fragment = new Event();
                 fragment.setArguments(bundle);
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.event_layout, fragment).addToBackStack(null).commit();
