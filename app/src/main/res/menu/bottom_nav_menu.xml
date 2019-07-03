@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_goal"
-        android:icon="@drawable/ic_goal"
-        android:title="" />
+        android:id="@+id/navigation_aim"
+        android:icon="@drawable/about_us_aim"
+        android:title="@string/aim_text" />
 
     <item
         android:id="@+id/navigation_team"
-        android:icon="@drawable/ic_teamwork"
-        android:title="" />
+        android:icon="@drawable/about_us_team"
+        android:title="@string/team" />
 
     <item
         android:id="@+id/navigation_aboutus"
-        android:icon="@drawable/ic_email"
-        android:title="" />
+        android:icon="@drawable/about_us_contact_us"
+        android:title="@string/contact_us" />
 
 </menu>

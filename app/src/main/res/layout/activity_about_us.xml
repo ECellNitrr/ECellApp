@@ -7,47 +7,70 @@
     android:layout_height="match_parent"
     tools:context=".activities.AboutUs">
 
-    <androidx.appcompat.widget.Toolbar
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/associateSponsBlue"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/topPanel"/>
+        android:layout_height="match_parent"
+        android:src="@drawable/aim_background"
+        android:rotation="45"
+        android:layout_marginStart="-400dp"
+        android:layout_marginEnd="-400dp"
+        android:layout_marginTop="-300dp"
+        android:layout_marginBottom="-300dp"/>
 
-    <RelativeLayout
-        android:id="@+id/topPanel"
+    <LinearLayout
+        android:id="@+id/about_us_toolbar"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:background="@color/transparent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/about_us"
-        android:textAllCaps="true"
-        android:textSize="32sp"
-        android:textColor="@color/colorWhite"
-        android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_back"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"/>
 
-    <androidx.viewpager.widget.ViewPager
+        <TextView
+            android:id="@+id/about_us_toolbar_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:padding="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/about_us_coord_layout"/>
+
+    </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/about_us_coord_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"/>
+        app:layout_constraintTop_toBottomOf="@id/about_us_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <FrameLayout
+            android:id="@+id/frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"/>
 
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorWhite"
+            android:animationCache="true"
+            android:layout_gravity="bottom"
+            android:saveEnabled="true"
+            app:itemHorizontalTranslationEnabled="false"
+            app:labelVisibilityMode="selected"
+            app:itemIconSize="30dp"
+            app:menu="@menu/bottom_nav_menu" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:paddingTop="15dp"
-        android:animationCache="true"
-        android:saveEnabled="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

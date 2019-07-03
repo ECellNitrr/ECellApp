@@ -4,73 +4,60 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.fragments.Goal;
+import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Aim;
+import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.ContactUs;
+import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Team;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.view.MenuItem;
 import android.widget.TextView;
 
 public class AboutUs extends AppCompatActivity {
 
-    private MenuItem goal;
-    private MenuItem team;
-    private MenuItem aboutus;
-    private BottomNavigationView navView;
+    TextView toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-        initialize();
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
+        BottomNavigationView navigation = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.about_us_toolbar_text);
 
-    private void initialize() {
-        navView = findViewById(R.id.nav_view);
-        goal = findViewById(R.id.navigation_goal);
-        team = findViewById(R.id.navigation_team);
-        aboutus = findViewById(R.id.navigation_aboutus);
+        toolbar.setText(R.string.aim_text);
+        loadFragment(new Aim());
 
-    }
+        navigation.setItemIconTintList(null);
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        navigation.setOnNavigationItemSelectedListener(menuItem -> {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_goal:
-                    goal.setIcon(R.drawable.ic_goal_2);
-                    goal.setTitle("AIM");
-                    team.setIcon(R.drawable.ic_teamwork);
-                    team.setTitle("");
-                    aboutus.setIcon(R.drawable.ic_email);
-                    aboutus.setTitle("");
-                    Fragment goalfrag = new Goal();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.goal_fragment,goalfrag).addToBackStack(null).commit();
+            switch (menuItem.getItemId()) {
+                case R.id.navigation_aim:
+                    toolbar.setText(R.string.aim_text);
+                    loadFragment(new Aim());
                     return true;
+
                 case R.id.navigation_team:
-                    goal.setIcon(R.drawable.ic_goal);
-                    goal.setTitle("");
-                    team.setIcon(R.drawable.ic_teamwork_2);
-                    team.setTitle("TEAM");
-                    aboutus.setIcon(R.drawable.ic_email);
-                    aboutus.setTitle("");
+                    toolbar.setText(R.string.team);
+                    loadFragment(new Team());
                     return true;
+
                 case R.id.navigation_aboutus:
-                    goal.setIcon(R.drawable.ic_goal);
-                    goal.setTitle("");
-                    team.setIcon(R.drawable.ic_teamwork);
-                    team.setTitle("");
-                    aboutus.setIcon(R.drawable.ic_email2);
-                    aboutus.setTitle("CONTACT US");
+                    toolbar.setText(R.string.contact_us);
+                    loadFragment(new ContactUs());
                     return true;
             }
             return false;
-        }
-    };
+        });
+    }
 
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

@@ -28,13 +28,14 @@
                 android:layout_height="28dp"
                 android:layout_gravity="center"
                 android:padding="4dp"
-                android:src="@drawable/ic_username" />
+                app:srcCompat="@drawable/ic_username" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="UserName"
+                android:text="@string/username"
+                android:padding="2dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="18sp" />
@@ -53,15 +54,15 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_gravity="center"
-                android:padding="4dp"
-                android:src="@drawable/ic_email" />
+                app:srcCompat="@drawable/ic_email" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="About Us"
+                android:text="@string/about_us"
                 android:textAlignment="center"
+                android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="18sp" />
 
@@ -81,7 +82,7 @@
                 android:layout_height="28dp"
                 android:layout_gravity="center"
                 android:padding="4dp"
-                android:src="@drawable/ic_log_out" />
+                app:srcCompat="@drawable/ic_log_out" />
 
 
             <TextView
@@ -89,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="Log Out"
                 android:textAlignment="center"
+                android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
                 android:textSize="18sp" />
 
