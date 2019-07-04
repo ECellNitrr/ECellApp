@@ -5,63 +5,72 @@
     android:id="@+id/goal_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.about_us.Aim">
+    tools:context=".fragments.about_us.Aim"
+    android:background="@color/associateSponsBlue">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/aim_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nova_round"
+                android:padding="20dp"
                 android:text="@string/aim_text"
                 android:textColor="@color/colorWhite"
                 android:textSize="50sp"
-                android:padding="20dp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/aim_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:breakStrategy="simple"
+                android:fontFamily="@font/noto_sans_bold"
+                android:justificationMode="inter_word"
+                android:padding="10dp"
                 android:text="@string/about_us_aim"
                 android:textColor="@color/colorWhite"
-                android:textSize="22sp"
-                android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@id/aim_text"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aim_text" />
 
             <TextView
                 android:id="@+id/vision_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nova_round"
+                android:padding="20dp"
                 android:text="@string/vision_text"
+                android:textAlignment="textEnd"
                 android:textColor="@color/colorWhite"
                 android:textSize="50sp"
-                android:padding="20dp"
                 android:textStyle="bold"
-                android:textAlignment="textEnd"
-                app:layout_constraintTop_toBottomOf="@id/aim_detail"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aim_detail" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans_bold"
+                android:padding="10dp"
                 android:text="@string/about_us_aim"
                 android:textColor="@color/colorWhite"
-                android:textSize="22sp"
-                android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@id/vision_text"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vision_text" />
         </LinearLayout>
 
     </ScrollView>

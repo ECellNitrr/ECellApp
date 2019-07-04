@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/alfa_slab_one</item>
+        <item>@font/bungee_shade</item>
         <item>@font/noto_sans_bold</item>
         <item>@font/nova_round</item>
     </array>
