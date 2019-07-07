@@ -139,13 +139,13 @@ public class LoginAnimation {
             ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1f);
             animator.setDuration(700);
             animator.start();
-        } //Appear - true
+        } //Appear = true
 
         else {
             ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0);
             animator.setDuration(700);
             animator.start();
-        } //Disappear - false
+        } //Disappear = false
 
     }
 }

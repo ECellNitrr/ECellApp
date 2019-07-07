@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.activities.Event;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsorsRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
@@ -25,10 +28,24 @@ import retrofit2.Response;
 
 public class Sponsors extends Fragment {
 
-    RecyclerView recycler;
-    SponsorsRecyclerViewAdapter adapter;
-    List<SponsRVData> list = new ArrayList<SponsRVData>();
-    static String type;
+    private RecyclerView recycler;
+    private SponsorsRecyclerViewAdapter adapter;
+    private List<SponsRVData> list = new ArrayList<SponsRVData>();
+    private static String type;
+
+    private DialogInterface.OnClickListener refreshlistener= new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            APICall();
+        }
+    };
+    private DialogInterface.OnClickListener cancellistener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            getActivity().finish();
+        }
+    };
+
 
 
     public Sponsors() {
@@ -54,22 +71,38 @@ public class Sponsors extends Fragment {
         list.clear();
         View view=inflater.inflate(R.layout.fragment_sponsors,container,false);
         recycler = view.findViewById(R.id.spons_recycler);
+        APICall();
+        return view;
+    }
+
+    void APICall()
+    {
         APIServices service = AppClient.getRetrofitInstance();
         Call<List<SponsRVData>> call =service.getAllPhotos();
         call.enqueue(new Callback<List<SponsRVData>>() {
             @Override
             public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {
+                if(response.isSuccessful()){
                 list=response.body();
-                setRecyclerView();
-            }
+                    if(list!=null && !list.isEmpty())
+                    setRecyclerView();
+                    else{
 
+                    }
+                }
+                else
+                    Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+            }
             @Override
             public void onFailure(Call<List<SponsRVData>> call, Throwable t) {
-                Log.e("Retrofit info","Something went wrong! erroe is: "+t);
+                if(!Utils.isNetworkAvailable(getContext()))
+                    Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                else
+                {Utils.showToast(getActivity(),"Something went wrong.");
+                    getActivity().finish();
+                }
             }
-        });
-        return view;
-    }
+        });}
 
     private void setList() {
         SponsRVData data = new SponsRVData("Resonance",type,R.drawable.spons_cardbg_1,null);
@@ -82,7 +115,7 @@ public class Sponsors extends Fragment {
     }
 
     void setRecyclerView(){
-        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
         recycler.setLayoutManager(linearLayoutManager);
         adapter =new SponsorsRecyclerViewAdapter(getContext(),list);
         recycler.setAdapter(adapter);

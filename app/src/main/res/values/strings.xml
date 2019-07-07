@@ -22,7 +22,7 @@
     <string name="text_events">Events</string>
     <string name="color_events">#ED5958</string>
     <string name="text_bquiz">BQuiz</string>
-    <string name="color_bquiz">#18A45E9</string>
+    <string name="color_bquiz">#18A4E9</string>
     <string name="text_spons">Sponsors</string>
     <string name="color_spons">#F2B531</string>
 
@@ -47,6 +47,10 @@
     <string name="vision_text">Vision</string>
     <string name="name_college">National Institute of Technology, GE Road, Raipur [492001]</string>
     <string name="mobile_number">Mobile Number</string>
+    <string name="otp">Please verify OTP</string>
+    <string name="wasntabletoload">Oops! data wasn\'t able to load</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>
