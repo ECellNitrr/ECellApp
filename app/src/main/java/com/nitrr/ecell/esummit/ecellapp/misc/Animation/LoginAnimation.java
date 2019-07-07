@@ -48,15 +48,15 @@ public class LoginAnimation {
     }
 
     public void toRegisterScreen(Context context){
-        doTranslationY(lowerPoly, nHeight);
+        doTranslationY(lowerPoly, nHeight*1.05f);
         doTranslationY(upperPoly, nHeight);
-        doTranslationY(lowerLinearLayout, nHeight);
+        doTranslationY(lowerLinearLayout, nHeight*1.05f);
         doTranslationY(upperLinearLayout, nHeight * 1.0769f); //-1400f
         doTranslationY(google, nHeight * 0.9846f); //-1280f
         doTranslationY(facebook, nHeight * 0.9846f);
         doTranslationY(forgot, nHeight * 1.1538f); //-1500f
         doTranslationY(signInButton, nHeight * 1.2307f); //-1600f
-        doTranslationY(registerButton, nHeight);
+        doTranslationY(registerButton, nHeight*1.05f);
 
         doAlphaTransition(google, false);
         doAlphaTransition(facebook, false);
@@ -71,7 +71,7 @@ public class LoginAnimation {
         doTranslationY(upperECell, nHeight);
 
         doAlphaTransition(lowerECell, true);
-        doTranslationY(lowerECell, nHeight);
+        doTranslationY(lowerECell, nHeight*1.05f);
 
         google.setEnabled(false);
         facebook.setEnabled(false);

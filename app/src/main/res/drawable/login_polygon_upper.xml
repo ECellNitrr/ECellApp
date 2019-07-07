@@ -3,7 +3,7 @@
 
     <item
         android:drawable="@drawable/ic_polygon"
-        android:left="-65dp"
-        android:right="-65dp"/>
+        android:left="-75dp"
+        android:right="-75dp"/>
 
 </layer-list>

@@ -9,7 +9,6 @@ import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.ContactUs;
 import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Team;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
