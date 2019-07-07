@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class Home extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private HomeRVAdapter adapter;
@@ -51,10 +52,35 @@ public class HomeActivity extends AppCompatActivity {
         sponsBG = findViewById(R.id.home_bg4);
 
         adapter = new HomeRVAdapter(this, homeRVDataList);
-        initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz));
-        initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events));
-        initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit));
-        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons));
+
+        initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this,ESummitActivity.class);
+                startActivity(intent);
+            }
+        });
+        initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this,Event.class);
+                startActivity(intent);
+            }
+        });
+        initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz),null/* new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this,Bquiz.class);
+                startActivity(intent);
+            }
+        }*/);
+        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this,Sponsors.class);
+                startActivity(intent);
+            }
+        });
 
         hamburger_button = findViewById(R.id.hamburgerButton);
         hamburger_button.setOnClickListener((View view) -> MenuCustomAlertDialog.getInstance().with(this).build());
@@ -65,8 +91,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public void initializeList(String name, int cardImage, String color) {
-        HomeRVData data = new HomeRVData(name, cardImage, color);
+    public void initializeList(String name, int cardImage, String color,View.OnClickListener listener) {
+        HomeRVData data = new HomeRVData(name, color, cardImage,listener);
         homeRVDataList.add(data);
     }
 

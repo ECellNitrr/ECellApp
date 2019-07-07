@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.about_us.Aim"
-    android:background="@color/associateSponsBlue">
+    android:background="@color/transparent">
 
     <ScrollView
         android:layout_width="match_parent"

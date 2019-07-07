@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -41,21 +42,9 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHold
         final HomeRVData data = homeRVDataList.get(i);
         holder.cardName.setText(data.getName());
         Glide.with(context).load(data.getImage()).into(holder.cardImg);
-
-        String color = "#FFFFFF";
-
-        if (i == 0)
-            color = "#48CFAD";
-
-        else if (i == 1)
-            color = "#ED5958";
-
-        else if (i == 2)
-            color = "#18A4E9";
-
-        else if (i == 3)
-            color = "#F2B531";
-        holder.cardBg.setCardBackgroundColor(Color.parseColor(color));
+        holder.cardBg.setCardBackgroundColor(Color.parseColor(data.getColor()));
+        if(data.getListener()!=null)
+            holder.cardBg.setOnClickListener(data.getListener());
     }
 
     @Override
@@ -63,7 +52,6 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHold
         return homeRVDataList.size();
     }
 
-    //Custom Class
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView cardName;

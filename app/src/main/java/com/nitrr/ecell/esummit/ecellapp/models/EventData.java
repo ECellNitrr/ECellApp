@@ -21,7 +21,6 @@ public class EventData {
 //    private String email;
 //    @SerializedName("flag")
 //    private boolean flag;
-    private Float alpha;
 
     public EventData() {
         //empty constructor
@@ -75,10 +74,6 @@ public class EventData {
 //        return flag;
 //    }
 
-    public Float getAlpha() {
-        return alpha;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -87,7 +82,4 @@ public class EventData {
         this.img = img;
     }
 
-    public void setAlpha(Float alpha) {
-        this.alpha = alpha;
-    }
 }

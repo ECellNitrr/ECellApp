@@ -12,54 +12,66 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.Event;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.EventData;
 
 import java.util.List;
 
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.MyViewHolder> {
     private List<EventData> list;
-    private LayoutInflater inflater;
+    private Context context;
     private View.OnClickListener onItemClickListener;
+    private float alpha = 0.2f;
 
 
     public EventRecyclerViewAdapter(Context context,List<EventData> list) {
-        inflater = LayoutInflater.from(context);
+        this.context = context;
         this.list = list;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = inflater.inflate(R.layout.layout_cardview_event,viewGroup,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.layout_cardview_event,viewGroup,false);
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         EventData data = list.get(i);
-        myViewHolder.eventimg.setImageResource(Integer.parseInt(data.getImage()));
+        Glide.with(context).load(data.getImage()).into(myViewHolder.eventimg);
         myViewHolder.event.setText(data.getName());
-        myViewHolder.eventbg.setAlpha(data.getAlpha());
+        myViewHolder.eventbg.setAlpha(alpha);
+        if((i+1)%3==0)
+            alpha-=0.2f;
+        else
+            alpha+=0.2f;
         myViewHolder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //if(data.isFlag()){Resource(Integer.parseInt(
                 String eventname = data.getName();
                 Bundle bundle = new Bundle();
-                bundle.putInt("position",i);
+                bundle.putInt("position", i);
                 Event fragment = new Event();
                 fragment.setArguments(bundle);
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.event_layout, fragment).addToBackStack(null).commit();
-
+//                }
+//                else{
+//                    Utils.showToast(context,"This Event hasn't been approved yet");
+//                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return 9;
     }
 
     public  class MyViewHolder extends RecyclerView.ViewHolder {

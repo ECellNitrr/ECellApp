@@ -22,8 +22,10 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/associateSponsBlue"
+        android:alpha="0.6"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="15dp">
 
         <!--<ImageView-->
             <!--android:layout_width="70dp"-->
@@ -38,8 +40,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/about_us"
+            android:background="@color/transparent"
             android:textColor="@color/colorWhite"
             android:textSize="35sp"
+            android:alpha="1"
             app:layout_constraintBottom_toTopOf="@id/about_us_coord_layout"
             app:layout_constraintTop_toTopOf="parent" />
 

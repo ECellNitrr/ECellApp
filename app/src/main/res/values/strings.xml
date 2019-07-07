@@ -22,7 +22,7 @@
     <string name="text_events">Events</string>
     <string name="color_events">#ED5958</string>
     <string name="text_bquiz">BQuiz</string>
-    <string name="color_bquiz">#18A45E9</string>
+    <string name="color_bquiz">#18A4E9</string>
     <string name="text_spons">Sponsors</string>
     <string name="color_spons">#F2B531</string>
 
@@ -46,6 +46,10 @@
     <string name="about_us_aim">At ESummit \'19, we aspire to create a melange of eminent speakers who have proved themselves in diverse fields and are at zenith of glory. ESummit \'19 will not be a conclave of innovative minds and epistemic elocutionists, but it will bea place where ideas not only thrive but become the greatest revelation in century.</string>
     <string name="vision_text">Vision</string>
     <string name="name_college">National Institute of Technology, Raipur</string>
+    <string name="otp">Please verify OTP</string>
+    <string name="wasntabletoload">Oops! data wasn\'t able to load</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

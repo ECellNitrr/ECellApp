@@ -1,7 +1,11 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.EventData;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
@@ -29,6 +34,18 @@ public class Event extends Fragment {
     private TextView timefeild;
     private List<EventData> list;
     private int position;
+    private DialogInterface.OnClickListener refreshlistener= new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            APICall();
+        }
+    };
+    private DialogInterface.OnClickListener cancellistener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            getActivity().finish();
+        }
+    };
 
     public Event() {
     }
@@ -42,13 +59,6 @@ public class Event extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_event, container, false);
@@ -57,22 +67,53 @@ public class Event extends Fragment {
             position =bundle.getInt("position");
             initalize(view);
         }
+        APICall();
+        return view;
+    }
 
+    void APICall(){
         APIServices service = AppClient.getRetrofitInstance();
         Call<List<EventData>> call= service.getEventDetails();
         call.enqueue(new Callback<List<EventData>>() {
             @Override
             public void onResponse(Call<List<EventData>> call, Response<List<EventData>> response) {
-                list = response.body();
-                setData();
-            }
 
+                Log.e("Response:", "response is "+response.toString()+" and call is "+call.toString());
+                if(response.isSuccessful()){
+                    list = response.body();
+                    if(list!=null && !list.isEmpty())
+                        setData();
+                    else
+                        showdialog();
+                }
+                else
+                    Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+            }
             @Override
             public void onFailure(Call<List<EventData>> call, Throwable t) {
-
+                Log.e("Failure", "throwable is "+t+" and call is "+call.toString());
+                if(!Utils.isNetworkAvailable(getContext()))
+                    Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                else
+                {Utils.showToast(getContext(),"Something went wrong.");
+                    getActivity().finish();
+                }
             }
         });
-        return view;
+    }
+
+    void showdialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setTitle("Verify OTP");
+        dialog.setMessage("Oops! data wasn't able to load");
+        dialog.setPositiveButton("Refresh", (dialog1, which) -> APICall());
+        dialog.setNegativeButton("Cancel", ((dialog12, which) -> {
+            getActivity().finish();
+            dialog12.dismiss();
+        }));
+        dialog.setOnCancelListener(dialog3 -> APICall());
+        dialog.show();
+        Log.e("Dialog ","Dialog code executed");
     }
 
     private void initalize(View v) {
