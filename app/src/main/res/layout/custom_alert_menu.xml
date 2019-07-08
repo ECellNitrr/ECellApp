@@ -24,8 +24,8 @@
             android:paddingEnd="16dp">
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:padding="4dp"
                 app:srcCompat="@drawable/ic_username" />
@@ -38,7 +38,7 @@
                 android:padding="2dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
         </LinearLayout>
 
@@ -47,14 +47,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingTop="8dp"
+            android:paddingTop="10dp"
             android:paddingEnd="16dp">
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_email" />
+                app:srcCompat="@drawable/about_us_team_21" />
 
 
             <TextView
@@ -64,7 +64,7 @@
                 android:textAlignment="center"
                 android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
         </LinearLayout>
 
@@ -73,13 +73,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingTop="8dp"
+            android:paddingTop="10dp"
             android:paddingEnd="16dp"
             android:paddingBottom="16dp">
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:padding="4dp"
                 app:srcCompat="@drawable/ic_log_out" />
@@ -92,7 +92,7 @@
                 android:textAlignment="center"
                 android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
         </LinearLayout>
     </LinearLayout>
