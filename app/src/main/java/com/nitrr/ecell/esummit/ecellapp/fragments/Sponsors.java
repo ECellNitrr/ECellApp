@@ -6,13 +6,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.Event;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsorsRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
@@ -78,7 +77,7 @@ public class Sponsors extends Fragment {
     void APICall()
     {
         APIServices service = AppClient.getRetrofitInstance();
-        Call<List<SponsRVData>> call =service.getAllPhotos();
+        Call<List<SponsRVData>> call =service.getSponsData();
         call.enqueue(new Callback<List<SponsRVData>>() {
             @Override
             public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {

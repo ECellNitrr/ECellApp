@@ -42,7 +42,7 @@ public class Team extends Fragment {
         View view = inflater.inflate(R.layout.fragment_team, container, false);
         recycler = view.findViewById(R.id.team_recycler);
         APIServices service = AppClient.getRetrofitInstance();
-        Call<List<SponsRVData>> call =service.getAllPhotos();
+        Call<List<SponsRVData>> call =service.getSponsData();
         call.enqueue(new Callback<List<SponsRVData>>() {
             @Override
             public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {
