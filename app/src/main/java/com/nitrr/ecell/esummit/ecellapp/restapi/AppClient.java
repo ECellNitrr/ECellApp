@@ -87,10 +87,10 @@ public class AppClient {
     private static OkHttpClient getclient(){
         return new OkHttpClient()
                 .newBuilder()
-                .callTimeout(1500, TimeUnit.MILLISECONDS)
-                .connectTimeout(1000, TimeUnit.MILLISECONDS)
-                .readTimeout(500, TimeUnit.MILLISECONDS)
-                .writeTimeout(500, TimeUnit.MILLISECONDS)
+                .callTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
                 .build();
         }
 

@@ -98,7 +98,8 @@ public class Sponsors extends Fragment {
                 if(!Utils.isNetworkAvailable(getContext()))
                     Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 else
-                {Utils.showToast(getActivity(),"Something went wrong.");
+                {Log.e("Failure:  =","throwable is "+t);
+                    Utils.showToast(getActivity(),"Something went wrong.");
                     getActivity().finish();
                 }
             }

@@ -77,7 +77,8 @@ public class Event extends AppCompatActivity {
                 if(!Utils.isNetworkAvailable(getApplicationContext()))
                     Utils.showDialog(Event.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 else
-                {Utils.showToast(getApplicationContext(),"Something went wrong.");
+                {Log.e("Failure:  =","throwable is "+t);
+                    Utils.showToast(getApplicationContext(),"Something went wrong.");
                 Event.this.finish();
                 }
             }

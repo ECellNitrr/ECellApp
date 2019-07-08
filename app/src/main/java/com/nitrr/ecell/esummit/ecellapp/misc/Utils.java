@@ -8,12 +8,15 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import com.nitrr.ecell.esummit.ecellapp.R;
 
 
 public class Utils {
@@ -33,8 +36,7 @@ public class Utils {
         View v=null;AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         if(layout!=null){
             v=LayoutInflater.from(context).inflate(layout,null);
-            dialog.setView(v) ;
-
+            dialog.setView(v);
         }
         dialog.setTitle(title)
                 .setMessage(message)

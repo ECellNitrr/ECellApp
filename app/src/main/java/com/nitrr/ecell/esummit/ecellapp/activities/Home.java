@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -190,63 +191,11 @@ public class Home extends AppCompatActivity {
 
 
 
+    int color(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
+        return Color.rgb(colorValue(IR,FR,pos),colorValue(IG,FG,pos),colorValue(IB,FB,pos));
+    }
+
+    int colorValue(int Initial,int Final,float pos){
+        return (int)(Final*pos+Initial*(1-pos));
+    }
 }
-
-//Below Code is still being reviewed it was for the changing size of the cards while scrolling.
-//Error is known. Just wanna figure out how to implement the correction.
-
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(0);
-//                RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay);
-//                layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-//
-//            }
-//        }, 100);
-//
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                View v = snapHelper.findSnapView(layoutManager);
-//                int pos = layoutManager.getPosition(v);
-//                int max = layoutManager.getChildCount();
-//
-//                RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(pos);
-//                RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay), layout2 = null, layout3 = null;
-//                if(pos < max) {
-//                    RecyclerView.ViewHolder viewHolder2 = recyclerView.findViewHolderForAdapterPosition(pos+1);
-//                    layout2 = viewHolder2.itemView.findViewById(R.id.relLay);
-//                }
-//                if(pos > 0) {
-//                    RecyclerView.ViewHolder viewHolder3 = recyclerView.findViewHolderForAdapterPosition(pos-1);
-//                    layout3 = viewHolder3.itemView.findViewById(R.id.relLay);
-//                }
-//
-//
-//                if(newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                    layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-//                    if(pos < max) {
-//                        layout2.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-//                    }
-//                    if(pos > 0) {
-//                        layout3.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-//                    }
-//                }
-//                else {
-//                    if(pos < max) {
-//                        layout2.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-//                    }
-//                    if(pos > 0) {
-//                        layout3.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-//                    }
-//                    layout.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//            }
-//        });
