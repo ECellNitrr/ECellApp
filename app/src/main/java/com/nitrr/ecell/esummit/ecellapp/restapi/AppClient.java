@@ -23,6 +23,17 @@ public class AppClient {
             return retrofit.create(APIServices.class);
     }
 
+    public static APIServices getRetrofitInstanceWithAuth(){
+        if(retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(getClient())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit.create(APIServices.class);
+    }
+
     private static OkHttpClient getClient(){
         return new OkHttpClient()
                 .newBuilder()

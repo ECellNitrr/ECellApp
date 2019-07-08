@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+import retrofit2.http.Header;
+
 public class StartUpDetails implements Serializable {
 
     @SerializedName("name")

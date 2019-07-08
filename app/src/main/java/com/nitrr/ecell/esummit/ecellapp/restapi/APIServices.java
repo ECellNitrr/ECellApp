@@ -21,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -35,26 +36,26 @@ public interface APIServices {
 
     //Auth
     @POST("/register/")
-    Class<RegisterResponse> postRegisterUser(@Body RegisterDetails registerDetails);
+    Call<RegisterResponse> postRegisterUser(@Body RegisterDetails registerDetails);
 
     @POST("/login/")
-    Class<GenericMessage> postLoginUser(@Body LoginDetails loginDetails);
+    Call<GenericMessage> postLoginUser(@Body LoginDetails loginDetails);
 
 
     //User
     @POST("/user/ca_profile/")
-    Class<GenericMessage> postCAProfile(@Body CADetails caDetails);
+    Call<GenericMessage> postCAProfile(@Body CADetails caDetails);
 
     @GET("/user/send_otp/")
     Class<GenericMessage> getSendOTP();
 
     @POST("/user/verify_otp/")
-    Class<GenericMessage> postSendOTP(@Field("token") String token, @Body OTPVerify otpVerify);
+    Class<GenericMessage> postSendOTP(@Header("token") String token, @Body OTPVerify otpVerify);
 
 
     //Speakers
     @POST("/speaker/add_new/")
-    Class<GenericMessage> postAddNewSpeaker(@Field("token") String token, @Body SpeakerDetails speakerDetails);
+    Class<GenericMessage> postAddNewSpeaker(@Header("token") String token, @Body SpeakerDetails speakerDetails);
 
     @GET("/speaker/list/{year}/")
     Class<SpeakerResponse> getSpeakerList(@Path("year") int year);
@@ -65,7 +66,7 @@ public interface APIServices {
 
     //mentors
     @POST("/mentors/add_new/")
-    Class<GenericMessage> postAddNewMentor(@Field("token") String token, @Body MentorDetails mentorDetails);
+    Class<GenericMessage> postAddNewMentor(@Header("token") String token, @Body MentorDetails mentorDetails);
 
     @GET("/mentors/list/{year}/")
     Class<MentorResponse> getMentorList(@Path("year") int year);
@@ -76,7 +77,7 @@ public interface APIServices {
 
     //startUp
     @POST("/startup/add_new/")
-    Class<GenericMessage> postAddNewStartup(@Field("token") String token, @Body StartUpDetails startUpDetails);
+    Class<GenericMessage> postAddNewStartup(@Header("token") String token, @Body StartUpDetails startUpDetails);
 
     @GET("/startup/list/{year}/")
     Class<StartUpResponse> getStartupList(@Path("year") int year);

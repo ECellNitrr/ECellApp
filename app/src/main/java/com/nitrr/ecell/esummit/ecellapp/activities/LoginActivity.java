@@ -2,15 +2,12 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
@@ -23,52 +20,58 @@ import android.widget.TextView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
+import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
+import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
+import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterResponse;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
-public class LoginActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+public class LoginActivity extends AppCompatActivity{
 
+    Context context;
+    private boolean isLoggingIn = true;
     ImageView lowerIcon, upArrow, downArrow, fbButton, googleButton;
     ImageButton signInButton, registerButton;
     Button signin,register;
     TextView signInText;
+    EditText loginusername, loginPassword;
+    EditText firstName, lastName, registerUsername, registerPassword, email, mobileNumber;
     LinearLayout registerlayout;
     LoginAnimation loginanimation;
     EditText otp1,otp2,otp3,otp4;
-    DialogInterface.OnClickListener confirmlistener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            dialog.cancel();
-        }
-    };
-    DialogInterface.OnClickListener cancellistener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            dialog.cancel();
-        }
-    };
+    DialogInterface.OnClickListener confirmlistener = (dialog, which) -> dialog.cancel();
+    DialogInterface.OnClickListener cancellistener = (dialog, which) -> dialog.cancel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initialize();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
+        context = this;
         loginanimation = new LoginAnimation(this);
 
         signin.setOnClickListener((View v) -> {
-            Intent intent = new Intent(this,Home.class);
+            Intent intent = new Intent(this, Home.class);
             startActivity(intent);
         });
 
         register.setOnClickListener((View v) -> {
-            showOTPdialog();
-            });
+            showOTPDialog();
+        });
 
-        registerButton.setOnClickListener((View v) -> loginanimation.toRegisterScreen(this));
+        registerButton.setOnClickListener((View v) ->
+        {
+            loginanimation.toRegisterScreen(this);
+            isLoggingIn = false;
+        });
 
-        signInButton.setOnClickListener((View v) -> loginanimation.toSignInScreen(this));
+        signInButton.setOnClickListener((View v) -> {
+            loginanimation.toSignInScreen(this);
+            isLoggingIn = true;
+        });
 
         fbButton.setOnClickListener((View v) -> { /*Write Here*/ });
 
@@ -90,7 +93,12 @@ public class LoginActivity extends AppCompatActivity {
         fbButton = findViewById(R.id.fb_button);
         googleButton = findViewById(R.id.google_button);
 
-
+        firstName = findViewById(R.id.register_first_name);
+        lastName = findViewById(R.id.register_last_name);
+        registerUsername = findViewById(R.id.register_username);
+        registerPassword = findViewById(R.id.register_password);
+        email = findViewById(R.id.register_email);
+        mobileNumber = findViewById(R.id.register_number);
 
         signInText.setVisibility(View.INVISIBLE);
         signInButton.setVisibility(View.INVISIBLE);
@@ -102,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         lowerIcon.animate().translationY(300f).setDuration(10).setInterpolator(new AccelerateInterpolator()).start();
     }
 
-    void showOTPdialog(){
+    void showOTPDialog() {
         View v =Utils.showDialog(this,R.layout.layout_otp,false,null,null,"CONFIRM",confirmlistener,"CANCEL",cancellistener);
         otp1 = v.findViewById(R.id.otp1);
         otp2 = v.findViewById(R.id.otp2);
@@ -177,5 +185,42 @@ public class LoginActivity extends AppCompatActivity {
                     otp3.requestFocus();
             }
         });
+    }
+
+    public void apiCall() {
+        RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
+                lastName.getText().toString(),
+                email.getText().toString(),
+                registerPassword.getText().toString(),
+                mobileNumber.getText().toString(),
+                null, null, null);
+
+        Call<RegisterResponse> call =  AppClient.getRetrofitInstance().postRegisterUser(details);
+
+        call.enqueue(new Callback<RegisterResponse>() {
+            @Override
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                if(!response.isSuccessful()) {
+                    Utils.showToast(context, "There was an error in post request");
+                    return;
+                }
+
+                RegisterResponse response1 = response.body();
+
+                if(response1.getMessage() == "Registration failed!") {
+                    Utils.showToast(context, "there was an error in registering User");
+                }
+                else {
+                    Utils.showToast(context, "User Registered Successfully with token " + response1.getToken() + "!" );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+
+            }
+        });
+
+
     }
 }
