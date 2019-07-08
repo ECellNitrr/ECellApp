@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity{
         });
 
         register.setOnClickListener((View v) -> {
-            showOTPDialog();
+            apiCall();
         });
 
         registerButton.setOnClickListener((View v) ->

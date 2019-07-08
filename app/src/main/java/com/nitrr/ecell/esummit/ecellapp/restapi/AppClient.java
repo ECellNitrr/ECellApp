@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppClient {
 
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "virtserver.swaggerhub.com/EcellWeb2k19/ECell2k19/1.0.0";
+    private static String BASE_URL = "https://virtserver.swaggerhub.com/EcellWeb2k19/ECell2k19/1.0.0/";
 
     public static APIServices getRetrofitInstance(){
         if(retrofit == null) {

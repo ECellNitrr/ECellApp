@@ -27,15 +27,15 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    @GET("/photos")
+    @GET()
     Call<List<SponsRVData>> getSponsData();
 
-    @GET("/todos")
+    @GET()
     Call<List<EventData>> getEventDetails();
 
 
     //Auth
-    @POST("/register/")
+    @POST("register/")
     Call<RegisterResponse> postRegisterUser(@Body RegisterDetails registerDetails);
 
     @POST("/login/")
