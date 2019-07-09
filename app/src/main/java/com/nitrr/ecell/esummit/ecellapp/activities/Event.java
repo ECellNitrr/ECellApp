@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.Event.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -24,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Event extends AppCompatActivity {
+    private EventModel model;
     private List<EventData> list= new ArrayList<EventData>();
     EventRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
@@ -58,14 +60,16 @@ public class Event extends AppCompatActivity {
 
     void APICall(){
         APIServices services = AppClient.getRetrofitInstance();
-        Call<List<EventData>> call = services.getEventDetails();
-        call.enqueue(new Callback<List<EventData>>() {
+        Call<EventModel> call = services.getEventDetails();
+        call.enqueue(new Callback<EventModel>() {
             @Override
-            public void onResponse(Call<List<EventData>> call, Response<List<EventData>> response) {
+            public void onResponse(Call<EventModel> call, Response<EventModel> response) {
                 if(response.isSuccessful()){
-                    list = response.body();
-                    if(list!=null && !list.isEmpty())
+                    model = response.body();
+                    if(model!=null){
+                        list = model.getList();
                         setRecycler();
+                    }
                     else
                         Utils.showDialog(getApplicationContext(),null,false,null,getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 }
@@ -73,13 +77,12 @@ public class Event extends AppCompatActivity {
                     Utils.showDialog(getApplicationContext(),null,false,null,getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
             }
             @Override
-            public void onFailure(Call<List<EventData>> call, Throwable t) {
+            public void onFailure(Call<EventModel> call, Throwable t) {
                 if(!Utils.isNetworkAvailable(getApplicationContext()))
                     Utils.showDialog(Event.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 else
                 {Log.e("Failure:  =","throwable is "+t);
                     Utils.showToast(getApplicationContext(),"Something went wrong.");
-                Event.this.finish();
                 }
             }
         });

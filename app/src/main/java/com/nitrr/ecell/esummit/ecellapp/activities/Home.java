@@ -29,15 +29,14 @@ public class Home extends AppCompatActivity {
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
 
-    private ImageView esummitBG;
-    private ImageView eventBG;
-    private ImageView bQuizBG;
-    private ImageView sponsBG;
+    private ImageView bgcircle1;
+    private ImageView bgcircle2;
+    private ImageView bgcircle3;
 
     private int rvpositionx = 0;
+    private int distance =0;
 
-    private float scrollpos1 = 0;
-    private float scrollpos2 = 0;
+    private float displacment = 0;
     ImageButton hamburger_button;
 
     @Override
@@ -47,10 +46,9 @@ public class Home extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.home_recycler);
 
-        esummitBG = findViewById(R.id.home_bg1);
-        eventBG = findViewById(R.id.home_bg2);
-        bQuizBG = findViewById(R.id.home_bg3);
-        sponsBG = findViewById(R.id.home_bg4);
+        bgcircle1 = findViewById(R.id.homebg_circle1);
+        bgcircle2 = findViewById(R.id.homebg_circle2);
+        bgcircle3 = findViewById(R.id.homebg_circle3);
 
         adapter = new HomeRVAdapter(this, homeRVDataList);
 
@@ -99,10 +97,11 @@ public class Home extends AppCompatActivity {
 
     public void setUpRV() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        int fristposition = layoutManager.findFirstVisibleItemPosition();
+        int lastposition = layoutManager.findLastVisibleItemPosition();
+        distance = lastposition-fristposition;
         recyclerView.setLayoutManager(layoutManager);
-
         recyclerView.setAdapter(adapter);
-
         recyclerView.setPadding(100, 0, 100, 0);
 
         SnapHelper snapHelper = new MySnapHelper();
@@ -159,30 +158,24 @@ public class Home extends AppCompatActivity {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                Log.w("positionX ", "value of revposX = " + rvpositionx);
+                Log.e("Scrolled","distance between them is " +distance);
                 rvpositionx += dx;
                 if (rvpositionx < 885) {
-                    scrollpos1 = (float) rvpositionx / 885;
-                    scrollpos2 = 1 - scrollpos1;
-                    esummitBG.setAlpha(scrollpos2);
-                    eventBG.setAlpha(scrollpos1);
-                    bQuizBG.setAlpha(0f);
-                    sponsBG.setAlpha(0f);
+                    displacment = (float) rvpositionx / 885;
+                    bgcircle1.setColorFilter(color(85,216,183,252,110,81, displacment));
+                    bgcircle2.setColorFilter(color(85,216,183,252,110,81, displacment));
+                    bgcircle3.setColorFilter(color(85,216,183,252,110,81, displacment));
 
                 } else if (rvpositionx < 1770) {
-                    scrollpos1 = (float) (rvpositionx - 885) / 885;
-                    scrollpos2 = 1 - scrollpos1;
-                    eventBG.setAlpha(scrollpos2);
-                    bQuizBG.setAlpha(scrollpos1);
-                    esummitBG.setAlpha(0f);
-                    sponsBG.setAlpha(0f);
+                    displacment = (float) (rvpositionx - 885) / 885;
+                    bgcircle1.setColorFilter(color(252,110,81,88,180,225, displacment));
+                    bgcircle2.setColorFilter(color(252,110,81,88,180,225, displacment));
+                    bgcircle3.setColorFilter(color(252,110,81,88,180,225, displacment));
                 } else if (rvpositionx < 2655) {
-                    scrollpos1 = (float) (rvpositionx - 1770) / 885;
-                    scrollpos2 = 1 - scrollpos1;
-                    bQuizBG.setAlpha(scrollpos2);
-                    sponsBG.setAlpha(scrollpos1);
-                    eventBG.setAlpha(0f);
-                    esummitBG.setAlpha(0f);
+                    displacment = (float) (rvpositionx - 1770) / 885;
+                    bgcircle1.setColorFilter(color(88,180,225,249,207,109, displacment));
+                    bgcircle2.setColorFilter(color(88,180,225,249,207,109, displacment));
+                    bgcircle3.setColorFilter(color(88,180,225,249,207,109, displacment));
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }

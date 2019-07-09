@@ -11,6 +11,7 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.ViewPagerAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.ESummitAnimaiton;
 import com.nitrr.ecell.esummit.ecellapp.misc.ViewPagerDepthTransformer;
+import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ESummitActivity extends AppCompatActivity{
     private ViewPager pager;
     private PagerAdapter adapter;
     private int[] pagebg = new int[4];
-    private List<Integer> img = new ArrayList<>();
+    private List<SpeakerDetails> list = new ArrayList<>();
     ESummitAnimaiton animaiton;
     private TextView toSpeaker, toAboutES;
 
@@ -43,14 +44,14 @@ public class ESummitActivity extends AppCompatActivity{
     public void initialize() {
         pager = findViewById(R.id.pager);
         pager.setPageTransformer(true, new ViewPagerDepthTransformer());
-        img.add(R.drawable.ic_username);
-        img.add(R.drawable.button_sign_in);
-        img.add(R.drawable.common_google_signin_btn_icon_dark_normal_background);
-        img.add(R.drawable.common_google_signin_btn_icon_light);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(),img);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), list);
         pager.setAdapter(adapter);
-
         toAboutES.setVisibility(View.INVISIBLE);
         toAboutES.setClickable(false);
+    }
+
+    void additem(int id,String name,String img){
+        SpeakerDetails data = new SpeakerDetails(id,name,img);
+        list.add(data);
     }
 }

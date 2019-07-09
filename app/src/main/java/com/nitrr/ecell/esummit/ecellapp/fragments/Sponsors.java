@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,8 @@ import android.view.ViewGroup;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsorsRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsorsModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -29,6 +31,7 @@ public class Sponsors extends Fragment {
 
     private RecyclerView recycler;
     private SponsorsRecyclerViewAdapter adapter;
+    private SponsorsModel model;
     private List<SponsRVData> list = new ArrayList<SponsRVData>();
     private static String type;
 
@@ -77,42 +80,46 @@ public class Sponsors extends Fragment {
     void APICall()
     {
         APIServices service = AppClient.getRetrofitInstance();
-        Call<List<SponsRVData>> call =service.getSponsData();
-        call.enqueue(new Callback<List<SponsRVData>>() {
+        Call<SponsorsModel> call =service.getSponsData();
+        call.enqueue(new Callback<SponsorsModel>() {
             @Override
-            public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {
+            public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {
                 if(response.isSuccessful()){
-                list=response.body();
-                    if(list!=null && !list.isEmpty())
-                    setRecyclerView();
+                model=response.body();
+                    if(model!=null){
+                        list = model.getList();
+                        setRecyclerView();
+                    }
                     else{
-
+                        Log.e("response list empty","response is empty and is: "+response.toString());
                     }
                 }
-                else
+                else{
+                    Log.e("response failure","resoponse is "+ response.toString());
                     Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                }
             }
             @Override
-            public void onFailure(Call<List<SponsRVData>> call, Throwable t) {
+            public void onFailure(Call<SponsorsModel> call, Throwable t) {
                 if(!Utils.isNetworkAvailable(getContext()))
                     Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 else
                 {
                     Utils.showToast(getActivity(),"Something went wrong.");
+                    Log.e("onfailure","throable is "+t.toString());
                     getActivity().finish();
                 }
             }
         });}
 
-    private void setList() {
-        SponsRVData data = new SponsRVData("Resonance",type,R.drawable.spons_cardbg_1,null);
-        list.add(data);
-        data = new SponsRVData("Saavan",type,R.drawable.spons_cardbg_2,null);
-        list.add(data);
-        data = new SponsRVData("Nesley",type,R.drawable.spons_cardbg_3,null);
-        list.add(data);
-
-    }
+//    private void setList() {
+//        SponsRVData data = new SponsRVData("Resonance",type,R.drawable.spons_cardbg_1,null);
+//        list.add(data);
+//        data = new SponsRVData("Saavan",type,R.drawable.spons_cardbg_2,null);
+//        list.add(data);
+//        data = new SponsRVData("Nesley",type,R.drawable.spons_cardbg_3,null);
+//        list.add(data);
+//    }
 
     void setRecyclerView(){
         LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);

@@ -8,26 +8,51 @@
     android:background="#EEF2F2"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
     <ImageView
-        android:id="@+id/home_bg1"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:src="@drawable/homebg_esummit"/>
-    <ImageView
-        android:id="@+id/home_bg2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/homebg_event"/>
-    <ImageView
-        android:id="@+id/home_bg3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/homebg_bquiz"/>
-    <ImageView
-        android:id="@+id/home_bg4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/homebg_sponsors"/>
+        android:id="@+id/homebg_circle1"
+        android:layout_height="440dp"
+        android:layout_width="440dp"
+        android:layout_marginTop="-110dp"
+        android:layout_marginLeft="-180dp"
+        app:srcCompat="@drawable/homebg_circle1"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <ImageView
+            android:id="@+id/homebg_circle2"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginBottom="-25dp"
+            android:layout_marginLeft="-30dp"
+            app:srcCompat="@drawable/homebg_circle1"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:id="@+id/homebg_circle3"
+            android:layout_width="320dp"
+            android:layout_height="320dp"
+            android:layout_marginBottom="-80dp"
+            android:layout_marginRight="-150dp"
+            app:srcCompat="@drawable/homebg_circle1"/>
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recycler"
@@ -46,7 +71,7 @@
         android:id="@+id/hamburgerButton"
         android:layout_width="100dp"
         android:layout_height="70dp"
-        android:src="@drawable/ic_hamburger"
+        app:srcCompat="@drawable/ic_hamburger"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="150dp"
         android:layout_marginEnd="150dp"

@@ -1,6 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -12,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.Event.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -26,7 +27,7 @@ import retrofit2.Response;
 
 public class Event extends Fragment {
 
-
+    private EventModel model;
     private TextView event;
     private TextView eventditails;
     private ImageView eventimg;
@@ -73,47 +74,32 @@ public class Event extends Fragment {
 
     void APICall(){
         APIServices service = AppClient.getRetrofitInstance();
-        Call<List<EventData>> call= service.getEventDetails();
-        call.enqueue(new Callback<List<EventData>>() {
+        Call<EventModel> call= service.getEventDetails();
+        call.enqueue(new Callback<EventModel>() {
             @Override
-            public void onResponse(Call<List<EventData>> call, Response<List<EventData>> response) {
-
-                Log.e("Response:", "response is "+response.toString()+" and call is "+call.toString());
+            public void onResponse(Call<EventModel> call, Response<EventModel> response) {
                 if(response.isSuccessful()){
-                    list = response.body();
-                    if(list!=null && !list.isEmpty())
+                    model = response.body();
+                    if(model!=null){
+                        list =model.getList();
                         setData();
+                    }
                     else
-                        showdialog();
+                        Log.e("model empty","moldel is emple and response is: "+ response.toString());
                 }
                 else
                     Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
             }
             @Override
-            public void onFailure(Call<List<EventData>> call, Throwable t) {
+            public void onFailure(Call<EventModel> call, Throwable t) {
                 Log.e("Failure", "throwable is "+t+" and call is "+call.toString());
                 if(!Utils.isNetworkAvailable(getContext()))
                     Utils.showDialog(getContext(),null,false,null,getContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 else
                 {Utils.showToast(getContext(),"Something went wrong.");
-                    getActivity().finish();
                 }
             }
         });
-    }
-
-    void showdialog(){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle("Verify OTP");
-        dialog.setMessage("Oops! data wasn't able to load");
-        dialog.setPositiveButton("Refresh", (dialog1, which) -> APICall());
-        dialog.setNegativeButton("Cancel", ((dialog12, which) -> {
-            getActivity().finish();
-            dialog12.dismiss();
-        }));
-        dialog.setOnCancelListener(dialog3 -> APICall());
-        dialog.show();
-        Log.e("Dialog ","Dialog code executed");
     }
 
     private void initalize(View v) {
@@ -126,17 +112,17 @@ public class Event extends Fragment {
 
     private void setData(){
         EventData data =list.get(position);
-//        if(data.isFlag())
-//        {
+        if(data.isFlag())
+        {
         event.setText(data.getName());
-        //Glide.with(getContext()).load(data.getImg()).into(eventimg);
+        Glide.with(getContext()).load(data.getImage()).into(eventimg);
         eventditails.setText(data.getDetails());
-//        timefeild.setText(setTime(data.getTime(),data.getDate()));
-//        venue.setText(data.getVenue());
-//        }
-//        else{
-//            Utils.showToast(getContext(),""+R.string.eventdenied);
-//        }
+        timefeild.setText(setTime(data.getTime(),data.getDate()));
+        venue.setText(data.getVenue());
+        }
+        else{
+            Utils.showToast(getContext(),""+R.string.eventdenied);
+        }
     }
 
     private String setTime(String time,String date){

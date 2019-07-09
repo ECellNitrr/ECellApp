@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if(!response.isSuccessful()) {
-                    Utils.showToast(context, "There was an error in post request");
+                    Utils.showToast(context, "There was an error in post request "+response.toString());
                     return;
                 }
 

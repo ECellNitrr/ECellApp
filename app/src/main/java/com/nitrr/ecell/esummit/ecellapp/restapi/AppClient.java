@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppClient {
 
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://virtserver.swaggerhub.com/EcellWeb2k19/ECell2k19/1.0.0/";
+    private static String BASE_URL = "https://1e67cac2.ngrok.io/";
 
     public static APIServices getRetrofitInstance(){
         if(retrofit == null) {
@@ -23,24 +23,13 @@ public class AppClient {
             return retrofit.create(APIServices.class);
     }
 
-    public static APIServices getRetrofitInstanceWithAuth(){
-        if(retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(getClient())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit.create(APIServices.class);
-    }
-
     private static OkHttpClient getClient(){
         return new OkHttpClient()
                 .newBuilder()
-                .callTimeout(10, TimeUnit.SECONDS)
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
+//                .callTimeout(10, TimeUnit.SECONDS)
+//                .connectTimeout(10, TimeUnit.SECONDS)
+//                .readTimeout(5, TimeUnit.SECONDS)
+//                .writeTimeout(5, TimeUnit.SECONDS)
                 .build();
         }
 }

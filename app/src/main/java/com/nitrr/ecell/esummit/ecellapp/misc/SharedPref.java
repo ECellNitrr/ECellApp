@@ -2,18 +2,23 @@ package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 public class SharedPref {
     private Activity activity;
 
-    public SharedPref(Activity activity,
+    public SharedPref(Activity activity, Bundle details,
                       String accessToken,
                       boolean isLoggedIn,
                       boolean isFBLoggedIn,
                       boolean isGLoggedIn) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = prefs.edit();
+        String fristname = details.getString("fristname");
+        String lastname = details.getString("lastname");
+        String email = details.getString("email");
+
         editor.putString("access_token", accessToken);
         editor.putBoolean("isLoggedIn", isLoggedIn);
         editor.putBoolean("isFBLoggedIn", isFBLoggedIn);
