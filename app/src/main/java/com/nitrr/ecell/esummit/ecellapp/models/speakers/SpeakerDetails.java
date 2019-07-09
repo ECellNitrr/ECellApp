@@ -7,6 +7,10 @@ import java.io.Serializable;
 
 public class SpeakerDetails implements Serializable {
 
+    @SerializedName("id")
+    @Expose
+    int id;
+
     @SerializedName("name")
     @Expose
     String name;
@@ -15,21 +19,17 @@ public class SpeakerDetails implements Serializable {
     @Expose
     String company;
 
-    @SerializedName("email")
-    @Expose
-    String email;
-
-    @SerializedName("year")
-    @Expose
-    int year;
-
-    @SerializedName("social_media")
-    @Expose
-    String socialMedia;
-
     @SerializedName("experience")
     @Expose
     int experience;
+
+    @SerializedName("profile_pic")
+    @Expose
+    String img;
+
+    @SerializedName("email")
+    @Expose
+    String email;
 
     @SerializedName("contact")
     @Expose
@@ -39,36 +39,37 @@ public class SpeakerDetails implements Serializable {
     @Expose
     String description;
 
+    @SerializedName("social_media")
+    @Expose
+    String socialMedia;
+
+    @SerializedName("flag")
+    @Expose
+    boolean flag;
+
+    @SerializedName("year")
+    @Expose
+    int year;
+
+    public SpeakerDetails(int id, String name, String img) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
     }
 
-    public String getCompany() {
-        return company;
+    public String getImg() {
+        return img;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getSocialMedia() {
-        return socialMedia;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public String getDescription() {
-        return description;
+    public boolean isFlag() {
+        return flag;
     }
 }

@@ -18,15 +18,12 @@ public class ViewPagerDepthTransformer implements ViewPager.PageTransformer {
         } else if (v <= 0) {
             view.setAlpha(1f);
             view.setTranslationX(0f);
-            view.setScaleX(1f);
-            view.setScaleY(1f);
+            view.setScaleX(0.8f);
+            view.setScaleY(0.8f);
 
         } else if (v <= 1) {
             // Fade the page out.
-            view.setAlpha(1 - v);
-
-            view.setTranslationX(pageWidth * -v);
-
+            view.setAlpha(1 /*- v*/);
             // Scale the page down (between MIN_SCALE and 1)
             float scaleFactor = MIN_SCALE
                     + (1 - MIN_SCALE) * (1 - Math.abs(v));
@@ -35,7 +32,14 @@ public class ViewPagerDepthTransformer implements ViewPager.PageTransformer {
 
         } else {
             // This page is way off-screen to the right.
-            view.setAlpha(0f);
+            view.setAlpha(1f);
+        }
+        if(v>=0) {
+            view.setTranslationX(pageWidth * -v);
+            view.setAlpha(1f);
+            view.setScaleX(0.8f-0.05f*v);
+            view.setScaleY(0.8f);
+            view.setTranslationY(30 * v);
         }
     }
 }

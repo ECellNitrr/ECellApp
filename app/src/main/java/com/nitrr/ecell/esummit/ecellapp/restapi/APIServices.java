@@ -1,8 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
-import com.nitrr.ecell.esummit.ecellapp.models.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
-import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
@@ -12,14 +11,12 @@ import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.otp.OTPVerify;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerResponse;
+import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsorsModel;
 import com.nitrr.ecell.esummit.ecellapp.models.startUps.StartUpDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.startUps.StartUpResponse;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -27,15 +24,15 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    @GET()
-    Call<List<SponsRVData>> getSponsData();
+    @GET("sponsors/list/2019")
+    Call<SponsorsModel> getSponsData();
 
-    @GET()
-    Call<List<EventData>> getEventDetails();
+    @GET("events/list/2019/")
+    Call<EventModel> getEventDetails();
 
 
     //Auth
-    @POST("register/")
+    @POST("users/register/")
     Call<RegisterResponse> postRegisterUser(@Body RegisterDetails registerDetails);
 
     @POST("/login/")

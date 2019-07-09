@@ -20,7 +20,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData;
 
 import java.util.List;
 

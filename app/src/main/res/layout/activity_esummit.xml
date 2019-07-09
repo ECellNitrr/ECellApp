@@ -175,6 +175,7 @@
             android:layout_marginTop="160dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
+            android:background="@color/transparent"
             app:layout_constraintBottom_toBottomOf="@id/es_lower_poly"
             app:layout_constraintEnd_toEndOf="@id/es_lower_poly"
             app:layout_constraintStart_toStartOf="@id/es_lower_poly"

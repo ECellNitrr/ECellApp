@@ -7,23 +7,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.TeamRVAdapter;
-import com.nitrr.ecell.esummit.ecellapp.models.SponsRVData;
-import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
-import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
+import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Team extends Fragment {
 
@@ -41,20 +34,20 @@ public class Team extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team, container, false);
         recycler = view.findViewById(R.id.team_recycler);
-        APIServices service = AppClient.getRetrofitInstance();
-        Call<List<SponsRVData>> call =service.getSponsData();
-        call.enqueue(new Callback<List<SponsRVData>>() {
-            @Override
-            public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {
-                list=response.body();
-                setRecyclerView();
-            }
-
-            @Override
-            public void onFailure(Call<List<SponsRVData>> call, Throwable t) {
-                Log.e("Retrofit info","Something went wrong! erroe is: "+t);
-            }
-        });
+//        APIServices service = AppClient.getRetrofitInstance();
+//        Call<List<SponsRVData>> call =service.getSponsData();
+//        call.enqueue(new Callback<List<SponsRVData>>() {
+//            @Override
+//            public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {
+//                list=response.body();
+//                setRecyclerView();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<SponsRVData>> call, Throwable t) {
+//                Log.e("Retrofit info","Something went wrong! erroe is: "+t);
+//            }
+//        });
         return view;
     }
 

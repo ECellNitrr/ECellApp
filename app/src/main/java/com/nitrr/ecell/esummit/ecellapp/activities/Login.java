@@ -203,7 +203,7 @@ public class Login extends AppCompatActivity{
             @Override
             public void onResponse(@NonNull Call<RegisterResponse> call, @NonNull Response<RegisterResponse> response) {
                 if(!response.isSuccessful()) {
-                    Utils.showToast(context, "There was an error in post request");
+                    Utils.showToast(context, "There was an error in post request "+response.toString());
                     return;
                 }
 
