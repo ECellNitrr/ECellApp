@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.activities.Login;
 
 public class LoginAnimation {
 
@@ -23,7 +23,7 @@ public class LoginAnimation {
     private float pHeight, nHeight;
 
     //Constructor to initialize all the objects that are to be animated
-    public LoginAnimation(LoginActivity view){
+    public LoginAnimation(Login view){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         view.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         this.pHeight = displayMetrics.heightPixels * 0.6310f;
