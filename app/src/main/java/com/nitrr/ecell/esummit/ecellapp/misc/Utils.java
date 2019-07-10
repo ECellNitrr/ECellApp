@@ -33,7 +33,8 @@ public class Utils {
     }
 
     public static View showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
-        View v=null;AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        View v=null;
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         if(layout!=null){
             v=LayoutInflater.from(context).inflate(layout,null);
             dialog.setView(v);

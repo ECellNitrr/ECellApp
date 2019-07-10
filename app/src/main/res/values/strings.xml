@@ -51,6 +51,8 @@
     <string name="wasntabletoload">Oops! data wasn\'t able to load</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="verifyotp">Verify OTP</string>
+    <string name="no_internet">No internet COnnection</string>
 
 
 </resources>

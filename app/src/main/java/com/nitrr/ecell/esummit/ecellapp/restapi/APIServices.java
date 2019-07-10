@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
+import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamData;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
@@ -82,5 +83,6 @@ public interface APIServices {
     @GET("/startup/generate_sheet/")
     Call getStartupSheet();
 
-
+    @GET("/spons")
+    Call<TeamData> getTeamData();
 }

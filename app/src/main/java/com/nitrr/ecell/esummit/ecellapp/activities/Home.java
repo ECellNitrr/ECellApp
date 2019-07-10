@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.ImageView;
 
@@ -29,14 +29,12 @@ public class Home extends AppCompatActivity {
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
 
-    private ImageView bgcircle1;
-    private ImageView bgcircle2;
-    private ImageView bgcircle3;
-
     private int rvpositionx = 0;
-    private int distance = 0;
+    private ImageView bgCircle1, bgCircle2,  bgCircle3;
 
+    private int distance =0,offset;
     private float displacment = 0;
+
     ImageButton hamburger_button;
 
     @Override
@@ -46,9 +44,9 @@ public class Home extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.home_recycler);
 
-        bgcircle1 = findViewById(R.id.homebg_circle1);
-        bgcircle2 = findViewById(R.id.homebg_circle2);
-        bgcircle3 = findViewById(R.id.homebg_circle3);
+        bgCircle1 = findViewById(R.id.homebg_circle1);
+        bgCircle2 = findViewById(R.id.homebg_circle2);
+        bgCircle3 = findViewById(R.id.homebg_circle3);
 
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
@@ -80,20 +78,14 @@ public class Home extends AppCompatActivity {
 
         hamburger_button = findViewById(R.id.hamburgerButton);
         hamburger_button.setOnClickListener((View view) -> MenuCustomAlertDialog.getInstance().with(this).build());
-
+        recyclerView = findViewById(R.id.home_recycler);
+        recyclerView.hasFixedSize();
+        setUpRV();
     }
 
-
-    public void initializeList(String name, int cardImage, String color,View.OnClickListener listener) {
-        HomeRVData data = new HomeRVData(name, color, cardImage,listener);
-        homeRVDataList.add(data);
-    }
 
     public void setUpRV() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        int fristposition = layoutManager.findFirstVisibleItemPosition();
-        int lastposition = layoutManager.findLastVisibleItemPosition();
-        distance = lastposition-fristposition;
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setPadding(100, 0, 100, 0);
@@ -152,24 +144,24 @@ public class Home extends AppCompatActivity {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                Log.e("Scrolled","distance between them is " + distance);
-                rvpositionx += dx;
-                if (rvpositionx < 885) {
-                    displacment = (float) rvpositionx / 885;
-                    bgcircle1.setColorFilter(color(85,216,183,252,110,81, displacment));
-                    bgcircle2.setColorFilter(color(85,216,183,252,110,81, displacment));
-                    bgcircle3.setColorFilter(color(85,216,183,252,110,81, displacment));
+                distance = recyclerView.computeHorizontalScrollRange();
+                offset=recyclerView.computeHorizontalScrollOffset();
+                if (offset < distance/4) {
+                    displacment = (float) offset / 885;
+                    bgCircle1.setColorFilter(color(85,216,183,252,110,81, displacment));
+                    bgCircle2.setColorFilter(color(85,216,183,252,110,81, displacment));
+                    bgCircle3.setColorFilter(color(85,216,183,252,110,81, displacment));
 
-                } else if (rvpositionx < 1770) {
-                    displacment = (float) (rvpositionx - 885) / 885;
-                    bgcircle1.setColorFilter(color(252,110,81,88,180,225, displacment));
-                    bgcircle2.setColorFilter(color(252,110,81,88,180,225, displacment));
-                    bgcircle3.setColorFilter(color(252,110,81,88,180,225, displacment));
-                } else if (rvpositionx < 2655) {
-                    displacment = (float) (rvpositionx - 1770) / 885;
-                    bgcircle1.setColorFilter(color(88,180,225,249,207,109, displacment));
-                    bgcircle2.setColorFilter(color(88,180,225,249,207,109, displacment));
-                    bgcircle3.setColorFilter(color(88,180,225,249,207,109, displacment));
+                } else if (offset < distance/2) {
+                    displacment = (float) (offset - (distance/4)) / 885;
+                    bgCircle1.setColorFilter(color(252,110,81,88,180,225, displacment));
+                    bgCircle2.setColorFilter(color(252,110,81,88,180,225, displacment));
+                    bgCircle3.setColorFilter(color(252,110,81,88,180,225, displacment));
+                } else if (offset < (distance*3/4)) {
+                    displacment = (float) (offset - (distance/2)) / 885;
+                    bgCircle1.setColorFilter(color(88,180,225,249,207,109, displacment));
+                    bgCircle2.setColorFilter(color(88,180,225,249,207,109, displacment));
+                    bgCircle3.setColorFilter(color(88,180,225,249,207,109, displacment));
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }
@@ -182,5 +174,10 @@ public class Home extends AppCompatActivity {
 
     int colorValue(int Initial,int Final,float pos){
         return (int)(Final*pos+Initial*(1-pos));
+    }
+
+    public void initializeList(String name, int cardImage, String color,View.OnClickListener listener) {
+        HomeRVData data = new HomeRVData(name, color, cardImage,listener);
+        homeRVDataList.add(data);
     }
 }

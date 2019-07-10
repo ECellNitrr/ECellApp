@@ -70,7 +70,7 @@ public class BQuizFragment extends Fragment {
         webSocket.onFailure()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventFailure -> Utils.showToast(getContext(), "Some exception occurred. Contact Technical Team."),
+                .subscribe(socketEventFailure -> Utils.showToast(getContext(), "Some exception occurred. Contact Technical TeamList."),
                         Throwable::printStackTrace);
 
         webSocket.setupConnection();

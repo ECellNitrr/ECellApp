@@ -22,4 +22,5 @@ public class Aim extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_aim, container, false);
     }
+
 }
