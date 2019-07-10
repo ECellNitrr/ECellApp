@@ -10,6 +10,7 @@ import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Team;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class AboutUs extends AppCompatActivity{
@@ -46,7 +47,7 @@ public class AboutUs extends AppCompatActivity{
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
+        transaction.disallowAddToBackStack();
         transaction.commit();
     }
 }

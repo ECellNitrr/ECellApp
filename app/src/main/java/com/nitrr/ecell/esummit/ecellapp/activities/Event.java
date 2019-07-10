@@ -51,13 +51,6 @@ public class Event extends AppCompatActivity {
         APICall();
     }
 
-    private void setRecycler() {
-        GridLayoutManager gridLayoutManager =new GridLayoutManager(this,3);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        adapter = new EventRecyclerViewAdapter(this,list);
-        recyclerView.setAdapter(adapter);
-    }
-
     void APICall(){
         APIServices services = AppClient.getRetrofitInstance();
         Call<EventModel> call = services.getEventDetails();
@@ -71,10 +64,10 @@ public class Event extends AppCompatActivity {
                         setRecycler();
                     }
                     else
-                        Utils.showDialog(getApplicationContext(),null,false,null,getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                        Utils.showDialog(Event.this,null,false,"Server down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 }
                 else
-                    Utils.showDialog(getApplicationContext(),null,false,null,getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                    Utils.showDialog(Event.this,null,false,"Server Down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
             }
             @Override
             public void onFailure(Call<EventModel> call, Throwable t) {
@@ -88,4 +81,10 @@ public class Event extends AppCompatActivity {
         });
     }
 
+    private void setRecycler() {
+        GridLayoutManager gridLayoutManager =new GridLayoutManager(this,3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        adapter = new EventRecyclerViewAdapter(this,list);
+        recyclerView.setAdapter(adapter);
+    }
 }

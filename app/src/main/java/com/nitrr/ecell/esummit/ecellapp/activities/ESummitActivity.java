@@ -43,8 +43,14 @@ public class ESummitActivity extends AppCompatActivity{
 
     public void initialize() {
         pager = findViewById(R.id.pager);
+        additem(1,"Vire","https://www.whatsappprofiledpimages.com/wp-content/uploads/2018/07/cool-profile-pictures5-300x300.jpg");
+        additem(2,"AAA","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8QrjD1Nnuez1NBnRg-fHvWAj1RCK9nUYDwC1ZTsLODmj4acwiuQ");
+        additem(3,"BBB","https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2OTA4NzY5MjE2MTI4/drake_photo_by_prince_williams_wireimage_getty_479503454.jpg");
+        additem(4,"CCC","https://i.ytimg.com/vi/CrEPmg06HRs/hqdefault.jpg");
+        additem(5,"DDD","https://cdn.cnn.com/cnnnext/dam/assets/160725131446-graham-car-crash-evolved-human-full-169.jpeg");
         pager.setPageTransformer(true, new ViewPagerDepthTransformer());
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), list);
+        pager.setOffscreenPageLimit(2);
+        adapter = new ViewPagerAdapter(this,list);
         pager.setAdapter(adapter);
         toAboutES.setVisibility(View.INVISIBLE);
         toAboutES.setClickable(false);

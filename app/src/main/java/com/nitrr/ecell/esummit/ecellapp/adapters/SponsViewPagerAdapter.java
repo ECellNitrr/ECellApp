@@ -16,8 +16,7 @@ public class SponsViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int i) {
-        return new Sponsors().newInstance(tabname[i],i);
+    public Fragment getItem(int i) { return new Sponsors().newInstance(i);
     }
 
     @Override

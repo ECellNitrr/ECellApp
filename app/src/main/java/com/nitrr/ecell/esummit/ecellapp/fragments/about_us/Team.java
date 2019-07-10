@@ -1,29 +1,46 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments.about_us;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.TeamRVAdapter;
-import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
+import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamData;
+import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamList;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Team extends Fragment {
 
 
-    RecyclerView recycler;
-    TeamRVAdapter adapter;
-    List<SponsRVData> list = new ArrayList<SponsRVData>();
+    private RecyclerView recycler;
+    private TeamRVAdapter adapter;
+    private TeamData model;
+    private List<TeamList> list = new ArrayList<TeamList>();
+    private Call<TeamData> call;
+//    private DialogInterface.OnClickListener cancellistener = (dialog, which) -> {
+//        dialog.cancel();
+//        getFragmentManager().beginTransaction().replace(R.id.frame_container,new Aim()).disallowAddToBackStack().commit();
+//    };
+    private DialogInterface.OnClickListener refreshlistener = (dialog, which) -> APICall();
 
     public Team() {
         // Required empty public constructor
@@ -34,27 +51,51 @@ public class Team extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team, container, false);
         recycler = view.findViewById(R.id.team_recycler);
-//        APIServices service = AppClient.getRetrofitInstance();
-//        Call<List<SponsRVData>> call =service.getSponsData();
-//        call.enqueue(new Callback<List<SponsRVData>>() {
-//            @Override
-//            public void onResponse(Call<List<SponsRVData>> call, Response<List<SponsRVData>> response) {
-//                list=response.body();
-//                setRecyclerView();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<SponsRVData>> call, Throwable t) {
-//                Log.e("Retrofit info","Something went wrong! erroe is: "+t);
-//            }
-//        });
+        APICall();
         return view;
     }
 
+    void APICall() {
+        if(this.isHidden()==false){
+        APIServices service = AppClient.getRetrofitInstance();
+        call = service.getTeamData();
+        call.enqueue(new Callback<TeamData>() {
+            @Override
+            public void onResponse(Call<TeamData> call, Response<TeamData> response) {
+                if (response.isSuccessful()) {
+                    model = response.body();
+                    if (model != null) {
+                        list = model.getList();
+                        setRecyclerView();
+                    }
+                } else
+                    Utils.showDialog(getContext(), null, false, "Poor internet connection", getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
+            }
+
+            @Override
+            public void onFailure(Call<TeamData> call, Throwable t) {
+                if (!Utils.isNetworkAvailable(getContext()))
+                    Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
+                else {
+                    Utils.showToast(getActivity(), "Something went wrong.");
+                    Log.e("onfailure", "throable is " + t.toString());
+                    getActivity().finish();
+                }
+            }
+        });
+    }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        call.cancel();
+    }
+
     private void setRecyclerView() {
-        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter =new TeamRVAdapter(getContext(),list);
+        adapter = new TeamRVAdapter(getContext(), list);
         recycler.setAdapter(adapter);
     }
 }

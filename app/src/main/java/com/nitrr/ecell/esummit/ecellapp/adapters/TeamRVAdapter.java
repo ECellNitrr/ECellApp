@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamList;
 
 import java.util.List;
 
 public class TeamRVAdapter extends RecyclerView.Adapter<TeamRVAdapter.MyViewHolder> {
 
     private Context context;
-    private List<SponsRVData> list;
+    private List<TeamList> list;
 
-    public TeamRVAdapter(Context context, List<SponsRVData> list) {
+    public TeamRVAdapter(Context context, List<TeamList> list) {
         this.context = context;
         this.list = list;
     }
@@ -35,10 +35,10 @@ public class TeamRVAdapter extends RecyclerView.Adapter<TeamRVAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
-        SponsRVData data = list.get(i);
+        TeamList data = list.get(i);
         holder.name.setText(data.getName());
         holder.post.setText(data.getType());
-        Glide.with(context).load(data.getImg())./*listener(new RequestListener<Drawable>() {
+        Glide.with(context).load(data.getUrl())./*listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.img.setVisibility(View.GONE);

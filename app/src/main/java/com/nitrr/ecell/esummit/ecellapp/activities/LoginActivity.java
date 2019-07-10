@@ -41,9 +41,6 @@ public class LoginActivity extends AppCompatActivity{
     EditText firstName, lastName, registerUsername, registerPassword, email, mobileNumber;
     LinearLayout registerlayout;
     LoginAnimation loginanimation;
-    EditText otp1,otp2,otp3,otp4;
-    DialogInterface.OnClickListener confirmlistener = (dialog, which) -> dialog.cancel();
-    DialogInterface.OnClickListener cancellistener = (dialog, which) -> dialog.cancel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,82 +107,7 @@ public class LoginActivity extends AppCompatActivity{
         lowerIcon.animate().translationY(300f).setDuration(10).setInterpolator(new AccelerateInterpolator()).start();
     }
 
-    void showOTPDialog() {
-        View v =Utils.showDialog(this,R.layout.layout_otp,false,null,null,"CONFIRM",confirmlistener,"CANCEL",cancellistener);
-        otp1 = v.findViewById(R.id.otp1);
-        otp2 = v.findViewById(R.id.otp2);
-        otp3 = v.findViewById(R.id.otp3);
-        otp4 = v.findViewById(R.id.otp4);
-        otp1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.length()==1)
-                    otp2.requestFocus();
-            }
-        });
-        otp2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.length()==1)
-                    otp3.requestFocus();
-                else if(s.length()==0)
-                    otp1.requestFocus();
-            }
-        });
-        otp3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.length()==1)
-                    otp4.requestFocus();
-                else if(s.length()==0)
-                    otp2.requestFocus();
-            }
-        });
-        otp4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(otp4.length()==0)
-                    otp3.requestFocus();
-            }
-        });
-    }
 
     public void apiCall() {
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
