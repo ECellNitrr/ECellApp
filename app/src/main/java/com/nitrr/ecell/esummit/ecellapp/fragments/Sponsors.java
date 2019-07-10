@@ -29,6 +29,7 @@ import retrofit2.Response;
 
 public class Sponsors extends Fragment {
 
+    com.nitrr.ecell.esummit.ecellapp.activities.Sponsors sponsors;
     private RecyclerView recycler;
     private SponsorsRecyclerViewAdapter adapter;
     private SponsorsModel model;
@@ -48,8 +49,6 @@ public class Sponsors extends Fragment {
         }
     };
 
-
-
     public Sponsors() {
         // Required empty public constructor
     }
@@ -65,7 +64,6 @@ public class Sponsors extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public  View onCreateView(LayoutInflater inflater, ViewGroup container,

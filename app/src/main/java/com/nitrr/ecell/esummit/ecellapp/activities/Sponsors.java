@@ -112,4 +112,8 @@ public class Sponsors extends AppCompatActivity {
     int color(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
         return Color.rgb(colorValue(IR,FR,pos),colorValue(IG,FG,pos),colorValue(IB,FB,pos));
     }
+
+    private void sampleFunction() {
+
+    }
 }

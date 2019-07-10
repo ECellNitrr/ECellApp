@@ -13,13 +13,13 @@ public class SponsorsModel {
     String mesage;
     @SerializedName("data")
     @Expose
-    List<SponsRVData> list;
+    List<com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData> list;
 
     public String getMesage() {
         return mesage;
     }
 
-    public List<SponsRVData> getList() {
+    public List<com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData> getList() {
         return list;
     }
 }
