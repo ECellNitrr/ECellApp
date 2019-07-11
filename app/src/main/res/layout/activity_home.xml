@@ -9,7 +9,7 @@
     android:background="#EEF2F2"
     android:orientation="vertical"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-    tools:context=".activities.Home"
+    tools:context=".activities.HomeActivity"
     android:fitsSystemWindows="true">
 
     <RelativeLayout

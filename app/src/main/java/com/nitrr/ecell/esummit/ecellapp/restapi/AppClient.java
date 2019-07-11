@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppClient {
 
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://1e67cac2.ngrok.io/";
+    private static String BASE_URL = "https://c04c3c6b.ngrok.io/";
 
     public static APIServices getRetrofitInstance(){
         if(retrofit == null) {
@@ -26,10 +26,10 @@ public class AppClient {
     private static OkHttpClient getClient(){
         return new OkHttpClient()
                 .newBuilder()
-//                .callTimeout(10, TimeUnit.SECONDS)
-//                .connectTimeout(10, TimeUnit.SECONDS)
-//                .readTimeout(5, TimeUnit.SECONDS)
-//                .writeTimeout(5, TimeUnit.SECONDS)
+                .callTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
                 .build();
         }
 }

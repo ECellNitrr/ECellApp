@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsViewPagerAdapter;
 
-public class Sponsors extends AppCompatActivity {
+public class SponsorsActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager pager;

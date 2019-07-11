@@ -35,7 +35,7 @@
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username"
+                android:text="@string/name"
                 android:padding="2dp"
                 android:textAlignment="center"
                 android:textColor="@color/colorLightBlack"
@@ -83,7 +83,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/about_us_team_21" />
+                app:srcCompat="@drawable/about_us_team_2" />
 
 
             <TextView

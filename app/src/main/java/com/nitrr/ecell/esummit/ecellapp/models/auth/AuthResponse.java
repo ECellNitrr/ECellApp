@@ -1,26 +1,25 @@
-package com.nitrr.ecell.esummit.ecellapp.models.Team;
+package com.nitrr.ecell.esummit.ecellapp.models.auth;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.io.Serializable;
 
-public class TeamData {
+public class AuthResponse implements Serializable {
 
     @SerializedName("message")
     @Expose
     String message;
 
-    @SerializedName("data")
+    @SerializedName("token")
     @Expose
-    List<TeamList> list;
+    String token;
 
     public String getMessage() {
         return message;
     }
 
-    public List<TeamList> getList() {
-        return list;
+    public String getToken() {
+        return token;
     }
-
 }

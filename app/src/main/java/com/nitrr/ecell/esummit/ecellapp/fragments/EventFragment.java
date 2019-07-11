@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventData;
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Event extends Fragment {
+public class EventFragment extends Fragment {
 
     private EventModel model;
     private TextView event;
@@ -48,11 +48,11 @@ public class Event extends Fragment {
         }
     };
 
-    public Event() {
+    public EventFragment() {
     }
 
-    public static Event newInstance(String param1, int pos) {
-        Event fragment = new Event();
+    public static EventFragment newInstance(String param1, int pos) {
+        EventFragment fragment = new EventFragment();
         Bundle args = new Bundle();
         args.putInt("position", pos);
         fragment.setArguments(args);
@@ -95,7 +95,7 @@ public class Event extends Fragment {
                 if (!Utils.isNetworkAvailable(getContext()))
                     Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
                 else {
-                    Utils.showToast(getContext(), "Something went wrong.");
+                    Utils.showLongToast(getContext(), "Something went wrong.");
                 }
             }
         });
@@ -118,7 +118,7 @@ public class Event extends Fragment {
             timefeild.setText(setTime(data.getTime(), data.getDate()));
             venue.setText(data.getVenue());
         } else {
-            Utils.showToast(getContext(), "" + R.string.eventdenied);
+            Utils.showLongToast(getContext(), "" + R.string.eventdenied);
         }
     }
 

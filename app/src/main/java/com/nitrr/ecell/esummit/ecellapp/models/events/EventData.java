@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.models.Event;
+package com.nitrr.ecell.esummit.ecellapp.models.events;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

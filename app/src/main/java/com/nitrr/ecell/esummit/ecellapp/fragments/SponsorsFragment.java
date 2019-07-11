@@ -1,6 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.activities.SponsorsActivity;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsorsRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData;
@@ -27,9 +27,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Sponsors extends Fragment {
+public class SponsorsFragment extends Fragment {
 
-    com.nitrr.ecell.esummit.ecellapp.activities.Sponsors sponsors;
+    SponsorsActivity sponsorsActivity;
     private static String type;
     private RecyclerView recycler;
     private SponsorsRecyclerViewAdapter adapter;
@@ -47,15 +47,15 @@ public class Sponsors extends Fragment {
             APICall();
         }
     };
-    public Sponsors() {
+    public SponsorsFragment() {
         // Required empty public constructor
     }
 
-    public static Sponsors newInstance(int position) {
+    public static SponsorsFragment newInstance(int position) {
 
         Bundle args = new Bundle();
 
-        Sponsors fragment = new Sponsors();
+        SponsorsFragment fragment = new SponsorsFragment();
         args.putInt("Position", position);
         fragment.setArguments(args);
         return fragment;
@@ -96,7 +96,7 @@ public class Sponsors extends Fragment {
                 if (!Utils.isNetworkAvailable(getContext()))
                     Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
                 else {
-                    Utils.showToast(getActivity(), "Something went wrong.");
+                    Utils.showLongToast(getActivity(), "Something went wrong.");
                     Log.e("onfailure", "throable is " + t.toString());
                     getActivity().finish();
                 }
