@@ -73,7 +73,7 @@ public class Event extends Fragment {
     }
 
     void APICall() {
-        APIServices service = AppClient.getRetrofitInstance();
+        APIServices service = AppClient.getInstance().createService(APIServices.class);
         Call<EventModel> call = service.getEventDetails();
         call.enqueue(new Callback<EventModel>() {
             @Override

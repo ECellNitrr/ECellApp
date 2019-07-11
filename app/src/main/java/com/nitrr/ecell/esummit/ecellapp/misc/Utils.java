@@ -1,12 +1,15 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +23,13 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 
 
 public class Utils {
+
+    private static Activity activity;
+
+    public Utils(Activity activity) {
+        if(activity == null)
+            this.activity = activity;
+    }
 
     public static void showToast(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -47,5 +57,10 @@ public class Utils {
             dialog.setNegativeButton(negbutton,neglistener);
         dialog.show();
         return v;
+    }
+
+    public static String getAccessToken() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        return prefs.getString("access_token", null);
     }
 }

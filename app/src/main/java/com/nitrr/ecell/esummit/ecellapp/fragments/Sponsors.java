@@ -74,7 +74,7 @@ public class Sponsors extends Fragment {
     }
 
     void APICall() {
-        APIServices service = AppClient.getRetrofitInstance();
+        APIServices service = AppClient.getInstance().createService(APIServices.class);
         Call<SponsorsModel> call = service.getSponsData();
         call.enqueue(new Callback<SponsorsModel>() {
             @Override
