@@ -23,13 +23,9 @@
         </activity>
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.Login"
             android:theme="@style/AppTheme.FullScreen"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -40,6 +36,10 @@
         <activity
             android:name=".activities.Home"
             android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

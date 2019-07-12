@@ -36,26 +36,31 @@ public class Utils {
     }
 
     public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        if(context!=null){
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return true;
     }
 
     public static View showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
         View v=null;
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        if(layout!=null){
-            v=LayoutInflater.from(context).inflate(layout,null);
-            dialog.setView(v);
+        if(!((Activity)context).isFinishing()){
+            if(layout!=null){
+                v=LayoutInflater.from(context).inflate(layout,null);
+                dialog.setView(v);
+            }
+            dialog.setTitle(title)
+                    .setMessage(message)
+                    .setCancelable(canclelable)
+                    .setPositiveButton(posbutton,poslistener);
+            if(negbutton!=null && neglistener!=null)
+                dialog.setNegativeButton(negbutton,neglistener);
+            dialog.show();
         }
-        dialog.setTitle(title)
-                .setMessage(message)
-                .setCancelable(canclelable)
-                .setPositiveButton(posbutton,poslistener);
-        if(negbutton!=null && neglistener!=null)
-            dialog.setNegativeButton(negbutton,neglistener);
-        dialog.show();
         return v;
     }
 
@@ -64,3 +69,7 @@ public class Utils {
         return prefs.getString("access_token", null);
     }
 }
+
+
+
+

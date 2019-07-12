@@ -47,22 +47,21 @@ public class Home extends AppCompatActivity {
         bgCircle2 = findViewById(R.id.homebg_circle2);
         bgCircle3 = findViewById(R.id.homebg_circle3);
 
+        recyclerView = findViewById(R.id.home_recycler);
+        recyclerView.hasFixedSize();
         adapter = new HomeRVAdapter(this, homeRVDataList);
+        setUpRV();
 
-        initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home.this,ESummitActivity.class);
-                startActivity(intent);
-            }
+        initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
+            Intent intent = new Intent(Home.this,ESummitActivity.class);
+            startActivity(intent);
         });
-        initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home.this,Event.class);
-                startActivity(intent);
-            }
+
+        initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events), v -> {
+            Intent intent = new Intent(Home.this,Event.class);
+            startActivity(intent);
         });
+
         initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz),null/* new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,12 +69,10 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         }*/);
-        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home.this,Sponsors.class);
-                startActivity(intent);
-            }
+
+        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
+            Intent intent = new Intent(Home.this,Sponsors.class);
+            startActivity(intent);
         });
 
         hamburger_button = findViewById(R.id.hamburgerButton);
@@ -93,7 +90,8 @@ public class Home extends AppCompatActivity {
         recyclerView.setPadding(100, 0, 100, 0);
 
         SnapHelper snapHelper = new MySnapHelper();
-        snapHelper.attachToRecyclerView(recyclerView);
+        if(recyclerView.getOnFlingListener()==null)
+            snapHelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 

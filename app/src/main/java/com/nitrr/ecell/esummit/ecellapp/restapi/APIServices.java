@@ -45,43 +45,43 @@ public interface APIServices {
     Call<GenericMessage> postCAProfile(@Body CADetails caDetails);
 
     @GET("/user/send_otp/")
-    Class<GenericMessage> getSendOTP();
+    Call<GenericMessage> getSendOTP();
 
     @POST("/user/verify_otp/")
-    Class<GenericMessage> postSendOTP(@Header("token") String token, @Body OTPVerify otpVerify);
+    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body OTPVerify otpVerify);
 
 
     //Speakers
     @POST("/speaker/add_new/")
-    Class<GenericMessage> postAddNewSpeaker(@Header("token") String token, @Body SpeakerDetails speakerDetails);
+    Call<GenericMessage> postAddNewSpeaker(@Header("token") String token, @Body SpeakerDetails speakerDetails);
 
     @GET("/speaker/list/{year}/")
-    Class<SpeakerResponse> getSpeakerList(@Path("year") int year);
+    Call<SpeakerResponse> getSpeakerList(@Path("year") int year);
 
     @GET("/speaker/generate_sheet/")
-    Class getSpeakerSheet();
+    Call getSpeakerSheet();
 
 
     //mentors
     @POST("/mentors/add_new/")
-    Class<GenericMessage> postAddNewMentor(@Header("token") String token, @Body MentorDetails mentorDetails);
+    Call<GenericMessage> postAddNewMentor(@Header("token") String token, @Body MentorDetails mentorDetails);
 
     @GET("/mentors/list/{year}/")
-    Class<MentorResponse> getMentorList(@Path("year") int year);
+    Call<MentorResponse> getMentorList(@Path("year") int year);
 
     @GET("/mentors/generate_sheet/")
-    Class getMentorSheet();
+    Call getMentorSheet();
 
 
     //startUp
     @POST("/startup/add_new/")
-    Class<GenericMessage> postAddNewStartup(@Header("token") String token, @Body StartUpDetails startUpDetails);
+    Call<GenericMessage> postAddNewStartup(@Header("token") String token, @Body StartUpDetails startUpDetails);
 
     @GET("/startup/list/{year}/")
-    Class<StartUpResponse> getStartupList(@Path("year") int year);
+    Call<StartUpResponse> getStartupList(@Path("year") int year);
 
     @GET("/startup/generate_sheet/")
-    Class getStartupSheet();
+    Call getStartupSheet();
 
     @GET("/spons")
     Call<TeamData> getTeamData();

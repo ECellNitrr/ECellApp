@@ -52,7 +52,7 @@ public class Event extends AppCompatActivity {
     }
 
     void APICall(){
-        APIServices services = AppClient.getRetrofitInstance();
+        APIServices services = AppClient.getInstance().createService(APIServices.class);
         Call<EventModel> call = services.getEventDetails();
         call.enqueue(new Callback<EventModel>() {
             @Override

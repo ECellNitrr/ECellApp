@@ -27,36 +27,14 @@ import retrofit2.Response;
 
 public class Event extends Fragment {
 
-    private EventModel model;
     private TextView event;
     private TextView eventditails;
     private ImageView eventimg;
-    private TextView venue;
+    private TextView venuefeild;
     private TextView timefeild;
-    private List<EventData> list;
-    private int position;
-    private DialogInterface.OnClickListener cancellistener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            getActivity().finish();
-        }
-    };
-    private DialogInterface.OnClickListener refreshlistener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            APICall();
-        }
-    };
+    private DialogInterface.OnClickListener cancellistener = (dialog, which) -> getActivity().finish();
 
     public Event() {
-    }
-
-    public static Event newInstance(String param1, int pos) {
-        Event fragment = new Event();
-        Bundle args = new Bundle();
-        args.putInt("position", pos);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -65,61 +43,46 @@ public class Event extends Fragment {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            position = bundle.getInt("position");
+            setData(bundle.getString("event_name"),
+                    bundle.getString("event_image"),
+                    bundle.getString("event_details"),
+                    bundle.getString("event_time"),
+                    bundle.getString("event_date"),
+                    bundle.getString("event_venue"));
             initalize(view);
         }
-        APICall();
         return view;
-    }
-
-    void APICall() {
-        APIServices service = AppClient.getInstance().createService(APIServices.class);
-        Call<EventModel> call = service.getEventDetails();
-        call.enqueue(new Callback<EventModel>() {
-            @Override
-            public void onResponse(Call<EventModel> call, Response<EventModel> response) {
-                if (response.isSuccessful()) {
-                    model = response.body();
-                    if (model != null) {
-                        list = model.getList();
-                        setData();
-                    } else
-                        Log.e("model empty", "moldel is emple and response is: " + response.toString());
-                } else
-                    Utils.showDialog(getContext(), null, false, null, getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
-            }
-
-            @Override
-            public void onFailure(Call<EventModel> call, Throwable t) {
-                Log.e("Failure", "throwable is " + t + " and call is " + call.toString());
-                if (!Utils.isNetworkAvailable(getContext()))
-                    Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
-                else {
-                    Utils.showToast(getContext(), "Something went wrong.");
-                }
-            }
-        });
     }
 
     private void initalize(View v) {
         event = v.findViewById(R.id.event_name);
         eventimg = v.findViewById(R.id.event_img);
         eventditails = v.findViewById(R.id.event_text);
-        venue = v.findViewById(R.id.event_venue);
+        venuefeild = v.findViewById(R.id.event_venue);
         timefeild = v.findViewById(R.id.date_time);
     }
 
-    private void setData() {
-        EventData data = list.get(position);
-        if (data.isFlag()) {
-            event.setText(data.getName());
-            Glide.with(getContext()).load(data.getImage()).into(eventimg);
-            eventditails.setText(data.getDetails());
-            timefeild.setText(setTime(data.getTime(), data.getDate()));
-            venue.setText(data.getVenue());
-        } else {
-            Utils.showToast(getContext(), "" + R.string.eventdenied);
-        }
+    private void setData(String name,String image,String details,String time,String date,String venue) {
+
+            if(Utils.isNetworkAvailable(getContext())==false)
+                Utils.showDialog(getContext(),
+                        null,
+                        false,
+                        "No Internet Connection",
+                        getContext().getString(R.string.wasntabletoload),
+                        "Retry", (dialog, which) -> setData(name,image,details,time,date,venue),
+                        "Cancel",
+                        cancellistener);
+            else{try{
+                Glide.with(getContext()).load(image).into(eventimg);}
+                catch(Exception e){
+                    setData(name,image,details,time,date,venue);
+                }
+                event.setText(name);
+                eventditails.setText(details);
+                timefeild.setText(setTime(time,date));
+                venuefeild.setText(venue);
+            }
     }
 
     private String setTime(String time, String date) {
