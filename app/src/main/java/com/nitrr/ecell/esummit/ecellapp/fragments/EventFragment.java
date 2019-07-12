@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventData;
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Event extends Fragment {
+public class EventFragment extends Fragment {
 
     private TextView event;
     private TextView eventditails;
@@ -34,7 +34,7 @@ public class Event extends Fragment {
     private TextView timefeild;
     private DialogInterface.OnClickListener cancellistener = (dialog, which) -> getActivity().finish();
 
-    public Event() {
+    public EventFragment() {
     }
 
     @Override

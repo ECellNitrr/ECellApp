@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">E - Cell</string>
-    <string name="accesstoken">access_token</string>
-    <string name="username">Username</string>
+    <string name="accesstoken">accessToken</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="email">Email</string>

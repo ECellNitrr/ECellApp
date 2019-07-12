@@ -1,12 +1,12 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
-import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamData;
+import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterResponse;
+import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.otp.OTPVerify;
@@ -34,10 +34,10 @@ public interface APIServices {
 
     //Auth
     @POST("users/register/")
-    Call<RegisterResponse> postRegisterUser(@Body RegisterDetails registerDetails);
+    Call<AuthResponse> postRegisterUser(@Body RegisterDetails registerDetails);
 
-    @POST("/login/")
-    Call<GenericMessage> postLoginUser(@Body LoginDetails loginDetails);
+    @POST("users/login/")
+    Call<AuthResponse> postLoginUser(@Body LoginDetails loginDetails);
 
 
     //User

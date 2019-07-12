@@ -27,7 +27,7 @@ public class ESummitAnimaiton {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         view.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         this.distOfScroll = -displayMetrics.heightPixels * 0.47f;
-        Utils.showToast(view, height + "");
+        Utils.showLongToast(view, height + "");
         upperPoly = view.findViewById(R.id.es_upper_poly);
         lowerPoly = view.findViewById(R.id.es_lower_poly);
         viewPager = view.findViewById(R.id.pager);

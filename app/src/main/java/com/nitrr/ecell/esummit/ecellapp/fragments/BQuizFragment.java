@@ -44,17 +44,17 @@ public class BQuizFragment extends Fragment {
         webSocket.onOpen()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventOpen -> Utils.showToast(getContext(), "B-Quiz is live."), Throwable::printStackTrace);
+                .subscribe(socketEventOpen -> Utils.showLongToast(getContext(), "B-Quiz is live."), Throwable::printStackTrace);
 
         webSocket.onClosed()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventClosed -> Utils.showToast(getContext(), "B-Quiz closed."), Throwable::printStackTrace);
+                .subscribe(socketEventClosed -> Utils.showLongToast(getContext(), "B-Quiz closed."), Throwable::printStackTrace);
 
         webSocket.onClosing()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventClosing -> Utils.showToast(getContext(), "B-Quiz is closing."), Throwable::printStackTrace);
+                .subscribe(socketEventClosing -> Utils.showLongToast(getContext(), "B-Quiz is closing."), Throwable::printStackTrace);
 
         webSocket.onMessage()
                 .subscribeOn(Schedulers.io())
@@ -70,7 +70,7 @@ public class BQuizFragment extends Fragment {
         webSocket.onFailure()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventFailure -> Utils.showToast(getContext(), "Some exception occurred. Contact Technical TeamList."),
+                .subscribe(socketEventFailure -> Utils.showLongToast(getContext(), "Some exception occurred. Contact Technical TeamList."),
                         Throwable::printStackTrace);
 
         webSocket.setupConnection();
@@ -83,8 +83,8 @@ public class BQuizFragment extends Fragment {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            success -> Utils.showToast(getContext(), "Answer submitted successfully."),
-                            throwable -> Utils.showToast(getContext(), throwable.getMessage()));
+                            success -> Utils.showLongToast(getContext(), "Answer submitted successfully."),
+                            throwable -> Utils.showLongToast(getContext(), throwable.getMessage()));
 
         } else
             throw new RuntimeException("Socket not Initialized.");

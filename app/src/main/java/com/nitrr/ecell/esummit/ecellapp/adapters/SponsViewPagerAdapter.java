@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.nitrr.ecell.esummit.ecellapp.fragments.Sponsors;
+import com.nitrr.ecell.esummit.ecellapp.fragments.SponsorsFragment;
 
 public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -16,7 +16,7 @@ public class SponsViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int i) { return new Sponsors().newInstance(i);
+    public Fragment getItem(int i) { return new SponsorsFragment().newInstance(i);
     }
 
     @Override

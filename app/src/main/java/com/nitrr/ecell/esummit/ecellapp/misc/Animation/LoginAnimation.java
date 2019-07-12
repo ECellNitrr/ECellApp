@@ -5,90 +5,96 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.Login;
+import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
 
 public class LoginAnimation {
 
     private LinearLayout upperLinearLayout, lowerLinearLayout;
-    private ImageView google, facebook, lowerPoly, upperPoly, downArrow, upArrow, lowerECell, upperECell;
-    private ImageButton toRegisterButton, toSignInButton;
-    private TextView forgot, toRegisterText, toSignInText;
+    private ImageView google, facebook, lowerPoly, upperPoly, /*downArrow, upArrow,*/ lowerECell, upperECell;
+    private TextView toRegister, toSignIn;
+    private TextView forgot;
     private Button signInButton, registerButton;
-    private float pHeight, nHeight;
+    private float distance;
+    private EditText loginEmail, loginPassword, firstName, lastName, registerEmail, registerPassword, contact;
 
     //Constructor to initialize all the objects that are to be animated
-    public LoginAnimation(Login view){
+    public LoginAnimation(LoginActivity view){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         view.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        this.pHeight = displayMetrics.heightPixels * 0.6310f;
-        this.nHeight = -1 * pHeight;
-        upperLinearLayout = view.findViewById(R.id.upper_linear_layout);
-        lowerLinearLayout = view.findViewById(R.id.lower_linear_layout);
+        this.distance = displayMetrics.heightPixels * 0.71f;
+        upperLinearLayout = view.findViewById(R.id.login_linear_layout);
+        lowerLinearLayout = view.findViewById(R.id.register_linear_layout);
         lowerPoly = view.findViewById(R.id.lower_poly);
         upperPoly = view.findViewById(R.id.upper_poly);
         google = view.findViewById(R.id.google_button);
         facebook = view.findViewById(R.id.fb_button);
         forgot = view.findViewById(R.id.forgot);
-        toRegisterText = view.findViewById(R.id.to_register_text);
         signInButton = view.findViewById(R.id.sign_in_button);
-        toRegisterButton = view.findViewById(R.id.to_register_button);
-        downArrow = view.findViewById(R.id.down_arrow);
         registerButton = view.findViewById(R.id.register_button);
-        upArrow = view.findViewById(R.id.up_arrow);
-        toSignInButton = view.findViewById(R.id.to_sign_in_button);
-        toSignInText = view.findViewById(R.id.to_sign_in_text);
+        toRegister = view.findViewById(R.id.to_register);
+        toSignIn = view.findViewById(R.id.to_sign_in);
         upperECell = view.findViewById(R.id.ic_upper_ecell);
         lowerECell = view.findViewById(R.id.ic_lower_ecell);
+
+        loginEmail = view.findViewById(R.id.login_email);
+        loginPassword = view.findViewById(R.id.login_password);
+        firstName = view.findViewById(R.id.register_first_name);
+        lastName = view.findViewById(R.id.register_last_name);
+        registerEmail = view.findViewById(R.id.register_email);
+        registerPassword = view.findViewById(R.id.register_password);
+        contact = view.findViewById(R.id.register_number);
     }
 
-    public void toRegisterScreen(Context context){
-        doTranslationY(lowerPoly, nHeight*1.05f);
-        doTranslationY(upperPoly, nHeight);
-        doTranslationY(lowerLinearLayout, nHeight*1.05f);
-        doTranslationY(upperLinearLayout, nHeight * 1.0769f); //-1400f
-        doTranslationY(google, nHeight * 0.9846f); //-1280f
-        doTranslationY(facebook, nHeight * 0.9846f);
-        doTranslationY(forgot, nHeight * 1.1538f); //-1500f
-        doTranslationY(signInButton, nHeight * 1.2307f); //-1600f
-        doTranslationY(registerButton, nHeight*1.05f);
+    public void toSignInScreen(Context context){
+        doTranslationY(lowerPoly, distance);
+        doTranslationY(upperPoly, distance);
+        doTranslationY(lowerLinearLayout, distance);
+        doTranslationY(upperLinearLayout, distance); //-1400f
+        doTranslationY(google, distance); //-1280f
+        doTranslationY(facebook, distance);
+        doTranslationY(forgot, distance); //-1500f
+        doTranslationY(signInButton, distance); //-1600f
+        doAlphaTransition(signInButton, true);
+        doTranslationY(registerButton, distance);
 
-        doAlphaTransition(google, false);
-        doAlphaTransition(facebook, false);
-        doAlphaTransition(toRegisterText, false);
-        doAlphaTransition(downArrow, false);
-        doAlphaTransition(upArrow, true);
-        doAlphaTransition(toRegisterButton, false);
-        doAlphaTransition(toSignInButton, true);
-        doAlphaTransition(toSignInText, true);
+        doAlphaTransition(google, true);
+        doAlphaTransition(facebook, true);
+        doAlphaTransition(toRegister, true);
+        doAlphaTransition(toSignIn, false);
 
-        doAlphaTransition(upperECell, false);
-        doTranslationY(upperECell, nHeight);
+        doAlphaTransition(upperECell, true);
+        doTranslationY(upperECell, distance);
+        doAlphaTransition(lowerECell, false);
+        doTranslationY(lowerECell, distance);
 
-        doAlphaTransition(lowerECell, true);
-        doTranslationY(lowerECell, nHeight*1.05f);
+        google.setEnabled(true);
+        facebook.setEnabled(true);
+        lowerLinearLayout.setEnabled(false);
+        upperLinearLayout.setEnabled(true);
 
-        google.setEnabled(false);
-        facebook.setEnabled(false);
-        upArrow.setVisibility(View.VISIBLE);
-        toSignInButton.setVisibility(View.VISIBLE);
-        toSignInButton.setEnabled(true);
-        toSignInText.setVisibility(View.VISIBLE);
-        lowerECell.setVisibility(View.VISIBLE);
+        doTranslationY(toSignIn, distance);
+        toSignIn.setEnabled(false);
 
-        downArrow.setVisibility(View.INVISIBLE);
-        toRegisterButton.setVisibility(View.INVISIBLE);
-        toRegisterButton.setEnabled(false);
-        toRegisterText.setVisibility(View.INVISIBLE);
+        doAlphaTransition(toRegister, true);
+        doTranslationY(toRegister, distance);
+        toRegister.setEnabled(true);
+
+        clearAll(registerEmail);
+        clearAll(registerPassword);
+        clearAll(firstName);
+        clearAll(lastName);
+        clearAll(contact);
+        loginPassword.setEnabled(true);
+        loginEmail.setEnabled(true);
     }
 
-
-    public void toSignInScreen(Context context) {
+    public void toRegisterScreen(Context context) {
         doTranslationY(lowerPoly, 0f);
         doTranslationY(upperPoly, 0f);
         doTranslationY(lowerLinearLayout, 0f);
@@ -97,45 +103,49 @@ public class LoginAnimation {
         doTranslationY(facebook, 0f);
         doTranslationY(forgot, 0f);
         doTranslationY(signInButton, 0f);
+        doAlphaTransition(signInButton, false);
         doTranslationY(registerButton, 0f);
 
-        doAlphaTransition(google, true);
-        doAlphaTransition(facebook, true);
-        doAlphaTransition(toRegisterText, true);
-        doAlphaTransition(downArrow, true);
-        doAlphaTransition(upArrow, false);
-        doAlphaTransition(toRegisterButton, true);
-        doAlphaTransition(toSignInButton, false);
-        doAlphaTransition(toSignInText, false);
-        doAlphaTransition(lowerECell, false);
+        doAlphaTransition(google, false);
+        doAlphaTransition(facebook, false);
+        upperLinearLayout.setEnabled(false);
+        lowerLinearLayout.setEnabled(true);
 
-        doAlphaTransition(upperECell, true);
         doTranslationY(upperECell, 0f);
+        doTranslationY(lowerECell, 0f);
+        doAlphaTransition(lowerECell, true);
+        doAlphaTransition(upperECell, false);
 
-        doAlphaTransition(lowerECell, false);
-        doTranslationY(lowerECell, 300f);
+        google.setEnabled(false);
+        facebook.setEnabled(false);
+        toSignIn.setVisibility(View.VISIBLE);
+        toSignIn.setEnabled(true);
 
-        google.setEnabled(true);
-        facebook.setEnabled(true);
-        upArrow.setVisibility(View.INVISIBLE);
-        toSignInButton.setVisibility(View.INVISIBLE);
-        toSignInButton.setEnabled(false);
-        toSignInText.setVisibility(View.INVISIBLE);
+        toRegister.setEnabled(false);
+        doAlphaTransition(toRegister, false);
+        doTranslationY(toRegister, 0f);
 
-        toRegisterButton.setEnabled(true);
-        toRegisterButton.setVisibility(View.VISIBLE);
-        downArrow.setVisibility(View.VISIBLE);
-        toRegisterText.setVisibility(View.VISIBLE);
+        doAlphaTransition(toSignIn, true);
+        toSignIn.setEnabled(true);
+        doTranslationY(toSignIn, 0f);
+
+        clearAll(loginEmail);
+        clearAll(loginPassword);
+        registerPassword.setEnabled(true);
+        registerEmail.setEnabled(true);
+        firstName.setEnabled(true);
+        lastName.setEnabled(true);
+        contact.setEnabled(true);
     }
 
     private void doTranslationY(View view, float value) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, value);
-        animator.setDuration(700);
+        animator.setDuration(800);
         animator.start();
     }
 
-    private void doAlphaTransition(View view, boolean direction) {
-        if(direction) {
+    private void doAlphaTransition(View view, boolean appear) {
+        if(appear) {
             ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1f);
             animator.setDuration(700);
             animator.start();
@@ -146,6 +156,11 @@ public class LoginAnimation {
             animator.setDuration(700);
             animator.start();
         } //Disappear = false
+    }
 
+    private void clearAll(EditText text) {
+        text.setText("");
+        text.clearFocus();
+        text.setEnabled(false);
     }
 }

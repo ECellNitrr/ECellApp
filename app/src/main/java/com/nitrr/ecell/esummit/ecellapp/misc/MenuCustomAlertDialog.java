@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.AboutUs;
+import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
 
 public class MenuCustomAlertDialog {
 
@@ -53,10 +53,10 @@ public class MenuCustomAlertDialog {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View alertView = activity.getLayoutInflater().inflate(R.layout.custom_alert_menu, null);
-        item1 = alertView.findViewById(R.id.username);
-        item2 = alertView.findViewById(R.id.item2);
-        item3 = alertView.findViewById(R.id.item3);
-        item4 = alertView.findViewById(R.id.item4);
+//        item1 = alertView.findViewById(R.id.username);
+//        item2 = alertView.findViewById(R.id.item2);
+//        item3 = alertView.findViewById(R.id.item3);
+//        item4 = alertView.findViewById(R.id.item4);
         item1.setText("Username");
         item2.setOnClickListener(v -> {
             showOTPDialog();
@@ -68,7 +68,7 @@ public class MenuCustomAlertDialog {
             });
         });
         item3.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, AboutUs.class);
+            Intent intent = new Intent(activity, AboutUsActivity.class);
             activity.startActivity(intent);
         });
         item4.setOnClickListener(v -> logout());

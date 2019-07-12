@@ -15,6 +15,11 @@ public class LoginDetails implements Serializable {
     @Expose
     String password;
 
+    public LoginDetails(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }

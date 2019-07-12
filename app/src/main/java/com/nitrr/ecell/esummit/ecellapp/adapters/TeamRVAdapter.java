@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamList;
+import com.nitrr.ecell.esummit.ecellapp.models.team.TeamList;
 
 import java.util.List;
 

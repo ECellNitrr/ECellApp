@@ -23,7 +23,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Home extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private HomeRVAdapter adapter;
@@ -53,25 +53,25 @@ public class Home extends AppCompatActivity {
         setUpRV();
 
         initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
-            Intent intent = new Intent(Home.this,ESummitActivity.class);
+            Intent intent = new Intent(HomeActivity.this,ESummitActivity.class);
             startActivity(intent);
         });
 
         initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events), v -> {
-            Intent intent = new Intent(Home.this,Event.class);
+            Intent intent = new Intent(HomeActivity.this, EventActivity.class);
             startActivity(intent);
         });
 
         initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz),null/* new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home.this,Bquiz.class);
+                Intent intent = new Intent(HomeActivity.this,Bquiz.class);
                 startActivity(intent);
             }
         }*/);
 
-        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
-            Intent intent = new Intent(Home.this,Sponsors.class);
+        initializeList("SponsorsActivity", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
+            Intent intent = new Intent(HomeActivity.this, SponsorsActivity.class);
             startActivity(intent);
         });
 

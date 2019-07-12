@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.fragments.Event;
+import com.nitrr.ecell.esummit.ecellapp.fragments.EventFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 
 import java.util.List;
 
@@ -58,13 +58,13 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             bundle.putString("event_data",data.getDate());
             bundle.putString("event_time",data.getTime());
             bundle.putString("event_details",data.getDetails());
-            Event fragment = new Event();
+            EventFragment fragment = new EventFragment();
             fragment.setArguments(bundle);
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             activity.getSupportFragmentManager().beginTransaction().replace(R.id.event_layout, fragment).addToBackStack(null).commit();
             }
             else{
-                Utils.showToast(context,"This Event hasn't been approved yet");
+                Utils.showLongToast(context,"This Event hasn't been approved yet");
             }
         });
     }

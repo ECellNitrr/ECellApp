@@ -31,8 +31,13 @@ public class Utils {
             this.activity = activity;
     }
 
-    public static void showToast(Context context, String message){
+    public static void showLongToast(Context context, String message){
+
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    public static void showShortToast(Context context, String message){
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public static boolean isNetworkAvailable(Context context) {
@@ -46,7 +51,7 @@ public class Utils {
     }
 
     public static View showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
-        View v=null;
+        View v = null;
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         if(!((Activity)context).isFinishing()){
             if(layout!=null){

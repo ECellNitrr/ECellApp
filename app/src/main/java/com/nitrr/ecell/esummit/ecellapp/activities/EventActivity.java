@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventData;
-import com.nitrr.ecell.esummit.ecellapp.models.Event.EventModel;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -24,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Event extends AppCompatActivity {
+public class EventActivity extends AppCompatActivity {
     private EventModel model;
     private List<EventData> list= new ArrayList<EventData>();
     EventRecyclerViewAdapter adapter;
@@ -39,7 +39,7 @@ public class Event extends AppCompatActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             dialog.cancel();
-            Event.this.finish();
+            EventActivity.this.finish();
         }
     };
 
@@ -64,18 +64,18 @@ public class Event extends AppCompatActivity {
                         setRecycler();
                     }
                     else
-                        Utils.showDialog(Event.this,null,false,"Server down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                        Utils.showDialog(EventActivity.this,null,false,"Server down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 }
                 else
-                    Utils.showDialog(Event.this,null,false,"Server Down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                    Utils.showDialog(EventActivity.this,null,false,"Server Down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
             }
             @Override
             public void onFailure(Call<EventModel> call, Throwable t) {
                 if(!Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(Event.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                    Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 else
                 {Log.e("Failure:  =","throwable is "+t);
-                    Utils.showToast(getApplicationContext(),"Something went wrong.");
+                    Utils.showLongToast(getApplicationContext(),"Something went wrong.");
                 }
             }
         });

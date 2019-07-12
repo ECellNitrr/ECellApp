@@ -2,7 +2,6 @@ package com.nitrr.ecell.esummit.ecellapp.fragments.about_us;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.TeamRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamData;
-import com.nitrr.ecell.esummit.ecellapp.models.Team.TeamList;
+import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
+import com.nitrr.ecell.esummit.ecellapp.models.team.TeamList;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -72,14 +71,12 @@ public class Team extends Fragment {
 
             @Override
             public void onFailure(Call<TeamData> call, Throwable t) {
-                if(getContext()!=null){
-                    if (!Utils.isNetworkAvailable(getContext()))
-                        Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
-                    else {
-                        Utils.showToast(getActivity(), "Something went wrong.");
-                        Log.e("onfailure", "throable is " + t.toString());
-                        getActivity().finish();
-                    }
+                if (!Utils.isNetworkAvailable(getContext()))
+                    Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
+                else {
+                    Utils.showLongToast(getActivity(), "Something went wrong.");
+                    Log.e("onfailure", "throable is " + t.toString());
+                    getActivity().finish();
                 }
             }
         });
