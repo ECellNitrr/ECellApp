@@ -78,6 +78,7 @@ public class SponsorsFragment extends Fragment {
             @Override
             public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {
                 if(getContext()!=null){
+                    Log.e("response",response.toString());
                     if (response.isSuccessful()) {
                         model = response.body();
                             if (model != null) {

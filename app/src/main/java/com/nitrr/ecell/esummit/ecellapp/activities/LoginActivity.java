@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
@@ -90,6 +91,9 @@ public class LoginActivity extends AppCompatActivity{
         fbButton = findViewById(R.id.fb_button);
         googleButton = findViewById(R.id.google_button);
 
+        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
+        fbButton.setOnClickListener((view -> Utils.showNotification(this,"This is title","this is message",true)));
+
         firstName = findViewById(R.id.register_first_name);
         lastName = findViewById(R.id.register_last_name);
         registerPassword = findViewById(R.id.register_password);
@@ -120,6 +124,9 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
                 if(!response.isSuccessful()) {
+                    if (response.body() == null) {
+                        Log.e("Response Body Null", "body is null");
+                    }
                     Utils.showLongToast(context, "There was an error in post request "+response.toString());
                     register.setEnabled(true);
                     return;
@@ -128,24 +135,26 @@ public class LoginActivity extends AppCompatActivity{
                 if (response.body() != null) {
                     if(response.code() == 400) {
                         Utils.showLongToast(context, "Registration Failed");
+                        Log.e("reg failed", response.body().getMessage());
                         register.setEnabled(true);
                     }
                     else {
+                        Log.e("reg successful", response.body().getMessage() + " with token " + response.body().getToken());
                         Utils.showLongToast(context, "User Registered Successfully with token " + response.body().getToken());
-//                        startActivity(new Intent(context, HomeActivity.class));
+                        startActivity(new Intent(context, HomeActivity.class));
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                Utils.showLongToast(context, "There was an error " + t.getMessage());
+                Utils.showLongToast(context, "Failed Response " + t.getMessage());
                 register.setEnabled(true);
             }
         });
     }
 
-    public void LoginApiCall() {
+    public void LoginApiCall() {;
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
         Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
@@ -153,6 +162,7 @@ public class LoginActivity extends AppCompatActivity{
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+                Log.e("response",response.toString());
                 if(response.code() == 400) {
                     Utils.showLongToast(context, "Wrong username or password!");
                     signin.setEnabled(true);

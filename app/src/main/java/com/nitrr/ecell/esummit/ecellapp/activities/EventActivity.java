@@ -58,6 +58,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<EventModel> call, Response<EventModel> response) {
                 if(response.isSuccessful()){
+                    Log.e("response",response.toString());
                     model = response.body();
                     if(model!=null){
                         list = model.getList();

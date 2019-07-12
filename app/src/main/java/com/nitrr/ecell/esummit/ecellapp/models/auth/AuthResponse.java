@@ -15,11 +15,19 @@ public class AuthResponse implements Serializable {
     @Expose
     String token;
 
+    @SerializedName("details")
+    @Expose
+    String details;
+
     public String getMessage() {
         return message;
     }
 
     public String getToken() {
         return token;
+    }
+
+    public String getDetails() {
+        return details;
     }
 }

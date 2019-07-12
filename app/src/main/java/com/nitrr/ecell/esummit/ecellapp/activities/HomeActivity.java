@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }*/);
 
-        initializeList("SponsorsActivity", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
+        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
             Intent intent = new Intent(HomeActivity.this, SponsorsActivity.class);
             startActivity(intent);
         });
