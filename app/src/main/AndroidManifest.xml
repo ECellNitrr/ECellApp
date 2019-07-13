@@ -14,18 +14,21 @@
         android:theme="@style/AppTheme.FullScreen">
         <activity
             android:name=".activities.AboutUsActivity"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.FullScreen"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".activities.SponsorsActivity"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.FullScreen"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
@@ -34,18 +37,21 @@
 
         <activity
             android:name=".activities.EventActivity"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.FullScreen"
+            android:screenOrientation="portrait">
         </activity>
-
         <activity
             android:name=".activities.HomeActivity"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.FullScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activities.ESummitActivity">
+        <activity
+            android:name=".activities.ESummitActivity"
+            android:theme="@style/AppTheme.FullScreen"
+            android:screenOrientation="portrait">
         </activity>
         <meta-data
             android:name="preloaded_fonts"

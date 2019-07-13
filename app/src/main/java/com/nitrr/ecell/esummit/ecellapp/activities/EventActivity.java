@@ -57,7 +57,7 @@ public class EventActivity extends AppCompatActivity {
         call.enqueue(new Callback<EventModel>() {
             @Override
             public void onResponse(Call<EventModel> call, Response<EventModel> response) {
-                if(response.isSuccessful()){
+                if(response.isSuccessful() && EventActivity.this!=null){
                     Log.e("response",response.toString());
                     model = response.body();
                     if(model!=null){
@@ -72,11 +72,13 @@ public class EventActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<EventModel> call, Throwable t) {
-                if(!Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
-                else
-                {Log.e("Failure:  =","throwable is "+t);
-                    Utils.showLongToast(getApplicationContext(),"Something went wrong.");
+                if(EventActivity.this!=null){
+                    if(!Utils.isNetworkAvailable(getApplicationContext()))
+                        Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                    else
+                    {Log.e("Failure:  =","throwable is "+t);
+                        Utils.showLongToast(getApplicationContext(),"Something went wrong.");
+                    }
                 }
             }
         });

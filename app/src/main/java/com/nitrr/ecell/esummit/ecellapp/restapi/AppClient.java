@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppClient {
 
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://38ea95f5.ngrok.io/";  private static AppClient mInstance;
+    private static String BASE_URL = "https://c05789be.ngrok.io/";  private static AppClient mInstance;
     private static Utils prefUtils;
 
     private AppClient() {
@@ -47,15 +47,12 @@ public class AppClient {
 
     public <S> S createServiceWithAuth(Class<S> serviceClass, final AppCompatActivity activity) {
         prefUtils = new Utils(activity);
-        Interceptor interceptorReq = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request().newBuilder()
-                        .addHeader("authId", prefUtils.getAccessToken()).build();
+        Interceptor interceptorReq = chain -> {
+            Request request = chain.request().newBuilder()
+                    .addHeader("authId", prefUtils.getAccessToken()).build();
 
-                Log.e("Header====",   prefUtils.getAccessToken()  );
-                return chain.proceed(request);
-            }
+            Log.e("Header====",   prefUtils.getAccessToken()  );
+            return chain.proceed(request);
         };
 
         OkHttpClient.Builder httpClient = getOKHttpClient();
