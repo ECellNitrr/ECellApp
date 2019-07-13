@@ -35,18 +35,11 @@ public class EventFragment extends Fragment {
     private TextView timefeild;
     private List<EventData> list;
     private int position;
-    private DialogInterface.OnClickListener cancellistener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            getActivity().finish();
-        }
-    };
-    private DialogInterface.OnClickListener refreshlistener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            APICall();
-        }
-    };
+
+
+
+    private DialogInterface.OnClickListener cancellistener = (dialog, which) -> getActivity().finish();
+    private DialogInterface.OnClickListener refreshlistener = (dialog, which) -> APICall();
 
     public EventFragment() {
     }
@@ -84,7 +77,7 @@ public class EventFragment extends Fragment {
                         list = model.getList();
                         setData();
                     } else
-                        Log.e("model empty", "moldel is emple and response is: " + response.toString());
+                        Log.e("model empty", "model is empty and response is: " + response.toString());
                 } else
                     Utils.showDialog(getContext(), null, false, null, getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
             }
@@ -125,5 +118,11 @@ public class EventFragment extends Fragment {
     private String setTime(String time, String date) {
         time = "Date: " + date + " | Time: " + time;
         return time;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
     }
 }
