@@ -53,12 +53,10 @@ public class LoginActivity extends AppCompatActivity{
         loginanimation.toSignInScreen(this);
 
         signin.setOnClickListener((View v) -> {
-            signin.setEnabled(false);
             LoginApiCall();
         });
 
         register.setOnClickListener((View v) -> {
-            register.setEnabled(false);
             RegisterApiCall();
         });
 
@@ -128,7 +126,6 @@ public class LoginActivity extends AppCompatActivity{
                         Log.e("Response Body Null", "body is null");
                     }
                     Utils.showLongToast(context, "There was an error in post request "+response.toString());
-                    register.setEnabled(true);
                     return;
                 }
 
@@ -136,7 +133,6 @@ public class LoginActivity extends AppCompatActivity{
                     if(response.code() == 400) {
                         Utils.showLongToast(context, "Registration Failed");
                         Log.e("reg failed", response.body().getMessage());
-                        register.setEnabled(true);
                     }
                     else {
                         Log.e("reg successful", response.body().getMessage() + " with token " + response.body().getToken());
@@ -149,12 +145,11 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 Utils.showLongToast(context, "Failed Response " + t.getMessage());
-                register.setEnabled(true);
             }
         });
     }
 
-    public void LoginApiCall() {;
+    public void LoginApiCall() {
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
         Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
@@ -162,10 +157,10 @@ public class LoginActivity extends AppCompatActivity{
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+
                 Log.e("response",response.toString());
                 if(response.code() == 400) {
                     Utils.showLongToast(context, "Wrong username or password!");
-                    signin.setEnabled(true);
                 }
 
                 else {
@@ -173,12 +168,10 @@ public class LoginActivity extends AppCompatActivity{
                         if (response.body() != null) {
                             if(!response.body().getMessage().equals("Login successful!")) {
                                 Utils.showLongToast(context, "There was an error in logging in " + response.code());
-                                signin.setEnabled(true);
                             }
                             else {
                                 Utils.showLongToast(context, "User Logged In Successfully with token " + response.body().getToken());
                                 SharedPref.setAccessToken(response.body().getToken());
-                                signin.setEnabled(true);
 //                                startActivity(new Intent(context, HomeActivity.class));
                             }
                         }
@@ -189,7 +182,6 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 Utils.showLongToast(context, "There was an error " + t.getMessage());
-                signin.setEnabled(true);
             }
         });
     }
