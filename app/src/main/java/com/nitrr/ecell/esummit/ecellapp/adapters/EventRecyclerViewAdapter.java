@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.EventFragment;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 
 import java.util.List;
@@ -22,7 +23,6 @@ import java.util.List;
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.MyViewHolder> {
     private List<EventData> list;
     private Context context;
-    private View.OnClickListener onItemClickListener;
     private float alpha = 0.2f;
 
 
@@ -48,21 +48,23 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             alpha-=0.2f;
         else
             alpha+=0.2f;
-        myViewHolder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //if(data.isFlag()){Resource(Integer.parseInt(
-                String eventname = data.getName();
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", i);
-                EventFragment fragment = new EventFragment();
-                fragment.setArguments(bundle);
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.event_layout, fragment).addToBackStack(null).commit();
-//                }
-//                else{
-//                    Utils.showLongToast(context,"This EventActivity hasn't been approved yet");
-//                }
+        myViewHolder.card.setOnClickListener(v -> {
+            if(data.isFlag()){
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", i);
+            bundle.putString("event_img",data.getImage());
+            bundle.putString("event_name",data.getName());
+            bundle.putString("event_venue",data.getVenue());
+            bundle.putString("event_data",data.getDate());
+            bundle.putString("event_time",data.getTime());
+            bundle.putString("event_details",data.getDetails());
+            EventFragment fragment = new EventFragment();
+            fragment.setArguments(bundle);
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.event_layout, fragment).addToBackStack(null).commit();
+            }
+            else{
+                Utils.showLongToast(context,"This Event hasn't been approved yet");
             }
         });
     }

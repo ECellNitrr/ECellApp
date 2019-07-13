@@ -53,10 +53,10 @@ public class MenuCustomAlertDialog {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View alertView = activity.getLayoutInflater().inflate(R.layout.custom_alert_menu, null);
-//        item1 = alertView.findViewById(R.id.username);
-//        item2 = alertView.findViewById(R.id.item2);
-//        item3 = alertView.findViewById(R.id.item3);
-//        item4 = alertView.findViewById(R.id.item4);
+        item1 = alertView.findViewById(R.id.username);
+        item2 = alertView.findViewById(R.id.item2);
+        item3 = alertView.findViewById(R.id.item3);
+        item4 = alertView.findViewById(R.id.item4);
         item1.setText("Username");
         item2.setOnClickListener(v -> {
             showOTPDialog();

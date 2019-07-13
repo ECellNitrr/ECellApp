@@ -21,6 +21,9 @@ import java.util.List;
 public class ViewPagerAdapter  extends PagerAdapter {
     private List<SpeakerDetails> speaker = new ArrayList<>();
     private Context context;
+
+
+
     public ViewPagerAdapter(Context context, List<SpeakerDetails> speakerDetailsList) {
         this.context=context;
         speaker = speakerDetailsList;

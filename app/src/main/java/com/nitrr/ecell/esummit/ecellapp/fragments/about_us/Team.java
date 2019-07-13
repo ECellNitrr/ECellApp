@@ -35,10 +35,6 @@ public class Team extends Fragment {
     private TeamData model;
     private List<TeamList> list = new ArrayList<TeamList>();
     private Call<TeamData> call;
-//    private DialogInterface.OnClickListener cancellistener = (dialog, which) -> {
-//        dialog.cancel();
-//        getFragmentManager().beginTransaction().replace(R.id.frame_container,new Aim()).disallowAddToBackStack().commit();
-//    };
     private DialogInterface.OnClickListener refreshlistener = (dialog, which) -> APICall();
 
     public Team() {
@@ -56,19 +52,21 @@ public class Team extends Fragment {
 
     void APICall() {
         if(this.isHidden()==false){
-        APIServices service = AppClient.getRetrofitInstance();
+        APIServices service = AppClient.getInstance().createService(APIServices.class);
         call = service.getTeamData();
         call.enqueue(new Callback<TeamData>() {
             @Override
             public void onResponse(Call<TeamData> call, Response<TeamData> response) {
-                if (response.isSuccessful()) {
-                    model = response.body();
-                    if (model != null) {
-                        list = model.getList();
-                        setRecyclerView();
-                    }
-                } else
-                    Utils.showDialog(getContext(), null, false, "Poor internet connection", getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
+                if(getContext()!=null){
+                    if (response.isSuccessful()) {
+                        model = response.body();
+                        if (model != null) {
+                            list = model.getList();
+                            setRecyclerView();
+                        }
+                    } else
+                        Utils.showDialog(getContext(), null, false, "Poor internet connection", getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
+                }
             }
 
             @Override

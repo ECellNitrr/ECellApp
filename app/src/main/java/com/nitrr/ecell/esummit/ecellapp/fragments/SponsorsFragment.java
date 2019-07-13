@@ -72,33 +72,38 @@ public class SponsorsFragment extends Fragment {
     }
 
     void APICall() {
-        APIServices service = AppClient.getRetrofitInstance();
+        APIServices service = AppClient.getInstance().createService(APIServices.class);
         Call<SponsorsModel> call = service.getSponsData();
         call.enqueue(new Callback<SponsorsModel>() {
             @Override
             public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {
-                if (response.isSuccessful()) {
-                    model = response.body();
-                    if (model != null) {
-                        list = model.getList();
-                        setRecyclerView();
-                    } else {
-                        Log.e("response list empty", "response is empty and is: " + response.toString());
+                if(getContext()!=null){
+                    Log.e("response",response.toString());
+                    if (response.isSuccessful()) {
+                        model = response.body();
+                            if (model != null) {
+                            list = model.getList();
+                            setRecyclerView();
+                        } else {
+                            Log.e("response list empty", "response is empty and is: " + response.toString());
                     }
                 } else {
                     Log.e("response failure", "resoponse is " + response.toString());
                     Utils.showDialog(getContext(), null, false, "Server Down", getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
                 }
+                }
             }
 
             @Override
             public void onFailure(Call<SponsorsModel> call, Throwable t) {
-                if (!Utils.isNetworkAvailable(getContext()))
-                    Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
-                else {
-                    Utils.showLongToast(getActivity(), "Something went wrong.");
-                    Log.e("onfailure", "throable is " + t.toString());
-                    getActivity().finish();
+                if(getContext()!=null){
+                    if (!Utils.isNetworkAvailable(getContext()))
+                        Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
+                    else {
+                        Utils.showLongToast(getActivity(), "Something went wrong.");
+                        Log.e("onfailure", "throable is " + t.toString());
+                        getActivity().finish();
+                    }
                 }
             }
         });

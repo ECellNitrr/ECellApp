@@ -29,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
 
-    private int rvpositionx = 0;
     private ImageView bgCircle1, bgCircle2,  bgCircle3;
 
     private int distance =0,offset;
@@ -71,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }*/);
 
-        initializeList("SponsorsActivity", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
+        initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
             Intent intent = new Intent(HomeActivity.this, SponsorsActivity.class);
             startActivity(intent);
         });
@@ -91,7 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setPadding(100, 0, 100, 0);
 
         SnapHelper snapHelper = new MySnapHelper();
-        snapHelper.attachToRecyclerView(recyclerView);
+        if(recyclerView.getOnFlingListener()==null)
+            snapHelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
@@ -21,7 +22,10 @@ import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,6 +93,9 @@ public class LoginActivity extends AppCompatActivity{
         fbButton = findViewById(R.id.fb_button);
         googleButton = findViewById(R.id.google_button);
 
+        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
+        fbButton.setOnClickListener((view -> Utils.showNotification(this,"This is title","this is message",true)));
+
         firstName = findViewById(R.id.register_first_name);
         lastName = findViewById(R.id.register_last_name);
         registerPassword = findViewById(R.id.register_password);
@@ -113,45 +120,47 @@ public class LoginActivity extends AppCompatActivity{
                 mobileNumber.getText().toString(),
                 null, null, null);
 
-        Call<AuthResponse> call =  AppClient.getRetrofitInstance().postRegisterUser(details);
+        Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postRegisterUser(details);
 
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
-                if(!response.isSuccessful()) {
-                    Utils.showLongToast(context, "There was an error in post request "+response.toString());
-                    register.setEnabled(true);
-                    return;
-                }
+                try {
+                    if (LoginActivity.this != null && response.isSuccessful()) {
+                        if (response.body() != null) {
+                            Utils.showLongToast(LoginActivity.this, response.body().getMessage());
 
-                if (response.body() != null) {
-                    if(response.code() == 400) {
-                        Utils.showLongToast(context, "Registration Failed");
-                        register.setEnabled(true);
+                            //TODO: Intent
+
+                        } else {
+                            Log.e("RegisterApiCall =====", "Response Body NULL.");
+                            Log.e("RegisterApiCall =====" ,response.errorBody().string() + " ");
+                        }
                     }
-                    else {
-                        Utils.showLongToast(context, "User Registered Successfully with token " + response.body().getToken());
-//                        startActivity(new Intent(context, HomeActivity.class));
-                    }
+
+                } catch (Exception e){
+                    Log.e("RegisterApiCall =======", e.getMessage() + " ");
+                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                Utils.showLongToast(context, "There was an error " + t.getMessage());
+                Utils.showLongToast(context, "Failed Response " + t.getMessage());
                 register.setEnabled(true);
             }
         });
     }
 
-    public void LoginApiCall() {
+    public void LoginApiCall() {;
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
-        Call<AuthResponse> call =  AppClient.getRetrofitInstance().postLoginUser(details);
+        Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
 
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+                Log.e("response",response.toString());
                 if(response.code() == 400) {
                     Utils.showLongToast(context, "Wrong username or password!");
                     signin.setEnabled(true);
@@ -181,5 +190,13 @@ public class LoginActivity extends AppCompatActivity{
                 signin.setEnabled(true);
             }
         });
+    }
+
+    boolean checkfeilds(){
+        if(firstName.getText()==null){
+            Utils.showShortToast(this,"Enter frist name");
+            return false;
+        }
+        return true;
     }
 }
