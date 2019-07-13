@@ -71,8 +71,7 @@ public class EventFragment extends Fragment {
                         "No Internet Connection",
                         getContext().getString(R.string.wasntabletoload),
                         "Retry", (dialog, which) -> setData(name,image,details,time,date,venue),
-                        "Cancel",
-                        cancellistener);
+                        "Cancel", cancellistener);
             else{try{
                 Glide.with(getContext()).load(image).into(eventimg);}
                 catch(Exception e){

@@ -25,6 +25,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -123,26 +125,22 @@ public class LoginActivity extends AppCompatActivity{
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
-                if(!response.isSuccessful()) {
-                    if (response.body() == null) {
-                        Log.e("Response Body Null", "body is null");
-                    }
-                    Utils.showLongToast(context, "There was an error in post request "+response.toString());
-                    register.setEnabled(true);
-                    return;
-                }
+                try {
+                    if (LoginActivity.this != null && response.isSuccessful()) {
+                        if (response.body() != null) {
+                            Utils.showLongToast(LoginActivity.this, response.body().getMessage());
 
-                if (response.body() != null) {
-                    if(response.code() == 400) {
-                        Utils.showLongToast(context, "Registration Failed");
-                        Log.e("reg failed", response.body().getMessage());
-                        register.setEnabled(true);
+                            //TODO: Intent
+
+                        } else {
+                            Log.e("RegisterApiCall =====", "Response Body NULL.");
+                            Log.e("RegisterApiCall =====" ,response.errorBody().string() + " ");
+                        }
                     }
-                    else {
-                        Log.e("reg successful", response.body().getMessage() + " with token " + response.body().getToken());
-                        Utils.showLongToast(context, "User Registered Successfully with token " + response.body().getToken());
-                        startActivity(new Intent(context, HomeActivity.class));
-                    }
+
+                } catch (Exception e){
+                    Log.e("RegisterApiCall =======", e.getMessage() + " ");
+                    e.printStackTrace();
                 }
             }
 
@@ -192,5 +190,13 @@ public class LoginActivity extends AppCompatActivity{
                 signin.setEnabled(true);
             }
         });
+    }
+
+    boolean checkfeilds(){
+        if(firstName.getText()==null){
+            Utils.showShortToast(this,"Enter frist name");
+            return false;
+        }
+        return true;
     }
 }

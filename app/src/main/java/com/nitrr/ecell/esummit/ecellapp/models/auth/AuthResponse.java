@@ -30,4 +30,13 @@ public class AuthResponse implements Serializable {
     public String getDetails() {
         return details;
     }
+
+    @Override
+    public String toString() {
+        return "AuthResponse{" +
+                "message='" + message + '\'' +
+                ", token='" + token + '\'' +
+                ", details='" + details + '\'' +
+                '}';
+    }
 }
