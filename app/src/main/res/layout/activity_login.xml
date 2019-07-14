@@ -229,8 +229,8 @@
 
     <ImageView
         android:id="@+id/ic_lower_ecell"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:src="@drawable/ic_ecell"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintVertical_bias="0.9"
@@ -256,7 +256,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="65dp"
             android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -298,7 +298,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="65dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_email"
@@ -313,7 +313,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="65dp"
             app:passwordToggleContentDescription="To Show and Hide Password"
             app:passwordToggleDrawable="@drawable/login_password_eye"
             app:passwordToggleEnabled="true">
@@ -331,7 +331,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="65dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_number"
@@ -351,7 +351,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.86"/>
+        app:layout_constraintGuide_percent="0.85"/>
 
     <Button
         android:id="@+id/register_button"

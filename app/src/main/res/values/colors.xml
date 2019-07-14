@@ -13,6 +13,6 @@
     <color name="associateSponsBlue">#010C54</color>
     <color name="black_overlay">#66000000</color>
     <color name="bgBottomNavigation">#fe485a</color>
-    <color name="empty"> </color>
+    <color name="empty">#616161</color>
 
 </resources>

@@ -15,8 +15,8 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.SponsorsActivity;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsorsRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData;
-import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsorsModel;
+import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -89,7 +89,7 @@ public class SponsorsFragment extends Fragment {
                     }
                 } else {
                     Log.e("response failure", "resoponse is " + response.toString());
-                    Utils.showDialog(getContext(), null, false, "Server Down", getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
+                    Utils.showDialog(getContext(), null, false, "Server Down", getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, "Cancel", cancellistener);
                 }
                 }
             }
@@ -98,7 +98,7 @@ public class SponsorsFragment extends Fragment {
             public void onFailure(Call<SponsorsModel> call, Throwable t) {
                 if(getContext()!=null){
                     if (!Utils.isNetworkAvailable(getContext()))
-                        Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, "Cancel", cancellistener);
+                        Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, "Cancel", cancellistener);
                     else {
                         Utils.showLongToast(getActivity(), "Something went wrong.");
                         Log.e("onfailure", "throable is " + t.toString());

@@ -2,28 +2,21 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
-import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
-import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
-import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class EventFragment extends Fragment {
 
@@ -36,13 +29,13 @@ public class EventFragment extends Fragment {
     private int position;
 
     private DialogInterface.OnClickListener cancellistener = (dialog, which) -> getActivity().finish();
-    private DialogInterface.OnClickListener refreshlistener = (dialog, which) -> APICall();
+//    private DialogInterface.OnClickListener refreshlistener = (dialog, which) -> APICall();
 
     public EventFragment() {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         Bundle bundle = this.getArguments();
@@ -69,12 +62,12 @@ public class EventFragment extends Fragment {
 
     private void setData(String name, String image, String details, String time, String date, String venue) {
 
-        if (Utils.isNetworkAvailable(getContext()) == false)
+        if (!Utils.isNetworkAvailable(getContext()))
             Utils.showDialog(getContext(),
                     null,
                     false,
                     "No Internet Connection",
-                    getContext().getString(R.string.wasntabletoload),
+                    getContext().getString(R.string.wasnt_able_to_load),
                     "Retry", (dialog, which) -> setData(name, image, details, time, date, venue),
                     "Cancel", cancellistener);
         else {

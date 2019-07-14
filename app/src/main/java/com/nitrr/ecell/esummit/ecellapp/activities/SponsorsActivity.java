@@ -6,7 +6,6 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.appcompat.widget.ToolbarWidgetWrapper;
 
 import android.widget.ImageView;
 
@@ -96,7 +95,7 @@ public class SponsorsActivity extends AppCompatActivity {
 
     private void initialize() {
         tabLayout = findViewById(R.id.tab);
-        pager = findViewById(R.id.pager);
+        pager = findViewById(R.id.spons_view_pager);
         toolbar = findViewById(R.id.toolbar);
         circle1 = findViewById(R.id.spons_bgcircle_1);
         circle2 = findViewById(R.id.spons_bgcircle_2);

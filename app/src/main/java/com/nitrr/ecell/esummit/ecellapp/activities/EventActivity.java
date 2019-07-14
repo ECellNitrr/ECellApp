@@ -72,16 +72,16 @@ public class EventActivity extends AppCompatActivity {
                         setRecycler();
                     }
                     else
-                        Utils.showDialog(EventActivity.this,null,false,"Server down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                        Utils.showDialog(EventActivity.this,null,false,"Server down",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry",refreshlistener,"Cancel",cancellistener);
                 }
                 else
-                    Utils.showDialog(EventActivity.this,null,false,"Server Down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                    Utils.showDialog(EventActivity.this,null,false,"Server Down",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry",refreshlistener,"Cancel",cancellistener);
             }
             @Override
             public void onFailure(Call<EventModel> call, Throwable t) {
                 if(EventActivity.this!=null){
                     if(!Utils.isNetworkAvailable(getApplicationContext()))
-                        Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                        Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry",refreshlistener,"Cancel",cancellistener);
                     else
                     {Log.e("Failure:  =","throwable is "+t);
                         Utils.showLongToast(getApplicationContext(),"Something went wrong.");

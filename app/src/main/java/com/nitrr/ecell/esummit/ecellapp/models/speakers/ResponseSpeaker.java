@@ -4,21 +4,24 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class SpeakerResponse implements Serializable {
+public class ResponseSpeaker implements Serializable {
+
     @SerializedName("message")
     @Expose
     String message;
 
     @SerializedName("data")
     @Expose
-    SpeakerResponseList list;
+    private
+    List<ResponseSpeakerData> list;
 
     public String getMessage() {
         return message;
     }
 
-    public SpeakerResponseList getList() {
+    public List<ResponseSpeakerData> getList() {
         return list;
     }
 }
