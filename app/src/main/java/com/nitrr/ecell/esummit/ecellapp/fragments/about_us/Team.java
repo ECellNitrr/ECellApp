@@ -76,7 +76,8 @@ public class Team extends Fragment {
                 else {
                     Utils.showLongToast(getActivity(), "Something went wrong.");
                     Log.e("onfailure", "throable is " + t.toString());
-                    getActivity().finish();
+                    if(getContext()!=null)
+                    Utils.showDialog(getContext(), null, false, "Something went wrong", getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
                 }
             }
         });

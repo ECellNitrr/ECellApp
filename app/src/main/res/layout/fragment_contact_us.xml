@@ -27,6 +27,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="DETAILS"
+                    android:textStyle="bold"
+                    android:textColor="@color/aboutusHeading"
                     android:textAlignment="center"
                     android:textSize="40sp" />
 
@@ -38,7 +40,7 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         app:srcCompat="@drawable/about_us_location"
                         android:padding="12dp"
                         android:layout_weight="1"/>
@@ -47,7 +49,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/name_college"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
+                        android:textColor="@color/aboutusHeading"
                         android:textAlignment="gravity"
                         android:gravity="center_vertical"
                         android:layout_weight="5"/>
@@ -62,7 +65,7 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         app:srcCompat="@drawable/about_us_contact"
                         android:padding="15dp"
                         android:layout_weight="1"/>
@@ -73,6 +76,7 @@
                         android:text="08827544244"
                         android:layout_gravity="center"
                         android:textSize="20sp"
+                        android:textColor="@color/aboutusHeading"
                         android:textAlignment="gravity"
                         android:gravity="center_vertical"
                         android:layout_weight="5"/>
@@ -87,7 +91,7 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         app:srcCompat="@drawable/about_us_email"
                         android:padding="15dp"
                         android:layout_weight="1"/>
@@ -98,6 +102,7 @@
                         android:text="ecell@nitrr.ac.in"
                         android:layout_gravity="center"
                         android:textSize="20sp"
+                        android:textColor="@color/aboutusHeading"
                         android:textAlignment="gravity"
                         android:gravity="center_vertical"
                         android:layout_weight="5"/>
@@ -114,35 +119,35 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_whatsapp"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_linkedin"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_twitter"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_facebook_logo"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_instagram"/>
@@ -160,8 +165,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="FEEDBACK"
+                    android:textColor="@color/aboutusHeading"
+                    android:textStyle="bold"
                     android:textAlignment="center"
-                    android:textSize="40sp" />
+                    android:textSize="36sp" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -171,7 +178,7 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         app:srcCompat="@drawable/ic_username"
                         android:padding="12dp"
                         android:layout_weight="1"/>
@@ -198,7 +205,7 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="60dp"
+                        android:layout_height="50dp"
                         app:srcCompat="@drawable/about_us_feedback"
                         android:padding="10dp"
                         android:layout_weight="1"/>
@@ -222,8 +229,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Submit"
-                    android:textSize="25sp"
-                    android:background="@color/colorWhite"/>
+                    android:textSize="24sp"
+                    android:background="@color/transparent"
+                    android:padding="8dp"/>
 
             </LinearLayout>
 

@@ -65,7 +65,7 @@ public class EventActivity extends AppCompatActivity {
                         setRecycler();
                     }
                     else
-                        Utils.showDialog(EventActivity.this,null,false,"Server down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                        Utils.showDialog(EventActivity.this,null,false,"Something went load",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
                 }
                 else
                     Utils.showDialog(EventActivity.this,null,false,"Server Down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
