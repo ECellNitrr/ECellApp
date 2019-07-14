@@ -3,6 +3,10 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +14,7 @@ import android.widget.TextView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.ViewPagerAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.ESummitAnimaiton;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
 import com.nitrr.ecell.esummit.ecellapp.misc.ViewPagerDepthTransformer;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 
@@ -25,6 +30,8 @@ public class ESummitActivity extends AppCompatActivity{
     private List<SpeakerDetails> list = new ArrayList<>();
     ESummitAnimaiton animaiton;
     private TextView toSpeaker, toAboutES;
+    private BroadcastReceiver receiver;
+    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,24 @@ public class ESummitActivity extends AppCompatActivity{
 
         initialize();
         view = findViewById(R.id.es_inner_constraint);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReciver();
+        filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver !=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
     }
 
     public void initialize() {

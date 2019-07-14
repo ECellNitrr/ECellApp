@@ -3,8 +3,11 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
@@ -45,6 +49,8 @@ public class LoginActivity extends AppCompatActivity{
     LinearLayout loginLayout, registerlayout;
     LoginAnimation loginanimation;
     private String phoneNo;
+    private BroadcastReceiver receiver;
+    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +94,24 @@ public class LoginActivity extends AppCompatActivity{
 //        fbButton.setOnClickListener((View v) -> { /*Write Here*/ });
 //
 //        googleButton.setOnClickListener((View v) -> { /*Write Here*/ });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReciver();
+        filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver !=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
     }
 
     public void initializeViews(){

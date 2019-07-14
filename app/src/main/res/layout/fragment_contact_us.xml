@@ -119,35 +119,35 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_whatsapp"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_linkedin"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_twitter"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_facebook_logo"/>
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_instagram"/>

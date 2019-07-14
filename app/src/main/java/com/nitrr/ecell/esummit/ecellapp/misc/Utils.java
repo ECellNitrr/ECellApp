@@ -71,8 +71,9 @@ public class Utils {
             }
             dialog.setTitle(title)
                     .setMessage(message)
-                    .setCancelable(canclelable)
-                    .setPositiveButton(posbutton,poslistener);
+                    .setCancelable(canclelable);
+            if(posbutton!=null)
+                    dialog.setPositiveButton(posbutton,poslistener);
             if(negbutton!=null && neglistener!=null)
                 dialog.setNegativeButton(negbutton,neglistener);
             dialog.show();
