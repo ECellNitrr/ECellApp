@@ -75,7 +75,7 @@ public class ESummitActivity extends AppCompatActivity{
         additem(5,"DDD","https://cdn.cnn.com/cnnnext/dam/assets/160725131446-graham-car-crash-evolved-human-full-169.jpeg");
         pager.setPageTransformer(true, new ViewPagerDepthTransformer());
         pager.setOffscreenPageLimit(2);
-        adapter = new ViewPagerAdapter(this,list);
+//        adapter = new ViewPagerAdapter(this,list);
         pager.setAdapter(adapter);
         toAboutES.setVisibility(View.INVISIBLE);
         toAboutES.setClickable(false);

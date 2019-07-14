@@ -46,6 +46,8 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+
         recyclerView = findViewById(R.id.event_recycler);
         APICall();
     }
@@ -77,6 +79,7 @@ public class EventActivity extends AppCompatActivity {
                 if(response.isSuccessful() && EventActivity.this!=null){
                     Log.e("response",response.toString());
                     model = response.body();
+
                     if(model!=null){
                         list = model.getList();
                         setRecycler();

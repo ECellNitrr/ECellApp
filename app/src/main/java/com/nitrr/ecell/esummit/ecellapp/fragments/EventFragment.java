@@ -30,15 +30,6 @@ public class EventFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReciver();
-        filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        getContext().registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
@@ -54,6 +45,7 @@ public class EventFragment extends Fragment {
         }
         return view;
     }
+
 
     private void initalize(View v) {
         event = v.findViewById(R.id.event_name);
@@ -81,6 +73,16 @@ public class EventFragment extends Fragment {
         time = "Date: " + date + " | Time: " + time;
         return time;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReciver();
+        filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        getContext().registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
 
     @Override
     public void onDestroy() {

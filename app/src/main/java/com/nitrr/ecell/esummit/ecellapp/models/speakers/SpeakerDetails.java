@@ -7,6 +7,11 @@ import java.io.Serializable;
 
 public class SpeakerDetails implements Serializable {
 
+    public SpeakerDetails(String name, String img) {
+        this.name = name;
+        this.img = img;
+    }
+
     @SerializedName("id")
     @Expose
     int id;

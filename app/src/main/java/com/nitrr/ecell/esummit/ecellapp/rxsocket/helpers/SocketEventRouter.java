@@ -50,9 +50,9 @@ public class SocketEventRouter extends WebSocketListener {
     }
 
     @Override
-    public void onMessage(WebSocket webSocket, ByteString bytes) {
+    public void onMessage(WebSocket webSocket, String message) {
 
         if (!emitter.isCancelled())
-            emitter.onNext(new SocketEventMessage(bytes));
+            emitter.onNext(new SocketEventMessage(message));
     }
 }

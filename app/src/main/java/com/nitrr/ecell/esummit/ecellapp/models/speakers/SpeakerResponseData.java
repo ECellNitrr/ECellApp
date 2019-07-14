@@ -7,7 +7,10 @@ import java.io.Serializable;
 
 public class SpeakerResponseData implements Serializable {
 
-
+    public SpeakerResponseData(String name, String image) {
+        this.name = name;
+        this.image = image;
+    }
 
     @SerializedName("id")
     @Expose
@@ -16,6 +19,10 @@ public class SpeakerResponseData implements Serializable {
     @SerializedName("name")
     @Expose
     String name;
+
+    @SerializedName("profile_pic")
+    @Expose
+    String image;
 
     @SerializedName("company")
     @Expose
@@ -63,6 +70,10 @@ public class SpeakerResponseData implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public String getCompany() {

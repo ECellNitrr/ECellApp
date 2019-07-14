@@ -45,7 +45,7 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="verifyotp">Verify OTP</string>
-    <string name="no_internet">No internet COnnection</string>
+    <string name="no_internet">No internet Connection.</string>
 
 
 </resources>
