@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity{
     EditText firstName, lastName, registerUsername, registerPassword, registerEmail, mobileNumber;
     LinearLayout loginLayout, registerLayout;
     LoginAnimation loginanimation;
+    private String phoneNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,18 @@ public class LoginActivity extends AppCompatActivity{
 
         register.setOnClickListener((View v) -> {
             registerDialog = Utils.showDialog(this, null, false, "Registering User...", null, null, null, null, null);
+
+            if(isnotEmpty(firstName) &&
+                    isnotEmpty(lastName) &&
+                    isnotEmpty(registerEmail) &&
+                    isnotEmpty(registerPassword) &&
+                    isnotEmpty(mobileNumber) &&
+                    checkEmail(registerEmail) &&
+                    checkpassword(registerPassword) &&
+                    checkmobile(mobileNumber)){
+                register.setEnabled(false);
             RegisterApiCall();
+            }
         });
 
         toRegister.setOnClickListener((View v) -> {
@@ -194,11 +207,55 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    boolean checkfeilds(){
-        if(firstName.getText()==null){
-            Utils.showShortToast(this,"Enter frist name");
-            return false;
+    boolean checkmobile(EditText editText){
+        phoneNo = mobileNumber.getText().toString();
+        if(editText.getText().toString().length()==10){
+            Character character = phoneNo.charAt(0);
+            if(character.compareTo('6')==0 || character.compareTo('7')==0 || character.compareTo('8')==0 || character.compareTo('9')==0){
+                try{
+                    long no = Long.parseLong(phoneNo);
+                    return true;
+                }
+                catch (Exception e){
+                    mobileNumber.setError("Please enter only numbers");
+                }
+            }
         }
-        return true;
+        editText.setError("Invaild number");
+        return false;
+    }
+
+    boolean checkpassword(EditText editText) {
+        if(editText.getText().length()>=8)
+            return true;
+        editText.setError("Atleast 8 characters required");
+        return false;
+    }
+
+    boolean isnotEmpty(EditText editText){
+        if(!TextUtils.isEmpty(editText.getText()))
+            return true;
+        else
+            editText.setError("This feild is necessary to fill");
+        return false;
+    }
+
+    boolean checkEmail(EditText editText){
+        String email = editText.getText().toString();
+        int check=email.length()-1;
+        boolean dot=false;
+        Character character;
+        while (check>=0){
+            character = email.charAt(check);
+            if(character.compareTo('.')==0 && !dot){
+                dot=true;
+            check--;}
+            if(dot)
+                if(character.compareTo('@')==0)
+                    return true;
+            check--;
+        }
+        editText.setError("Enter email correctly");
+        return false;
     }
 }

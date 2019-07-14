@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.fragments.BQuizFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
@@ -47,8 +48,13 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
-        recyclerView = findViewById(R.id.event_recycler);
-        APICall();
+
+        BQuizFragment bQuizFragment = new BQuizFragment();
+        bQuizFragment.show(getSupportFragmentManager(), "bquiz");
+
+
+//        recyclerView = findViewById(R.id.event_recycler);
+//        APICall();
     }
 
     void APICall(){
@@ -60,6 +66,7 @@ public class EventActivity extends AppCompatActivity {
                 if(response.isSuccessful() && EventActivity.this!=null){
                     Log.e("response",response.toString());
                     model = response.body();
+
                     if(model!=null){
                         list = model.getList();
                         setRecycler();
