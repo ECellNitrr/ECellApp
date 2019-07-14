@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,23 +25,22 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity{
 
+    View signInDialog, registerDialog;
     Context context;
     private boolean isLoggingIn;
     RegisterDetails details;
-    ImageView lowerIcon, fbButton, googleButton;
-    Button signin,register;
+    ImageView lowerIcon, fbButton, googleButton, upperPoly;
+    Button signIn,register;
     TextView toSignIn, toRegister;
     EditText loginEmail, loginPassword;
     EditText firstName, lastName, registerUsername, registerPassword, registerEmail, mobileNumber;
-    LinearLayout loginLayout, registerlayout;
+    LinearLayout loginLayout, registerLayout;
     LoginAnimation loginanimation;
 
     @Override
@@ -50,15 +49,22 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         initializeViews();
         initializeUserStatus();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        Utils.showLongToast(this, displayMetrics.heightPixels + "");
+
         context = this;
         loginanimation = new LoginAnimation(this);
         loginanimation.toSignInScreen(this);
 
-        signin.setOnClickListener((View v) -> {
+        signIn.setOnClickListener((View v) -> {
+            signInDialog = Utils.showDialog(this, null, false, "Signing In...", null, null, null, null, null);
             LoginApiCall();
         });
 
         register.setOnClickListener((View v) -> {
+            registerDialog = Utils.showDialog(this, null, false, "Registering User...", null, null, null, null, null);
             RegisterApiCall();
         });
 
@@ -78,14 +84,16 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void initializeViews(){
+        upperPoly = findViewById(R.id.upper_poly);
+
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
 
         loginLayout = findViewById(R.id.login_linear_layout);
-        registerlayout = findViewById(R.id.register_linear_layout);
+        registerLayout = findViewById(R.id.register_linear_layout);
         lowerIcon = findViewById(R.id.ic_lower_ecell);
 
-        signin = findViewById(R.id.sign_in_button);
+        signIn = findViewById(R.id.sign_in_button);
         register = findViewById(R.id.register_button);
 
         fbButton = findViewById(R.id.fb_button);

@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class SpeakerResponseList implements Serializable {
+
     @SerializedName("index")
     @Expose
     SpeakerResponseData data;
+
 }
