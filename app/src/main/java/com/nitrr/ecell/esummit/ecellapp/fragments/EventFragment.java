@@ -67,26 +67,27 @@ public class EventFragment extends Fragment {
         timefeild = v.findViewById(R.id.date_time);
     }
 
-    private void setData(String name,String image,String details,String time,String date,String venue) {
+    private void setData(String name, String image, String details, String time, String date, String venue) {
 
-            if(Utils.isNetworkAvailable(getContext())==false)
-                Utils.showDialog(getContext(),
-                        null,
-                        false,
-                        "No Internet Connection",
-                        getContext().getString(R.string.wasntabletoload),
-                        "Retry", (dialog, which) -> setData(name,image,details,time,date,venue),
-                        "Cancel", cancellistener);
-            else{try{
-                Glide.with(getContext()).load(image).into(eventimg);}
-                catch(Exception e){
-                    setData(name,image,details,time,date,venue);
-                }
-                event.setText(name);
-                eventditails.setText(details);
-                timefeild.setText(setTime(time,date));
-                venuefeild.setText(venue);
+        if (Utils.isNetworkAvailable(getContext()) == false)
+            Utils.showDialog(getContext(),
+                    null,
+                    false,
+                    "No Internet Connection",
+                    getContext().getString(R.string.wasntabletoload),
+                    "Retry", (dialog, which) -> setData(name, image, details, time, date, venue),
+                    "Cancel", cancellistener);
+        else {
+            try {
+                Glide.with(getContext()).load(image).into(eventimg);
+            } catch (Exception e) {
+                setData(name, image, details, time, date, venue);
             }
+            event.setText(name);
+            eventditails.setText(details);
+            timefeild.setText(setTime(time, date));
+            venuefeild.setText(venue);
+        }
     }
 
     private String setTime(String time, String date) {
