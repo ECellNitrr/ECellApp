@@ -17,7 +17,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/event_bg" />
+        android:src="@drawable/event_bg"
+        tools:layout_editor_absoluteX="-155dp"
+        tools:layout_editor_absoluteY="63dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:background="@color/colorLightBlack"
+        android:background="@color/colorWhite"
         app:layout_constraintTop_toBottomOf="@id/nameevent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -65,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_event_ws"/>
+        app:srcCompat="@drawable/ic_event_bq"/>
         <TextView
             android:id="@+id/event_name"
             android:layout_width="wrap_content"

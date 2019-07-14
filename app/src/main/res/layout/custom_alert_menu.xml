@@ -7,25 +7,25 @@
     app:cardElevation="8dp"
     android:paddingStart="24dp"
     android:paddingEnd="24dp"
-    android:paddingBottom="40dp"
+    android:paddingBottom="16dp"
     app:cardCornerRadius="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingTop="16dp"
             android:paddingEnd="16dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:padding="4dp"
                 app:srcCompat="@drawable/ic_username" />
@@ -34,14 +34,23 @@
             <TextView
                 android:id="@+id/username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/name"
                 android:padding="2dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#AFAFAF"/>
 
         <LinearLayout
             android:id="@+id/item2"
@@ -49,15 +58,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingTop="16dp"
+            android:paddingTop="0dp"
             android:paddingEnd="16dp"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackground">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_margin="-5dp"
+                android:background="@drawable/ic_otp"
                 android:layout_gravity="center"
                 android:padding="4dp" />
 
@@ -67,9 +78,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/verify_otp"
                 android:padding="2dp"
+                android:gravity="center"
                 android:textAlignment="center"
-                android:textColor="@color/colorLightBlack"
-                android:textSize="24sp" />
+                android:textColor="@color/aboutUsHeading"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -79,27 +91,27 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingTop="10dp"
+            android:paddingTop="0dp"
             android:paddingEnd="16dp"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackground">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/about_us_team_2" />
+                app:srcCompat="@drawable/about_us_team_1" />
 
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/about_us"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="24sp"/>
+                android:textSize="16sp"/>
 
         </LinearLayout>
 
@@ -109,15 +121,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingTop="10dp"
+            android:paddingTop="0dp"
             android:paddingEnd="16dp"
             android:layout_marginBottom="16dp"
             android:focusable="true"
             android:background="?attr/selectableItemBackground">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:padding="4dp"
                 app:srcCompat="@drawable/ic_log_out" />
@@ -125,12 +137,12 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Log Out"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
     </LinearLayout>

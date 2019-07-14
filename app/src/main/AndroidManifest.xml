@@ -12,6 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
+
+        <receiver android:name=".misc.NetworkChangeReciver"
+            android:enabled="true">
+            <intent-filter >
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGED"/>
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".activities.AboutUsActivity"
             android:theme="@style/AppTheme.FullScreen"

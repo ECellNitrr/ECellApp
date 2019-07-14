@@ -5,24 +5,15 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/aboutusBg"
     tools:context=".activities.AboutUsActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/about_us_background"
-        android:rotation="45"
-        android:layout_marginStart="-400dp"
-        android:layout_marginEnd="-400dp"
-        android:layout_marginTop="-300dp"
-        android:layout_marginBottom="-300dp"/>
 
     <LinearLayout
         android:id="@+id/about_us_toolbar"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/associateSponsBlue"
+        android:background="@color/aboutusToolbarBg"
         android:alpha="0.6"
         app:layout_constraintTop_toTopOf="parent"
         android:padding="15dp">

@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz),null/* new View.OnClickListener() {
+        initializeList("BQuiz", R.drawable.ic_event_bq, this.getString(R.string.color_bquiz),null/* new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this,Bquiz.class);

@@ -4,4 +4,7 @@
     <size android:width="40dp" android:height="40dp"/>
     <solid android:color="@color/colorWhite"/>
     <corners android:radius="30dp"/>
+    <corners android:radius="20dp"/>
+    <stroke android:color="@color/aboutUsHeading"
+        android:width="1dp" />
 </shape>

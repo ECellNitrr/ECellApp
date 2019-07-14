@@ -13,9 +13,6 @@
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
     <string name="event">Event</string>
-    <string name="title_activity_event">Event</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="text_esummit">ESummit</string>
     <string name="color_esummit">#48CFAD</string>
     <string name="text_events">Events</string>
@@ -25,6 +22,7 @@
     <string name="text_spons">Sponsors</string>
     <string name="color_spons">#F2B531</string>
 
+    <!--ESUMMIT STRINGS-->
     <string name="e_summit_19">E SUMMIT \'19</string>
     <string name="eventdenied">This Event is not approved yet.Sorry for the inconvenicence</string>
 
@@ -34,14 +32,10 @@
     <string name="es_date"><![CDATA[31 Aug & 1 Sept, 2k19 | NIT Raipur]]></string>
     <string name="post">Post</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <!--About Us Strings-->
     <string name="aim_text">Aim</string>
     <string name="team">Team</string>
     <string name="contact_us">Contact Us</string>
-
     <string name="about_us_aim">At ESummit \'19, we aspire to create a melange of eminent speakers who have proved themselves in diverse fields and are at zenith of glory. ESummit \'19 will not be a conclave of innovative minds and epistemic elocutionists, but it will bea place where ideas not only thrive but become the greatest revelation in century.</string>
     <string name="vision_text">Vision</string>
     <string name="name_college">National Institute of Technology, GE Road, Raipur [492001]</string>

@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +20,9 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.ESStackAdapter;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
-import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerObject;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,12 +34,12 @@ import retrofit2.Response;
 
 public class ESummitActivity extends AppCompatActivity{
 
-    private int[] pagebg = new int[4];
     private List<ResponseSpeakerData> responseSpeakerObjectList;
     StackView stackView;
     TextView aboutES, aboutESDetail;
     ImageView curvedRect;
     boolean isUp = false;
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,21 +81,6 @@ public class ESummitActivity extends AppCompatActivity{
 
         responseSpeakerObjectList = new ArrayList<>();
         callAPI();
-//        responseSpeakerObjectList.add(new ResponseSpeakerObject(new ResponseSpeakerData("Speaker",
-//                "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg")));
-//        responseSpeakerObjectList.add(new ResponseSpeakerObject(new ResponseSpeakerData("Speaker",
-//                "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg")));
-//        responseSpeakerObjectList.add(new ResponseSpeakerObject(new ResponseSpeakerData("Speaker",
-//                "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg")));
-//        responseSpeakerObjectList.add(new ResponseSpeakerObject(new ResponseSpeakerData("Speaker",
-//                "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg")));
-//        responseSpeakerObjectList.add(new ResponseSpeakerObject(new ResponseSpeakerData("Speaker",
-//                "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg")));
-//        responseSpeakerObjectList.add(new ResponseSpeakerObject(new ResponseSpeakerData("Speaker",
-//                "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg")));
-//        responseSpeakerObjectList.add(new ResponseSpeakerObject(new ResponseSpeakerData("Speaker",
-//                "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg")));
-
 
         ESStackAdapter adapter = new ESStackAdapter(this, R.id.es_stack_view, responseSpeakerObjectList);
         stackView.setAdapter(adapter);
@@ -105,7 +93,7 @@ public class ESummitActivity extends AppCompatActivity{
         call.enqueue(new Callback<ResponseSpeaker>() {
             @Override
             public void onResponse(@NonNull Call<ResponseSpeaker> call, @NonNull Response<ResponseSpeaker> response) {
-                if(!response.isSuccessful()) {
+                if (!response.isSuccessful()) {
                     try {
                         if (response.errorBody() != null) {
                             Log.e("ES Speaker List", response.errorBody().string());
@@ -113,9 +101,8 @@ public class ESummitActivity extends AppCompatActivity{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else {
-                    if(response.body() == null)
+                } else {
+                    if (response.body() == null)
                         Log.e("ES Speaker List", "response body null");
                     else {
                         responseSpeakerObjectList = response.body().getList();
@@ -131,6 +118,24 @@ public class ESummitActivity extends AppCompatActivity{
                 Log.e("ES Speaker List", "Failed Connection!");
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReciver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver !=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
     }
 
     public void aboutESAnimation() {

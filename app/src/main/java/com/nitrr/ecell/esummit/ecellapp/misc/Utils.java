@@ -57,15 +57,16 @@ public class Utils {
     public static View showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
         View v = null;
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        if(!((Activity)context).isFinishing()){
+        if(context!=null){
             if(layout!=null){
                 v=LayoutInflater.from(context).inflate(layout,null);
                 dialog.setView(v);
             }
             dialog.setTitle(title)
                     .setMessage(message)
-                    .setCancelable(canclelable)
-                    .setPositiveButton(posbutton,poslistener);
+                    .setCancelable(canclelable);
+            if(posbutton!=null)
+                    dialog.setPositiveButton(posbutton,poslistener);
             if(negbutton!=null && neglistener!=null)
                 dialog.setNegativeButton(negbutton,neglistener);
             dialog.show();
@@ -84,7 +85,7 @@ public class Utils {
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setDefaults(NotificationCompat.DEFAULT_ALL);
-            if(isintent==true){
+            if(isintent){
                 Intent intent = new Intent(context, HomeActivity.class);
                 PendingIntent pendingintent = PendingIntent.getActivity(context,0,intent,0);
                 builder.setContentIntent(pendingintent);

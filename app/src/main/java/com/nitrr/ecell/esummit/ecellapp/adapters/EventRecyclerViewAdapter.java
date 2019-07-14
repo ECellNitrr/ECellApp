@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +50,12 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             alpha-=0.2f;
         else
             alpha+=0.2f;
+
         myViewHolder.card.setOnClickListener(v -> {
+
+            Log.e("card selected","card index "+i+"is selected");
             if(data.isFlag()){
+                Log.e("Flag is true","card index "+i+"is selected");
             Bundle bundle = new Bundle();
             bundle.putInt("position", i);
             bundle.putString("event_img",data.getImage());
@@ -71,7 +77,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
 
     @Override
     public int getItemCount() {
-        return 9;
+        return list.size();
     }
 
     public  class MyViewHolder extends RecyclerView.ViewHolder {
