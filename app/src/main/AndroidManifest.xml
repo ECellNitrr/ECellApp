@@ -35,7 +35,11 @@
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.FullScreen"
             android:windowSoftInputMode="stateAlwaysVisible"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -43,16 +47,14 @@
             android:theme="@style/AppTheme.FullScreen"
             android:screenOrientation="nosensor">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.FullScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -61,8 +63,9 @@
         <activity
             android:name=".activities.ESummitActivity"
             android:theme="@style/AppTheme.FullScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor">
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

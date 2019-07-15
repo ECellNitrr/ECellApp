@@ -5,5 +5,7 @@
         <item>@font/bungee_shade</item>
         <item>@font/noto_sans_bold</item>
         <item>@font/nova_round</item>
+        <item>@font/pt_sans</item>
+        <item>@font/roboto</item>
     </array>
 </resources>
