@@ -1,7 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
-import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,24 +44,27 @@ public class ESStackAdapter extends ArrayAdapter<ResponseSpeakerData> {
             TextView textView = itemView.findViewById(R.id.speaker_name);
             ImageView imageView = itemView.findViewById(R.id.speaker_image);
 
-            textView.setText(speakerObject.getName());
+
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .placeholder(R.mipmap.ic_launcher_round)
                     .error(R.mipmap.ic_launcher_round);
-            Glide.with(context).load(speakerObject.getImage()).apply(options).into(imageView);
+            Glide.with(context).load(speakerObject.getImage())/*.apply(options)*/.into(imageView);
+            textView.setText(speakerObject.getName());
         }
         return itemView;
     }
-}
-//
 
-//    @Override
-//    public int getCount() { return details.size(); }
-//    @Override
-//    public Object getItem(int i) {
-//        return details.get(i);
-//    }
+
+    @Override
+    public int getCount() {
+        return details.size();
+    }
+
+    @Override
+    public ResponseSpeakerData getItem(int i) {
+        return details.get(i);
+    }
 //
 //    @Override
 //    public long getItemId(int i) {
@@ -91,3 +92,4 @@ public class ESStackAdapter extends ArrayAdapter<ResponseSpeakerData> {
 //        TextView name;
 //        ImageView image;
 //    }
+}

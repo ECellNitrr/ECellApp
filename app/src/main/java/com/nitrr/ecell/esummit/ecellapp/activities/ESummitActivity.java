@@ -82,9 +82,6 @@ public class ESummitActivity extends AppCompatActivity{
         responseSpeakerObjectList = new ArrayList<>();
         callAPI();
 
-        ESStackAdapter adapter = new ESStackAdapter(this, R.id.es_stack_view, responseSpeakerObjectList);
-        stackView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     public void callAPI() {
@@ -105,12 +102,13 @@ public class ESummitActivity extends AppCompatActivity{
                     if (response.body() == null)
                         Log.e("ES Speaker List", "response body null");
                     else {
-                        responseSpeakerObjectList = response.body().getList();
+                        ResponseSpeaker data = response.body();
+                        responseSpeakerObjectList = data.getList();
+                        setadapter();
+                        Log.e("data ===========","list size is"+responseSpeakerObjectList.size());
                         Log.e("ES Speaker List", response.body().getMessage());
                     }
-
                 }
-
             }
 
             @Override
@@ -118,6 +116,12 @@ public class ESummitActivity extends AppCompatActivity{
                 Log.e("ES Speaker List", "Failed Connection!");
             }
         });
+    }
+
+    void setadapter(){
+        ESStackAdapter adapter = new ESStackAdapter(this, R.id.es_stack_view, responseSpeakerObjectList);
+        stackView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

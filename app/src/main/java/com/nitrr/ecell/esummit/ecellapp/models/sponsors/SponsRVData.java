@@ -19,6 +19,13 @@ public class SponsRVData{
     @Expose
     String img;
 
+    public SponsRVData(String name, String id, String type, String img) {
+        this.name = name;
+        this.id = id;
+        this.type = type;
+        this.img = img;
+    }
+
     public String getName(){
         return name;
     }

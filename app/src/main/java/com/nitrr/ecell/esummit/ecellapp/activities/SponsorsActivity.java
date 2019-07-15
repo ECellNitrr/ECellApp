@@ -1,39 +1,95 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsViewPagerAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
+import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SponsorsActivity extends AppCompatActivity {
 
-    TabLayout tabLayout;
-    ViewPager pager;
-    Toolbar toolbar;
-    ImageView circle1;
-    ImageView circle2;
-    ImageView circle3;
-    ImageView circle4;
-    ImageView circle5;
+    private TabLayout tabLayout;
+    private ViewPager pager;
+    private Toolbar toolbar;
+    private ImageView circle1, circle2, circle3, circle4, circle5;
+    private Bundle[] bundle = new Bundle[3];
+    private int index[] = {0,0,0};
+    private BroadcastReceiver receiver;
+    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
+    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
+        dialog.cancel();
+        SponsorsActivity.this.finish();
+    };
+
+    private SponsorsModel model;
+    private List<SponsRVData> list = new ArrayList<SponsRVData>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sponsors);
         initialize();
-        setTabs();
+        APICall();
     }
 
     private void setTabs() {
-        pager.setAdapter(new SponsViewPagerAdapter(getSupportFragmentManager()));
+        SponsRVData data;
+        bundle[0] = new Bundle();
+        bundle[1] = new Bundle();
+        bundle[2] = new Bundle();
+        for(int x=0;x<list.size();x++){
+            data = list.get(x);
+            if(data.getType().contentEquals("ATS") || data.getType().contentEquals("TLS") || data.getType().contentEquals("PRS")){
+                index[0]++;
+                bundle[0].putString("type"+index[0],"Assoiate Sponsors");
+                bundle[0].putString("name"+index[0],data.getName());
+                bundle[0].putString("image"+index[0],data.getImg());
+                bundle[0].putString("id"+index[0],data.getId());
+            }
+            else if(data.getType().contentEquals("PTS")){
+                index[1]++;
+                bundle[1].putString("type"+index[1],"Platinum Sponsors");
+                bundle[1].putString("name"+index[1],data.getName());
+                bundle[1].putString("image"+index[1],data.getImg());
+                bundle[1].putString("id"+index[1],data.getId());
+            }
+            else if(data.getType().contentEquals("GDS")){
+                index[2]++;
+                bundle[2].putString("type"+index[2],"Gold Sponsors");
+                bundle[2].putString("name"+index[2],data.getName());
+                bundle[2].putString("image"+index[2],data.getImg());
+                bundle[2].putString("id"+index[2],data.getId());
+            }
+        }
+        pager.setAdapter(new SponsViewPagerAdapter(getSupportFragmentManager(),bundle,index));
         tabLayout.setupWithViewPager(pager,true);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -112,7 +168,60 @@ public class SponsorsActivity extends AppCompatActivity {
         return Color.rgb(colorValue(IR,FR,pos),colorValue(IG,FG,pos),colorValue(IB,FB,pos));
     }
 
-    private void sampleFunction() {
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReciver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver !=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
+    }
+
+    void APICall() {
+        APIServices service = AppClient.getInstance().createService(APIServices.class);
+        Call<SponsorsModel> call = service.getSponsData();
+        call.enqueue(new Callback<SponsorsModel>() {
+            @Override
+            public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {
+                if(this!=null){
+                    Log.e("response",response.toString());
+                    if (response.isSuccessful()) {
+                        model = response.body();
+                        if (model != null) {
+                            list = model.getList();
+                            setTabs();
+                        } else {
+                            Log.e("response list empty", "response is empty and is: " + response.toString());
+                        }
+                    }
+                    else {
+                        Log.e("response failure", "resoponse is " + response.toString());
+                        Utils.showDialog(SponsorsActivity.this, null, false, "Something Went wrong", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry",refreshListener,"Cancel",cancelListener);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SponsorsModel> call, Throwable t) {
+                if(this!=null){
+                    if (!Utils.isNetworkAvailable(SponsorsActivity.this))
+                        Utils.showDialog(SponsorsActivity.this, null, false, SponsorsActivity.this.getString(R.string.no_internet), SponsorsActivity.this.getString(R.string.wasnt_able_to_load), null,null,null,null);
+                    else {
+                        Utils.showLongToast(SponsorsActivity.this, "Something went wrong.");
+                        Log.e("onfailure", "throable is " + t.toString());
+                    }
+                }
+            }
+        });
+    }
+
 }

@@ -72,17 +72,26 @@ public class LoginActivity extends AppCompatActivity{
         register.setOnClickListener((View v) -> {
             registerDialog = Utils.showDialog(this, null, false, "Registering User...", null, null, null, null, null);
 
-            if(isNotEmpty(firstName) &&
+            if(isNotEmpty(firstName) ||
+                    isNotEmpty(lastName) ||
+                    isNotEmpty(registerEmail) ||
+                    isNotEmpty(registerPassword) ||
+                    isNotEmpty(mobileNumber) ||
+                    checkEmail(registerEmail) ||
+                    checkPassword(registerPassword) ||
+                    checkPhone(mobileNumber))
+                if(isNotEmpty(firstName) &&
                     isNotEmpty(lastName) &&
                     isNotEmpty(registerEmail) &&
                     isNotEmpty(registerPassword) &&
                     isNotEmpty(mobileNumber) &&
                     checkEmail(registerEmail) &&
                     checkPassword(registerPassword) &&
-                    checkPhone(mobileNumber)){
-                register.setEnabled(false);
-            RegisterApiCall();
-            }
+                    checkPhone(mobileNumber))
+                {
+                        register.setEnabled(false);
+                        RegisterApiCall();
+                }
         });
 
         toRegister.setOnClickListener((View v) -> {
@@ -94,10 +103,11 @@ public class LoginActivity extends AppCompatActivity{
             loginanimation.toSignInScreen(this);
             isLoggingIn = true;
         });
-//
-//        fbButton.setOnClickListener((View v) -> { /*Write Here*/ });
-//
-//        googleButton.setOnClickListener((View v) -> { /*Write Here*/ });
+
+        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
+
+        fbButton.setOnClickListener((view -> Utils.showNotification(this,"This is title","this is message",true)));
+
     }
 
     @Override
@@ -134,9 +144,6 @@ public class LoginActivity extends AppCompatActivity{
         fbButton = findViewById(R.id.fb_button);
         googleButton = findViewById(R.id.google_button);
 
-        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
-        fbButton.setOnClickListener((view -> Utils.showNotification(this,"This is title","this is message",true)));
-
         firstName = findViewById(R.id.register_first_name);
         lastName = findViewById(R.id.register_last_name);
         registerPassword = findViewById(R.id.register_password);
@@ -167,10 +174,9 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
                 try {
-                    if (LoginActivity.this != null && response.isSuccessful()) {
+                    if (getApplicationContext()!= null && response.isSuccessful()) {
                         if (response.body() != null) {
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-
                             //TODO: Intent
 
                         } else {
