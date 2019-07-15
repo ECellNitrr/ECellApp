@@ -64,6 +64,9 @@
             android:name=".activities.ESummitActivity"
             android:theme="@style/AppTheme.FullScreen"
             android:screenOrientation="nosensor">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
 
         <meta-data

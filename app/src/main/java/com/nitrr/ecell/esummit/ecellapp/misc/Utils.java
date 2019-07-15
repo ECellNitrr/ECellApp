@@ -34,13 +34,6 @@ import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 
 public class Utils {
 
-    private static Activity activity;
-
-    public Utils(Activity activity) {
-        if(activity == null)
-            this.activity = activity;
-    }
-
     public static void showLongToast(Context context, String message){
         if(context!=null)
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
@@ -79,11 +72,6 @@ public class Utils {
             dialog.show();
         }
         return v;
-    }
-
-    public static String getAccessToken() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        return prefs.getString("access_token", null);
     }
 
     public static void showNotification(Context context,@NonNull String title,@NonNull String message,Boolean isintent){

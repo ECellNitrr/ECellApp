@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.models.Sponsors;
+package com.nitrr.ecell.esummit.ecellapp.models.sponsors;
 
 
 import com.google.gson.annotations.Expose;

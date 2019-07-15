@@ -1,58 +1,130 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.StackView;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.ViewPagerAdapter;
-import com.nitrr.ecell.esummit.ecellapp.misc.Animation.ESummitAnimaiton;
+import com.nitrr.ecell.esummit.ecellapp.adapters.ESStackAdapter;
+import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
+import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
-import com.nitrr.ecell.esummit.ecellapp.misc.ViewPagerDepthTransformer;
-import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ESummitActivity extends AppCompatActivity{
 
-    private View view;
-    private ViewPager pager;
-    private PagerAdapter adapter;
-    private int[] pagebg = new int[4];
-    private List<SpeakerDetails> list = new ArrayList<>();
-    ESummitAnimaiton animaiton;
-    private TextView toSpeaker, toAboutES;
+    private List<ResponseSpeakerData> responseSpeakerObjectList;
+    StackView stackView;
+    TextView aboutES, aboutESDetail;
+    ImageView curvedRect;
+    boolean isUp = false;
     private BroadcastReceiver receiver;
-    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_esummit);
-        animaiton = new ESummitAnimaiton(this);
-        toSpeaker = findViewById(R.id.to_speaker);
-        toSpeaker.setOnClickListener((View v) -> animaiton.toSpeakers());
 
-        toAboutES = findViewById(R.id.to_about_es);
-        toAboutES.setOnClickListener((View v) -> animaiton.toAboutES());
+        //Initialization
+        stackView = findViewById(R.id.es_stack_view);
+        curvedRect = findViewById(R.id.es_about_rect);
+        aboutES = findViewById(R.id.es_about_text);
+        aboutESDetail = findViewById(R.id.es_about_detail);
 
-        initialize();
-        view = findViewById(R.id.es_inner_constraint);
+        //Bounce Animation
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                aboutES.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.slide_up));
+                aboutESDetail.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.slide_up));
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                curvedRect.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
+                aboutES.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
+                aboutESDetail.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        curvedRect.startAnimation(animation);
+
+        curvedRect.setOnClickListener(view -> {
+            aboutESAnimation();
+        });
+
+        responseSpeakerObjectList = new ArrayList<>();
+        callAPI();
+
+        ESStackAdapter adapter = new ESStackAdapter(this, R.id.es_stack_view, responseSpeakerObjectList);
+        stackView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void callAPI() {
+        Call<ResponseSpeaker> call = AppClient.getInstance().createService(APIServices.class).getSpeakerList(2019);
+
+        call.enqueue(new Callback<ResponseSpeaker>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseSpeaker> call, @NonNull Response<ResponseSpeaker> response) {
+                if (!response.isSuccessful()) {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("ES Speaker List", response.errorBody().string());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if (response.body() == null)
+                        Log.e("ES Speaker List", "response body null");
+                    else {
+                        responseSpeakerObjectList = response.body().getList();
+                        Log.e("ES Speaker List", response.body().getMessage());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseSpeaker> call, @NonNull Throwable t) {
+                Log.e("ES Speaker List", "Failed Connection!");
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         receiver = new NetworkChangeReciver();
-        filter = new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
@@ -66,23 +138,18 @@ public class ESummitActivity extends AppCompatActivity{
         super.onDestroy();
     }
 
-    public void initialize() {
-        pager = findViewById(R.id.pager);
-        additem(1,"Vire","https://www.whatsappprofiledpimages.com/wp-content/uploads/2018/07/cool-profile-pictures5-300x300.jpg");
-        additem(2,"AAA","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8QrjD1Nnuez1NBnRg-fHvWAj1RCK9nUYDwC1ZTsLODmj4acwiuQ");
-        additem(3,"BBB","https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2OTA4NzY5MjE2MTI4/drake_photo_by_prince_williams_wireimage_getty_479503454.jpg");
-        additem(4,"CCC","https://i.ytimg.com/vi/CrEPmg06HRs/hqdefault.jpg");
-        additem(5,"DDD","https://cdn.cnn.com/cnnnext/dam/assets/160725131446-graham-car-crash-evolved-human-full-169.jpeg");
-        pager.setPageTransformer(true, new ViewPagerDepthTransformer());
-        pager.setOffscreenPageLimit(2);
-//        adapter = new ViewPagerAdapter(this,list);
-        pager.setAdapter(adapter);
-        toAboutES.setVisibility(View.INVISIBLE);
-        toAboutES.setClickable(false);
+    public void aboutESAnimation() {
+        if(isUp) {
+            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, 0f).setDuration(500).start();
+            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, 0f).setDuration(500).start();
+            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, 0f).setDuration(500).start();
+            isUp = false;
+        } else {
+            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, -1200f).setDuration(500).start();
+            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, -1200f).setDuration(500).start();
+            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, -1200f).setDuration(500).start();
+            isUp = true;
+        }
     }
 
-    void additem(int id,String name,String img){
-        SpeakerDetails data = new SpeakerDetails(id,name,img);
-        list.add(data);
-    }
 }

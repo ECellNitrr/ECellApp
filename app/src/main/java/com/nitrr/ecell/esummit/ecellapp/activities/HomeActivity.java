@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         setUpRV();
 
         initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
-            Intent intent = new Intent(HomeActivity.this,ESummitActivity.class);
+            Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
             startActivity(intent);
         });
 

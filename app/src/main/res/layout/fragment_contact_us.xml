@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:text="DETAILS"
                     android:textStyle="bold"
-                    android:textColor="@color/aboutusHeading"
+                    android:textColor="@color/aboutUsHeading"
                     android:textAlignment="center"
                     android:textSize="40sp" />
 
@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/name_college"
                         android:textSize="18sp"
-                        android:textColor="@color/aboutusHeading"
+                        android:textColor="@color/aboutUsHeading"
                         android:textAlignment="gravity"
                         android:gravity="center_vertical"
                         android:layout_weight="5"/>
@@ -76,7 +76,7 @@
                         android:text="08827544244"
                         android:layout_gravity="center"
                         android:textSize="20sp"
-                        android:textColor="@color/aboutusHeading"
+                        android:textColor="@color/aboutUsHeading"
                         android:textAlignment="gravity"
                         android:gravity="center_vertical"
                         android:layout_weight="5"/>
@@ -102,7 +102,7 @@
                         android:text="ecell@nitrr.ac.in"
                         android:layout_gravity="center"
                         android:textSize="20sp"
-                        android:textColor="@color/aboutusHeading"
+                        android:textColor="@color/aboutUsHeading"
                         android:textAlignment="gravity"
                         android:gravity="center_vertical"
                         android:layout_weight="5"/>
@@ -165,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="FEEDBACK"
-                    android:textColor="@color/aboutusHeading"
+                    android:textColor="@color/aboutUsHeading"
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:textSize="36sp" />

@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class SpeakerResponseData implements Serializable {
+public class ResponseSpeakerData implements Serializable {
 
-    public SpeakerResponseData(String name, String image) {
+    public ResponseSpeakerData(String name, String image) {
         this.name = name;
         this.image = image;
     }

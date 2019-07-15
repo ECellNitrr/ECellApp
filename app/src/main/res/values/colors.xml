@@ -13,10 +13,10 @@
     <color name="associateSponsBlue">#010C54</color>
     <color name="black_overlay">#66000000</color>
     <color name="bgBottomNavigation">#fe485a</color>
-    <color name="empty"> </color>
+    <color name="empty">#616161</color>
 
     <!--ABOUTUS SECTION BELOW-->
-    <color name="aboutusHeading">#414141</color>
+    <color name="aboutUsHeading">#414141</color>
     <color name="aboutusText">#EFEFEF</color>
     <color name="aboutusBg">#D9F5FF</color>
     <color name="aboutusToolbarBg">#5AB1D8</color>

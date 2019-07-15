@@ -42,6 +42,7 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -60,8 +61,7 @@
             android:paddingTop="0dp"
             android:paddingEnd="16dp"
             android:clickable="true"
-            android:focusable="true"
-            android:backgroun>
+            android:focusable="true">
 
             <ImageView
                 android:layout_width="35dp"
@@ -74,12 +74,12 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/verifyotp"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_otp"
                 android:padding="2dp"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textColor="@color/aboutusHeading"
+                android:textColor="@color/aboutUsHeading"
                 android:textSize="16sp" />
 
         </LinearLayout>

@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.BroadcastReceiver;
@@ -24,6 +25,7 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,13 +36,12 @@ public class EventActivity extends AppCompatActivity {
     private List<EventData> list= new ArrayList<EventData>();
     EventRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
-    private DialogInterface.OnClickListener refreshlistener= (dialog, which) -> APICall();
-    private DialogInterface.OnClickListener cancellistener = (dialog, which) -> {
+    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
+    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
         EventActivity.this.finish();
     };
     private BroadcastReceiver receiver;
-    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class EventActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         receiver = new NetworkChangeReciver();
-        filter = new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
@@ -75,8 +76,8 @@ public class EventActivity extends AppCompatActivity {
         Call<EventModel> call = services.getEventDetails();
         call.enqueue(new Callback<EventModel>() {
             @Override
-            public void onResponse(Call<EventModel> call, Response<EventModel> response) {
-                if(response.isSuccessful() && EventActivity.this!=null){
+            public void onResponse(@NonNull Call<EventModel> call, @NonNull Response<EventModel> response) {
+                if(response.isSuccessful() && getApplicationContext() != null){
                     Log.e("response",response.toString());
                     model = response.body();
 
@@ -85,22 +86,24 @@ public class EventActivity extends AppCompatActivity {
                         setRecycler();
                     }
                     else
-                        Utils.showDialog(EventActivity.this,null,false,"Something went load",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                        Utils.showDialog(EventActivity.this,null,false,"Something went load",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
                 }
                 else{
                     try {
-                        Log.e("error body====::::",response.errorBody().string());
+                        if (response.errorBody() != null) {
+                            Log.e("error body====::::",response.errorBody().string());
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Utils.showDialog(EventActivity.this,null,false,"Server Down",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                    Utils.showDialog(EventActivity.this,null,false,"Server Down", Objects.requireNonNull(getApplicationContext()).getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
                 }
             }
             @Override
-            public void onFailure(Call<EventModel> call, Throwable t) {
-                if(EventActivity.this!=null){
+            public void onFailure(@NonNull Call<EventModel> call, @NonNull Throwable t) {
+                if(getApplicationContext() != null){
                     if(!Utils.isNetworkAvailable(getApplicationContext()))
-                        Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasntabletoload),"Retry",refreshlistener,"Cancel",cancellistener);
+                        Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
                     else
                     {Log.e("Failure:  =","throwable is "+t);
                         Utils.showLongToast(getApplicationContext(),"Something went wrong.");

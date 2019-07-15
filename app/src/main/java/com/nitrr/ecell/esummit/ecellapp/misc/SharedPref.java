@@ -12,7 +12,6 @@ public class SharedPref {
             firstName = "",
             lastName = "",
             email = "",
-            password = "",
             contact = "",
             avatar = "",
             facebook = "",
@@ -24,17 +23,15 @@ public class SharedPref {
 
     public void setSharedPref(Activity activity, String access_token,
                               String firstName, String lastName,
-                              String email, String password,
-                              String contact, String avatar,
-                              String facebook, String linkedin,
-                              boolean isLoggedIn, boolean isFBLoggedIn,
-                              boolean isGLoggedIn) {
+                              String email, String contact,
+                              String avatar, String facebook,
+                              String linkedin, boolean isLoggedIn,
+                              boolean isFBLoggedIn, boolean isGLoggedIn) {
         this.activity = activity;
         SharedPref.accessToken = access_token;
         SharedPref.firstName = firstName;
         SharedPref.lastName = lastName;
         SharedPref.email = email;
-        SharedPref.password = password;
         SharedPref.contact = contact;
         SharedPref.avatar = avatar;
         SharedPref.facebook = facebook;
@@ -50,7 +47,6 @@ public class SharedPref {
         editor.putString("first_name", firstName);
         editor.putString("last_name", lastName);
         editor.putString("email", email);
-        editor.putString("password", password);
         editor.putString("contact", contact);
         editor.putString("avatar", avatar);
         editor.putString("facebook", facebook);
@@ -76,10 +72,6 @@ public class SharedPref {
 
     public static String getEmail() {
         return email;
-    }
-
-    public static String getPassword() {
-        return password;
     }
 
     public static String getContact() {

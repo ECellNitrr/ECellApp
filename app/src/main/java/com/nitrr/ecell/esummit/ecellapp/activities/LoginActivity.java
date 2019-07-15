@@ -47,9 +47,7 @@ public class LoginActivity extends AppCompatActivity{
     EditText firstName, lastName, registerUsername, registerPassword, registerEmail, mobileNumber;
     LinearLayout loginLayout, registerLayout;
     LoginAnimation loginanimation;
-    private String phoneNo;
     private BroadcastReceiver receiver;
-    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +72,14 @@ public class LoginActivity extends AppCompatActivity{
         register.setOnClickListener((View v) -> {
             registerDialog = Utils.showDialog(this, null, false, "Registering User...", null, null, null, null, null);
 
-            if(isnotEmpty(firstName) &&
-                    isnotEmpty(lastName) &&
-                    isnotEmpty(registerEmail) &&
-                    isnotEmpty(registerPassword) &&
-                    isnotEmpty(mobileNumber) &&
+            if(isNotEmpty(firstName) &&
+                    isNotEmpty(lastName) &&
+                    isNotEmpty(registerEmail) &&
+                    isNotEmpty(registerPassword) &&
+                    isNotEmpty(mobileNumber) &&
                     checkEmail(registerEmail) &&
-                    checkpassword(registerPassword) &&
-                    checkmobile(mobileNumber)){
+                    checkPassword(registerPassword) &&
+                    checkPhone(mobileNumber)){
                 register.setEnabled(false);
             RegisterApiCall();
             }
@@ -106,7 +104,7 @@ public class LoginActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         receiver = new NetworkChangeReciver();
-        filter = new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
@@ -231,8 +229,8 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    boolean checkmobile(EditText editText){
-        phoneNo = mobileNumber.getText().toString();
+    boolean checkPhone(EditText editText){
+        String phoneNo = mobileNumber.getText().toString();
         if(editText.getText().toString().length()==10){
             Character character = phoneNo.charAt(0);
             if(character.compareTo('6')==0 || character.compareTo('7')==0 || character.compareTo('8')==0 || character.compareTo('9')==0){
@@ -245,35 +243,37 @@ public class LoginActivity extends AppCompatActivity{
                 }
             }
         }
-        editText.setError("Invaild number");
+        editText.setError("Invalid number");
         return false;
     }
 
-    boolean checkpassword(EditText editText) {
+    boolean checkPassword(EditText editText) {
         if(editText.getText().length()>=8)
             return true;
         editText.setError("Atleast 8 characters required");
         return false;
     }
 
-    boolean isnotEmpty(EditText editText){
+    boolean isNotEmpty(EditText editText){
         if(!TextUtils.isEmpty(editText.getText()))
             return true;
         else
-            editText.setError("This feild is necessary to fill");
+            editText.setError("This field is necessary to fill");
         return false;
     }
 
     boolean checkEmail(EditText editText){
         String email = editText.getText().toString();
-        int check=email.length()-1;
+        int check = email.length()-1;
         boolean dot=false;
         Character character;
         while (check>=0){
             character = email.charAt(check);
-            if(character.compareTo('.')==0 && !dot){
+            if(character.compareTo('.')==0 && !dot) {
                 dot=true;
-            check--;}
+                check--;
+            }
+
             if(dot)
                 if(character.compareTo('@')==0)
                     return true;

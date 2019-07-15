@@ -27,7 +27,7 @@
                 android:fontFamily="@font/pt_sans"
                 android:padding="20dp"
                 android:text="@string/aim_text"
-                android:textColor="@color/aboutusHeading"
+                android:textColor="@color/aboutUsHeading"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
