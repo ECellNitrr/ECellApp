@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 
 
-public class NetworkChangeReciver extends BroadcastReceiver {
+public class NetworkChangeReceiver extends BroadcastReceiver {
 
     AlertDialog alertDialog;
 

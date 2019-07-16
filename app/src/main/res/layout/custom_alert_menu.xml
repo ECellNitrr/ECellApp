@@ -74,7 +74,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/verify_otp"
                 android:padding="2dp"
                 android:gravity="center"
@@ -90,7 +90,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingTop="0dp"
             android:paddingEnd="16dp"
             android:clickable="true"
             android:focusable="true"

@@ -8,14 +8,14 @@ public class SharedPref {
 
     private Activity activity;
 
-    private static String accessToken = "",
-            firstName = "",
-            lastName = "",
-            email = "",
-            contact = "",
-            avatar = "",
-            facebook = "",
-            linkedin = "";
+    private static String accessToken = null,
+            firstName = null,
+            lastName = null,
+            email = null,
+            contact = null,
+            avatar = null,
+            facebook = null,
+            linkedin = null;
 
     private static boolean isLoggedIn = false,
             isFBLoggedIn = false,

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
@@ -56,7 +56,7 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        receiver = new NetworkChangeReciver();
+        receiver = new NetworkChangeReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));

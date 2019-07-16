@@ -2,13 +2,19 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,9 +25,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.Login;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
@@ -30,31 +45,39 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
-    View signInDialog, registerDialog;
-    Context context;
-    private boolean isLoggingIn;
-    RegisterDetails details;
-    ImageView lowerIcon, fbButton, googleButton, upperPoly;
-    Button signIn,register;
-    TextView toSignIn, toRegister;
-    EditText loginEmail, loginPassword;
-    EditText firstName, lastName, registerUsername, registerPassword, registerEmail, mobileNumber;
-    LinearLayout loginLayout, registerLayout;
-    LoginAnimation loginanimation;
+    private View signInDialog, registerDialog;
+    private Context context;
+    private ImageView lowerIcon, fbButton, googleButton, upperPoly;
+    private Button signIn,register;
+    private TextView toSignIn, toRegister;
+    private EditText loginEmail, loginPassword;
+    private EditText firstName, lastName, registerUsername, registerPassword, registerEmail, registerPhone;
+    private LinearLayout loginLayout, registerLayout;
+    private LoginAnimation loginanimation;
     private BroadcastReceiver receiver;
+    private ConstraintLayout constraintLayout;
+    TextInputLayout textInputLayout;
 
+    private static final String EMAIL = "email";
+    CallbackManager callbackManager;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeViews();
-        initializeUserStatus();
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -65,55 +88,76 @@ public class LoginActivity extends AppCompatActivity{
         loginanimation.toSignInScreen(this);
 
         signIn.setOnClickListener((View v) -> {
-            signInDialog = Utils.showDialog(this, null, false, "Signing In...", null, null, null, null, null);
+            signInDialog = Utils.showDialog(this, null, false, "Signing In...", "", null, null, null, null);
             LoginApiCall();
         });
 
         register.setOnClickListener((View v) -> {
-            registerDialog = Utils.showDialog(this, null, false, "Registering User...", null, null, null, null, null);
+//            registerDialog = Utils.showDialog(this, null, false, "Registering User...", "", null, null, null, null);
+            firstName.setTag(isNotEmpty(firstName));
+            lastName.setTag(isNotEmpty(lastName));
+            registerEmail.setTag(checkEmail(registerEmail));
+            registerPassword.setTag(checkPassword(registerPassword));
+            registerPhone.setTag(checkPhone(registerPhone));
 
-            if(isNotEmpty(firstName) ||
-                    isNotEmpty(lastName) ||
-                    isNotEmpty(registerEmail) ||
-                    isNotEmpty(registerPassword) ||
-                    isNotEmpty(mobileNumber) ||
-                    checkEmail(registerEmail) ||
-                    checkPassword(registerPassword) ||
-                    checkPhone(mobileNumber))
-                if(isNotEmpty(firstName) &&
-                    isNotEmpty(lastName) &&
-                    isNotEmpty(registerEmail) &&
-                    isNotEmpty(registerPassword) &&
-                    isNotEmpty(mobileNumber) &&
-                    checkEmail(registerEmail) &&
-                    checkPassword(registerPassword) &&
-                    checkPhone(mobileNumber))
-                {
-                        register.setEnabled(false);
-                        RegisterApiCall();
+            if((boolean)firstName.getTag()) {
+                if((boolean)lastName.getTag()) {
+                    if((boolean)registerEmail.getTag()) {
+                        if((boolean)registerPassword.getTag()) {
+                            if((boolean)registerPhone.getTag()) {
+                                register.setEnabled(false);
+                                RegisterApiCall();
+                            }
+                        }
+                    }
                 }
+            }
         });
 
         toRegister.setOnClickListener((View v) -> {
-            isLoggingIn = false;
             loginanimation.toRegisterScreen(this);
         });
 
         toSignIn.setOnClickListener((View v) -> {
             loginanimation.toSignInScreen(this);
-            isLoggingIn = true;
         });
 
         googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
 
-        fbButton.setOnClickListener((view -> Utils.showNotification(this,"This is title","this is message",true)));
+        fbButton.setOnClickListener((view -> {
 
+            callbackManager = CallbackManager.Factory.create();
+
+            LoginManager.getInstance().registerCallback(callbackManager,
+                    new FacebookCallback<LoginResult>() {
+                        @Override
+                        public void onSuccess(LoginResult loginResult) {
+                            // App code
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            // App code
+                        }
+
+                        @Override
+                        public void onError(FacebookException exception) {
+                            // App code
+                        }
+                    });
+        }));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        receiver = new NetworkChangeReciver();
+        receiver = new NetworkChangeReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -128,7 +172,9 @@ public class LoginActivity extends AppCompatActivity{
         super.onDestroy();
     }
 
-    public void initializeViews(){
+    private void initializeViews(){
+        textInputLayout = findViewById(R.id.register_password_layout);
+        constraintLayout = findViewById(R.id.login_outer_constraint);
         upperPoly = findViewById(R.id.upper_poly);
 
         toSignIn = findViewById(R.id.to_sign_in);
@@ -148,7 +194,7 @@ public class LoginActivity extends AppCompatActivity{
         lastName = findViewById(R.id.register_last_name);
         registerPassword = findViewById(R.id.register_password);
         registerEmail = findViewById(R.id.register_email);
-        mobileNumber = findViewById(R.id.register_number);
+        registerPhone = findViewById(R.id.register_number);
 
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
@@ -156,16 +202,12 @@ public class LoginActivity extends AppCompatActivity{
         toSignIn.setVisibility(View.INVISIBLE);
     }
 
-    public void initializeUserStatus() {
-
-    }
-
-    public void RegisterApiCall() {
+    private void RegisterApiCall() {
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
                 lastName.getText().toString(),
                 registerEmail.getText().toString(),
                 registerPassword.getText().toString(),
-                mobileNumber.getText().toString(),
+                registerPhone.getText().toString(),
                 null, null, null);
 
         Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postRegisterUser(details);
@@ -181,7 +223,7 @@ public class LoginActivity extends AppCompatActivity{
 
                         } else {
                             Log.e("RegisterApiCall =====", "Response Body NULL.");
-                            Log.e("RegisterApiCall =====" ,response.errorBody().string() + " ");
+                            Log.e("RegisterApiCall =====" , Objects.requireNonNull(response.errorBody()).string() + " ");
                         }
                     }
 
@@ -198,7 +240,7 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    public void LoginApiCall() {
+    private void LoginApiCall() {
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
         Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
@@ -235,9 +277,11 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    boolean checkPhone(EditText editText){
-        String phoneNo = mobileNumber.getText().toString();
-        if(editText.getText().toString().length()==10){
+    private boolean checkPhone(EditText editText){
+        if(isNotEmpty(editText))
+            return false;
+        String phoneNo = registerPhone.getText().toString();
+        if(editText.getText().toString().length() == 10){
             Character character = phoneNo.charAt(0);
             if(character.compareTo('6')==0 || character.compareTo('7')==0 || character.compareTo('8')==0 || character.compareTo('9')==0){
                 try{
@@ -245,7 +289,7 @@ public class LoginActivity extends AppCompatActivity{
                     return true;
                 }
                 catch (Exception e){
-                    mobileNumber.setError("Please enter only numbers");
+                    registerPhone.setError("Please enter only numbers");
                 }
             }
         }
@@ -253,22 +297,19 @@ public class LoginActivity extends AppCompatActivity{
         return false;
     }
 
-    boolean checkPassword(EditText editText) {
-        if(editText.getText().length()>=8)
+    private boolean checkPassword(EditText editText) {
+        if(isNotEmpty(editText)) {
+            return false;
+        }
+        if(editText.getText().length() >= 8)
             return true;
         editText.setError("Atleast 8 characters required");
         return false;
     }
 
-    boolean isNotEmpty(EditText editText){
-        if(!TextUtils.isEmpty(editText.getText()))
-            return true;
-        else
-            editText.setError("This field is necessary to fill");
-        return false;
-    }
-
-    boolean checkEmail(EditText editText){
+    private boolean checkEmail(EditText editText){
+        if(isNotEmpty(editText))
+            return false;
         String email = editText.getText().toString();
         int check = email.length()-1;
         boolean dot=false;
@@ -286,6 +327,14 @@ public class LoginActivity extends AppCompatActivity{
             check--;
         }
         editText.setError("Enter email correctly");
+        return false;
+    }
+
+    private boolean isNotEmpty(EditText editText){
+        if(!TextUtils.isEmpty(editText.getText()))
+            return true;
+        else
+            editText.setError("This field is necessary to fill");
         return false;
     }
 }

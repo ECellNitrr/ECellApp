@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import java.util.Objects;
 
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
 public class EventFragment extends Fragment {
 
@@ -80,7 +80,7 @@ public class EventFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        receiver = new NetworkChangeReciver();
+        receiver = new NetworkChangeReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         Objects.requireNonNull(getContext()).registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));

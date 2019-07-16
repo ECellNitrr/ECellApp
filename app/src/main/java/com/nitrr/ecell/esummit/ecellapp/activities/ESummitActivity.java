@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,7 +23,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReciver;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,10 +36,10 @@ import retrofit2.Response;
 public class ESummitActivity extends AppCompatActivity{
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
-    StackView stackView;
-    TextView aboutES, aboutESDetail;
-    ImageView curvedRect;
-    boolean isUp = false;
+    private StackView stackView;
+    private TextView aboutES, aboutESDetail;
+    private ImageView curvedRect;
+    private boolean isUp = false;
     private BroadcastReceiver receiver;
 
     @Override
@@ -76,12 +77,13 @@ public class ESummitActivity extends AppCompatActivity{
         curvedRect.startAnimation(animation);
 
         curvedRect.setOnClickListener(view -> {
+            curvedRect.setEnabled(false);
             aboutESAnimation();
         });
 
         responseSpeakerObjectList = new ArrayList<>();
-        callAPI();
 
+        callAPI();
     }
 
     public void callAPI() {
@@ -104,7 +106,9 @@ public class ESummitActivity extends AppCompatActivity{
                     else {
                         ResponseSpeaker data = response.body();
                         responseSpeakerObjectList = data.getList();
-                        setadapter();
+                        ESStackAdapter adapter = new ESStackAdapter(ESummitActivity.this, R.id.es_stack_view, responseSpeakerObjectList);
+                        stackView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                         Log.e("data ===========","list size is"+responseSpeakerObjectList.size());
                         Log.e("ES Speaker List", response.body().getMessage());
                     }
@@ -118,16 +122,10 @@ public class ESummitActivity extends AppCompatActivity{
         });
     }
 
-    void setadapter(){
-        ESStackAdapter adapter = new ESStackAdapter(this, R.id.es_stack_view, responseSpeakerObjectList);
-        stackView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        receiver = new NetworkChangeReciver();
+        receiver = new NetworkChangeReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -135,7 +133,7 @@ public class ESummitActivity extends AppCompatActivity{
 
     @Override
     protected void onDestroy() {
-        if(receiver !=null){
+        if(receiver != null){
             unregisterReceiver(receiver);
             receiver=null;
         }
@@ -147,13 +145,18 @@ public class ESummitActivity extends AppCompatActivity{
             ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, 0f).setDuration(500).start();
             ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, 0f).setDuration(500).start();
             ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, 0f).setDuration(500).start();
-            isUp = false;
+            new Handler().postDelayed(() -> {
+                isUp = false;
+                curvedRect.setEnabled(true);
+            }, 500);
         } else {
             ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, -1200f).setDuration(500).start();
             ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, -1200f).setDuration(500).start();
             ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, -1200f).setDuration(500).start();
-            isUp = true;
+            new Handler().postDelayed(() -> {
+                isUp = true;
+                curvedRect.setEnabled(true);
+            }, 500);
         }
     }
-
 }
