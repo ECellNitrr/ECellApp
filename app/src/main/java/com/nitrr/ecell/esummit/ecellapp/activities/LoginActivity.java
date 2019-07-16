@@ -34,27 +34,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity implements View.OnFocusChangeListener {
 
-    View signInDialog, registerDialog;
-    Context context;
+    private View signInDialog, registerDialog;
+    private Context context;
     private boolean isLoggingIn;
-    RegisterDetails details;
-    ImageView lowerIcon, fbButton, googleButton, upperPoly;
-    Button signIn,register;
-    TextView toSignIn, toRegister;
-    EditText loginEmail, loginPassword;
-    EditText firstName, lastName, registerUsername, registerPassword, registerEmail, mobileNumber;
-    LinearLayout loginLayout, registerLayout;
-    LoginAnimation loginanimation;
+    private RegisterDetails details;
+    private ImageView lowerIcon, fbButton, googleButton, upperPoly;
+    private Button signIn,register;
+    private TextView toSignIn, toRegister;
+    private EditText loginEmail, loginPassword;
+    private EditText firstName, lastName, registerPassword, registerEmail, mobileNumber;
+    private LinearLayout loginLayout, registerLayout;
+    private LoginAnimation loginanimation;
     private BroadcastReceiver receiver;
+    private AuthResponse authResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeViews();
-        initializeUserStatus();
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -72,26 +72,16 @@ public class LoginActivity extends AppCompatActivity{
         register.setOnClickListener((View v) -> {
             registerDialog = Utils.showDialog(this, null, false, "Registering User...", null, null, null, null, null);
 
-            if(isNotEmpty(firstName) ||
-                    isNotEmpty(lastName) ||
-                    isNotEmpty(registerEmail) ||
-                    isNotEmpty(registerPassword) ||
-                    isNotEmpty(mobileNumber) ||
-                    checkEmail(registerEmail) ||
-                    checkPassword(registerPassword) ||
-                    checkPhone(mobileNumber))
-                if(isNotEmpty(firstName) &&
-                    isNotEmpty(lastName) &&
-                    isNotEmpty(registerEmail) &&
-                    isNotEmpty(registerPassword) &&
-                    isNotEmpty(mobileNumber) &&
-                    checkEmail(registerEmail) &&
-                    checkPassword(registerPassword) &&
-                    checkPhone(mobileNumber))
-                {
-                        register.setEnabled(false);
-                        RegisterApiCall();
-                }
+            if(isNotEmpty(firstName) &&
+                isNotEmpty(lastName) &&
+                isNotEmpty(registerEmail) &&
+                isNotEmpty(registerPassword) &&
+                isNotEmpty(mobileNumber) &&
+                checkEmail(registerEmail) &&
+                checkPassword(registerPassword) &&
+                checkPhone(mobileNumber))
+                    register.setEnabled(false);
+                    RegisterApiCall();
         });
 
         toRegister.setOnClickListener((View v) -> {
@@ -128,7 +118,52 @@ public class LoginActivity extends AppCompatActivity{
         super.onDestroy();
     }
 
-    public void initializeViews(){
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        Log.e("focus changed====","view id is "+ v.getId());
+        switch (v.getId()){
+            case R.id.register_first_name:
+                if(!firstName.hasFocus())
+                isNotEmpty(firstName);
+                break;
+            case  R.id.register_last_name:
+                if(!lastName.hasFocus())
+                isNotEmpty(lastName);
+                break;
+            case R.id.register_email:
+                if(!registerEmail.hasFocus()){
+                    isNotEmpty(registerEmail);
+                    checkEmail(registerEmail);
+                }
+                break;
+            case R.id.register_password:
+                if(!registerPassword.hasFocus()){
+                    isNotEmpty(registerPassword);
+                    checkPassword(registerPassword);
+                }
+                break;
+            case R.id.register_number:
+                if(!mobileNumber.hasFocus()){
+                    isNotEmpty(mobileNumber);
+                    checkPhone(mobileNumber);
+                }
+                break;
+            case R.id.login_email:
+                if(!loginEmail.hasFocus()){
+                    isNotEmpty(loginEmail);
+                    checkEmail(loginEmail);
+                }
+                break;
+            case R.id.login_password:
+                if(!loginPassword.hasFocus()){
+                    isNotEmpty(loginPassword);
+                    checkPassword(loginPassword);
+                }
+                break;
+        }
+    }
+
+    private void initializeViews(){
         upperPoly = findViewById(R.id.upper_poly);
 
         toSignIn = findViewById(R.id.to_sign_in);
@@ -154,13 +189,18 @@ public class LoginActivity extends AppCompatActivity{
         loginPassword = findViewById(R.id.login_password);
 
         toSignIn.setVisibility(View.INVISIBLE);
+
+
+        firstName.setOnFocusChangeListener(this);
+        lastName.setOnFocusChangeListener(this);
+        registerEmail.setOnFocusChangeListener(this);
+        registerPassword.setOnFocusChangeListener(this);
+        mobileNumber.setOnFocusChangeListener(this);
+        loginEmail.setOnFocusChangeListener(this);
+        loginPassword.setOnFocusChangeListener(this);
     }
 
-    public void initializeUserStatus() {
-
-    }
-
-    public void RegisterApiCall() {
+    private void RegisterApiCall() {
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
                 lastName.getText().toString(),
                 registerEmail.getText().toString(),
@@ -177,9 +217,25 @@ public class LoginActivity extends AppCompatActivity{
                     if (getApplicationContext()!= null && response.isSuccessful()) {
                         if (response.body() != null) {
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-                            //TODO: Intent
-
-                        } else {
+                            authResponse = response.body();
+                            SharedPref.setSharedPref(LoginActivity.this,
+                                    authResponse.getToken(),
+                                    details.getFirstName(),
+                                    details.getLastName(),
+                                    details.getEmail(),
+                                    details.getContact(),
+                                    details.getAvatar(),
+                                    details.getFacebook(),
+                                    details.getLinkedin());
+                            if(details.getFacebook()!=null)
+                                SharedPref.setIsLoggedIn(false,true,false);
+                            else if(details.getLinkedin()!=null)
+                                SharedPref.setIsLoggedIn(false,false,true);
+                            else
+                                SharedPref.setIsLoggedIn(true,false,false);
+                            startActivity(new Intent(context, HomeActivity.class));
+                        }
+                        else {
                             Log.e("RegisterApiCall =====", "Response Body NULL.");
                             Log.e("RegisterApiCall =====" ,response.errorBody().string() + " ");
                         }
@@ -198,7 +254,7 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    public void LoginApiCall() {
+    private void LoginApiCall() {
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
         Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
@@ -235,7 +291,7 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
-    boolean checkPhone(EditText editText){
+    private boolean checkPhone(EditText editText){
         String phoneNo = mobileNumber.getText().toString();
         if(editText.getText().toString().length()==10){
             Character character = phoneNo.charAt(0);
@@ -253,14 +309,14 @@ public class LoginActivity extends AppCompatActivity{
         return false;
     }
 
-    boolean checkPassword(EditText editText) {
+    private boolean checkPassword(EditText editText) {
         if(editText.getText().length()>=8)
             return true;
         editText.setError("Atleast 8 characters required");
         return false;
     }
 
-    boolean isNotEmpty(EditText editText){
+    private boolean isNotEmpty(EditText editText){
         if(!TextUtils.isEmpty(editText.getText()))
             return true;
         else
@@ -268,7 +324,7 @@ public class LoginActivity extends AppCompatActivity{
         return false;
     }
 
-    boolean checkEmail(EditText editText){
+    private boolean checkEmail(EditText editText){
         String email = editText.getText().toString();
         int check = email.length()-1;
         boolean dot=false;
@@ -288,4 +344,6 @@ public class LoginActivity extends AppCompatActivity{
         editText.setError("Enter email correctly");
         return false;
     }
+
+
 }

@@ -118,6 +118,7 @@
                 android:layout_margin="10dp">
 
                 <ImageView
+                    android:id="@+id/whatsapplogo"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -125,6 +126,7 @@
                     app:srcCompat="@drawable/ic_whatsapp"/>
 
                 <ImageView
+                    android:id="@+id/linkedinlogo"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -132,6 +134,7 @@
                     app:srcCompat="@drawable/ic_linkedin"/>
 
                 <ImageView
+                    android:id="@+id/twitterlogo"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -139,6 +142,7 @@
                     app:srcCompat="@drawable/ic_twitter"/>
 
                 <ImageView
+                    android:id="@+id/facebooklogo"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -146,6 +150,7 @@
                     app:srcCompat="@drawable/ic_facebook_logo"/>
 
                 <ImageView
+                    android:id="@+id/instagramlogo"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -179,33 +184,6 @@
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        app:srcCompat="@drawable/ic_username"
-                        android:padding="12dp"
-                        android:layout_weight="1"/>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="5"
-                        android:hint="Name"
-                        android:gravity="center_vertical">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
                         app:srcCompat="@drawable/about_us_feedback"
                         android:padding="10dp"
                         android:layout_weight="1"/>
@@ -218,13 +196,16 @@
                         android:gravity="center_vertical">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mesage"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/messagesubmit"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

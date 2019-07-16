@@ -7,17 +7,6 @@ import java.io.Serializable;
 
 public class RegisterDetails implements Serializable {
 
-    public RegisterDetails(String firstName, String lastName, String email, String password, String contact, String avatar, String linkedin, String facebook) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.contact = contact;
-        this.avatar = avatar;
-        this.linkedin = linkedin;
-        this.facebook = facebook;
-    }
-
     @SerializedName("first_name")
     @Expose
     String firstName;
@@ -49,6 +38,17 @@ public class RegisterDetails implements Serializable {
     @SerializedName("facebook")
     @Expose
     String facebook;
+
+    public RegisterDetails(String firstName, String lastName, String email, String password, String contact, String avatar, String linkedin, String facebook) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.contact = contact;
+        this.avatar = avatar;
+        this.linkedin = linkedin;
+        this.facebook = facebook;
+    }
 
     public String getFirstName() {
         return firstName;

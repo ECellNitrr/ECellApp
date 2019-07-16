@@ -31,6 +31,7 @@ public class NetworkChangeReciver extends BroadcastReceiver {
                 alertDialog = dialog.create();
                 dialog.setTitle("No Internet Connection")
                         .setMessage("Please Connect to internet")
+                        .setPositiveButton("",null)
                         .setCancelable(false);
                 alertDialog =dialog.show();
             }

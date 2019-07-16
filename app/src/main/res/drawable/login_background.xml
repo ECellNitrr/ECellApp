@@ -9,10 +9,10 @@
         android:drawable="@drawable/login_circle_left"/>
 
     <item
-        android:top="38dp"
+        android:top="50dp"
         android:left="33dp"
         android:right="-25dp"
-        android:bottom="3dp"
+        android:bottom="-9dp"
         android:drawable="@drawable/login_circle_right"/>
 
 </layer-list>

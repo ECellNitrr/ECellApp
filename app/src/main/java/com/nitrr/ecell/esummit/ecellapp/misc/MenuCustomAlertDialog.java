@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
+import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
 
 public class MenuCustomAlertDialog {
 
@@ -60,18 +61,13 @@ public class MenuCustomAlertDialog {
         item1.setText("Username");
         item2.setOnClickListener(v -> {
             showOTPDialog();
-            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setOnDismissListener(dialog -> dialog.dismiss());
         });
         item3.setOnClickListener(v -> {
             Intent intent = new Intent(activity, AboutUsActivity.class);
             activity.startActivity(intent);
         });
-        item4.setOnClickListener(v -> logout());
+        //item4.setOnClickListener(v -> logout());
 
         builder.setView(alertView);
 
@@ -96,6 +92,8 @@ public class MenuCustomAlertDialog {
     }
 
     private void logout() {
+        SharedPref.clearPrefs();
+        activity.startActivity(new Intent(activity, LoginActivity.class));
     }
 
     void showOTPDialog() {
