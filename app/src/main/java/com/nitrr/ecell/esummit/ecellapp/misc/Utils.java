@@ -8,21 +8,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.preference.PreferenceManager;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +26,10 @@ import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 
 
 public class Utils {
+
+    private static View v = null;
+    private static AlertDialog.Builder builder;
+    private static AlertDialog dialog;
 
     public static void showLongToast(Context context, String message){
         if(context!=null)
@@ -55,21 +52,20 @@ public class Utils {
     }
 
     public static View showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
-        View v = null;
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        if(context!=null){
+         builder = new AlertDialog.Builder(context);
+        if(!((Activity)context).isFinishing()){
             if(layout!=null){
                 v=LayoutInflater.from(context).inflate(layout,null);
-                dialog.setView(v);
+                builder.setView(v);
             }
-            dialog.setTitle(title)
+            builder.setTitle(title)
                     .setMessage(message)
                     .setCancelable(canclelable);
             if(posbutton!=null)
-                    dialog.setPositiveButton(posbutton,poslistener);
+                    builder.setPositiveButton(posbutton,poslistener);
             if(negbutton!=null && neglistener!=null)
-                dialog.setNegativeButton(negbutton,neglistener);
-            dialog.show();
+                builder.setNegativeButton(negbutton,neglistener);
+            dialog = builder.show();
         }
         return v;
     }

@@ -29,7 +29,6 @@ import retrofit2.Response;
 
 public class SponsorsFragment extends Fragment {
 
-    private static String type;
     private RecyclerView recycler;
     private SponsorsRecyclerViewAdapter adapter;
     private List<SponsRVData> list = new ArrayList<SponsRVData>();

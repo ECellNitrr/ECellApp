@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 
 public class SharedPref {
 
-    private Activity activity;
+    private static Activity activity;
 
     private static String accessToken = null,
             firstName = null,
@@ -21,13 +21,12 @@ public class SharedPref {
             isFBLoggedIn = false,
             isGLoggedIn = false;
 
-    public void setSharedPref(Activity activity, String access_token,
+    public static void setSharedPref(Activity act, String access_token,
                               String firstName, String lastName,
                               String email, String contact,
                               String avatar, String facebook,
-                              String linkedin, boolean isLoggedIn,
-                              boolean isFBLoggedIn, boolean isGLoggedIn) {
-        this.activity = activity;
+                              String linkedin) {
+        activity = act;
         SharedPref.accessToken = access_token;
         SharedPref.firstName = firstName;
         SharedPref.lastName = lastName;
@@ -36,9 +35,6 @@ public class SharedPref {
         SharedPref.avatar = avatar;
         SharedPref.facebook = facebook;
         SharedPref.linkedin = linkedin;
-        SharedPref.isLoggedIn = isLoggedIn;
-        SharedPref.isFBLoggedIn = isFBLoggedIn;
-        SharedPref.isGLoggedIn = isGLoggedIn;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = prefs.edit();
@@ -56,6 +52,12 @@ public class SharedPref {
         editor.putBoolean("isGLoggedIn", isGLoggedIn);
 
         editor.apply();
+    }
+
+    public static void setIsLoggedIn( boolean isLoggedIn, boolean isFBLoggedIn, boolean isGLoggedIn) {
+        SharedPref.isLoggedIn = isLoggedIn;
+        SharedPref.isFBLoggedIn = isFBLoggedIn;
+        SharedPref.isGLoggedIn = isGLoggedIn;
     }
 
     public static String getAccessToken() {
@@ -106,7 +108,7 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(activity).edit();
     }
 
-    public void clearPrefs() {
+    public static void clearPrefs() {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(activity).edit();
         editor.clear();
         editor.apply();

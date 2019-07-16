@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -53,11 +54,13 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnFocusChangeListener {
 
     private View signInDialog, registerDialog;
     private Context context;
+    private RegisterDetails details;
     private ImageView lowerIcon, fbButton, googleButton, upperPoly;
     private Button signIn,register;
     private TextView toSignIn, toRegister;
@@ -71,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String EMAIL = "email";
     CallbackManager callbackManager;
+
+    private AuthResponse authResponse;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -100,17 +105,13 @@ public class LoginActivity extends AppCompatActivity {
             registerPassword.setTag(checkPassword(registerPassword));
             registerPhone.setTag(checkPhone(registerPhone));
 
-            if((boolean)firstName.getTag()) {
-                if((boolean)lastName.getTag()) {
-                    if((boolean)registerEmail.getTag()) {
-                        if((boolean)registerPassword.getTag()) {
-                            if((boolean)registerPhone.getTag()) {
-                                register.setEnabled(false);
-                                RegisterApiCall();
-                            }
-                        }
-                    }
-                }
+            if(isNotEmpty(firstName) &&
+                    isNotEmpty(lastName) &&
+                    checkEmail(registerEmail) &&
+                    checkPassword(registerPassword) &&
+                    checkPhone(registerPhone)) {
+                register.setEnabled(false);
+                RegisterApiCall();
             }
         });
 
@@ -155,21 +156,38 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(receiver !=null){
-            unregisterReceiver(receiver);
-            receiver=null;
+    public void onFocusChange(View v, boolean hasFocus) {
+        Log.e("focus changed====","view id is "+ v.getId());
+        switch (v.getId()){
+            case R.id.register_first_name:
+                if(!firstName.hasFocus())
+                isNotEmpty(firstName);
+                break;
+            case  R.id.register_last_name:
+                if(!lastName.hasFocus())
+                isNotEmpty(lastName);
+                break;
+            case R.id.register_email:
+                if(!registerEmail.hasFocus())
+                    checkEmail(registerEmail);
+                break;
+            case R.id.register_password:
+                if(!registerPassword.hasFocus())
+                    checkPassword(registerPassword);
+                break;
+            case R.id.register_number:
+                if(!registerPhone.hasFocus())
+                    checkPhone(registerPhone);
+                break;
+            case R.id.login_email:
+                if(!loginEmail.hasFocus())
+                    checkEmail(loginEmail);
+                break;
+            case R.id.login_password:
+                if(!loginPassword.hasFocus())
+                    checkPassword(loginPassword);
+                break;
         }
-        super.onDestroy();
     }
 
     private void initializeViews(){
@@ -200,9 +218,20 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.login_password);
 
         toSignIn.setVisibility(View.INVISIBLE);
+
+        firstName.setOnFocusChangeListener(this);
+        lastName.setOnFocusChangeListener(this);
+        registerEmail.setOnFocusChangeListener(this);
+        registerPassword.setOnFocusChangeListener(this);
+        registerPhone.setOnFocusChangeListener(this);
+        loginEmail.setOnFocusChangeListener(this);
+        loginPassword.setOnFocusChangeListener(this);
     }
 
     private void RegisterApiCall() {
+        ProgressDialog dialog = ProgressDialog.show(this, "Registering User",
+                "Please wait...", true);
+
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
                 lastName.getText().toString(),
                 registerEmail.getText().toString(),
@@ -215,19 +244,39 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+                dialog.dismiss();
                 try {
-                    if (getApplicationContext()!= null && response.isSuccessful()) {
+                    if (getApplicationContext() != null && response.isSuccessful()) {
                         if (response.body() != null) {
+                            dialog.dismiss();
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-                            //TODO: Intent
-
-                        } else {
+                            authResponse = response.body();
+                            SharedPref.setSharedPref(LoginActivity.this,
+                                    authResponse.getToken(),
+                                    details.getFirstName(),
+                                    details.getLastName(),
+                                    details.getEmail(),
+                                    details.getContact(),
+                                    details.getAvatar(),
+                                    details.getFacebook(),
+                                    details.getLinkedin());
+                            if(details.getFacebook()!= null)
+                                SharedPref.setIsLoggedIn(false,true,false);
+                            else if(details.getLinkedin() != null)
+                                SharedPref.setIsLoggedIn(false,false,true);
+                            else
+                                SharedPref.setIsLoggedIn(true,false,false);
+                            startActivity(new Intent(context, HomeActivity.class));
+                        }
+                        else {
+                            dialog.dismiss();
                             Log.e("RegisterApiCall =====", "Response Body NULL.");
                             Log.e("RegisterApiCall =====" , Objects.requireNonNull(response.errorBody()).string() + " ");
                         }
                     }
 
                 } catch (Exception e){
+                    dialog.dismiss();
                     Log.e("RegisterApiCall =======", e.getMessage() + " ");
                     e.printStackTrace();
                 }
@@ -235,6 +284,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
+                dialog.dismiss();
                 Utils.showLongToast(context, "Failed Response " + t.getMessage());
             }
         });
@@ -278,7 +328,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean checkPhone(EditText editText){
-        if(isNotEmpty(editText))
+        if(!isNotEmpty(editText))
             return false;
         String phoneNo = registerPhone.getText().toString();
         if(editText.getText().toString().length() == 10){
@@ -298,7 +348,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean checkPassword(EditText editText) {
-        if(isNotEmpty(editText)) {
+        if(!isNotEmpty(editText)) {
             return false;
         }
         if(editText.getText().length() >= 8)
@@ -308,7 +358,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean checkEmail(EditText editText){
-        if(isNotEmpty(editText))
+        if(!isNotEmpty(editText))
             return false;
         String email = editText.getText().toString();
         int check = email.length()-1;
@@ -337,4 +387,23 @@ public class LoginActivity extends AppCompatActivity {
             editText.setError("This field is necessary to fill");
         return false;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver !=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
+    }
+
 }
