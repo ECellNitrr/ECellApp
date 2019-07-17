@@ -33,7 +33,7 @@ import retrofit2.Response;
 
 public class EventActivity extends AppCompatActivity {
     private EventModel model;
-    private List<EventData> list= new ArrayList<EventData>();
+    private List<EventData> list= new ArrayList<>();
     EventRecyclerViewAdapter adapter;
     RecyclerView recyclerView;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();

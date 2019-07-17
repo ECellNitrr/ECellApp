@@ -58,155 +58,119 @@ import retrofit2.http.HEAD;
 
 public class LoginActivity extends AppCompatActivity implements View.OnFocusChangeListener {
 
-    private View signInDialog, registerDialog;
     private Context context;
-    private RegisterDetails details;
-    private ImageView lowerIcon, fbButton, googleButton, upperPoly;
     private Button signIn,register;
     private TextView toSignIn, toRegister;
     private EditText loginEmail, loginPassword;
-    private EditText firstName, lastName, registerUsername, registerPassword, registerEmail, registerPhone;
-    private LinearLayout loginLayout, registerLayout;
+    private EditText firstName, lastName, registerPassword, registerEmail, registerPhone;
     private LoginAnimation loginanimation;
     private BroadcastReceiver receiver;
-    private ConstraintLayout constraintLayout;
-    TextInputLayout textInputLayout;
-
-    private static final String EMAIL = "email";
-    CallbackManager callbackManager;
-
     private AuthResponse authResponse;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeViews();
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        Utils.showLongToast(this, displayMetrics.heightPixels + "");
-
         context = this;
         loginanimation = new LoginAnimation(this);
-        loginanimation.toSignInScreen(this);
+        loginanimation.toSignInScreen();
+
+        loginEmail.clearFocus();
 
         signIn.setOnClickListener((View v) -> {
-            signInDialog = Utils.showDialog(this, null, false, "Signing In...", "", null, null, null, null);
-            LoginApiCall();
+            //Validation for Sign In
+            loginEmail.setTag(checkEmail(loginEmail));
+            loginPassword.setTag(checkPassword(loginPassword));
+
+            if(loginEmail.getText().toString().equals("DebugMode"))
+                startActivity(new Intent(this, HomeActivity.class));
+            else
+                if((boolean)loginEmail.getTag() && (boolean)loginPassword.getTag())
+                    LoginApiCall();
         });
 
         register.setOnClickListener((View v) -> {
-//            registerDialog = Utils.showDialog(this, null, false, "Registering User...", "", null, null, null, null);
+            //Validation for Register
             firstName.setTag(isNotEmpty(firstName));
             lastName.setTag(isNotEmpty(lastName));
             registerEmail.setTag(checkEmail(registerEmail));
             registerPassword.setTag(checkPassword(registerPassword));
             registerPhone.setTag(checkPhone(registerPhone));
 
-            if(isNotEmpty(firstName) &&
-                    isNotEmpty(lastName) &&
-                    checkEmail(registerEmail) &&
-                    checkPassword(registerPassword) &&
-                    checkPhone(registerPhone)) {
+            if((boolean)firstName.getTag() &&
+                    (boolean)lastName.getTag() &&
+                    (boolean)registerEmail.getTag() &&
+                    (boolean)registerPassword.getTag() &&
+                    (boolean)registerPhone.getTag()){
                 register.setEnabled(false);
                 RegisterApiCall();
             }
         });
 
-        toRegister.setOnClickListener((View v) -> {
-            loginanimation.toRegisterScreen(this);
-        });
+        toRegister.setOnClickListener((View v) -> loginanimation.toRegisterScreen());
 
-        toSignIn.setOnClickListener((View v) -> {
-            loginanimation.toSignInScreen(this);
-        });
-
-        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
-
-        fbButton.setOnClickListener((view -> {
-
-            callbackManager = CallbackManager.Factory.create();
-
-            LoginManager.getInstance().registerCallback(callbackManager,
-                    new FacebookCallback<LoginResult>() {
-                        @Override
-                        public void onSuccess(LoginResult loginResult) {
-                            // App code
-                        }
-
-                        @Override
-                        public void onCancel() {
-                            // App code
-                        }
-
-                        @Override
-                        public void onError(FacebookException exception) {
-                            // App code
-                        }
-                    });
-        }));
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+        toSignIn.setOnClickListener((View v) -> loginanimation.toSignInScreen());
+}
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         Log.e("focus changed====","view id is "+ v.getId());
         switch (v.getId()){
             case R.id.register_first_name:
-                if(!firstName.hasFocus())
-                isNotEmpty(firstName);
+                if(firstName.isEnabled())
+                    if(!firstName.hasFocus())
+                        isNotEmpty(firstName);
                 break;
-            case  R.id.register_last_name:
-                if(!lastName.hasFocus())
-                isNotEmpty(lastName);
+
+            case R.id.register_last_name:
+                if(lastName.isEnabled())
+                    if(!lastName.hasFocus())
+                        isNotEmpty(lastName);
                 break;
+
             case R.id.register_email:
-                if(!registerEmail.hasFocus())
-                    checkEmail(registerEmail);
+                if(registerEmail.isEnabled())
+                    if(!registerEmail.hasFocus())
+                        checkEmail(registerEmail);
                 break;
+
             case R.id.register_password:
-                if(!registerPassword.hasFocus())
-                    checkPassword(registerPassword);
+                if(registerPassword.isEnabled())
+                    if(!registerPassword.hasFocus())
+                        checkPassword(registerPassword);
                 break;
+
             case R.id.register_number:
-                if(!registerPhone.hasFocus())
-                    checkPhone(registerPhone);
+                if(registerPhone.isEnabled())
+                    if(!registerPhone.hasFocus())
+                        checkPhone(registerPhone);
                 break;
+
             case R.id.login_email:
-                if(!loginEmail.hasFocus())
-                    checkEmail(loginEmail);
+                if(loginEmail.isEnabled())
+                    if(!loginEmail.hasFocus())
+                        checkEmail(loginEmail);
                 break;
+
             case R.id.login_password:
-                if(!loginPassword.hasFocus())
-                    checkPassword(loginPassword);
+                if(loginPassword.isEnabled())
+                    if(!loginPassword.hasFocus())
+                        checkPassword(loginPassword);
                 break;
         }
     }
 
     private void initializeViews(){
-        textInputLayout = findViewById(R.id.register_password_layout);
-        constraintLayout = findViewById(R.id.login_outer_constraint);
-        upperPoly = findViewById(R.id.upper_poly);
-
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
-
-        loginLayout = findViewById(R.id.login_linear_layout);
-        registerLayout = findViewById(R.id.register_linear_layout);
-        lowerIcon = findViewById(R.id.ic_lower_ecell);
 
         signIn = findViewById(R.id.sign_in_button);
         register = findViewById(R.id.register_button);
 
-        fbButton = findViewById(R.id.fb_button);
-        googleButton = findViewById(R.id.google_button);
+//        fbButton = findViewById(R.id.fb_button);
+//        googleButton = findViewById(R.id.google_button);
 
         firstName = findViewById(R.id.register_first_name);
         lastName = findViewById(R.id.register_last_name);
@@ -216,8 +180,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
 
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
-
-        toSignIn.setVisibility(View.INVISIBLE);
 
         firstName.setOnFocusChangeListener(this);
         lastName.setOnFocusChangeListener(this);
@@ -244,7 +206,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
-                dialog.dismiss();
                 try {
                     if (getApplicationContext() != null && response.isSuccessful()) {
                         if (response.body() != null) {
@@ -273,6 +234,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                             Log.e("RegisterApiCall =====", "Response Body NULL.");
                             Log.e("RegisterApiCall =====" , Objects.requireNonNull(response.errorBody()).string() + " ");
                         }
+                    }
+                    else {
+                        dialog.dismiss();
                     }
 
                 } catch (Exception e){
@@ -328,22 +292,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
     }
 
     private boolean checkPhone(EditText editText){
+        String phoneNo = editText.getText().toString();
         if(!isNotEmpty(editText))
             return false;
-        String phoneNo = registerPhone.getText().toString();
-        if(editText.getText().toString().length() == 10){
-            Character character = phoneNo.charAt(0);
-            if(character.compareTo('6')==0 || character.compareTo('7')==0 || character.compareTo('8')==0 || character.compareTo('9')==0){
-                try{
-                    long no = Long.parseLong(phoneNo);
-                    return true;
-                }
-                catch (Exception e){
-                    registerPhone.setError("Please enter only numbers");
-                }
-            }
+        if(phoneNo.length() == 10) {
+            if(phoneNo.charAt(0) == '6' || phoneNo.charAt(0) == '7' || phoneNo.charAt(0) == '8' || phoneNo.charAt(0) == '9')
+                return true;
+            else
+                editText.setError("Invalid Number!");
         }
-        editText.setError("Invalid number");
+        else
+            editText.setError("Enter a 10 digit number");
         return false;
     }
 
@@ -353,7 +312,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         }
         if(editText.getText().length() >= 8)
             return true;
-        editText.setError("Atleast 8 characters required");
+        editText.setError("Required Min 8 Characters!");
         return false;
     }
 
@@ -376,7 +335,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                     return true;
             check--;
         }
-        editText.setError("Enter email correctly");
+        editText.setError("Invalid Email!");
         return false;
     }
 
@@ -384,7 +343,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         if(!TextUtils.isEmpty(editText.getText()))
             return true;
         else
-            editText.setError("This field is necessary to fill");
+            editText.setError("Field Required!");
         return false;
     }
 
@@ -407,3 +366,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
     }
 
 }
+
+
+
+//                        ****************** FACEBOOK IMPLEMENTATION! ******************
+//
+//    private static final String EMAIL = "email";
+//    CallbackManager callbackManager;
+//
+//        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
+//
+//        fbButton.setOnClickListener((view -> {
+//
+//            callbackManager = CallbackManager.Factory.create();
+//
+//            LoginManager.getInstance().registerCallback(callbackManager,
+//                    new FacebookCallback<LoginResult>() {
+//                        @Override
+//                        public void onSuccess(LoginResult loginResult) {
+//                            // App code
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//                            // App code
+//                        }
+//
+//                        @Override
+//                        public void onError(FacebookException exception) {
+//                            // App code
+//                        }
+//                    });
+//        }));
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }

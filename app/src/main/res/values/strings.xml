@@ -1,13 +1,16 @@
 <resources>
     <string name="app_name">E - Cell</string>
-    <string name="accesstoken">accessToken</string>
+    <string name="access_token">accessToken</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="forgot">Forgot Password?</string>
+    <string name="forgot">Forgot Password?\u00A0</string>
     <string name="sign_in">Sign in</string>
     <string name="register">Register</string>
-    <string name="signout">sign out</string>
+    <string name="to_sign_in">Sign in\u00A0</string>
+    <string name="to_register">Register\u00A0</string>
+
+    <string name="signout">Sign out</string>
     <string name="about_us">About Us</string>
     <string name="log_out">Log Out</string>
     <string name="profile">Profile</string>

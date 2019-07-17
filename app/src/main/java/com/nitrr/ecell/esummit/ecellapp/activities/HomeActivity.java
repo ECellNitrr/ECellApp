@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
 import java.util.ArrayList;
@@ -62,13 +64,14 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        initializeList("BQuiz", R.drawable.ic_event_bq, this.getString(R.string.color_bquiz),null/* new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,Bquiz.class);
-                startActivity(intent);
-            }
-        }*/);
+        initializeList("BQuiz", R.drawable.ic_event_bq, this.getString(R.string.color_bquiz), v -> {
+            AlertDialog dialog = null;
+            dialog = Utils.showDialog(this, null, true, "Sorry for the Inconvenience",
+                    "BQuiz will be online soon, Please checkout later",
+                    null, null, "Cancel", (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                    });
+        });
 
         initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
             Intent intent = new Intent(HomeActivity.this, SponsorsActivity.class);
@@ -94,53 +97,6 @@ public class HomeActivity extends AppCompatActivity {
             snapHelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                /*new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(0);
-                        RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay);
-                        layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-
-                    }
-                }, 100);
-                View v = snapHelper.findSnapView(layoutManager);
-                int pos = layoutManager.getPosition(v);
-                int max = layoutManager.getChildCount();
-
-                RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(pos);
-                RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay), layout2 = null, layout3 = null;
-                if(pos < max) {
-                    RecyclerView.ViewHolder viewHolder2 = recyclerView.findViewHolderForAdapterPosition(pos+1);
-                    layout2 = viewHolder2.itemView.findViewById(R.id.relLay);
-                }
-                if(pos > 0) {
-                    RecyclerView.ViewHolder viewHolder3 = recyclerView.findViewHolderForAdapterPosition(pos-1);
-                    layout3 = viewHolder3.itemView.findViewById(R.id.relLay);
-                }
-
-
-                if(newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-                    if(pos < max) {
-                        layout2.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                    if(pos > 0) {
-                        layout3.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                }
-                else {
-                    if(pos < max) {
-                        layout2.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                    if(pos > 0) {
-                        layout3.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                    layout.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-                }*/
-            }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
