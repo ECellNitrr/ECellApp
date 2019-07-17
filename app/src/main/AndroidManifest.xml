@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_ecell_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity android:name=".activities.SplashScreenActivity">
-            <intent-filter>
-            </intent-filter>
+        <activity android:name=".activities.SplashScreenActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
         </activity>
 
         <receiver
@@ -38,9 +38,9 @@
 
         <activity
             android:name=".activities.LoginActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:screenOrientation="nosensor">
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,7 +76,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>
 
                         <!--****************FACEBOOK IMPLEMENTATION******************-->
