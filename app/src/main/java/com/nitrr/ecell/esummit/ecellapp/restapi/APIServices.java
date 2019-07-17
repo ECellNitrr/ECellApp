@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
+import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
@@ -85,4 +86,7 @@ public interface APIServices {
 
     @GET("/spons")
     Call<TeamData> getTeamData();
+
+    @GET("/app/2019")
+    Call<AppDetails> getAppdata();
 }

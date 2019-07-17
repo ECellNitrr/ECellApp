@@ -12,77 +12,81 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
+        <activity android:name=".activities.SplashScreenActivity">
+            <intent-filter>
+            </intent-filter>
+        </activity>
 
-        <receiver android:name=".misc.NetworkChangeReceiver"
+        <receiver
+            android:name=".misc.NetworkChangeReceiver"
             android:enabled="true">
-            <intent-filter >
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGED"/>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGED" />
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".activities.AboutUsActivity"
-            android:theme="@style/AppTheme.FullScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
         </activity>
-
         <activity
             android:name=".activities.SponsorsActivity"
-            android:theme="@style/AppTheme.FullScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
         </activity>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <activity
             android:name=".activities.LoginActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="nosensor">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.EventActivity"
-            android:theme="@style/AppTheme.FullScreen"
-            android:screenOrientation="nosensor">
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.HomeActivity"
-            android:theme="@style/AppTheme.FullScreen"
-            android:screenOrientation="nosensor">
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.ESummitActivity"
-            android:theme="@style/AppTheme.FullScreen"
-            android:screenOrientation="nosensor">
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -92,4 +96,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

@@ -12,7 +12,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
 public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
-    private String tabname[] = { "Associate","Platinum", "Gold"};
+    private String tabname[] = { "Associate","Platinum", "Gold","Title","Partner"};
     private Bundle[] bundle;
     private int[] index;
 

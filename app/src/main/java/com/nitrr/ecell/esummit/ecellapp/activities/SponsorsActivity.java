@@ -37,8 +37,8 @@ public class SponsorsActivity extends AppCompatActivity {
     private ViewPager pager;
     private Toolbar toolbar;
     private ImageView circle1, circle2, circle3, circle4, circle5;
-    private Bundle[] bundle = new Bundle[3];
-    private int index[] = {0,0,0};
+    private Bundle[] bundle = new Bundle[5];
+    private int index[] = {0,0,0,0,0};
     private BroadcastReceiver receiver;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
@@ -62,9 +62,11 @@ public class SponsorsActivity extends AppCompatActivity {
         bundle[0] = new Bundle();
         bundle[1] = new Bundle();
         bundle[2] = new Bundle();
+        bundle[3] = new Bundle();
+        bundle[4] = new Bundle();
         for(int x=0;x<list.size();x++){
             data = list.get(x);
-            if(data.getType().contentEquals("ATS") || data.getType().contentEquals("TLS") || data.getType().contentEquals("PRS")){
+            if(data.getType().contentEquals("ATS")){
                 index[0]++;
                 bundle[0].putString("type"+index[0],"Assoiate Sponsors");
                 bundle[0].putString("name"+index[0],data.getName());
@@ -84,6 +86,20 @@ public class SponsorsActivity extends AppCompatActivity {
                 bundle[2].putString("name"+index[2],data.getName());
                 bundle[2].putString("image"+index[2],data.getImg());
                 bundle[2].putString("id"+index[2],data.getId());
+            }
+            else if(data.getType().contentEquals("TLS")){
+                index[3]++;
+                bundle[3].putString("type"+index[3],"Title Sponsors");
+                bundle[3].putString("name"+index[3],data.getName());
+                bundle[3].putString("image"+index[3],data.getImg());
+                bundle[3].putString("id"+index[3],data.getId());
+            }
+            else if(data.getType().contentEquals("PRS")){
+                index[4]++;
+                bundle[4].putString("type"+index[4],"Partner Sponsors");
+                bundle[4].putString("name"+index[4],data.getName());
+                bundle[4].putString("image"+index[4],data.getImg());
+                bundle[4].putString("id"+index[4],data.getId());
             }
         }
         pager.setAdapter(new SponsViewPagerAdapter(getSupportFragmentManager(),bundle,index));
@@ -136,12 +152,20 @@ public class SponsorsActivity extends AppCompatActivity {
                     circle5.setColorFilter(color(188,188,188,255,164,46,positionOffset));
                 }
                 else if(position==2){
-                    toolbar.setBackgroundColor(Color.rgb(130,87,0));
-                    circle1.setColorFilter(Color.rgb(255,228,164));
-                    circle2.setColorFilter(Color.rgb(255,222,129));
-                    circle3.setColorFilter(Color.rgb(255,212,110));
-                    circle4.setColorFilter(Color.rgb(255,191,109));
-                    circle5.setColorFilter(Color.rgb(255,164,46));
+                    toolbar.setBackgroundColor(color(130,87,0,213,74,74, positionOffset));
+                    circle1.setColorFilter(color(255,228,164,252,216,216,positionOffset));
+                    circle2.setColorFilter(color(255,222,129,251,191,191,positionOffset));
+                    circle3.setColorFilter(color(255,212,110,249,170,170,positionOffset));
+                    circle4.setColorFilter(color(255,191,109,251,147,147,positionOffset));
+                    circle5.setColorFilter(color(255,164,46,249,116,116,positionOffset));
+                }
+                else if(position==3){
+                    toolbar.setBackgroundColor(color(213,74,74,58,167,163, positionOffset));
+                    circle1.setColorFilter(color(252,216,216,210,255,253,positionOffset));
+                    circle2.setColorFilter(color(251,191,191,166,245,241,positionOffset));
+                    circle3.setColorFilter(color(249,170,170,116,241,235,positionOffset));
+                    circle4.setColorFilter(color(251,147,147,103,230,225,positionOffset));
+                    circle5.setColorFilter(color(249,116,116,53,220,214,positionOffset));
                 }
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }

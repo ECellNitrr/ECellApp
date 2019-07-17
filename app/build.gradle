@@ -42,7 +42,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.facebook.android:facebook-android-sdk:5.0.2'
 
     testImplementation 'junit:junit:4.12'
     testImplementation("com.squareup.okhttp3:mockwebserver:$OK_HTTP_VERSION")
