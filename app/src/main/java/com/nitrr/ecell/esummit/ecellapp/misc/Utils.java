@@ -1,7 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -51,11 +51,11 @@ public class Utils {
         return true;
     }
 
-    public static View showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
+    public static AlertDialog showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
          builder = new AlertDialog.Builder(context);
         if(!((Activity)context).isFinishing()){
             if(layout!=null){
-                v=LayoutInflater.from(context).inflate(layout,null);
+                v = LayoutInflater.from(context).inflate(layout,null);
                 builder.setView(v);
             }
             builder.setTitle(title)
@@ -67,7 +67,7 @@ public class Utils {
                 builder.setNegativeButton(negbutton,neglistener);
             dialog = builder.show();
         }
-        return v;
+        return dialog;
     }
 
     public static void showNotification(Context context,@NonNull String title,@NonNull String message,Boolean isintent){

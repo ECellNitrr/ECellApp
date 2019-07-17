@@ -1,7 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -97,7 +97,7 @@ public class MenuCustomAlertDialog {
     }
 
     void showOTPDialog() {
-        View v =Utils.showDialog(activity,R.layout.layout_otp,false,null,null,"CONFIRM",confirmlistener,"CANCEL",cancellistener);
+        AlertDialog v = Utils.showDialog(activity,R.layout.layout_otp,false,null,null,"CONFIRM",confirmlistener,"CANCEL",cancellistener);
         otp1 = v.findViewById(R.id.otp1);
         otp2 = v.findViewById(R.id.otp2);
         otp3 = v.findViewById(R.id.otp3);
