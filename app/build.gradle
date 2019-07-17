@@ -42,6 +42,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.0.2'
 
     testImplementation 'junit:junit:4.12'
     testImplementation("com.squareup.okhttp3:mockwebserver:$OK_HTTP_VERSION")
@@ -52,7 +53,6 @@ dependencies {
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
 
     //Square
     implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
@@ -79,5 +79,5 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
     //facebook
-    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.android:facebook-android-sdk:5.0.2'
 }
