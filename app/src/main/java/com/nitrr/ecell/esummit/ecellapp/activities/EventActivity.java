@@ -85,6 +85,7 @@ public class EventActivity extends AppCompatActivity {
                         list = model.getList();
                         setRecycler();
                     }
+
                     else
                         Utils.showDialog(EventActivity.this,null,false,"Something went load",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
                 }
@@ -96,25 +97,25 @@ public class EventActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Utils.showDialog(EventActivity.this,null,false,"Server Down", Objects.requireNonNull(getApplicationContext()).getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
+                    Utils.showDialog(EventActivity.this, null, false, "Something Went wrong",
+                            EventActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener,
+                            "Cancel", cancelListener);
                 }
             }
             @Override
             public void onFailure(@NonNull Call<EventModel> call, @NonNull Throwable t) {
                 if(getApplicationContext() != null){
-                    if(!Utils.isNetworkAvailable(getApplicationContext()))
-                        Utils.showDialog(EventActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
-                    else
-                    {Log.e("Failure:  =","throwable is "+t);
-                        Utils.showLongToast(getApplicationContext(),"Something went wrong.");
-                    }
+                    Utils.showDialog(EventActivity.this, null, false, "Something Went wrong",
+                            EventActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener,
+                            "Cancel", cancelListener);
+                    Utils.showLongToast(getApplicationContext(),"Something went wrong.");
                 }
             }
         });
     }
 
     private void setRecycler() {
-        GridLayoutManager gridLayoutManager =new GridLayoutManager(this,3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,3);
         recyclerView.setLayoutManager(gridLayoutManager);
         adapter = new EventRecyclerViewAdapter(this,list);
         recyclerView.setAdapter(adapter);

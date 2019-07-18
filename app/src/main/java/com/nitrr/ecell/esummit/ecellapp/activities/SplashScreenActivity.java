@@ -32,11 +32,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     private ImageView ecellLogo;
     private AppDetails details;
     private SharedPref pref;
-    private DialogInterface.OnClickListener retrylistener = (dialog, which) -> {
+    private DialogInterface.OnClickListener retryListener = (dialog, which) -> {
         APICall();
         dialog.dismiss();
     };
-    private DialogInterface.OnClickListener cancellistener = (dialog, which) -> {
+    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         this.finish();
         dialog.dismiss();
     };
@@ -47,7 +47,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         ecellLogo = findViewById(R.id.ecell_splash_icon);
-        startanimation();
+        startAnimation();
         pref = new SharedPref();
         APICall();
         if(pref.isLoggedIn()){
@@ -75,7 +75,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
 
-    private void startanimation() {
+    private void startAnimation() {
     }
 
     private void APICall() {
@@ -97,14 +97,14 @@ public class SplashScreenActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Utils.showDialog(SplashScreenActivity.this,null,false,"Something went wrong","","Retry",retrylistener,null,null);
+                    Utils.showDialog(SplashScreenActivity.this,null,false,"Something went wrong","","Retry", retryListener,null,null);
                 }
             }
 
             @Override
             public void onFailure(Call<AppDetails> call, Throwable t) {
                 if(Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(SplashScreenActivity.this,null,false,getString(R.string.no_internet),null,"Retry",retrylistener,"Cancel",cancellistener);
+                    Utils.showDialog(SplashScreenActivity.this,null,false,getString(R.string.no_internet),null,"Retry", retryListener,"Cancel", cancelListener);
                 else{
                     Utils.showLongToast(SplashScreenActivity.this,"Something went Wrong");
                 }
@@ -114,12 +114,12 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void checkAppVersion() {
         if((int)details.getVersion() > BuildConfig.VERSION_CODE){
-            DialogInterface.OnClickListener updatelistener = (dialog, which) -> {
+            DialogInterface.OnClickListener updateListener = (dialog, which) -> {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(details.getLink())));
             };
             Utils.showDialog(SplashScreenActivity.this,null,false,
                     getString(R.string.update_msg),null,
-                    "Update",updatelistener,null,null);
+                    "Update",updateListener,null,null);
         }
         else{
             Intent intent;

@@ -61,8 +61,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeViews();
-
-        context = this;
         loginanimation = new LoginAnimation(this);
         loginanimation.toSignInScreen();
 
@@ -107,58 +105,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()){
             case R.id.register_first_name:
-                if(firstName.isEnabled())
-                    if(!firstName.hasFocus())
-                        isNotEmpty(firstName);
+                if(!firstName.hasFocus())
+                    isNotEmpty(firstName);
                 break;
 
             case R.id.register_last_name:
-                if(lastName.isEnabled())
-                    if(!lastName.hasFocus())
-                        isNotEmpty(lastName);
+                if(!lastName.hasFocus())
+                    isNotEmpty(lastName);
                 break;
 
             case R.id.register_email:
-                if(registerEmail.isEnabled())
-                    if(!registerEmail.hasFocus())
-                        checkEmail(registerEmail);
+                if(!registerEmail.hasFocus())
+                    checkEmail(registerEmail);
                 break;
 
             case R.id.register_password:
-                if(registerPassword.isEnabled())
-                    if(!registerPassword.hasFocus())
-                        checkPassword(registerPassword);
+                if(!registerPassword.hasFocus())
+                    checkPassword(registerPassword);
                 break;
 
             case R.id.register_number:
-                if(registerPhone.isEnabled())
-                    if(!registerPhone.hasFocus())
-                        checkPhone(registerPhone);
+                if(!registerPhone.hasFocus())
+                    checkPhone(registerPhone);
                 break;
 
             case R.id.login_email:
-                if(loginEmail.isEnabled())
-                    if(!loginEmail.hasFocus())
-                        checkEmail(loginEmail);
+                if(!loginEmail.hasFocus())
+                    checkEmail(loginEmail);
                 break;
 
             case R.id.login_password:
-                if(loginPassword.isEnabled())
-                    if(!loginPassword.hasFocus())
-                        checkPassword(loginPassword);
+                if(!loginPassword.hasFocus())
+                    checkPassword(loginPassword);
                 break;
         }
     }
 
     private void initializeViews(){
+        context = this;
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
 
         signIn = findViewById(R.id.sign_in_button);
         register = findViewById(R.id.register_button);
-
-//        fbButton = findViewById(R.id.fb_button);
-//        googleButton = findViewById(R.id.google_button);
 
         firstName = findViewById(R.id.register_first_name);
         lastName = findViewById(R.id.register_last_name);
@@ -358,6 +347,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
 
 
 //                        ****************** FACEBOOK IMPLEMENTATION! ******************
+//
+//        fbButton = findViewById(R.id.fb_button);
+//        googleButton = findViewById(R.id.google_button);
 //
 //    private static final String EMAIL = "email";
 //    CallbackManager callbackManager;

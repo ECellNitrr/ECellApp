@@ -1,11 +1,14 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+
+import com.nitrr.ecell.esummit.ecellapp.activities.EventActivity;
 
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
@@ -24,16 +27,20 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
             online(false,context);
     }
 
-    void online(boolean isonline,Context context){
+    void online(boolean isOnline, Context context){
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        if(!isonline){
+        if(!isOnline){
             if(context!=null){
                 alertDialog = dialog.create();
                 dialog.setTitle("No Internet Connection")
-                        .setMessage("Please Connect to internet")
+                        .setMessage("Please Connect to Internet")
                         .setPositiveButton("",null)
-                        .setCancelable(false);
-                alertDialog =dialog.show();
+                        .setCancelable(false)
+                        .setNegativeButton("Cancel", (dialogInterface, i) -> {
+                            dialogInterface.cancel();
+                            ((Activity)context).finish();
+                        });
+                alertDialog = dialog.show();
             }
         }
         else{

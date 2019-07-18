@@ -12,11 +12,6 @@
         android:roundIcon="@mipmap/ic_ecell_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity android:name=".activities.SplashScreenActivity"
-            android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen">
-        </activity>
-
         <receiver
             android:name=".misc.NetworkChangeReceiver"
             android:enabled="true">
@@ -25,13 +20,7 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".activities.AboutUsActivity"
-            android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen">
-        </activity>
-        <activity
-            android:name=".activities.SponsorsActivity"
+        <activity android:name=".activities.SplashScreenActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
         </activity>
@@ -40,13 +29,27 @@
             android:name=".activities.LoginActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.AboutUsActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
+        </activity>
+
+        <activity
+            android:name=".activities.SponsorsActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
+        </activity>
+
         <activity
             android:name=".activities.EventActivity"
             android:screenOrientation="nosensor"
@@ -55,6 +58,7 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="nosensor"
@@ -63,6 +67,7 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.ESummitActivity"
             android:screenOrientation="nosensor"

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.ESStackAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
@@ -41,6 +43,11 @@ public class ESummitActivity extends AppCompatActivity{
     private ImageView curvedRect;
     private boolean isUp = false;
     private BroadcastReceiver receiver;
+    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI();
+    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
+        dialog.cancel();
+        ESummitActivity.this.finish();
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,19 +95,11 @@ public class ESummitActivity extends AppCompatActivity{
 
     public void callAPI() {
         Call<ResponseSpeaker> call = AppClient.getInstance().createService(APIServices.class).getSpeakerList(2019);
-
         call.enqueue(new Callback<ResponseSpeaker>() {
             @Override
             public void onResponse(@NonNull Call<ResponseSpeaker> call, @NonNull Response<ResponseSpeaker> response) {
-                if (!response.isSuccessful()) {
-                    try {
-                        if (response.errorBody() != null) {
-                            Log.e("ES Speaker List", response.errorBody().string());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
+                if (response.isSuccessful() && getApplicationContext() != null) {
+                    Log.e("response",response.toString());
                     if (response.body() == null)
                         Log.e("ES Speaker List", "response body null");
                     else {
@@ -109,35 +108,32 @@ public class ESummitActivity extends AppCompatActivity{
                         ESStackAdapter adapter = new ESStackAdapter(ESummitActivity.this, R.id.es_stack_view, responseSpeakerObjectList);
                         stackView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-                        Log.e("data ===========","list size is"+responseSpeakerObjectList.size());
+                        Log.e("data ===========","list size is" + responseSpeakerObjectList.size());
                         Log.e("ES Speaker List", response.body().getMessage());
+                    }
+                } else {
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("ES Speaker List", response.errorBody().string());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseSpeaker> call, @NonNull Throwable t) {
-                Log.e("ES Speaker List", "Failed Connection!");
+                if(getApplicationContext() != null){
+                    if(!Utils.isNetworkAvailable(getApplicationContext()))
+                        Utils.showDialog(ESummitActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
+                    else
+                    {Log.e("Failure:  =","throwable is " + t);
+                        Utils.showLongToast(getApplicationContext(),"Something went wrong.");
+                    }
+                }
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(receiver != null){
-            unregisterReceiver(receiver);
-            receiver=null;
-        }
-        super.onDestroy();
     }
 
     public void aboutESAnimation() {
@@ -158,5 +154,23 @@ public class ESummitActivity extends AppCompatActivity{
                 curvedRect.setEnabled(true);
             }, 500);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver != null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
     }
 }

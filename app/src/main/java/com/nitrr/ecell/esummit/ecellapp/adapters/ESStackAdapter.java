@@ -44,11 +44,6 @@ public class ESStackAdapter extends ArrayAdapter<ResponseSpeakerData> {
             TextView textView = itemView.findViewById(R.id.speaker_name);
             ImageView imageView = itemView.findViewById(R.id.speaker_image);
 
-
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .error(R.mipmap.ic_launcher_round);
             Glide.with(context).load(speakerObject.getImage())/*.apply(options)*/.into(imageView);
             textView.setText(speakerObject.getName());
         }

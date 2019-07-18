@@ -38,7 +38,7 @@ public class SponsorsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ImageView circle1, circle2, circle3, circle4, circle5;
     private Bundle[] bundle = new Bundle[5];
-    private int index[] = {0,0,0,0,0};
+    private int[] index = {0, 0, 0, 0, 0};
     private BroadcastReceiver receiver;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
@@ -202,7 +202,7 @@ public class SponsorsActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if(receiver !=null){
+        if(receiver != null){
             unregisterReceiver(receiver);
             receiver=null;
         }
@@ -215,7 +215,7 @@ public class SponsorsActivity extends AppCompatActivity {
         call.enqueue(new Callback<SponsorsModel>() {
             @Override
             public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {
-                if(this!=null){
+                if(getApplicationContext() != null){
                     Log.e("response",response.toString());
                     if (response.isSuccessful()) {
                         model = response.body();
@@ -235,13 +235,9 @@ public class SponsorsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SponsorsModel> call, Throwable t) {
-                if(this!=null){
-                    if (!Utils.isNetworkAvailable(SponsorsActivity.this))
-                        Utils.showDialog(SponsorsActivity.this, null, false, SponsorsActivity.this.getString(R.string.no_internet), SponsorsActivity.this.getString(R.string.wasnt_able_to_load), null,null,null,null);
-                    else {
-                        Utils.showLongToast(SponsorsActivity.this, "Something went wrong.");
-                        Log.e("onfailure", "throable is " + t.toString());
-                    }
+                if(getApplicationContext() != null){
+                    Utils.showDialog(SponsorsActivity.this, null, false, "Something Went wrong", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry",refreshListener,"Cancel",cancelListener);
+                    Log.e("onFailure", "Throwable is " + t.toString());
                 }
             }
         });
