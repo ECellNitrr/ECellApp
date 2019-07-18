@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     private int distance =0,offset;
     private float displacment = 0;
 
-    ImageButton hamburger_button;
+    private ImageButton hamburger_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,26 +103,25 @@ public class HomeActivity extends AppCompatActivity {
                 distance = recyclerView.computeHorizontalScrollRange();
                 offset=recyclerView.computeHorizontalScrollOffset();
                 if (offset < distance/4) {
-                    displacment = (float) offset / 885;
-                    bgCircle1.setColorFilter(color(85,216,183,252,110,81, displacment));
-                    bgCircle2.setColorFilter(color(85,216,183,252,110,81, displacment));
-                    bgCircle3.setColorFilter(color(85,216,183,252,110,81, displacment));
+                    displacment = (float) offset / (distance/4);
+                    setcolor(147,223,204,241,140,120, displacment);
 
                 } else if (offset < distance/2) {
-                    displacment = (float) (offset - (distance/4)) / 885;
-                    bgCircle1.setColorFilter(color(252,110,81,88,180,225, displacment));
-                    bgCircle2.setColorFilter(color(252,110,81,88,180,225, displacment));
-                    bgCircle3.setColorFilter(color(252,110,81,88,180,225, displacment));
+                    displacment = (float) (offset - (distance/4)) / (distance/4);
+                    setcolor(241,140,120,123,193,227, displacment);
                 } else if (offset < (distance*3/4)) {
-                    displacment = (float) (offset - (distance/2)) / 885;
-                    bgCircle1.setColorFilter(color(88,180,225,249,207,109, displacment));
-                    bgCircle2.setColorFilter(color(88,180,225,249,207,109, displacment));
-                    bgCircle3.setColorFilter(color(88,180,225,249,207,109, displacment));
+                    displacment = (float) (offset - (distance/2)) / (distance/4);
+                    setcolor(123,193,227,248,212,130, displacment);
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
+
+    void setcolor(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
+        bgCircle1.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));
+        bgCircle2.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));
+        bgCircle3.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));}
 
     int color(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
         return Color.rgb(colorValue(IR,FR,pos),colorValue(IG,FG,pos),colorValue(IB,FB,pos));

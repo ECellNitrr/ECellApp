@@ -17,11 +17,11 @@
     <string name="settings">Settings</string>
     <string name="event">Event</string>
     <string name="text_esummit">ESummit</string>
-    <string name="color_esummit">#48CFAD</string>
+    <string name="color_esummit">#44C7A6</string>
     <string name="text_events">Events</string>
     <string name="color_events">#ED5958</string>
     <string name="text_bquiz">BQuiz</string>
-    <string name="color_bquiz">#18A4E9</string>
+    <string name="color_bquiz">#2492C8</string>
     <string name="text_spons">Sponsors</string>
     <string name="color_spons">#F2B531</string>
 

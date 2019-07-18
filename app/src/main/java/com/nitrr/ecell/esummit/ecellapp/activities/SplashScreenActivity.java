@@ -2,8 +2,11 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
@@ -36,6 +40,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         this.finish();
         dialog.dismiss();
     };
+    private BroadcastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,25 @@ public class SplashScreenActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver !=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
+    }
+
 
     private void startanimation() {
     }
