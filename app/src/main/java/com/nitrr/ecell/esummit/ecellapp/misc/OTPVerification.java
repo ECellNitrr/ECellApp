@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.misc;
 import android.app.Activity;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class OTPVerification {
     private static OTPVerification dialog = null;
     private Activity activity;
     private TextView item1;
-    private LinearLayout item2, item3, item4;
+    private CardView item2, item3, item4;
     private EditText otp1, otp2, otp3, otp4, oldNumber, newNumber;
     private TextView changeNumber;
     private String otp;
@@ -209,8 +210,9 @@ public class OTPVerification {
     }
 
     private void logout() {
-        SharedPref.clearPrefs();
+        SharedPref.clearPrefs(activity);
         activity.startActivity(new Intent(activity, LoginActivity.class));
+        activity.finish();
     }
 
     private boolean confirmNumber() {

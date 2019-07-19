@@ -104,21 +104,21 @@ public class HomeActivity extends AppCompatActivity {
                 offset = recyclerView.computeHorizontalScrollOffset();
                 if (offset < distance / 4) {
                     displacement = (float) offset / (distance / 4);
-                    setcolor(147, 223, 204, 241, 140, 120, displacement);
+                    setColor(147, 223, 204, 241, 140, 120, displacement);
 
                 } else if (offset < distance / 2) {
                     displacement = (float) (offset - (distance / 4)) / (distance / 4);
-                    setcolor(241, 140, 120, 123, 193, 227, displacement);
+                    setColor(241, 140, 120, 123, 193, 227, displacement);
                 } else if (offset < (distance * 3 / 4)) {
                     displacement = (float) (offset - (distance / 2)) / (distance / 4);
-                    setcolor(123, 193, 227, 248, 212, 130, displacement);
+                    setColor(123, 193, 227, 248, 212, 130, displacement);
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
 
-    void setcolor(int IR, int IG, int IB, int FR, int FG, int FB, float pos) {
+    void setColor(int IR, int IG, int IB, int FR, int FG, int FB, float pos) {
         bgCircle1.setColorFilter(color(IR, IG, IB, FR, FG, FB, pos));
         bgCircle2.setColorFilter(color(IR, IG, IB, FR, FG, FB, pos));
         bgCircle3.setColorFilter(color(IR, IG, IB, FR, FG, FB, pos));

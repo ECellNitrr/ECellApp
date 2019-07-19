@@ -27,6 +27,7 @@ public class SharedPref {
                               String avatar, String facebook,
                               String linkedin) {
         activity = act;
+
         SharedPref.accessToken = access_token;
         SharedPref.firstName = firstName;
         SharedPref.lastName = lastName;
@@ -108,7 +109,7 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(activity).edit();
     }
 
-    public static void clearPrefs() {
+    public static void clearPrefs(Activity activity) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(activity).edit();
         editor.clear();
         editor.apply();
