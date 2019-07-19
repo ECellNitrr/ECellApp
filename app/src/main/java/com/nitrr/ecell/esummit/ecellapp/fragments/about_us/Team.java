@@ -65,18 +65,19 @@ public class Team extends Fragment {
                             setRecyclerView();
                         }
                     } else
-                        Utils.showDialog(getContext(), null, false, "Poor internet connection", getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
+                        Utils.showDialog(getContext(), null, false, "Poor internet connection", getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, null,null);
                 }
             }
 
             @Override
             public void onFailure(Call<TeamData> call, Throwable t) {
                 if (!Utils.isNetworkAvailable(getContext()))
-                    Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasntabletoload), "Retry", refreshlistener, null,null);
+                    Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, null,null);
                 else {
                     Utils.showLongToast(getActivity(), "Something went wrong.");
                     Log.e("onfailure", "throable is " + t.toString());
-                    getActivity().finish();
+                    if(getContext()!=null)
+                    Utils.showDialog(getContext(), null, false, "Something went wrong", getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, null,null);
                 }
             }
         });

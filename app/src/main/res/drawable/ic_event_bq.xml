@@ -7,16 +7,15 @@
             <gradient android:centerX="-307.17313"
                 android:centerY="-1121.6318"
                 android:gradientRadius="37.41158" android:type="radial">
-                <item android:color="#FFFFA12A" android:offset="0"/>
-                <item android:color="#FFFCA12C" android:offset="0.006"/>
-                <item android:color="#FFC5A763" android:offset="0.154"/>
-                <item android:color="#FF95AD93" android:offset="0.303"/>
-                <item android:color="#FF6FB1B9" android:offset="0.45"/>
-                <item android:color="#FF50B5D8" android:offset="0.595"/>
-                <item android:color="#FF3BB7ED" android:offset="0.736"/>
-                <item android:color="#FF2EB9FA" android:offset="0.873"/>
-                <item android:color="#FF2ABAFF" android:offset="1"/>
-            </gradient>
+                <item android:color="#FFFFFF" android:offset="0"/>
+                <item android:color="#FFFFFF" android:offset="0.006"/>
+                <item android:color="#FFFFFF" android:offset="0.154"/>
+                <item android:color="#FFFFFF" android:offset="0.303"/>
+                <item android:color="#FFFFFF" android:offset="0.45"/>
+                <item android:color="#FFFFFF" android:offset="0.595"/>
+                <item android:color="#FFFFFF" android:offset="0.736"/>
+                <item android:color="#FFFFFF" android:offset="0.873"/>
+                </gradient>
         </aapt:attr>
     </path>
     <path android:fillColor="#FF000000" android:pathData="M33.746,28.004a28.659,28.659 0,0 0,-7.828 -2.05v-0.152c4.992,-1.519 8.149,-3.921 9.938,-6.727 0.076,-0.13 0.156,-0.256 0.235,-0.382a12.5,12.5 0,0 0,1.679 -6.4,10.782 10.782,0 0,0 -3.564,-8.321c-2.736,-2.448 -7.04,-3.9 -12.9,-3.9 -1.867,0 -6.86,0.152 -11.776,0.152 -3.43,0 -7.355,-0.076 -9.527,-0.228v1.556c5.3,0.227 6.326,1.024 6.326,6.678v38.552c0,5.653 -1.029,6.45 -6.326,6.678v1.555c2.172,-0.151 6.021,-0.227 9.68,-0.227 6.4,0 11.09,0.227 13.414,0.227 5.26,0 9.576,-1.26 12.739,-3.448a13.566,13.566 0,0 0,5.965 -10.457c0.028,-0.382 0.047,-0.767 0.047,-1.159C41.846,35.265 39.855,30.703 33.746,28.004ZM13.57,8.234c0,-5.35 1.029,-6.678 5.793,-6.678 5.591,0 8.78,2.022 10.143,5.967a17.269,17.269 0,0 1,0.794 5.606c0,6.194 -1.927,11.682 -9.33,12.55a18.209,18.209 0,0 1,-2.141 0.123h-5.259ZM31.44,48.721c-2.307,2.945 -6.219,4.515 -12,4.515 -4.84,0 -5.869,-1.024 -5.869,-6.45v-19.656h6.555c0.272,0 0.538,0.005 0.8,0.012 9.322,0.244 13.109,4.8 13.109,12.472C34.032,43.401 33.206,46.4641 31.437,48.721Z"/>

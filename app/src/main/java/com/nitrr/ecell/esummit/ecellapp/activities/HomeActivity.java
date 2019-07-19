@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,11 +14,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.misc.MenuCustomAlertDialog;
+import com.nitrr.ecell.esummit.ecellapp.misc.OTPVerification;
 import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     private int distance =0,offset;
     private float displacment = 0;
 
-    ImageButton hamburger_button;
+    private ImageButton hamburger_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,8 @@ public class HomeActivity extends AppCompatActivity {
         adapter = new HomeRVAdapter(this, homeRVDataList);
         setUpRV();
 
-        initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
-            Intent intent = new Intent(HomeActivity.this,ESummitActivity.class);
+        initializeList("E Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
+            Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
             startActivity(intent);
         });
 
@@ -62,13 +64,14 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        initializeList("BQuiz", R.drawable.ic_google, this.getString(R.string.color_bquiz),null/* new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,Bquiz.class);
-                startActivity(intent);
-            }
-        }*/);
+        initializeList("BQuiz", R.drawable.ic_event_bq, this.getString(R.string.color_bquiz), v -> {
+            AlertDialog dialog = null;
+            dialog = Utils.showDialog(this, null, true, "Sorry for the Inconvenience",
+                    "BQuiz will be online soon, Please checkout later",
+                    null, null, "Cancel", (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                    });
+        });
 
         initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
             Intent intent = new Intent(HomeActivity.this, SponsorsActivity.class);
@@ -76,7 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         hamburger_button = findViewById(R.id.hamburgerButton);
-        hamburger_button.setOnClickListener((View view) -> MenuCustomAlertDialog.getInstance().with(this).build());
+        hamburger_button.setOnClickListener((View view) -> OTPVerification.getInstance().with(this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
         setUpRV();
@@ -96,77 +99,29 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                /*new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(0);
-                        RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay);
-                        layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-
-                    }
-                }, 100);
-                View v = snapHelper.findSnapView(layoutManager);
-                int pos = layoutManager.getPosition(v);
-                int max = layoutManager.getChildCount();
-
-                RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(pos);
-                RelativeLayout layout = viewHolder.itemView.findViewById(R.id.relLay), layout2 = null, layout3 = null;
-                if(pos < max) {
-                    RecyclerView.ViewHolder viewHolder2 = recyclerView.findViewHolderForAdapterPosition(pos+1);
-                    layout2 = viewHolder2.itemView.findViewById(R.id.relLay);
-                }
-                if(pos > 0) {
-                    RecyclerView.ViewHolder viewHolder3 = recyclerView.findViewHolderForAdapterPosition(pos-1);
-                    layout3 = viewHolder3.itemView.findViewById(R.id.relLay);
-                }
-
-
-                if(newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    layout.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-                    if(pos < max) {
-                        layout2.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                    if(pos > 0) {
-                        layout3.animate().setDuration(150).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                }
-                else {
-                    if(pos < max) {
-                        layout2.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                    if(pos > 0) {
-                        layout3.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-                    }
-                    layout.animate().setDuration(150).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
-                }*/
-            }
-
-            @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 distance = recyclerView.computeHorizontalScrollRange();
                 offset=recyclerView.computeHorizontalScrollOffset();
                 if (offset < distance/4) {
-                    displacment = (float) offset / 885;
-                    bgCircle1.setColorFilter(color(85,216,183,252,110,81, displacment));
-                    bgCircle2.setColorFilter(color(85,216,183,252,110,81, displacment));
-                    bgCircle3.setColorFilter(color(85,216,183,252,110,81, displacment));
+                    displacment = (float) offset / (distance/4);
+                    setcolor(147,223,204,241,140,120, displacment);
 
                 } else if (offset < distance/2) {
-                    displacment = (float) (offset - (distance/4)) / 885;
-                    bgCircle1.setColorFilter(color(252,110,81,88,180,225, displacment));
-                    bgCircle2.setColorFilter(color(252,110,81,88,180,225, displacment));
-                    bgCircle3.setColorFilter(color(252,110,81,88,180,225, displacment));
+                    displacment = (float) (offset - (distance/4)) / (distance/4);
+                    setcolor(241,140,120,123,193,227, displacment);
                 } else if (offset < (distance*3/4)) {
-                    displacment = (float) (offset - (distance/2)) / 885;
-                    bgCircle1.setColorFilter(color(88,180,225,249,207,109, displacment));
-                    bgCircle2.setColorFilter(color(88,180,225,249,207,109, displacment));
-                    bgCircle3.setColorFilter(color(88,180,225,249,207,109, displacment));
+                    displacment = (float) (offset - (distance/2)) / (distance/4);
+                    setcolor(123,193,227,248,212,130, displacment);
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
+
+    void setcolor(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
+        bgCircle1.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));
+        bgCircle2.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));
+        bgCircle3.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));}
 
     int color(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
         return Color.rgb(colorValue(IR,FR,pos),colorValue(IG,FG,pos),colorValue(IB,FB,pos));

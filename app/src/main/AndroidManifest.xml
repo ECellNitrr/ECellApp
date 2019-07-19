@@ -7,52 +7,101 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_ecell_round"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_ecell_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity android:name=".activities.BQuizActivity"></activity>
-        <activity
-            android:name=".activities.AboutUsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"></activity>
-        <activity
-            android:name=".activities.SponsorsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"></activity>
+
+        <receiver
+            android:name=".misc.NetworkChangeReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".activities.SplashScreenActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
+        </activity>
+
         <activity
             android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activities.AboutUsActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
+        </activity>
+
+        <activity
+            android:name=".activities.SponsorsActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
+        </activity>
+
         <activity
             android:name=".activities.EventActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.HomeActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.ESummitActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"></activity>
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".fragments.SpeakerDetail" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>
+
+                        <!--****************FACEBOOK IMPLEMENTATION******************-->
+
+    <!--<activity android:name="com.facebook.FacebookActivity"-->
+    <!--android:configChanges=-->
+    <!--"keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
+    <!--android:label="@string/app_name" />-->
+    <!--<activity-->
+    <!--android:name="com.facebook.CustomTabActivity"-->
+    <!--android:exported="true">-->
+    <!--<intent-filter>-->
+    <!--<action android:name="android.intent.action.VIEW" />-->
+    <!--<category android:name="android.intent.category.DEFAULT" />-->
+    <!--<category android:name="android.intent.category.BROWSABLE" />-->
+    <!--<data android:scheme="@string/fb_login_protocol_scheme" />-->
+    <!--</intent-filter>-->
+    <!--</activity>-->
+
+    <!--<meta-data android:name="com.facebook.sdk.ApplicationId"-->
+    <!--android:value="@string/facebook_app_id"/>-->

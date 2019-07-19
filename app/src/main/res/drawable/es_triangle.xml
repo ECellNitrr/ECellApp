@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/es_upper_triangle"
-        android:bottom="150dp">
+        android:bottom="180dp">
     </item>
     <item android:drawable="@drawable/es_lower_triangle"/>
 </layer-list>

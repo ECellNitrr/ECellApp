@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.models.Sponsors;
+package com.nitrr.ecell.esummit.ecellapp.models.sponsors;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,13 +13,13 @@ public class SponsorsModel {
     String mesage;
     @SerializedName("data")
     @Expose
-    List<com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData> list;
+    List<com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData> list;
 
     public String getMesage() {
         return mesage;
     }
 
-    public List<com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsRVData> getList() {
+    public List<com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData> getList() {
         return list;
     }
 }

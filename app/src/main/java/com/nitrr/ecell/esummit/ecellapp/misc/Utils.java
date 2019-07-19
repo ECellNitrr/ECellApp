@@ -1,31 +1,24 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.preference.PreferenceManager;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -34,12 +27,9 @@ import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 
 public class Utils {
 
-    private static Activity activity;
-
-    public Utils(Activity activity) {
-        if(activity == null)
-            this.activity = activity;
-    }
+    private static View v = null;
+    private static AlertDialog.Builder builder;
+    private static AlertDialog dialog;
 
     public static void showLongToast(Context context, String message){
         if(context!=null)
@@ -61,28 +51,23 @@ public class Utils {
         return true;
     }
 
-    public static View showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
-        View v = null;
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+    public static AlertDialog showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
+        builder = new AlertDialog.Builder(context);
         if(!((Activity)context).isFinishing()){
             if(layout!=null){
-                v=LayoutInflater.from(context).inflate(layout,null);
-                dialog.setView(v);
+                v = LayoutInflater.from(context).inflate(layout,null);
+                builder.setView(v);
             }
-            dialog.setTitle(title)
+            builder.setTitle(title)
                     .setMessage(message)
-                    .setCancelable(canclelable)
-                    .setPositiveButton(posbutton,poslistener);
+                    .setCancelable(canclelable);
+            if(posbutton!=null)
+                    builder.setPositiveButton(posbutton,poslistener);
             if(negbutton!=null && neglistener!=null)
-                dialog.setNegativeButton(negbutton,neglistener);
-            dialog.show();
+                builder.setNegativeButton(negbutton,neglistener);
+            dialog = builder.show();
         }
-        return v;
-    }
-
-    public static String getAccessToken() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        return prefs.getString("access_token", null);
+        return dialog;
     }
 
     public static void showNotification(Context context,@NonNull String title,@NonNull String message,Boolean isintent){
@@ -96,7 +81,7 @@ public class Utils {
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setDefaults(NotificationCompat.DEFAULT_ALL);
-            if(isintent==true){
+            if(isintent){
                 Intent intent = new Intent(context, HomeActivity.class);
                 PendingIntent pendingintent = PendingIntent.getActivity(context,0,intent,0);
                 builder.setContentIntent(pendingintent);

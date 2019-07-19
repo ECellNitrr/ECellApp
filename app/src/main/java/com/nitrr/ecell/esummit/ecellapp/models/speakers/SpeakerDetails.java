@@ -7,6 +7,11 @@ import java.io.Serializable;
 
 public class SpeakerDetails implements Serializable {
 
+    public SpeakerDetails(String name, String image) {
+        this.name = name;
+        this.image = image;
+    }
+
     @SerializedName("id")
     @Expose
     int id;
@@ -25,7 +30,7 @@ public class SpeakerDetails implements Serializable {
 
     @SerializedName("profile_pic")
     @Expose
-    String img;
+    String image;
 
     @SerializedName("email")
     @Expose
@@ -51,10 +56,10 @@ public class SpeakerDetails implements Serializable {
     @Expose
     int year;
 
-    public SpeakerDetails(int id, String name, String img) {
+    public SpeakerDetails(int id, String name, String image) {
         this.id = id;
         this.name = name;
-        this.img = img;
+        this.image = image;
     }
 
     public int getId() {
@@ -65,8 +70,8 @@ public class SpeakerDetails implements Serializable {
         return name;
     }
 
-    public String getImg() {
-        return img;
+    public String getImage() {
+        return image;
     }
 
     public boolean isFlag() {

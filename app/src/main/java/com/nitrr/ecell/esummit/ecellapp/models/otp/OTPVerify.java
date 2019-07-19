@@ -9,7 +9,7 @@ public class OTPVerify implements Serializable {
 
     @SerializedName("otp")
     @Expose
-    String otp;
+    private String otp;
 
     public String getOtp() {
         return otp;

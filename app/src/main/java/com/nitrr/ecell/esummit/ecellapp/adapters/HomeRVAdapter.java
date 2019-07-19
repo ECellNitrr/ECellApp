@@ -52,14 +52,14 @@ public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHold
         return homeRVDataList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView cardName;
         ImageView cardImg;
         CardView cardBg;
 
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             cardName = itemView.findViewById(R.id.card_name);
             cardImg = itemView.findViewById(R.id.card_image);

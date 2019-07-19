@@ -1,5 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments.about_us;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,10 +10,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
+import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
-public class ContactUs extends Fragment {
+import retrofit2.Call;
+
+public class ContactUs extends Fragment implements View.OnClickListener {
+
+    private ImageView whatsapp, linkedin, twitter, facebook, instagram;
 
     public ContactUs() {
         // Required empty public constructor
@@ -20,7 +32,53 @@ public class ContactUs extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_contact_us, container, false);
+        View view = inflater.inflate(R.layout.fragment_contact_us, container, false);
+        initialize(view);
+        return view;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.whatsapplogo:{
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
+                break;
+            }
+            case R.id.linkedinlogo:{
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                break;
+            }
+            case R.id.twitterlogo:{
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                break;
+            }
+            case R.id.facebooklogo:{
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                break;
+            }
+            case R.id.instagramlogo:{
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                break;
+            }
+            case R.id.messagesubmit:
+                sendMessage();
+                break;
+        }
+    }
+
+    private void sendMessage() {
+        String token = SharedPref.getAccessToken();
+        String email = SharedPref.getEmail();
+        String name = SharedPref.getFirstName();
+
+//        Call<> call =  AppClient.getInstance().createService(APIServices.class).methordName;
+    }
+
+    void initialize(View view){
+        whatsapp = view.findViewById(R.id.whatsapplogo);
+        linkedin = view.findViewById(R.id.linkedinlogo);
+        twitter = view.findViewById(R.id.twitterlogo);
+        facebook = view.findViewById(R.id.facebooklogo);
+        instagram = view.findViewById(R.id.instagramlogo);
+    }
 }

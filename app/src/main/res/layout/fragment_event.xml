@@ -17,7 +17,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/event_bg" />
+        android:src="@drawable/event_bg"
+        tools:layout_editor_absoluteX="-155dp"
+        tools:layout_editor_absoluteY="63dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,22 +40,23 @@
         android:id="@+id/nameevent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/event"
+        android:textAllCaps="true"
         android:textColor="#fff"
         android:textSize="60sp"
-        android:textAllCaps="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="22dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:background="@color/colorLightBlack"
+        android:background="@color/black_overlay"
         app:layout_constraintTop_toBottomOf="@id/nameevent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -65,18 +68,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_event_ws"/>
+        app:srcCompat="@drawable/ic_event_bq"/>
+
         <TextView
             android:id="@+id/event_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/event"
             android:layout_below="@+id/event_img"
-            android:textColor="@color/colorWhite"
-            android:textSize="20dp"
             android:layout_centerHorizontal="true"
-            android:textAllCaps="true"/>
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/event"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp" />
 
 </RelativeLayout>
 
@@ -108,12 +113,13 @@
             android:id="@+id/date_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/roboto"
+            android:maxLines="1"
             android:text="Date: 2019-07-29 | Time: 10:00am"
             android:textColor="@color/colorLightBlack"
-            android:textSize="22dp"
-            android:maxLines="1"
-            android:autoSizeTextType="uniform"
-            android:layout_marginBottom="5dp"/>
+            android:textSize="22dp" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -128,9 +134,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
                     android:text="Venue: "
                     android:textColor="@color/colorLightBlack"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -138,13 +145,16 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginTop="8dp"/>
+
                 <TextView
                     android:id="@+id/event_venue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
                     android:text="TBD"
+                    android:textAllCaps="true"
                     android:textColor="@color/colorLightBlack"
-                    android:textSize="22sp"/>
+                    android:textSize="22sp" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
@@ -157,19 +167,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <TextView
 
             android:id="@+id/event_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Here event discription will be placed and shown like in thi example "
-            android:textColor="@color/colorLightBlack"
-            android:textSize="18dp"
-            android:autoSizeTextType="uniform"
-            android:autoSizeMaxTextSize="22sp"
             android:layout_margin="10dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:autoSizeMaxTextSize="22sp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/roboto"
+            android:text="Here event discription will be placed and shown like in thi example "
+            android:textColor="@color/colorLightBlack"
+            android:textSize="18dp" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,9 +5,17 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class SpeakerResponseData implements Serializable {
+public class ResponseSpeakerData implements Serializable {
 
-
+    public ResponseSpeakerData(String name, String image, String company, String email, int year, String socialMedia, String contact) {
+        this.name = name;
+        this.image = image;
+        this.company = company;
+        this.email = email;
+        this.year = year;
+        this.socialMedia = socialMedia;
+        this.contact = contact;
+    }
 
     @SerializedName("id")
     @Expose
@@ -16,6 +24,10 @@ public class SpeakerResponseData implements Serializable {
     @SerializedName("name")
     @Expose
     String name;
+
+    @SerializedName("profile_pic")
+    @Expose
+    String image;
 
     @SerializedName("company")
     @Expose
@@ -63,6 +75,10 @@ public class SpeakerResponseData implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public String getCompany() {

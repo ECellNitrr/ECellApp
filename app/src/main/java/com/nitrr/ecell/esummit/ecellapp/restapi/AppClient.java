@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
 import java.io.IOException;
@@ -21,9 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://c05789be.ngrok.io/";  private static AppClient mInstance;
-    private static Utils prefUtils;
+    private static String BASE_URL = "https://55f78a0f.ngrok.io/";
+    private static AppClient mInstance;
 
     private AppClient() {
     }
@@ -46,12 +46,11 @@ public class AppClient {
     }
 
     public <S> S createServiceWithAuth(Class<S> serviceClass, final AppCompatActivity activity) {
-        prefUtils = new Utils(activity);
         Interceptor interceptorReq = chain -> {
             Request request = chain.request().newBuilder()
-                    .addHeader("authId", prefUtils.getAccessToken()).build();
+                    .addHeader("authId", SharedPref.getAccessToken()).build();
 
-            Log.e("Header====",   prefUtils.getAccessToken()  );
+            Log.e("Header====", SharedPref.getAccessToken()  );
             return chain.proceed(request);
         };
 

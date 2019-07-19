@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.models.Sponsors;
+package com.nitrr.ecell.esummit.ecellapp.models.sponsors;
 
 
 import com.google.gson.annotations.Expose;
@@ -18,6 +18,13 @@ public class SponsRVData{
     @SerializedName("pic")
     @Expose
     String img;
+
+    public SponsRVData(String name, String id, String type, String img) {
+        this.name = name;
+        this.id = id;
+        this.type = type;
+        this.img = img;
+    }
 
     public String getName(){
         return name;

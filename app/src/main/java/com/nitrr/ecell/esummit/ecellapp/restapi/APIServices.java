@@ -1,5 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
+import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
+import com.nitrr.ecell.esummit.ecellapp.models.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
@@ -11,8 +13,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.otp.OTPVerify;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerResponse;
-import com.nitrr.ecell.esummit.ecellapp.models.Sponsors.SponsorsModel;
+import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
+import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
 import com.nitrr.ecell.esummit.ecellapp.models.startUps.StartUpDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.startUps.StartUpResponse;
 
@@ -55,8 +57,8 @@ public interface APIServices {
     @POST("/speaker/add_new/")
     Call<GenericMessage> postAddNewSpeaker(@Header("token") String token, @Body SpeakerDetails speakerDetails);
 
-    @GET("/speaker/list/{year}/")
-    Call<SpeakerResponse> getSpeakerList(@Path("year") int year);
+    @GET("speakers/list/{year}/")
+    Call<ResponseSpeaker> getSpeakerList(@Path("year") int year);
 
     @GET("/speaker/generate_sheet/")
     Call getSpeakerSheet();
@@ -85,4 +87,10 @@ public interface APIServices {
 
     @GET("/spons")
     Call<TeamData> getTeamData();
+
+    @GET("/app/2019")
+    Call<AppDetails> getAppdata();
+
+    @GET("/users/change_contact")
+    Call<PhoneNumber> changeNumber(@Body String string);
 }

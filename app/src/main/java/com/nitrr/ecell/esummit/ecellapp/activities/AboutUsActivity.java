@@ -1,5 +1,8 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -7,13 +10,18 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Aim;
 import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.ContactUs;
 import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Team;
+import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class AboutUsActivity extends AppCompatActivity{
+
+
+    private BroadcastReceiver receiver;
+    private IntentFilter filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +49,25 @@ public class AboutUsActivity extends AppCompatActivity{
             }
             return false;
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        receiver = new NetworkChangeReceiver();
+        filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
+        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(receiver !=null){
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+        super.onDestroy();
     }
 
     private void loadFragment(Fragment fragment) {
