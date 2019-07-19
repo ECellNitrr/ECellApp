@@ -52,7 +52,7 @@ public class Utils {
     }
 
     public static AlertDialog showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
-         builder = new AlertDialog.Builder(context);
+        builder = new AlertDialog.Builder(context);
         if(!((Activity)context).isFinishing()){
             if(layout!=null){
                 v = LayoutInflater.from(context).inflate(layout,null);

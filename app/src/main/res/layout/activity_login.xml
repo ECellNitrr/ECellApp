@@ -74,7 +74,8 @@
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789.@"
                 android:hint="@string/email"
                 android:inputType="text"
-                android:maxLines="1"
+                android:singleLine="true"
+                android:nextFocusDown="@id/login_password"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +95,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -302,13 +304,13 @@
                     android:hint="First Name"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:inputType="textPersonName"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:nextFocusForward="@id/register_last_name"
+                    android:singleLine="true"
+                    android:nextFocusDown="@id/register_last_name"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -320,10 +322,9 @@
                     android:layout_height="wrap_content"
                     android:hint="Last Name"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:inputType="text"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:nextFocusForward="@id/register_email"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    android:nextFocusDown="@id/register_email"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -341,9 +342,8 @@
                 android:hint="@string/email"
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.@1234567890"
                 android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:lines="1"
-                android:nextFocusForward="@id/register_password"
+                android:singleLine="true"
+                android:nextFocusDown="@id/register_password"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -362,9 +362,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:inputType="textPassword"
-                android:maxLines="1"
-                android:lines="1"
-                android:nextFocusForward="@id/register_number"
+                android:singleLine="true"
+                android:nextFocusDown="@id/register_number"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -382,6 +381,7 @@
                 android:inputType="phone"
                 android:maxLength="10"
                 android:maxLines="1"
+                android:imeOptions="actionDone"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

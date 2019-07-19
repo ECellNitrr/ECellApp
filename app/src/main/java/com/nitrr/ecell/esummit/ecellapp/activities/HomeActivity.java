@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.misc.MenuCustomAlertDialog;
+import com.nitrr.ecell.esummit.ecellapp.misc.OTPVerification;
 import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         adapter = new HomeRVAdapter(this, homeRVDataList);
         setUpRV();
 
-        initializeList("ESummit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
+        initializeList("E Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
             Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
             startActivity(intent);
         });
@@ -79,7 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         hamburger_button = findViewById(R.id.hamburgerButton);
-        hamburger_button.setOnClickListener((View view) -> MenuCustomAlertDialog.getInstance().with(this).build());
+        hamburger_button.setOnClickListener((View view) -> OTPVerification.getInstance().with(this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
         setUpRV();

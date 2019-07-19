@@ -7,9 +7,14 @@ import java.io.Serializable;
 
 public class ResponseSpeakerData implements Serializable {
 
-    public ResponseSpeakerData(String name, String image) {
+    public ResponseSpeakerData(String name, String image, String company, String email, int year, String socialMedia, String contact) {
         this.name = name;
         this.image = image;
+        this.company = company;
+        this.email = email;
+        this.year = year;
+        this.socialMedia = socialMedia;
+        this.contact = contact;
     }
 
     @SerializedName("id")

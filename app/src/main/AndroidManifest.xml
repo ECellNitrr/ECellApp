@@ -76,6 +76,7 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+        <activity android:name=".fragments.SpeakerDetail" />
 
         <meta-data
             android:name="preloaded_fonts"

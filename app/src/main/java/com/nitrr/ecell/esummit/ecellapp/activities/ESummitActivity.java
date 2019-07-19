@@ -2,6 +2,8 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
@@ -10,16 +12,16 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.StackView;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.ESStackAdapter;
+import com.nitrr.ecell.esummit.ecellapp.adapters.ESRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
@@ -38,7 +40,7 @@ import retrofit2.Response;
 public class ESummitActivity extends AppCompatActivity{
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
-    private StackView stackView;
+    private RecyclerView speakerRV;
     private TextView aboutES, aboutESDetail;
     private ImageView curvedRect;
     private boolean isUp = false;
@@ -55,7 +57,7 @@ public class ESummitActivity extends AppCompatActivity{
         setContentView(R.layout.activity_esummit);
 
         //Initialization
-        stackView = findViewById(R.id.es_stack_view);
+        speakerRV = findViewById(R.id.es_speaker_rv);
         curvedRect = findViewById(R.id.es_about_rect);
         aboutES = findViewById(R.id.es_about_text);
         aboutESDetail = findViewById(R.id.es_about_detail);
@@ -89,7 +91,6 @@ public class ESummitActivity extends AppCompatActivity{
         });
 
         responseSpeakerObjectList = new ArrayList<>();
-
         callAPI();
     }
 
@@ -105,8 +106,9 @@ public class ESummitActivity extends AppCompatActivity{
                     else {
                         ResponseSpeaker data = response.body();
                         responseSpeakerObjectList = data.getList();
-                        ESStackAdapter adapter = new ESStackAdapter(ESummitActivity.this, R.id.es_stack_view, responseSpeakerObjectList);
-                        stackView.setAdapter(adapter);
+                        ESRVAdapter adapter = new ESRVAdapter(responseSpeakerObjectList, ESummitActivity.this);
+                        speakerRV.setAdapter(adapter);
+                        speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
                         adapter.notifyDataSetChanged();
                         Log.e("data ===========","list size is" + responseSpeakerObjectList.size());
                         Log.e("ES Speaker List", response.body().getMessage());
@@ -137,22 +139,27 @@ public class ESummitActivity extends AppCompatActivity{
     }
 
     public void aboutESAnimation() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        float height = -1 * (float)(curvedRect.getMeasuredHeight() - 0.1 * metrics.heightPixels);
+        Utils.showLongToast(this, height + "");
+        int duration = 500;
         if(isUp) {
-            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, 0f).setDuration(500).start();
-            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, 0f).setDuration(500).start();
-            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, 0f).setDuration(500).start();
+            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, 0f).setDuration(duration).start();
+            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, 0f).setDuration(duration).start();
+            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, 0f).setDuration(duration).start();
             new Handler().postDelayed(() -> {
                 isUp = false;
                 curvedRect.setEnabled(true);
-            }, 500);
+            }, duration);
         } else {
-            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, -1200f).setDuration(500).start();
-            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, -1200f).setDuration(500).start();
-            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, -1200f).setDuration(500).start();
+            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, height).setDuration(duration).start();
+            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, height).setDuration(duration).start();
+            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, height).setDuration(duration).start();
             new Handler().postDelayed(() -> {
                 isUp = true;
                 curvedRect.setEnabled(true);
-            }, 500);
+            }, duration);
         }
     }
 
@@ -174,3 +181,19 @@ public class ESummitActivity extends AppCompatActivity{
         super.onDestroy();
     }
 }
+
+
+
+
+//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
+//                "virenk2906", 12, "Facebook", "1234567890"));
+//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
+//                "virenk2906", 12, "Facebook", "1234567890"));
+//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
+//                "virenk2906", 12, "Facebook", "1234567890"));
+//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
+//                "virenk2906", 12, "Facebook", "1234567890"));
+//        ESRVAdapter adapter = new ESRVAdapter(responseSpeakerObjectList, ESummitActivity.this);
+//        speakerRV.setAdapter(adapter);
+//        speakerRV.setLayoutManager(new LinearLayoutManager(this));
+//        adapter.notifyDataSetChanged();
