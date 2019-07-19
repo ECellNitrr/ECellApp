@@ -104,7 +104,7 @@ public class OTPVerification {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
-            params.gravity = Gravity.BOTTOM;
+            params.gravity = Gravity.TOP;
             params.verticalMargin = 0.05f;
             params.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 
