@@ -1,8 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
-import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
-import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
-import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class EventFragment extends Fragment {
 
@@ -35,8 +25,6 @@ public class EventFragment extends Fragment {
     private List<EventData> list;
     private int position;
 
-    private DialogInterface.OnClickListener cancellistener = (dialog, which) -> getActivity().finish();
-    private DialogInterface.OnClickListener refreshlistener = (dialog, which) -> APICall();
 
     public EventFragment() {
     }
@@ -69,25 +57,16 @@ public class EventFragment extends Fragment {
 
     private void setData(String name, String image, String details, String time, String date, String venue) {
 
-        if (Utils.isNetworkAvailable(getContext()) == false)
-            Utils.showDialog(getContext(),
-                    null,
-                    false,
-                    "No Internet Connection",
-                    getContext().getString(R.string.wasntabletoload),
-                    "Retry", (dialog, which) -> setData(name, image, details, time, date, venue),
-                    "Cancel", cancellistener);
-        else {
-            try {
-                Glide.with(getContext()).load(image).into(eventimg);
-            } catch (Exception e) {
-                setData(name, image, details, time, date, venue);
-            }
-            event.setText(name);
-            eventditails.setText(details);
-            timefeild.setText(setTime(time, date));
-            venuefeild.setText(venue);
+        try {
+            Glide.with(getContext()).load(image).into(eventimg);
+        } catch (Exception e) {
+            setData(name, image, details, time, date, venue);
         }
+
+        event.setText(name);
+        eventditails.setText(details);
+        timefeild.setText(setTime(time, date));
+        venuefeild.setText(venue);
     }
 
     private String setTime(String time, String date) {

@@ -44,12 +44,7 @@ public class BQuizFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_bquiz, container, false);
 
         view.findViewById(R.id.connect).setOnClickListener(v -> setUpWebSocket("https://26a0f217.ngrok.io/ws/"));
-        view.findViewById(R.id.send).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage(new BquizAnswerModel(resText.getText().toString().trim()));
-            }
-        });
+        view.findViewById(R.id.send).setOnClickListener(v -> sendMessage(new BquizAnswerModel(resText.getText().toString().trim())));
 
         response = view.findViewById(R.id.response);
         resText = view.findViewById(R.id.res_text);
