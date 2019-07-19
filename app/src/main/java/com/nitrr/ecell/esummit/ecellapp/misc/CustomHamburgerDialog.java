@@ -27,10 +27,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OTPVerification {
+public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
-    private static OTPVerification dialog = null;
+    private static CustomHamburgerDialog dialog = null;
     private Activity activity;
     private TextView item1;
     private LinearLayout item2,item3,item4;
@@ -47,19 +47,19 @@ public class OTPVerification {
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
 
 
-    private OTPVerification() {
+    private CustomHamburgerDialog() {
 
     }
 
-    public static OTPVerification getInstance() {
+    public static CustomHamburgerDialog getInstance() {
 
         if (dialog == null)
-            dialog = new OTPVerification();
+            dialog = new CustomHamburgerDialog();
 
         return dialog;
     }
 
-    public OTPVerification with(Activity activity){
+    public CustomHamburgerDialog with(Activity activity){
         this.activity = activity;
         return this;
     }

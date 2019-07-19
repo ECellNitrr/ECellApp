@@ -47,7 +47,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         ecellLogo = findViewById(R.id.ecell_splash_icon);
-        startAnimation();
         pref = new SharedPref();
         APICall();
         if(pref.isLoggedIn()){
@@ -75,8 +74,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
 
-    private void startAnimation() {
-    }
 
     private void APICall() {
         Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getAppdata();
@@ -85,7 +82,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onResponse(Call<AppDetails> call, Response<AppDetails> response) {
                 if(response.isSuccessful() && getApplication()!=null){
                     details = response.body();
-                    if(details!=null && details.isFlag()){
+                    if(details!=null){
                         checkAppVersion();
                     }
                     else{
@@ -97,7 +94,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Utils.showDialog(SplashScreenActivity.this,null,false,"Something went wrong","","Retry", retryListener,null,null);
+                    Utils.showDialog(SplashScreenActivity.this,null,false,"Something went wrong",null,"Retry", retryListener,null,null);
                 }
             }
 
@@ -113,7 +110,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void checkAppVersion() {
-        if((int)details.getVersion() > BuildConfig.VERSION_CODE){
+        if(details.getVersion() > BuildConfig.VERSION_CODE){
             DialogInterface.OnClickListener updateListener = (dialog, which) -> {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(details.getLink())));
             };

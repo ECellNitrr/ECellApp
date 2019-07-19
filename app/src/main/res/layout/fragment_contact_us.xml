@@ -16,11 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_curved_rect"
                 android:layout_margin="10dp">
 
                 <TextView
@@ -110,6 +114,7 @@
                 </LinearLayout>
 
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -123,6 +128,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:focusable="true"
+                    android:clickable="true"
                     app:srcCompat="@drawable/ic_whatsapp"/>
 
                 <ImageView
@@ -131,6 +138,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:focusable="true"
+                    android:clickable="true"
                     app:srcCompat="@drawable/ic_linkedin"/>
 
                 <ImageView
@@ -138,6 +147,8 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
+                    android:focusable="true"
+                    android:clickable="true"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_twitter"/>
 
@@ -147,6 +158,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:focusable="true"
+                    android:clickable="true"
                     app:srcCompat="@drawable/ic_facebook_logo"/>
 
                 <ImageView
@@ -155,9 +168,17 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:focusable="true"
+                    android:clickable="true"
                     app:srcCompat="@drawable/ic_instagram"/>
 
             </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="5dp">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -215,6 +236,7 @@
                     android:padding="8dp"/>
 
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

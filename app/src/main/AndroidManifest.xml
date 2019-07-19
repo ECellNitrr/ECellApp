@@ -31,11 +31,7 @@
             android:theme="@style/AppTheme.FullScreen"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -64,6 +60,8 @@
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>

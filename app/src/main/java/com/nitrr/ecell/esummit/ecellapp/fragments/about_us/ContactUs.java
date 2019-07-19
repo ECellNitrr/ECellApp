@@ -42,22 +42,27 @@ public class ContactUs extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.whatsapplogo:{
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
+                startActivity(intent);
                 break;
             }
             case R.id.linkedinlogo:{
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.linkedin.com/company/entrepreneurship-cell-nit-raipur/"));
+                startActivity(intent);
                 break;
             }
             case R.id.twitterlogo:{
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://twitter.com/ecell_nitrr"));
+                startActivity(intent);
                 break;
             }
             case R.id.facebooklogo:{
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.facebook.com/ecellnitrr/"));
+                startActivity(intent);
                 break;
             }
             case R.id.instagramlogo:{
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(""));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.instagram.com/ecell.nitraipur/"));
+                startActivity(intent);
                 break;
             }
             case R.id.messagesubmit:
