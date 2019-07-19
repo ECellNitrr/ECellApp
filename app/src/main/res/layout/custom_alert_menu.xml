@@ -37,9 +37,9 @@
                 android:layout_height="match_parent"
                 android:text="@string/name"
                 android:padding="2dp"
-                android:gravity="center"
+                android:layout_marginStart="40dp"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -78,10 +78,9 @@
                 android:layout_height="match_parent"
                 android:text="@string/verify_otp"
                 android:padding="2dp"
-                android:gravity="center"
-                android:textAlignment="center"
+                android:layout_marginStart="40dp"
                 android:textColor="@color/aboutUsHeading"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -107,10 +106,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/about_us"
-                android:gravity="center"
+                android:layout_marginStart="40dp"
                 android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="16sp"/>
+                android:textSize="20sp"/>
 
         </LinearLayout>
 
@@ -137,11 +136,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Log Out"
-                android:gravity="center"
+                android:text="@string/log_out"
+                android:layout_marginStart="40dp"
                 android:padding="2dp"
                 android:textColor="@color/colorLightBlack"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
     </LinearLayout>

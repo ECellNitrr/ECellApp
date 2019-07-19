@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static String BASE_URL = "https://cb5ce7da.ngrok.io/";  private static AppClient mInstance;
+    private static String BASE_URL = "https://de3cf68d.ngrok.io/";  private static AppClient mInstance;
 
     private AppClient() {
     }

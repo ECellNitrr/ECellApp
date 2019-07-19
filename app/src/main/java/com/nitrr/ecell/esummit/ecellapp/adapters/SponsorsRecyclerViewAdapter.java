@@ -28,10 +28,12 @@ import java.util.List;
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder>{
     private List<SponsRVData> list;
     private Context context;
+    private int pos;
 
-    public SponsorsRecyclerViewAdapter(Context context,List<SponsRVData> list) {
+    public SponsorsRecyclerViewAdapter(Context context,List<SponsRVData> list,int i) {
         this.context = context;
         this.list = list;
+        pos = i;
     }
 
     @NonNull
@@ -44,14 +46,14 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         SponsRVData data = list.get(i);
-        //Glide.with(context).load(R.drawable.loading1).transform(new CircleCrop()).into(holder.loadingimg);
-        switch(i%5){
+        Glide.with(context).load(R.drawable.loading1).transform(new CircleCrop()).into(holder.loadingimg);
+        switch(pos){
             case 0:{
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
                 break;
             }
             case 1:{
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_2);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
                 break;
             }
             case 2:{
@@ -59,11 +61,11 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
                 break;
             }
             case 3:{
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
                 break;
             }
             case 4:{
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_2);
                 break;
             }
         }

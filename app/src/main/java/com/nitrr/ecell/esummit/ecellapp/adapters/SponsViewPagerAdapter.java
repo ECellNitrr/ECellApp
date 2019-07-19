@@ -24,7 +24,7 @@ public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return new SponsorsFragment().newInstance(bundle[i],index[i]);
+        return new SponsorsFragment().newInstance(bundle[i],index[i],i);
     }
 
     @Override
