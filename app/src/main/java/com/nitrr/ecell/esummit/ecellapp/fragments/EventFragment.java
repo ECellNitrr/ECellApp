@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
+
 import java.util.Objects;
 
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
@@ -57,18 +59,18 @@ public class EventFragment extends Fragment {
         timeField = v.findViewById(R.id.date_time);
     }
 
-    private void setData(String name,String image,String details,String time,String date,String venue) {
+    private void setData(String name, String image, String details, String time, String date, String venue) {
 
-        try{
-            if(image!=null){
-                Glide.with(Objects.requireNonNull(getContext())).load(image).into(eventImage);}
-        }
-        catch(Exception e){
-            setData(name,image,details,time,date,venue);
+        try {
+            if (image != null) {
+                Glide.with(Objects.requireNonNull(getContext())).load(image).into(eventImage);
+            }
+        } catch (Exception e) {
+            setData(name, image, details, time, date, venue);
         }
         event.setText(name);
         eventDetails.setText(details);
-        timeField.setText(setTime(time,date));
+        timeField.setText(setTime(time, date));
         venueField.setText(venue);
     }
 
@@ -83,15 +85,15 @@ public class EventFragment extends Fragment {
         receiver = new NetworkChangeReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        Objects.requireNonNull(getContext()).registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        Objects.requireNonNull(getContext()).registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
 
     @Override
     public void onDestroy() {
-        if(receiver !=null){
+        if (receiver != null) {
             Objects.requireNonNull(getContext()).unregisterReceiver(receiver);
-            receiver=null;
+            receiver = null;
         }
         super.onDestroy();
     }

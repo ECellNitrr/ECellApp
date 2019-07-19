@@ -21,5 +21,6 @@
     <color name="aboutusBg">#D9F5FF</color>
     <color name="aboutusToolbarBg">#5AB1D8</color>
     <color name="aboutusCardBg">#4DA7CF</color>
+    <color name="colorHamAlertCardBackground">#2f2f2f</color>
 
 </resources>
