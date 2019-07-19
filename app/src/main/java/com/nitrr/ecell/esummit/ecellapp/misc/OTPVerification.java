@@ -30,6 +30,7 @@ import retrofit2.Response;
 public class OTPVerification {
 
     private AlertDialog alertDialog;
+    SharedPref pref = new SharedPref();
     private static OTPVerification dialog = null;
     private Activity activity;
     private TextView item1;
@@ -38,7 +39,7 @@ public class OTPVerification {
     TextView changeNumber;
     private String otp;
     DialogInterface.OnClickListener changeNumberConfirmListener = (dialog,which) ->{
-        if(confirmnumber())
+        if(confirmNumber())
             dialog.dismiss();
     };
     DialogInterface.OnClickListener confirmlistener = (dialog, which) -> {
@@ -181,7 +182,8 @@ public class OTPVerification {
         String otp = otp1.getText().toString()+otp2.getText().toString()+otp3.getText().toString()+otp4.getText().toString();
         changeNumber = v.findViewById(R.id.change_number);
         changeNumber.setOnClickListener(view -> {
-            AlertDialog alertDialog =Utils.showDialog(activity,R.layout.layout_changenumber,false,"Enter new Number",null,"Confirm",changeNumberConfirmListener,"Cancel",cancelListener);
+            AlertDialog alertDialog =Utils.showDialog(activity,R.layout.layout_changenumber,false,
+                    "Enter new Number",null,"Confirm",changeNumberConfirmListener,"Cancel",cancelListener);
         });
         oldNumber = alertDialog.findViewById(R.id.old_number);
         newNumber = alertDialog.findViewById(R.id.new_number);
@@ -189,13 +191,13 @@ public class OTPVerification {
     }
 
     private void logout() {
-        SharedPref.clearPrefs();
+        pref.getEditor(activity).clear().apply();
         activity.startActivity(new Intent(activity, LoginActivity.class));
     }
 
-    private boolean confirmnumber() {
+    private boolean confirmNumber() {
         if(checkPhone(oldNumber) && checkPhone(newNumber))
-            if(SharedPref.getContact().contentEquals(oldNumber.getText().toString())){
+            if(pref.getContact().contentEquals(oldNumber.getText().toString())){
                 changeNumber(newNumber.getText().toString());
                 return true;
             }

@@ -65,7 +65,8 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="70dp">
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_email"
@@ -288,8 +289,9 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:baselineAligned="false">
+            android:layout_height="60dp"
+            android:baselineAligned="false"
+            android:layout_marginBottom="5dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -303,7 +305,7 @@
                     android:layout_height="wrap_content"
                     android:hint="First Name"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:singleLine="true"
                     android:nextFocusDown="@id/register_last_name"
                     android:textSize="20sp" />
@@ -322,7 +324,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Last Name"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:singleLine="true"
                     android:nextFocusDown="@id/register_email"
                     android:textSize="20sp" />
@@ -333,7 +335,8 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="65dp">
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_email"
@@ -351,7 +354,8 @@
             android:id="@+id/register_password_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp"
             app:passwordToggleContentDescription="To Show and Hide Password"
             app:passwordToggleDrawable="@drawable/login_password_eye"
             app:passwordToggleEnabled="true">
@@ -370,7 +374,7 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="65dp">
+            android:layout_height="60dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_number"
@@ -383,6 +387,7 @@
                 android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:textSize="20sp" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

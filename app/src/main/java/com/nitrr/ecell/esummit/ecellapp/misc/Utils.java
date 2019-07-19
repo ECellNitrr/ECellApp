@@ -27,8 +27,6 @@ import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 
 public class Utils {
 
-    private static View v = null;
-    private static AlertDialog.Builder builder;
     private static AlertDialog dialog;
 
     public static void showLongToast(Context context, String message){
@@ -36,7 +34,7 @@ public class Utils {
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public static void showShortToast(Context context, String message){
+    public static void showShortToast(Context context, String message) {
         if(context!=null)
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
@@ -52,10 +50,10 @@ public class Utils {
     }
 
     public static AlertDialog showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
-        builder = new AlertDialog.Builder(context);
-        if(!((Activity)context).isFinishing()){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        if(!((Activity)context).isFinishing()) {
             if(layout!=null){
-                v = LayoutInflater.from(context).inflate(layout,null);
+                View v = LayoutInflater.from(context).inflate(layout, null);
                 builder.setView(v);
             }
             builder.setTitle(title)

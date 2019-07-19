@@ -43,7 +43,7 @@
         android:layout_marginLeft="22dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/event"
+        android:text="@string/name"
         android:textAllCaps="true"
         android:textColor="#fff"
         android:textSize="60sp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        android:id="@+id/event"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -78,7 +78,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/event"
+            android:text="@string/name"
             android:textAllCaps="true"
             android:textColor="@color/colorWhite"
             android:textSize="20dp" />
@@ -105,7 +105,7 @@
         android:layout_marginTop="40dp"
         android:padding="18dp"
         android:elevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/event"
+        app:layout_constraintTop_toBottomOf="@id/name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
@@ -179,7 +179,7 @@
             android:autoSizeMaxTextSize="22sp"
             android:autoSizeTextType="uniform"
             android:fontFamily="@font/roboto"
-            android:text="Here event discription will be placed and shown like in thi example "
+            android:text="Here name discription will be placed and shown like in thi example "
             android:textColor="@color/colorLightBlack"
             android:textSize="18dp" />
     </androidx.cardview.widget.CardView>
