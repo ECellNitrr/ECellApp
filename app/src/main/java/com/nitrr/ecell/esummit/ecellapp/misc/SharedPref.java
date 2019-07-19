@@ -108,7 +108,7 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(activity).edit();
     }
 
-    public void clearPrefs() {
+    void clearPrefs() {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(activity).edit();
         editor.clear();
         editor.apply();

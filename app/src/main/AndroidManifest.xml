@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_ecell_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
+
         <receiver
             android:name=".misc.NetworkChangeReceiver"
             android:enabled="true">
@@ -76,6 +77,7 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <activity android:name=".fragments.SpeakerDetail" />
 
         <meta-data

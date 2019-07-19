@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.OTPVerification;
+
 import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
@@ -31,10 +33,10 @@ public class HomeActivity extends AppCompatActivity {
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
 
-    private ImageView bgCircle1, bgCircle2,  bgCircle3;
+    private ImageView bgCircle1, bgCircle2, bgCircle3;
 
-    private int distance =0,offset;
-    private float displacment = 0;
+    private int distance = 0, offset;
+    private float displacement = 0;
 
     private ImageButton hamburger_button;
 
@@ -68,9 +70,7 @@ public class HomeActivity extends AppCompatActivity {
             AlertDialog dialog = null;
             dialog = Utils.showDialog(this, null, true, "Sorry for the Inconvenience",
                     "BQuiz will be online soon, Please checkout later",
-                    null, null, "Cancel", (dialogInterface, i) -> {
-                dialogInterface.dismiss();
-                    });
+                    null, null, "Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
         });
 
         initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setPadding(100, 0, 100, 0);
 
         SnapHelper snapHelper = new MySnapHelper();
-        if(recyclerView.getOnFlingListener()==null)
+        if (recyclerView.getOnFlingListener() == null)
             snapHelper.attachToRecyclerView(recyclerView);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -101,38 +101,39 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 distance = recyclerView.computeHorizontalScrollRange();
-                offset=recyclerView.computeHorizontalScrollOffset();
-                if (offset < distance/4) {
-                    displacment = (float) offset / (distance/4);
-                    setcolor(147,223,204,241,140,120, displacment);
+                offset = recyclerView.computeHorizontalScrollOffset();
+                if (offset < distance / 4) {
+                    displacement = (float) offset / (distance / 4);
+                    setColor(147, 223, 204, 241, 140, 120, displacement);
 
-                } else if (offset < distance/2) {
-                    displacment = (float) (offset - (distance/4)) / (distance/4);
-                    setcolor(241,140,120,123,193,227, displacment);
-                } else if (offset < (distance*3/4)) {
-                    displacment = (float) (offset - (distance/2)) / (distance/4);
-                    setcolor(123,193,227,248,212,130, displacment);
+                } else if (offset < distance / 2) {
+                    displacement = (float) (offset - (distance / 4)) / (distance / 4);
+                    setColor(241, 140, 120, 123, 193, 227, displacement);
+                } else if (offset < (distance * 3 / 4)) {
+                    displacement = (float) (offset - (distance / 2)) / (distance / 4);
+                    setColor(123, 193, 227, 248, 212, 130, displacement);
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
 
-    void setcolor(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
-        bgCircle1.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));
-        bgCircle2.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));
-        bgCircle3.setColorFilter(color(IR,IG,IB,FR,FG,FB, pos));}
-
-    int color(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
-        return Color.rgb(colorValue(IR,FR,pos),colorValue(IG,FG,pos),colorValue(IB,FB,pos));
+    void setColor(int IR, int IG, int IB, int FR, int FG, int FB, float pos) {
+        bgCircle1.setColorFilter(color(IR, IG, IB, FR, FG, FB, pos));
+        bgCircle2.setColorFilter(color(IR, IG, IB, FR, FG, FB, pos));
+        bgCircle3.setColorFilter(color(IR, IG, IB, FR, FG, FB, pos));
     }
 
-    int colorValue(int Initial,int Final,float pos){
-        return (int)(Final*pos+Initial*(1-pos));
+    int color(int IR, int IG, int IB, int FR, int FG, int FB, float pos) {
+        return Color.rgb(colorValue(IR, FR, pos), colorValue(IG, FG, pos), colorValue(IB, FB, pos));
     }
 
-    public void initializeList(String name, int cardImage, String color,View.OnClickListener listener) {
-        HomeRVData data = new HomeRVData(name, color, cardImage,listener);
+    int colorValue(int Initial, int Final, float pos) {
+        return (int) (Final * pos + Initial * (1 - pos));
+    }
+
+    public void initializeList(String name, int cardImage, String color, View.OnClickListener listener) {
+        HomeRVData data = new HomeRVData(name, color, cardImage, listener);
         homeRVDataList.add(data);
     }
 }
