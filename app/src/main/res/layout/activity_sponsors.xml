@@ -76,6 +76,7 @@
         android:background="@color/transparent"
         app:tabBackground="@color/transparent"
         app:tabIndicatorColor="@color/colorWhite"
+        app:tabMode="scrollable"
         app:tabIndicatorHeight="2dp"
         app:tabUnboundedRipple="true"
         app:tabRippleColor="@color/common_google_signin_btn_text_dark_disabled"

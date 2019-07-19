@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
@@ -34,14 +35,15 @@ import retrofit2.Response;
 public class EventActivity extends AppCompatActivity {
     private EventModel model;
     private List<EventData> list= new ArrayList<>();
-    EventRecyclerViewAdapter adapter;
-    RecyclerView recyclerView;
+    private EventRecyclerViewAdapter adapter;
+    private RecyclerView recyclerView;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
         EventActivity.this.finish();
     };
     private BroadcastReceiver receiver;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,9 @@ public class EventActivity extends AppCompatActivity {
     }
 
     void APICall(){
+
+        dialog = ProgressDialog.show(this, "Loading Events",
+                "Please wait...", true);
         APIServices services = AppClient.getInstance().createService(APIServices.class);
         Call<EventModel> call = services.getEventDetails();
         call.enqueue(new Callback<EventModel>() {
@@ -80,14 +85,18 @@ public class EventActivity extends AppCompatActivity {
                 if(response.isSuccessful() && getApplicationContext() != null){
                     Log.e("response",response.toString());
                     model = response.body();
-
                     if(model!=null){
                         list = model.getList();
                         setRecycler();
                     }
-
-                    else
-                        Utils.showDialog(EventActivity.this,null,false,"Something went load",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
+                    else{
+                        Utils.showDialog(EventActivity.this,null,false,"Something went wrong",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
+                        try {
+                            Log.e("event body null====","error body: "+response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
                 else{
                     try {
@@ -119,5 +128,6 @@ public class EventActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         adapter = new EventRecyclerViewAdapter(this,list);
         recyclerView.setAdapter(adapter);
+        dialog.dismiss();
     }
 }

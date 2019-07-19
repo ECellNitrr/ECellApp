@@ -1,10 +1,13 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,6 +51,7 @@ public class SponsorsActivity extends AppCompatActivity {
 
     private SponsorsModel model;
     private List<SponsRVData> list = new ArrayList<SponsRVData>();
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +174,7 @@ public class SponsorsActivity extends AppCompatActivity {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
         });
+        dialog.dismiss();
     }
 
     private void initialize() {
@@ -210,6 +215,8 @@ public class SponsorsActivity extends AppCompatActivity {
     }
 
     void APICall() {
+        dialog = ProgressDialog.show(this, "Loading Sponsors",
+                "Please wait...", true);
         APIServices service = AppClient.getInstance().createService(APIServices.class);
         Call<SponsorsModel> call = service.getSponsData();
         call.enqueue(new Callback<SponsorsModel>() {
@@ -224,20 +231,27 @@ public class SponsorsActivity extends AppCompatActivity {
                             setTabs();
                         } else {
                             Log.e("response list empty", "response is empty and is: " + response.toString());
+                            dialog.cancel();
                         }
                     }
                     else {
                         Log.e("response failure", "resoponse is " + response.toString());
                         Utils.showDialog(SponsorsActivity.this, null, false, "Something Went wrong", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry",refreshListener,"Cancel",cancelListener);
+                        dialog.cancel();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<SponsorsModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<SponsorsModel> call, @NonNull Throwable t) {
+                dialog.cancel();
                 if(getApplicationContext() != null){
-                    Utils.showDialog(SponsorsActivity.this, null, false, "Something Went wrong", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry",refreshListener,"Cancel",cancelListener);
-                    Log.e("onFailure", "Throwable is " + t.toString());
+                    if (!Utils.isNetworkAvailable(SponsorsActivity.this))
+                        Utils.showDialog(SponsorsActivity.this, null, false, SponsorsActivity.this.getString(R.string.no_internet), SponsorsActivity.this.getString(R.string.wasnt_able_to_load), null,null,null,null);
+                    else {
+                        Utils.showLongToast(SponsorsActivity.this, "Something went wrong.");
+                        Log.e("onfailure", "throable is " + t.toString());
+                    }
                 }
             }
         });

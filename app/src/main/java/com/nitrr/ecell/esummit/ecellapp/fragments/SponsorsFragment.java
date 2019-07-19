@@ -37,9 +37,10 @@ public class SponsorsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static SponsorsFragment newInstance(Bundle bundle,int pos) {
+    public static SponsorsFragment newInstance(Bundle bundle,int pos,int i) {
         SponsorsFragment fragment = new SponsorsFragment();
         bundle.putInt("index",pos);
+        bundle.putInt("position",i);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -48,10 +49,11 @@ public class SponsorsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         list.clear();
-        intialiselist(this.getArguments());
+        Bundle arg = this.getArguments();
+        intialiselist(arg);
         View view = inflater.inflate(R.layout.fragment_sponsors, container, false);
         recycler = view.findViewById(R.id.spons_recycler);
-        setRecyclerView();
+        setRecyclerView(arg.getInt("position"));
         return view;
     }
 
@@ -61,6 +63,7 @@ public class SponsorsFragment extends Fragment {
         String type;
         String id;
         int index = arguments.getInt("index");
+        arguments.getInt("position");
         while (index>0){
             name = arguments.getString("name"+index);
             id = arguments.getString("id"+index);
@@ -72,10 +75,10 @@ public class SponsorsFragment extends Fragment {
     }
 
 
-    void setRecyclerView() {
+    void setRecyclerView(int i) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new SponsorsRecyclerViewAdapter(getContext(), list);
+        adapter = new SponsorsRecyclerViewAdapter(getContext(), list,i);
         recycler.setAdapter(adapter);
     }
 

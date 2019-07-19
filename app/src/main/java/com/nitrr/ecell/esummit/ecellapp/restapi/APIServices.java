@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
+import com.nitrr.ecell.esummit.ecellapp.models.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
@@ -89,4 +90,7 @@ public interface APIServices {
 
     @GET("/app/2019")
     Call<AppDetails> getAppdata();
+
+    @GET("/users/change_contact")
+    Call<PhoneNumber> changeNumber(@Body String string);
 }

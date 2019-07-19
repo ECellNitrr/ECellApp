@@ -208,16 +208,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                         }
                         else {
                             dialog.dismiss();
+                            Utils.showLongToast(getApplicationContext(),"Registration Failed");
                             Log.e("RegisterApiCall =====", "Response Body NULL.");
                             Log.e("RegisterApiCall =====" , Objects.requireNonNull(response.errorBody()).string() + " ");
                         }
                     }
                     else {
-                        dialog.dismiss();
+                        dialog.cancel();
+                        Utils.showLongToast(getApplicationContext(),"Registration Failed");
                     }
 
                 } catch (Exception e){
-                    dialog.dismiss();
+                    dialog.cancel();
                     Log.e("RegisterApiCall =======", e.getMessage() + " ");
                     e.printStackTrace();
                 }
@@ -225,8 +227,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                dialog.dismiss();
-                Utils.showLongToast(context, "Failed Response " + t.getMessage());
+                dialog.cancel();
+                Utils.showLongToast(context, "Registration Failed" + t.getMessage());
             }
         });
     }
