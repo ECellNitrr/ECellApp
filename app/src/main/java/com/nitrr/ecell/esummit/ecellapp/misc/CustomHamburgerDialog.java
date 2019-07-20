@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.DialogInterface;
@@ -13,7 +14,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -37,22 +40,15 @@ public class CustomHamburgerDialog {
     private static CustomHamburgerDialog dialog = null;
     private SharedPref pref = new SharedPref();
     private Activity activity;
-    private EditText otp1, otp2, otp3, otp4, oldNumber, newNumber;
-    private String otp;
+    private EditText oldNumber, newNumber;
     private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) ->{
         if(confirmNumber())
             dialog.dismiss();
     };
-    private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
-        otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
-        dialog.dismiss();
-    };
-
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
 
 
-    private CustomHamburgerDialog() {
-
+    private CustomHamburgerDialog(){
     }
 
     public static CustomHamburgerDialog getInstance() {
@@ -112,92 +108,10 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        AlertDialog v = Utils.showDialog(activity, R.layout.layout_otp, false, null, null, "CONFIRM", confirmListener, "CANCEL", cancelListener);
-
-        otp1 = v.findViewById(R.id.otp1);
-        otp2 = v.findViewById(R.id.otp2);
-        otp3 = v.findViewById(R.id.otp3);
-        otp4 = v.findViewById(R.id.otp4);
-
-        otp1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 1)
-                    otp2.requestFocus();
-            }
-        });
-
-        otp2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 1)
-                    otp3.requestFocus();
-                else if (s.length() == 0)
-                    otp1.requestFocus();
-            }
-        });
-
-        otp3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 1)
-                    otp4.requestFocus();
-                else if (s.length() == 0)
-                    otp2.requestFocus();
-            }
-        });
-
-        otp4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (otp4.length() == 0)
-                    otp3.requestFocus();
-                else
-                    otp4.clearFocus();
-            }
-        });
-
-        String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
-
-        TextView changeNumber = v.findViewById(R.id.change_number);
+        OTPDialog fragment = new OTPDialog();
+        AppCompatActivity act = (AppCompatActivity) activity.getApplicationContext();
+        act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
+        TextView changeNumber=null;
         if (changeNumber != null) {
             changeNumber.setOnClickListener(view -> {
                 AlertDialog alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false,
