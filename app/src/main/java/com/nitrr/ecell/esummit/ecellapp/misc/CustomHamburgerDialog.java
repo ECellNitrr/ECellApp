@@ -11,21 +11,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.text.Editable;
+import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.models.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
@@ -108,8 +105,9 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        OTPDialog fragment = new OTPDialog();
-        AppCompatActivity act = (AppCompatActivity) activity.getApplicationContext();
+        OTPDialogFragment fragment = new OTPDialogFragment();
+        fragment.setArguments(new Bundle());
+        AppCompatActivity act = (AppCompatActivity) activity;
         act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
         TextView changeNumber=null;
         if (changeNumber != null) {
