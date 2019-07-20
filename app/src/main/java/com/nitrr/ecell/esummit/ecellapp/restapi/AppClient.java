@@ -46,11 +46,12 @@ public class AppClient {
     }
 
     public <S> S createServiceWithAuth(Class<S> serviceClass, final AppCompatActivity activity) {
+        SharedPref pref = new SharedPref();
         Interceptor interceptorReq = chain -> {
             Request request = chain.request().newBuilder()
-                    .addHeader("authId", SharedPref.getAccessToken()).build();
+                    .addHeader("authId", pref.getAccessToken()).build();
 
-            Log.e("Header====", SharedPref.getAccessToken()  );
+            Log.e("Header====", pref.getAccessToken()  );
             return chain.proceed(request);
         };
 

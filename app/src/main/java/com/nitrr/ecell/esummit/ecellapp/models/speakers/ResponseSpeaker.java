@@ -10,7 +10,7 @@ public class ResponseSpeaker implements Serializable {
 
     @SerializedName("message")
     @Expose
-    String message;
+    private String message;
 
     @SerializedName("data")
     @Expose

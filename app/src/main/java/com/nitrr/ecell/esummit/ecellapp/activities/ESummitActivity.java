@@ -41,9 +41,6 @@ public class ESummitActivity extends AppCompatActivity{
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
     private RecyclerView speakerRV;
-    private TextView aboutES, aboutESDetail;
-    private ImageView curvedRect;
-    private boolean isUp = false;
     private BroadcastReceiver receiver;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
@@ -58,40 +55,23 @@ public class ESummitActivity extends AppCompatActivity{
 
         //Initialization
         speakerRV = findViewById(R.id.es_speaker_rv);
-        curvedRect = findViewById(R.id.es_about_rect);
-        aboutES = findViewById(R.id.es_about_text);
-        aboutESDetail = findViewById(R.id.es_about_detail);
-
-        //Bounce Animation
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                aboutES.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.slide_up));
-                aboutESDetail.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.slide_up));
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                curvedRect.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
-                aboutES.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
-                aboutESDetail.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        curvedRect.startAnimation(animation);
-
-        curvedRect.setOnClickListener(view -> {
-            curvedRect.setEnabled(false);
-            aboutESAnimation();
-        });
-
         responseSpeakerObjectList = new ArrayList<>();
-        callAPI();
+
+        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
+                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
+        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
+                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
+        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
+                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
+        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
+                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
+        ESRVAdapter adapter = new ESRVAdapter(responseSpeakerObjectList, ESummitActivity.this);
+        speakerRV.setAdapter(adapter);
+        speakerRV.setLayoutManager(new LinearLayoutManager(this));
+        speakerRV.setNestedScrollingEnabled(false);
+        adapter.notifyDataSetChanged();
+
+//        callAPI();
     }
 
     public void callAPI() {
@@ -138,31 +118,6 @@ public class ESummitActivity extends AppCompatActivity{
         });
     }
 
-    public void aboutESAnimation() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        float height = -1 * (float)(curvedRect.getMeasuredHeight() - 0.1 * metrics.heightPixels);
-        Utils.showLongToast(this, height + "");
-        int duration = 500;
-        if(isUp) {
-            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, 0f).setDuration(duration).start();
-            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, 0f).setDuration(duration).start();
-            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, 0f).setDuration(duration).start();
-            new Handler().postDelayed(() -> {
-                isUp = false;
-                curvedRect.setEnabled(true);
-            }, duration);
-        } else {
-            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, height).setDuration(duration).start();
-            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, height).setDuration(duration).start();
-            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, height).setDuration(duration).start();
-            new Handler().postDelayed(() -> {
-                isUp = true;
-                curvedRect.setEnabled(true);
-            }, duration);
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -183,17 +138,56 @@ public class ESummitActivity extends AppCompatActivity{
 }
 
 
+//Bounce Animation
+//        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+//        animation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//                aboutES.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.slide_up));
+//                aboutESDetail.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.slide_up));
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                curvedRect.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
+//                aboutES.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
+//                aboutESDetail.startAnimation(AnimationUtils.loadAnimation(ESummitActivity.this, R.anim.bounce_up));
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        curvedRect.startAnimation(animation);
 
+//        curvedRect.setOnClickListener(view -> {
+//            curvedRect.setEnabled(false);
+//            aboutESAnimation();
+//        });
 
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
-//                "virenk2906", 12, "Facebook", "1234567890"));
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
-//                "virenk2906", 12, "Facebook", "1234567890"));
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
-//                "virenk2906", 12, "Facebook", "1234567890"));
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "", "WeRain",
-//                "virenk2906", 12, "Facebook", "1234567890"));
-//        ESRVAdapter adapter = new ESRVAdapter(responseSpeakerObjectList, ESummitActivity.this);
-//        speakerRV.setAdapter(adapter);
-//        speakerRV.setLayoutManager(new LinearLayoutManager(this));
-//        adapter.notifyDataSetChanged();
+//
+
+//    public void aboutESAnimation() {
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        float height = -1 * (float)(curvedRect.getMeasuredHeight() - 0.1 * metrics.heightPixels);
+//        int duration = 500;
+//        if(isUp) {
+//            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, 0f).setDuration(duration).start();
+//            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, 0f).setDuration(duration).start();
+//            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, 0f).setDuration(duration).start();
+//            new Handler().postDelayed(() -> {
+//                isUp = false;
+//                curvedRect.setEnabled(true);
+//            }, duration);
+//        } else {
+//            ObjectAnimator.ofFloat(curvedRect, View.TRANSLATION_Y, height).setDuration(duration).start();
+//            ObjectAnimator.ofFloat(aboutES, View.TRANSLATION_Y, height).setDuration(duration).start();
+//            ObjectAnimator.ofFloat(aboutESDetail, View.TRANSLATION_Y, height).setDuration(duration).start();
+//            new Handler().postDelayed(() -> {
+//                isUp = true;
+//                curvedRect.setEnabled(true);
+//            }, duration);
+//        }
+//    }

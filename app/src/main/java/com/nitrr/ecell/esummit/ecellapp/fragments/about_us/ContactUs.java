@@ -24,6 +24,7 @@ import retrofit2.Call;
 public class ContactUs extends Fragment implements View.OnClickListener {
 
     private ImageView whatsapp, linkedin, twitter, facebook, instagram;
+    SharedPref pref = new SharedPref();
 
     public ContactUs() {
         // Required empty public constructor
@@ -72,9 +73,9 @@ public class ContactUs extends Fragment implements View.OnClickListener {
     }
 
     private void sendMessage() {
-        String token = SharedPref.getAccessToken();
-        String email = SharedPref.getEmail();
-        String name = SharedPref.getFirstName();
+        String token = pref.getAccessToken();
+        String email = pref.getEmail();
+        String name = pref.getFirstName();
 
 //        Call<> call =  AppClient.getInstance().createService(APIServices.class).methordName;
     }
