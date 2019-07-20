@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +41,8 @@ public class ContactUs extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Log.e("onclick called","contact us page");
         switch (v.getId()){
-            case R.id.whatsapplogo:{
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(""));
-                startActivity(intent);
-                break;
-            }
             case R.id.linkedinlogo:{
                 Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.linkedin.com/company/entrepreneurship-cell-nit-raipur/"));
                 startActivity(intent);
@@ -81,10 +78,13 @@ public class ContactUs extends Fragment implements View.OnClickListener {
     }
 
     void initialize(View view){
-        whatsapp = view.findViewById(R.id.whatsapplogo);
         linkedin = view.findViewById(R.id.linkedinlogo);
         twitter = view.findViewById(R.id.twitterlogo);
         facebook = view.findViewById(R.id.facebooklogo);
         instagram = view.findViewById(R.id.instagramlogo);
+        linkedin.setOnClickListener(this);
+        twitter.setOnClickListener(this);
+        facebook.setOnClickListener(this);
+        instagram.setOnClickListener(this);
     }
 }
