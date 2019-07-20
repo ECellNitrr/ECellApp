@@ -7,41 +7,41 @@
     tools:context=".activities.SplashScreenActivity">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidline1"
+        android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2"/>
+        app:layout_constraintGuide_percent="0.2" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidline2"
+        android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8"/>
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidline3"
+        android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3"/>
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidline4"
+        android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7"/>
+        app:layout_constraintGuide_percent="0.7" />
 
     <ImageView
         android:id="@+id/ecell_splash_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/ic_ecell"
-        app:layout_constraintTop_toBottomOf="@id/guidline3"
-        app:layout_constraintBottom_toTopOf="@id/guidline4"
-        app:layout_constraintRight_toLeftOf="@id/guidline2"
-        app:layout_constraintLeft_toRightOf="@id/guidline1"/>
+        app:layout_constraintBottom_toTopOf="@id/guideline4"
+        app:layout_constraintLeft_toRightOf="@id/guideline1"
+        app:layout_constraintRight_toLeftOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/guideline3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

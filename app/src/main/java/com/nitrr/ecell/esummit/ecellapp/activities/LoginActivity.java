@@ -25,6 +25,7 @@ import android.widget.TextView;
 //import com.facebook.login.LoginManager;
 //import com.facebook.login.LoginResult;
 //import com.facebook.login.widget.LoginButton;
+import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
@@ -41,26 +42,32 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Objects;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnFocusChangeListener {
+public class LoginActivity extends BaseActivity implements View.OnFocusChangeListener {
 
     private Context context;
-    private Button signIn,register;
+    private Button signIn, register;
     private TextView toSignIn, toRegister;
     private EditText loginEmail, loginPassword;
     private EditText firstName, lastName, registerPassword, registerEmail, registerPhone;
     private LoginAnimation loginanimation;
-    private BroadcastReceiver receiver;
     private AuthResponse authResponse;
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_login;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
         initializeViews();
+
         loginanimation = new LoginAnimation(this);
         loginanimation.toSignInScreen();
 
@@ -71,11 +78,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
             loginEmail.setTag(checkEmail(loginEmail));
             loginPassword.setTag(checkPassword(loginPassword));
 
-            if(loginEmail.getText().toString().equals("DebugMode"))
+            if (loginEmail.getText().toString().equals("DebugMode"))
                 startActivity(new Intent(this, HomeActivity.class));
-            else
-                if((boolean)loginEmail.getTag() && (boolean)loginPassword.getTag())
-                    LoginApiCall();
+            else if ((boolean) loginEmail.getTag() && (boolean) loginPassword.getTag())
+                LoginApiCall();
         });
 
         register.setOnClickListener((View v) -> {
@@ -86,11 +92,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
             registerPassword.setTag(checkPassword(registerPassword));
             registerPhone.setTag(checkPhone(registerPhone));
 
-            if((boolean)firstName.getTag() &&
-                    (boolean)lastName.getTag() &&
-                    (boolean)registerEmail.getTag() &&
-                    (boolean)registerPassword.getTag() &&
-                    (boolean)registerPhone.getTag()){
+            if ((boolean) firstName.getTag() &&
+                    (boolean) lastName.getTag() &&
+                    (boolean) registerEmail.getTag() &&
+                    (boolean) registerPassword.getTag() &&
+                    (boolean) registerPhone.getTag()) {
                 register.setEnabled(false);
                 RegisterApiCall();
             }
@@ -99,49 +105,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         toRegister.setOnClickListener((View v) -> loginanimation.toRegisterScreen());
 
         toSignIn.setOnClickListener((View v) -> loginanimation.toSignInScreen());
-}
+    }
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.register_first_name:
-                if(!firstName.hasFocus())
+                if (!firstName.hasFocus())
                     isNotEmpty(firstName);
                 break;
 
             case R.id.register_last_name:
-                if(!lastName.hasFocus())
+                if (!lastName.hasFocus())
                     isNotEmpty(lastName);
                 break;
 
             case R.id.register_email:
-                if(!registerEmail.hasFocus())
+                if (!registerEmail.hasFocus())
                     checkEmail(registerEmail);
                 break;
 
             case R.id.register_password:
-                if(!registerPassword.hasFocus())
+                if (!registerPassword.hasFocus())
                     checkPassword(registerPassword);
                 break;
 
             case R.id.register_number:
-                if(!registerPhone.hasFocus())
+                if (!registerPhone.hasFocus())
                     checkPhone(registerPhone);
                 break;
 
             case R.id.login_email:
-                if(!loginEmail.hasFocus())
+                if (!loginEmail.hasFocus())
                     checkEmail(loginEmail);
                 break;
 
             case R.id.login_password:
-                if(!loginPassword.hasFocus())
+                if (!loginPassword.hasFocus())
                     checkPassword(loginPassword);
                 break;
         }
     }
 
-    private void initializeViews(){
+    private void initializeViews() {
         context = this;
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
@@ -178,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                 registerPhone.getText().toString(),
                 null, null, null);
 
-        Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postRegisterUser(details);
+        Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postRegisterUser(details);
 
         call.enqueue(new Callback<AuthResponse>() {
             @Override
@@ -187,8 +193,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                     if (getApplicationContext() != null && response.isSuccessful()) {
                         if (response.body() != null) {
                             dialog.dismiss();
+
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                             authResponse = response.body();
+
                             SharedPref pref = new SharedPref();
                             pref.setSharedPref(LoginActivity.this,
                                     authResponse.getToken(),
@@ -199,27 +207,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                                     details.getAvatar(),
                                     details.getFacebook(),
                                     details.getLinkedin());
-                            if(details.getFacebook()!= null)
-                                pref.setIsLoggedIn(false,true,false);
-                            else if(details.getLinkedin() != null)
-                                pref.setIsLoggedIn(false,false,true);
+
+                            if (details.getFacebook() != null)
+                                pref.setIsLoggedIn(false, true, false);
+                            else if (details.getLinkedin() != null)
+                                pref.setIsLoggedIn(false, false, true);
                             else
-                                pref.setIsLoggedIn(true,false,false);
+                                pref.setIsLoggedIn(true, false, false);
                             startActivity(new Intent(context, HomeActivity.class));
-                        }
-                        else {
+                        } else {
                             dialog.dismiss();
-                            Utils.showLongToast(getApplicationContext(),"Registration Failed");
+                            Utils.showLongToast(getApplicationContext(), "Registration Failed");
                             Log.e("RegisterApiCall =====", "Response Body NULL.");
-                            Log.e("RegisterApiCall =====" , Objects.requireNonNull(response.errorBody()).string() + " ");
+                            Log.e("RegisterApiCall =====", Objects.requireNonNull(response.errorBody()).string() + " ");
                         }
-                    }
-                    else {
+                    } else {
                         dialog.cancel();
-                        Utils.showLongToast(getApplicationContext(),"Registration Failed");
+                        Utils.showLongToast(getApplicationContext(), "Registration Failed");
                     }
 
-                } catch (Exception e){
+                } catch (Exception e) {
                     dialog.cancel();
                     Log.e("RegisterApiCall =======", e.getMessage() + " ");
                     e.printStackTrace();
@@ -239,7 +246,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                 "Please wait...", true);
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
-        Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
+        Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
 
         call.enqueue(new Callback<AuthResponse>() {
             @Override
@@ -251,47 +258,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                             authResponse = response.body();
                             startActivity(new Intent(context, HomeActivity.class));
-                        }
-                        else {
+                        } else {
                             loginDialog.dismiss();
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(),response.errorBody().string());
+                                Utils.showLongToast(getApplicationContext(), response.errorBody().string());
                             }
                             Log.e("LoginApiCall =====", "Response Body NULL.");
-                            Log.e("LoginApiCall =====" , Objects.requireNonNull(response.errorBody()).string() + " ");
+                            Log.e("LoginApiCall =====", Objects.requireNonNull(response.errorBody()).string() + " ");
                         }
-                    }
-                    else {
+                    } else {
                         loginDialog.cancel();
                         if (response.errorBody() != null) {
-                            Utils.showLongToast(getApplicationContext(),response.errorBody().string().split("\"")[7]);
+                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
                         }
                     }
 
-                } catch (Exception e){
+                } catch (Exception e) {
                     loginDialog.cancel();
                     Log.e("LoginApiCall =======", e.getMessage() + " ");
                     e.printStackTrace();
                 }
             }
-//                Log.e("response",response.toString());
-//                if(response.code() == 400) {
-//                    Utils.showLongToast(context, "Wrong username or password!");
-//                }
-//                else {
-//                    if(response.isSuccessful()) {
-//                        if (response.body() != null) {
-//                            if(!response.body().getMessage().equals("Login successful!")) {
-//                                Utils.showLongToast(context, "Something went wrong");
-//                            }
-//                            else {
-//                                SharedPref.setAccessToken(response.body().getToken());
-//                                startActivity(new Intent(context, HomeActivity.class));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
@@ -300,47 +287,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         });
     }
 
-    private boolean checkPhone(EditText editText){
+    private boolean checkPhone(EditText editText) {
         String phoneNo = editText.getText().toString();
-        if(!isNotEmpty(editText))
+        if (!isNotEmpty(editText))
             return false;
-        if(phoneNo.length() == 10) {
-            if(phoneNo.charAt(0) == '6' || phoneNo.charAt(0) == '7' || phoneNo.charAt(0) == '8' || phoneNo.charAt(0) == '9')
+        if (phoneNo.length() == 10) {
+            if (phoneNo.charAt(0) == '6' || phoneNo.charAt(0) == '7' || phoneNo.charAt(0) == '8' || phoneNo.charAt(0) == '9')
                 return true;
             else
                 editText.setError("Invalid Number!");
-        }
-        else
+        } else
             editText.setError("Enter a 10 digit number");
         return false;
     }
 
     private boolean checkPassword(EditText editText) {
-        if(!isNotEmpty(editText)) {
+        if (!isNotEmpty(editText)) {
             return false;
         }
-        if(editText.getText().length() >= 8)
+        if (editText.getText().length() >= 8)
             return true;
         editText.setError("Required Min 8 Characters!");
         return false;
     }
 
-    private boolean checkEmail(EditText editText){
-        if(!isNotEmpty(editText))
+    private boolean checkEmail(EditText editText) {
+        if (!isNotEmpty(editText))
             return false;
         String email = editText.getText().toString();
-        int check = email.length()-1;
-        boolean dot=false;
+        int check = email.length() - 1;
+        boolean dot = false;
         Character character;
-        while (check>=0){
+        while (check >= 0) {
             character = email.charAt(check);
-            if(character.compareTo('.')==0 && !dot) {
-                dot=true;
+            if (character.compareTo('.') == 0 && !dot) {
+                dot = true;
                 check--;
             }
 
-            if(dot)
-                if(character.compareTo('@')==0)
+            if (dot)
+                if (character.compareTo('@') == 0)
                     return true;
             check--;
         }
@@ -348,34 +334,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         return false;
     }
 
-    private boolean isNotEmpty(EditText editText){
-        if(!TextUtils.isEmpty(editText.getText()))
+    private boolean isNotEmpty(EditText editText) {
+        if (!TextUtils.isEmpty(editText.getText()))
             return true;
         else
             editText.setError("Field Required!");
         return false;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(receiver !=null){
-            unregisterReceiver(receiver);
-            receiver=null;
-        }
-        super.onDestroy();
-    }
-
 }
-
 
 
 //                        ****************** FACEBOOK IMPLEMENTATION! ******************

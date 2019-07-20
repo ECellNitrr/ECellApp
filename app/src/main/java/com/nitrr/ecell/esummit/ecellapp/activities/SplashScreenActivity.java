@@ -1,20 +1,17 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
@@ -22,14 +19,16 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends BaseActivity {
 
-    private ImageView ecellLogo;
     private AppDetails details;
     private SharedPref pref;
 
@@ -37,100 +36,122 @@ public class SplashScreenActivity extends AppCompatActivity {
         APICall();
         dialog.dismiss();
     };
+
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         this.finish();
         dialog.dismiss();
     };
-    private BroadcastReceiver receiver;
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_splashscreen;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splashscreen);
 
-        ecellLogo = findViewById(R.id.ecell_splash_icon);
+        init();
+    }
 
+    private void init() {
         pref = new SharedPref();
+
         APICall();
 
-        if(pref.isLoggedIn()){
-            Intent intent = new Intent(this,HomeActivity.class);
+        if (pref.isLoggedIn()) {
+            Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         }
+
+        Animation animation = new AlphaAnimation(1.0f, 0.5f);
+        animation.setDuration(500);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+
+        findViewById(R.id.ecell_splash_icon).setAnimation(animation);
+
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        if (date.equals("2019-08-31") || date.equals("2019-10-01"))
+            ((ImageView) findViewById(R.id.ecell_splash_icon)).setImageResource(R.drawable.ic_esummit);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(receiver !=null){
-            unregisterReceiver(receiver);
-            receiver=null;
-        }
-        super.onDestroy();
-    }
-
-
 
     private void APICall() {
         Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getAppdata();
         call.enqueue(new Callback<AppDetails>() {
             @Override
             public void onResponse(Call<AppDetails> call, Response<AppDetails> response) {
-                if(response.isSuccessful() && getApplication()!=null){
+                if (response.isSuccessful() && getApplication() != null) {
                     details = response.body();
-                    if(details!=null){
+
+                    if (details != null) {
                         checkAppVersion();
-                    }
-                    else{
+                    } else {
+
                         try {
-                            Log.e("details null====","error message is "+response.errorBody().string());
+                            Log.e("details null====", "error message is " + response.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
+
+                } else {
+                    Utils.showDialog(SplashScreenActivity.this,
+                            null,
+                            false,
+                            "Something's wrong!",
+                            null,
+                            "Retry", retryListener,
+                            null, null);
                 }
-                else{
-                    Utils.showDialog(SplashScreenActivity.this,null,false,"Something went wrong",null,"Retry", retryListener,null,null);
-                }
-                Log.e("unsucess API SScreen===",response.toString());
+
+                Log.e("unsucess API Screen===", response.toString());
             }
 
             @Override
             public void onFailure(Call<AppDetails> call, Throwable t) {
-                if(Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(SplashScreenActivity.this,null,false,getString(R.string.no_internet),null,"Retry", retryListener,"Cancel", cancelListener);
-                else{
-                    Utils.showLongToast(SplashScreenActivity.this,"Something went Wrong");
+                if (Utils.isNetworkAvailable(getApplicationContext()))
+                    Utils.showDialog(SplashScreenActivity.this, null, false, getString(R.string.no_internet), null, "Retry", retryListener, "Cancel", cancelListener);
+                else {
+                    Utils.showLongToast(SplashScreenActivity.this, "Something went wrong.");
                 }
             }
         });
     }
 
     private void checkAppVersion() {
-        if(details.getVersion() > BuildConfig.VERSION_CODE){
+        if (details.getVersion() > BuildConfig.VERSION_CODE) {
+
             DialogInterface.OnClickListener updateListener = (dialog, which) -> {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(details.getLink())));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(details.getLink())));
+                finish();
             };
-            Utils.showDialog(SplashScreenActivity.this,null,false,
-                    getString(R.string.update_msg),null,
-                    "Update",updateListener,null,null);
-        }
-        else{
-            Intent intent;
-            if(pref.isLoggedIn()){
-                intent = new Intent(this,HomeActivity.class);
-            }
-            else
-                intent = new Intent(this,LoginActivity.class);
-            startActivity(intent);
-        }
+
+            DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
+                dialog.dismiss();
+                goInsideApp();
+
+                Utils.showNotification(SplashScreenActivity.this, "Update Notification.", "Updates will allow you to enjoy latest features.", false);
+            };
+
+            Utils.showDialog(SplashScreenActivity.this, null, false,
+                    getString(R.string.update_msg), null,
+                    "Update", updateListener, "Later", cancelListener);
+        } else
+            goInsideApp();
+    }
+
+    private void goInsideApp() {
+        Intent intent;
+
+        if (pref.isLoggedIn()) {
+            intent = new Intent(this, HomeActivity.class);
+        } else
+            intent = new Intent(this, LoginActivity.class);
+
+        startActivity(intent);
+        finish();
     }
 }

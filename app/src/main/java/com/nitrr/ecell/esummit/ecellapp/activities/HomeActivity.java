@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import android.widget.ImageButton;
@@ -26,7 +27,9 @@ import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+import io.fabric.sdk.android.Fabric;
+
+public class HomeActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private HomeRVAdapter adapter;
@@ -40,9 +43,13 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton hamburger_button;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
 
         recyclerView = findViewById(R.id.home_recycler);
 

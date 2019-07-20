@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.graphics.Color;
+
+import com.crashlytics.android.Crashlytics;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
@@ -30,11 +33,12 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SponsorsActivity extends AppCompatActivity {
+public class SponsorsActivity extends BaseActivity {
 
     private TabLayout tabLayout;
     private ViewPager pager;
@@ -42,7 +46,6 @@ public class SponsorsActivity extends AppCompatActivity {
     private ImageView circle1, circle2, circle3, circle4, circle5;
     private Bundle[] bundle = new Bundle[5];
     private int[] index = {0, 0, 0, 0, 0};
-    private BroadcastReceiver receiver;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
@@ -54,9 +57,14 @@ public class SponsorsActivity extends AppCompatActivity {
     private ProgressDialog dialog;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_sponsors;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sponsors);
+
         initialize();
         APICall();
     }
@@ -68,46 +76,48 @@ public class SponsorsActivity extends AppCompatActivity {
         bundle[2] = new Bundle();
         bundle[3] = new Bundle();
         bundle[4] = new Bundle();
-        for(int x=0;x<list.size();x++){
+        for (int x = 0; x < list.size(); x++) {
             data = list.get(x);
-            if(data.getType().contentEquals("ATS")){
+
+            if (data.getType().contentEquals("ATS")) {
                 index[0]++;
-                bundle[0].putString("type"+index[0],"Assoiate Sponsors");
-                bundle[0].putString("name"+index[0],data.getName());
-                bundle[0].putString("image"+index[0],data.getImg());
-                bundle[0].putString("id"+index[0],data.getId());
-            }
-            else if(data.getType().contentEquals("PTS")){
+                bundle[0].putString("type" + index[0], "Assoiate Sponsors");
+                bundle[0].putString("name" + index[0], data.getName());
+                bundle[0].putString("image" + index[0], data.getImg());
+                bundle[0].putString("id" + index[0], data.getId());
+
+            } else if (data.getType().contentEquals("PTS")) {
                 index[1]++;
-                bundle[1].putString("type"+index[1],"Platinum Sponsors");
-                bundle[1].putString("name"+index[1],data.getName());
-                bundle[1].putString("image"+index[1],data.getImg());
-                bundle[1].putString("id"+index[1],data.getId());
-            }
-            else if(data.getType().contentEquals("GDS")){
+                bundle[1].putString("type" + index[1], "Platinum Sponsors");
+                bundle[1].putString("name" + index[1], data.getName());
+                bundle[1].putString("image" + index[1], data.getImg());
+                bundle[1].putString("id" + index[1], data.getId());
+
+            } else if (data.getType().contentEquals("GDS")) {
                 index[2]++;
-                bundle[2].putString("type"+index[2],"Gold Sponsors");
-                bundle[2].putString("name"+index[2],data.getName());
-                bundle[2].putString("image"+index[2],data.getImg());
-                bundle[2].putString("id"+index[2],data.getId());
-            }
-            else if(data.getType().contentEquals("TLS")){
+                bundle[2].putString("type" + index[2], "Gold Sponsors");
+                bundle[2].putString("name" + index[2], data.getName());
+                bundle[2].putString("image" + index[2], data.getImg());
+                bundle[2].putString("id" + index[2], data.getId());
+
+            } else if (data.getType().contentEquals("TLS")) {
                 index[3]++;
-                bundle[3].putString("type"+index[3],"Title Sponsors");
-                bundle[3].putString("name"+index[3],data.getName());
-                bundle[3].putString("image"+index[3],data.getImg());
-                bundle[3].putString("id"+index[3],data.getId());
-            }
-            else if(data.getType().contentEquals("PRS")){
+                bundle[3].putString("type" + index[3], "Title Sponsors");
+                bundle[3].putString("name" + index[3], data.getName());
+                bundle[3].putString("image" + index[3], data.getImg());
+                bundle[3].putString("id" + index[3], data.getId());
+
+            } else if (data.getType().contentEquals("PRS")) {
                 index[4]++;
-                bundle[4].putString("type"+index[4],"Partner Sponsors");
-                bundle[4].putString("name"+index[4],data.getName());
-                bundle[4].putString("image"+index[4],data.getImg());
-                bundle[4].putString("id"+index[4],data.getId());
+                bundle[4].putString("type" + index[4], "Partner Sponsors");
+                bundle[4].putString("name" + index[4], data.getName());
+                bundle[4].putString("image" + index[4], data.getImg());
+                bundle[4].putString("id" + index[4], data.getId());
             }
         }
-        pager.setAdapter(new SponsViewPagerAdapter(getSupportFragmentManager(),bundle,index));
-        tabLayout.setupWithViewPager(pager,true);
+
+        pager.setAdapter(new SponsViewPagerAdapter(getSupportFragmentManager(), bundle, index));
+        tabLayout.setupWithViewPager(pager, true);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -126,7 +136,7 @@ public class SponsorsActivity extends AppCompatActivity {
             }
         });
 
-        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout){
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
@@ -139,41 +149,42 @@ public class SponsorsActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(position==0){
-                    toolbar.setBackgroundColor(color(1,12,84,129,129,129,positionOffset));
-                    circle1.setColorFilter(color(203, 239,255,255,255,255,positionOffset));
-                    circle2.setColorFilter(color(173,218,238,239,239,239,positionOffset));
-                    circle3.setColorFilter(color(147,203,227,225,225,225,positionOffset));
-                    circle4.setColorFilter(color(119,196,230,209,209,209,positionOffset));
-                    circle5.setColorFilter(color(90,177,216,188,188,188,positionOffset));
-                }
-                else if(position==1){
-                    toolbar.setBackgroundColor(color(129,129,129,130,87,0,positionOffset));
-                    circle1.setColorFilter(color(255,255,255,255,228,164,positionOffset));
-                    circle2.setColorFilter(color(239,239,239,255,222,129,positionOffset));
-                    circle3.setColorFilter(color(225,225,225,255,212,110,positionOffset));
-                    circle4.setColorFilter(color(209,209,209,255,191,109,positionOffset));
-                    circle5.setColorFilter(color(188,188,188,255,164,46,positionOffset));
-                }
-                else if(position==2){
-                    toolbar.setBackgroundColor(color(130,87,0,213,74,74, positionOffset));
-                    circle1.setColorFilter(color(255,228,164,252,216,216,positionOffset));
-                    circle2.setColorFilter(color(255,222,129,251,191,191,positionOffset));
-                    circle3.setColorFilter(color(255,212,110,249,170,170,positionOffset));
-                    circle4.setColorFilter(color(255,191,109,251,147,147,positionOffset));
-                    circle5.setColorFilter(color(255,164,46,249,116,116,positionOffset));
-                }
-                else if(position==3){
-                    toolbar.setBackgroundColor(color(213,74,74,58,167,163, positionOffset));
-                    circle1.setColorFilter(color(252,216,216,210,255,253,positionOffset));
-                    circle2.setColorFilter(color(251,191,191,166,245,241,positionOffset));
-                    circle3.setColorFilter(color(249,170,170,116,241,235,positionOffset));
-                    circle4.setColorFilter(color(251,147,147,103,230,225,positionOffset));
-                    circle5.setColorFilter(color(249,116,116,53,220,214,positionOffset));
+                if (position == 0) {
+                    toolbar.setBackgroundColor(color(1, 12, 84, 129, 129, 129, positionOffset));
+                    circle1.setColorFilter(color(203, 239, 255, 255, 255, 255, positionOffset));
+                    circle2.setColorFilter(color(173, 218, 238, 239, 239, 239, positionOffset));
+                    circle3.setColorFilter(color(147, 203, 227, 225, 225, 225, positionOffset));
+                    circle4.setColorFilter(color(119, 196, 230, 209, 209, 209, positionOffset));
+                    circle5.setColorFilter(color(90, 177, 216, 188, 188, 188, positionOffset));
+
+                } else if (position == 1) {
+                    toolbar.setBackgroundColor(color(129, 129, 129, 130, 87, 0, positionOffset));
+                    circle1.setColorFilter(color(255, 255, 255, 255, 228, 164, positionOffset));
+                    circle2.setColorFilter(color(239, 239, 239, 255, 222, 129, positionOffset));
+                    circle3.setColorFilter(color(225, 225, 225, 255, 212, 110, positionOffset));
+                    circle4.setColorFilter(color(209, 209, 209, 255, 191, 109, positionOffset));
+                    circle5.setColorFilter(color(188, 188, 188, 255, 164, 46, positionOffset));
+
+                } else if (position == 2) {
+                    toolbar.setBackgroundColor(color(130, 87, 0, 213, 74, 74, positionOffset));
+                    circle1.setColorFilter(color(255, 228, 164, 252, 216, 216, positionOffset));
+                    circle2.setColorFilter(color(255, 222, 129, 251, 191, 191, positionOffset));
+                    circle3.setColorFilter(color(255, 212, 110, 249, 170, 170, positionOffset));
+                    circle4.setColorFilter(color(255, 191, 109, 251, 147, 147, positionOffset));
+                    circle5.setColorFilter(color(255, 164, 46, 249, 116, 116, positionOffset));
+
+                } else if (position == 3) {
+                    toolbar.setBackgroundColor(color(213, 74, 74, 58, 167, 163, positionOffset));
+                    circle1.setColorFilter(color(252, 216, 216, 210, 255, 253, positionOffset));
+                    circle2.setColorFilter(color(251, 191, 191, 166, 245, 241, positionOffset));
+                    circle3.setColorFilter(color(249, 170, 170, 116, 241, 235, positionOffset));
+                    circle4.setColorFilter(color(251, 147, 147, 103, 230, 225, positionOffset));
+                    circle5.setColorFilter(color(249, 116, 116, 53, 220, 214, positionOffset));
                 }
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
         });
+
         dialog.dismiss();
     }
 
@@ -188,42 +199,25 @@ public class SponsorsActivity extends AppCompatActivity {
         circle5 = findViewById(R.id.spons_bgcircle_5);
     }
 
-    int colorValue(int Initial,int Final,float pos){
-        return (int)(Final*pos+Initial*(1-pos));
+    int colorValue(int Initial, int Final, float pos) {
+        return (int) (Final * pos + Initial * (1 - pos));
     }
 
-    int color(int IR,int IG,int IB,int FR,int FG,int FB,float pos){
-        return Color.rgb(colorValue(IR,FR,pos),colorValue(IG,FG,pos),colorValue(IB,FB,pos));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(receiver != null){
-            unregisterReceiver(receiver);
-            receiver=null;
-        }
-        super.onDestroy();
+    int color(int IR, int IG, int IB, int FR, int FG, int FB, float pos) {
+        return Color.rgb(colorValue(IR, FR, pos), colorValue(IG, FG, pos), colorValue(IB, FB, pos));
     }
 
     void APICall() {
         dialog = ProgressDialog.show(this, "Loading Sponsors",
                 "Please wait...", true);
+
         APIServices service = AppClient.getInstance().createService(APIServices.class);
         Call<SponsorsModel> call = service.getSponsData();
         call.enqueue(new Callback<SponsorsModel>() {
             @Override
             public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {
-                if(getApplicationContext() != null){
-                    Log.e("response",response.toString());
+                if (getApplicationContext() != null) {
+                    Log.e("response", response.toString());
                     if (response.isSuccessful()) {
                         model = response.body();
                         if (model != null) {
@@ -233,10 +227,9 @@ public class SponsorsActivity extends AppCompatActivity {
                             Log.e("response list empty", "response is empty and is: " + response.toString());
                             dialog.cancel();
                         }
-                    }
-                    else {
-                        Log.e("response failure", "resoponse is " + response.toString());
-                        Utils.showDialog(SponsorsActivity.this, null, false, "Something Went wrong", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry",refreshListener,"Cancel",cancelListener);
+                    } else {
+                        Log.e("response failure", "response is " + response.toString());
+                        Utils.showDialog(SponsorsActivity.this, null, false, "Something went wrong.", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
                         dialog.cancel();
                     }
                 }
@@ -245,13 +238,9 @@ public class SponsorsActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<SponsorsModel> call, @NonNull Throwable t) {
                 dialog.cancel();
-                if(getApplicationContext() != null){
-                    if (!Utils.isNetworkAvailable(SponsorsActivity.this))
-                        Utils.showDialog(SponsorsActivity.this, null, false, SponsorsActivity.this.getString(R.string.no_internet), SponsorsActivity.this.getString(R.string.wasnt_able_to_load), null,null,null,null);
-                    else {
-                        Utils.showLongToast(SponsorsActivity.this, "Something went wrong.");
-                        Log.e("onfailure", "throable is " + t.toString());
-                    }
+
+                if (getApplicationContext() != null) {
+                    Utils.showDialog(SponsorsActivity.this, null, false, "Something went wrong.", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
                 }
             }
         });

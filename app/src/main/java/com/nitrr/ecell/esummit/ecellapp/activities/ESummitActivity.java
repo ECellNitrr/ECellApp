@@ -20,6 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.ESRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
@@ -33,15 +34,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ESummitActivity extends AppCompatActivity{
+public class ESummitActivity extends BaseActivity {
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
     private RecyclerView speakerRV;
-    private BroadcastReceiver receiver;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
@@ -49,9 +50,13 @@ public class ESummitActivity extends AppCompatActivity{
     };
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_esummit;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_esummit);
 
         //Initialization
         speakerRV = findViewById(R.id.es_speaker_rv);
@@ -65,10 +70,13 @@ public class ESummitActivity extends AppCompatActivity{
                 "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
         responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
                 "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
+
         ESRVAdapter adapter = new ESRVAdapter(responseSpeakerObjectList, ESummitActivity.this);
+
         speakerRV.setAdapter(adapter);
         speakerRV.setLayoutManager(new LinearLayoutManager(this));
         speakerRV.setNestedScrollingEnabled(false);
+
         adapter.notifyDataSetChanged();
 
 //        callAPI();
@@ -80,7 +88,7 @@ public class ESummitActivity extends AppCompatActivity{
             @Override
             public void onResponse(@NonNull Call<ResponseSpeaker> call, @NonNull Response<ResponseSpeaker> response) {
                 if (response.isSuccessful() && getApplicationContext() != null) {
-                    Log.e("response",response.toString());
+                    Log.e("response", response.toString());
                     if (response.body() == null)
                         Log.e("ES Speaker List", "response body null");
                     else {
@@ -90,7 +98,7 @@ public class ESummitActivity extends AppCompatActivity{
                         speakerRV.setAdapter(adapter);
                         speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
                         adapter.notifyDataSetChanged();
-                        Log.e("data ===========","list size is" + responseSpeakerObjectList.size());
+                        Log.e("data ===========", "list size is" + responseSpeakerObjectList.size());
                         Log.e("ES Speaker List", response.body().getMessage());
                     }
                 } else {
@@ -106,35 +114,18 @@ public class ESummitActivity extends AppCompatActivity{
 
             @Override
             public void onFailure(@NonNull Call<ResponseSpeaker> call, @NonNull Throwable t) {
-                if(getApplicationContext() != null){
-                    if(!Utils.isNetworkAvailable(getApplicationContext()))
-                        Utils.showDialog(ESummitActivity.this,null,false,"Poor Internet Connection",getApplicationContext().getString(R.string.wasnt_able_to_load),"Retry", refreshListener,"Cancel", cancelListener);
-                    else
-                    {Log.e("Failure:  =","throwable is " + t);
-                        Utils.showLongToast(getApplicationContext(),"Something went wrong.");
+                if (getApplicationContext() != null) {
+                    if (!Utils.isNetworkAvailable(getApplicationContext()))
+                        Utils.showDialog(ESummitActivity.this, null, false, "Poor Internet Connection", getApplicationContext().getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
+                    else {
+                        Log.e("Failure:  =", "throwable is " + t);
+                        Utils.showLongToast(getApplicationContext(), "Something went wrong.");
                     }
                 }
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(receiver != null){
-            unregisterReceiver(receiver);
-            receiver=null;
-        }
-        super.onDestroy();
-    }
 }
 
 

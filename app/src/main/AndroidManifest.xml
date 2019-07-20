@@ -21,6 +21,8 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".activities.BQuizActivity"/>
+
         <activity android:name=".activities.SplashScreenActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
