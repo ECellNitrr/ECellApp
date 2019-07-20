@@ -32,6 +32,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private ImageView ecellLogo;
     private AppDetails details;
     private SharedPref pref;
+
     private DialogInterface.OnClickListener retryListener = (dialog, which) -> {
         APICall();
         dialog.dismiss();
@@ -46,10 +47,14 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+
         ecellLogo = findViewById(R.id.ecell_splash_icon);
+
         startAnimation();
+
         pref = new SharedPref();
         APICall();
+
         if(pref.isLoggedIn()){
             Intent intent = new Intent(this,HomeActivity.class);
             startActivity(intent);
