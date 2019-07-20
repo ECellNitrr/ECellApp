@@ -96,6 +96,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 else{
                     Utils.showDialog(SplashScreenActivity.this,null,false,"Something went wrong",null,"Retry", retryListener,null,null);
                 }
+                Log.e("unsucess API SScreen===",response.toString());
             }
 
             @Override

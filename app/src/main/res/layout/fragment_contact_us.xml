@@ -52,6 +52,7 @@
                         android:layout_weight="1"/>
 
                     <TextView
+                        android:id="@+id/contactus_address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/name_college"
@@ -78,6 +79,7 @@
                         android:layout_weight="1"/>
 
                     <TextView
+                        android:id="@+id/contactus_number"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="08827544244"
@@ -105,6 +107,7 @@
                         android:layout_weight="1"/>
 
                     <TextView
+                        android:id="@+id/contactus_website"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:text="ecell@nitrr.ac.in"

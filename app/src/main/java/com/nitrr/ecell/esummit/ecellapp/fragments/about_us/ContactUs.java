@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
@@ -25,6 +26,7 @@ import retrofit2.Call;
 public class ContactUs extends Fragment implements View.OnClickListener {
 
     private ImageView whatsapp, linkedin, twitter, facebook, instagram;
+    private TextView address, site, phonenumber;
     SharedPref pref = new SharedPref();
 
     public ContactUs() {
@@ -66,6 +68,21 @@ public class ContactUs extends Fragment implements View.OnClickListener {
             case R.id.messagesubmit:
                 sendMessage();
                 break;
+            case R.id.contactus_address:{
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("geo:21.2479,81.6039"));
+                startActivity(intent);
+                break;
+            }
+            case R.id.contactus_website:{
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://ecell.nitrr.ac.in"));
+                startActivity(intent);
+                break;
+            }
+            case R.id.contactus_number:{
+                Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel: 8827544244"));
+                startActivity(intent);
+                break;
+            }
         }
     }
 
@@ -82,9 +99,15 @@ public class ContactUs extends Fragment implements View.OnClickListener {
         twitter = view.findViewById(R.id.twitterlogo);
         facebook = view.findViewById(R.id.facebooklogo);
         instagram = view.findViewById(R.id.instagramlogo);
+        address = view.findViewById(R.id.contactus_address);
+        site = view.findViewById(R.id.contactus_website);
+        phonenumber = view.findViewById(R.id.contactus_number);
         linkedin.setOnClickListener(this);
         twitter.setOnClickListener(this);
         facebook.setOnClickListener(this);
         instagram.setOnClickListener(this);
+        address.setOnClickListener(this);
+        site.setOnClickListener(this);
+        phonenumber.setOnClickListener(this);
     }
 }
