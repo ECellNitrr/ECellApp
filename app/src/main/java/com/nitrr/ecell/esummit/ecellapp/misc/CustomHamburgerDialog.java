@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 
@@ -30,23 +31,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OTPVerification {
+public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
-    private static OTPVerification dialog = null;
+    private static CustomHamburgerDialog dialog = null;
+    private SharedPref pref = new SharedPref();
     private Activity activity;
-    private TextView item1;
-    private CardView item2, item3, item4;
     private EditText otp1, otp2, otp3, otp4, oldNumber, newNumber;
-    private TextView changeNumber;
     private String otp;
-
-    DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) -> {
-        if (confirmNumber())
+    private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) ->{
+        if(confirmNumber())
             dialog.dismiss();
     };
-
-    DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
+    private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
         otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
         dialog.dismiss();
     };
@@ -54,19 +51,19 @@ public class OTPVerification {
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
 
 
-    private OTPVerification() {
+    private CustomHamburgerDialog() {
 
     }
 
-    public static OTPVerification getInstance() {
+    public static CustomHamburgerDialog getInstance() {
 
         if (dialog == null)
-            dialog = new OTPVerification();
+            dialog = new CustomHamburgerDialog();
 
         return dialog;
     }
 
-    public OTPVerification with(Activity activity) {
+    public CustomHamburgerDialog with(Activity activity){
         this.activity = activity;
         return this;
     }
@@ -76,16 +73,16 @@ public class OTPVerification {
 
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
 
-        item1 = alertView.findViewById(R.id.username);
-        item2 = alertView.findViewById(R.id.item2);
-        item3 = alertView.findViewById(R.id.item3);
-        item4 = alertView.findViewById(R.id.item4);
+        TextView item1 = alertView.findViewById(R.id.username);
+        CardView item2 = alertView.findViewById(R.id.item2);
+        CardView item3 = alertView.findViewById(R.id.item3);
+        CardView item4 = alertView.findViewById(R.id.item4);
 
         item1.setText("Username");
 
         item2.setOnClickListener(v -> {
             showOTPDialog();
-            builder.setOnDismissListener(dialog -> dialog.dismiss());
+            builder.setOnDismissListener(DialogInterface::dismiss);
         });
 
         item3.setOnClickListener(v -> {
@@ -200,24 +197,27 @@ public class OTPVerification {
 
         String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
 
-        changeNumber = v.findViewById(R.id.change_number);
-        changeNumber.setOnClickListener(view -> {
-            AlertDialog alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false, "Enter new Number", null, "Confirm", changeNumberConfirmListener, "Cancel", cancelListener);
-        });
+        TextView changeNumber = v.findViewById(R.id.change_number);
+        if (changeNumber != null) {
+            changeNumber.setOnClickListener(view -> {
+                AlertDialog alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false,
+                        "Enter new Number", null, "Confirm", changeNumberConfirmListener, "Cancel", cancelListener);
+                });
+        }
         oldNumber = alertDialog.findViewById(R.id.old_number);
         newNumber = alertDialog.findViewById(R.id.new_number);
         sendOTP();
     }
 
     private void logout() {
-        SharedPref.clearPrefs(activity);
+        pref.getEditor(activity).clear().apply();
         activity.startActivity(new Intent(activity, LoginActivity.class));
         activity.finish();
     }
 
     private boolean confirmNumber() {
-        if (checkPhone(oldNumber) && checkPhone(newNumber))
-            if (SharedPref.getContact().contentEquals(oldNumber.getText().toString())) {
+        if(checkPhone(oldNumber) && checkPhone(newNumber))
+            if(pref.getContact().contentEquals(oldNumber.getText().toString())){
                 changeNumber(newNumber.getText().toString());
                 return true;
             }
@@ -252,7 +252,7 @@ public class OTPVerification {
         Call<PhoneNumber> call = AppClient.getInstance().createService(APIServices.class).changeNumber(newNumber);
         call.enqueue(new Callback<PhoneNumber>() {
             @Override
-            public void onResponse(Call<PhoneNumber> call, Response<PhoneNumber> response) {
+            public void onResponse(@NonNull Call<PhoneNumber> call, @NonNull Response<PhoneNumber> response) {
                 if (response.isSuccessful() && !activity.isFinishing()) {
                     PhoneNumber number = response.body();
 
@@ -260,7 +260,7 @@ public class OTPVerification {
             }
 
             @Override
-            public void onFailure(Call<PhoneNumber> call, Throwable t) {
+            public void onFailure(@NonNull Call<PhoneNumber> call, @NonNull Throwable t) {
 
             }
         });

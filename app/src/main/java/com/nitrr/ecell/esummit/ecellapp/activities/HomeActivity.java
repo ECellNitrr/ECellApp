@@ -15,8 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.misc.OTPVerification;
-
+import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
@@ -79,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         hamburger_button = findViewById(R.id.hamburgerButton);
-        hamburger_button.setOnClickListener((View view) -> OTPVerification.getInstance().with(this).build());
+        hamburger_button.setOnClickListener((View view) -> CustomHamburgerDialog.getInstance().with(HomeActivity.this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
         setUpRV();

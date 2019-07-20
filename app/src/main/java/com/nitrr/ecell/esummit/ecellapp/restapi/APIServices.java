@@ -11,7 +11,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorResponse;
-import com.nitrr.ecell.esummit.ecellapp.models.otp.OTPVerify;
+import com.nitrr.ecell.esummit.ecellapp.models.ForgotPassword.Forgot_Password;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
@@ -50,7 +50,7 @@ public interface APIServices {
     Call<GenericMessage> getSendOTP();
 
     @POST("/user/verify_otp/")
-    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body OTPVerify otpVerify);
+    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body Forgot_Password otpVerify);
 
 
     //Speakers
@@ -88,7 +88,7 @@ public interface APIServices {
     @GET("/spons")
     Call<TeamData> getTeamData();
 
-    @GET("/app/2019")
+    @GET("/is_update_available")
     Call<AppDetails> getAppdata();
 
     @GET("/users/change_contact")

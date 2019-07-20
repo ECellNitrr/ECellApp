@@ -5,37 +5,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class AppDetails {
 
-    @SerializedName("id")
-    @Expose
-    int id;
-
-    @SerializedName("name")
-    @Expose
-    String name;
-
-    @SerializedName("log")
+    @SerializedName("message")
     @Expose
     String log;
 
-    @SerializedName("link")
+    @SerializedName("URL")
     @Expose
     String link;
 
     @SerializedName("version")
     @Expose
-    Number version;
+    Integer version;
 
-    @SerializedName("flag")
-    @Expose
-    boolean flag;
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public String getLog() {
         return log;
@@ -45,11 +26,8 @@ public class AppDetails {
         return link;
     }
 
-    public Number getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public boolean isFlag() {
-        return flag;
-    }
 }

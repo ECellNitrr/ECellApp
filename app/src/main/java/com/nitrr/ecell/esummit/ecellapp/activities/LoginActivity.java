@@ -189,7 +189,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                             dialog.dismiss();
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                             authResponse = response.body();
-                            SharedPref.setSharedPref(LoginActivity.this,
+                            SharedPref pref = new SharedPref();
+                            pref.setSharedPref(LoginActivity.this,
                                     authResponse.getToken(),
                                     details.getFirstName(),
                                     details.getLastName(),
@@ -199,11 +200,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
                                     details.getFacebook(),
                                     details.getLinkedin());
                             if(details.getFacebook()!= null)
-                                SharedPref.setIsLoggedIn(false,true,false);
+                                pref.setIsLoggedIn(false,true,false);
                             else if(details.getLinkedin() != null)
-                                SharedPref.setIsLoggedIn(false,false,true);
+                                pref.setIsLoggedIn(false,false,true);
                             else
-                                SharedPref.setIsLoggedIn(true,false,false);
+                                pref.setIsLoggedIn(true,false,false);
                             startActivity(new Intent(context, HomeActivity.class));
                         }
                         else {
@@ -234,6 +235,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
     }
 
     private void LoginApiCall() {
+        ProgressDialog loginDialog = ProgressDialog.show(this, "Signing in",
+                "Please wait...", true);
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
         Call<AuthResponse> call =  AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
@@ -241,27 +244,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnFocusChan
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
-
-                Log.e("response",response.toString());
-                if(response.code() == 400) {
-                    Utils.showLongToast(context, "Wrong username or password!");
-                }
-
-                else {
-                    if(response.isSuccessful()) {
+                try {
+                    if (getApplicationContext() != null && response.isSuccessful()) {
                         if (response.body() != null) {
-                            if(!response.body().getMessage().equals("Login successful!")) {
-                                Utils.showLongToast(context, "There was an error in logging in " + response.code());
+                            loginDialog.dismiss();
+                            Utils.showLongToast(LoginActivity.this, response.body().getMessage());
+                            authResponse = response.body();
+                            startActivity(new Intent(context, HomeActivity.class));
+                        }
+                        else {
+                            loginDialog.dismiss();
+                            if (response.errorBody() != null) {
+                                Utils.showLongToast(getApplicationContext(),response.errorBody().string());
                             }
-                            else {
-                                Utils.showLongToast(context, "User Logged In Successfully with token " + response.body().getToken());
-                                SharedPref.setAccessToken(response.body().getToken());
-//                                startActivity(new Intent(context, HomeActivity.class));
-                            }
+                            Log.e("LoginApiCall =====", "Response Body NULL.");
+                            Log.e("LoginApiCall =====" , Objects.requireNonNull(response.errorBody()).string() + " ");
                         }
                     }
+                    else {
+                        loginDialog.cancel();
+                        if (response.errorBody() != null) {
+                            Utils.showLongToast(getApplicationContext(),response.errorBody().string().split("\"")[7]);
+                        }
+                    }
+
+                } catch (Exception e){
+                    loginDialog.cancel();
+                    Log.e("LoginApiCall =======", e.getMessage() + " ");
+                    e.printStackTrace();
                 }
             }
+//                Log.e("response",response.toString());
+//                if(response.code() == 400) {
+//                    Utils.showLongToast(context, "Wrong username or password!");
+//                }
+//                else {
+//                    if(response.isSuccessful()) {
+//                        if (response.body() != null) {
+//                            if(!response.body().getMessage().equals("Login successful!")) {
+//                                Utils.showLongToast(context, "Something went wrong");
+//                            }
+//                            else {
+//                                SharedPref.setAccessToken(response.body().getToken());
+//                                startActivity(new Intent(context, HomeActivity.class));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {

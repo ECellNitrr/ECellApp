@@ -1,7 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.fragments.SpeakerDetail;
+import com.nitrr.ecell.esummit.ecellapp.fragments.SpeakerFragment;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
 
 import java.util.ArrayList;
@@ -41,27 +44,31 @@ public class ESRVAdapter extends RecyclerView.Adapter<ESRVAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final ResponseSpeakerData data = speakerDataList.get(position);
-        holder.name.setText(data.getName());
-        holder.year.setText(data.getYear());
         try {
+            holder.year.setText(Integer.toString(data.getYear()));
+            holder.name.setText(data.getName());
             Glide.with(context).load(data.getImage()).apply(RequestOptions.circleCropTransform()).into(holder.image);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         holder.image.setOnClickListener(view -> {
             try {
+                Bundle bundle = new Bundle();
                 ArrayList<String> arrayList = new ArrayList<>();
-                arrayList.add(0, data.getCompany());
-                arrayList.add(1, data.getEmail());
-                arrayList.add(2, data.getContact());
-                arrayList.add(3, data.getSocialMedia());
-                arrayList.add(4, data.getName());
-                arrayList.add(5, data.getImage());
-                Intent i = new Intent(context, SpeakerDetail.class);
-                i.putStringArrayListExtra("data", arrayList);
-                i.putExtra("year", data.getYear());
-                context.startActivity(i);
+                arrayList.add(0, data.getImage());
+                arrayList.add(1, data.getName());
+                arrayList.add(2, data.getCompany());
+                arrayList.add(3, data.getEmail());
+                arrayList.add(4, data.getContact());
+                arrayList.add(5, data.getSocialMedia());
+                bundle.putStringArrayList("data", arrayList);
+                bundle.putInt("year", 2019);
+                SpeakerFragment fragment = new SpeakerFragment();
+                fragment.setArguments(bundle);
+                AppCompatActivity activity = (AppCompatActivity) context;
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.es_parent_layout, fragment).addToBackStack(null).commit();
             } catch (Exception e) {
                 Log.e("ESDetail", e.toString());
             }
@@ -80,9 +87,9 @@ public class ESRVAdapter extends RecyclerView.Adapter<ESRVAdapter.MyViewHolder> 
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.detail_speaker_name);
-            image = itemView.findViewById(R.id.speaker_image);
             year = itemView.findViewById(R.id.speaker_year);
+            name = itemView.findViewById(R.id.speaker_name);
+            image = itemView.findViewById(R.id.speaker_image);
         }
     }
 }

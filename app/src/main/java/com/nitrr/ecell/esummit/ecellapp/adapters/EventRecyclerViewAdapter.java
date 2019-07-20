@@ -80,12 +80,13 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         return list.size();
     }
 
-    public  class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView eventimg;
         TextView event;
         ImageView eventbg;
         CardView card;
-        public MyViewHolder(@NonNull View itemView) {
+
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             event = itemView.findViewById(R.id.event_name);
             eventbg = itemView.findViewById(R.id.event_bg);
