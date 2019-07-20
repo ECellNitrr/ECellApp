@@ -28,19 +28,20 @@ import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 public class Utils {
 
     private static AlertDialog dialog;
+    private static String NOTIFICAION_CHANNEL_ID = "e_cell_notif_channel_id_0";
 
-    public static void showLongToast(Context context, String message){
-        if(context!=null)
+    public static void showLongToast(Context context, String message) {
+        if (context != null)
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     public static void showShortToast(Context context, String message) {
-        if(context!=null)
+        if (context != null)
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public static boolean isNetworkAvailable(Context context) {
-        if(context!=null){
+        if (context != null) {
             ConnectivityManager connectivityManager
                     = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -49,50 +50,63 @@ public class Utils {
         return true;
     }
 
-    public static AlertDialog showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener){
+    public static AlertDialog showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        if(!((Activity)context).isFinishing()) {
-            if(layout!=null){
+
+        if (!((Activity) context).isFinishing()) {
+
+            if (layout != null) {
                 View v = LayoutInflater.from(context).inflate(layout, null);
                 builder.setView(v);
             }
+
             builder.setTitle(title)
                     .setMessage(message)
                     .setCancelable(canclelable);
-            if(posbutton!=null)
-                    builder.setPositiveButton(posbutton,poslistener);
-            if(negbutton!=null && neglistener!=null)
-                builder.setNegativeButton(negbutton,neglistener);
+
+            if (posbutton != null)
+                builder.setPositiveButton(posbutton, poslistener);
+
+            if (negbutton != null && neglistener != null)
+                builder.setNegativeButton(negbutton, neglistener);
+
             dialog = builder.show();
         }
         return dialog;
     }
 
-    public static void showNotification(Context context,@NonNull String title,@NonNull String message,Boolean isintent){
-        if(context!=null) {
+    public static void showNotification(Context context, @NonNull String title, @NonNull String message, Boolean isIntent) {
+        if (context != null) {
             int notificationId = 0;
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.ic_close)
+
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICAION_CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_ecell)
                     .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_close))
                     .setContentTitle(title)
                     .setContentText(message)
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setDefaults(NotificationCompat.DEFAULT_ALL);
-            if(isintent){
+
+            if (isIntent) {
                 Intent intent = new Intent(context, HomeActivity.class);
-                PendingIntent pendingintent = PendingIntent.getActivity(context,0,intent,0);
+                PendingIntent pendingintent = PendingIntent.getActivity(context, 0, intent, 0);
                 builder.setContentIntent(pendingintent);
             }
+
             Uri path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             builder.setSound(path);
+
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                String channelid = "YOUR_CHANNEL_ID";
-                NotificationChannel channel = new NotificationChannel(channelid, "Channel", NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationChannel channel = new NotificationChannel(NOTIFICAION_CHANNEL_ID, "E-Cell Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+
                 notificationManager.createNotificationChannel(channel);
-                builder.setChannelId(channelid);
+                builder.setChannelId(NOTIFICAION_CHANNEL_ID);
             }
+
             notificationManager.notify(notificationId, builder.build());
         }
     }
