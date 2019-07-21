@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.SnapHelper;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
+
 import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
@@ -26,7 +28,9 @@ import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+import io.fabric.sdk.android.Fabric;
+
+public class HomeActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private HomeRVAdapter adapter;
@@ -40,12 +44,15 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton hamburger_button;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
 
         recyclerView = findViewById(R.id.home_recycler);
-
         bgCircle1 = findViewById(R.id.homebg_circle1);
         bgCircle2 = findViewById(R.id.homebg_circle2);
         bgCircle3 = findViewById(R.id.homebg_circle3);
@@ -78,9 +85,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         hamburger_button = findViewById(R.id.hamburgerButton);
-        hamburger_button.setOnClickListener((View view) -> CustomHamburgerDialog.getInstance().with(HomeActivity.this).build());
+        hamburger_button.setOnClickListener((View view) -> new CustomHamburgerDialog().with(HomeActivity.this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
+
         setUpRV();
     }
 

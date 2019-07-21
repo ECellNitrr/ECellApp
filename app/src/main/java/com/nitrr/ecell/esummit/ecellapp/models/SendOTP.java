@@ -3,7 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OTPVerification {
+public class SendOTP {
 
 
     @SerializedName("token")
@@ -13,8 +13,4 @@ public class OTPVerification {
     @SerializedName("email")
     @Expose
     String email;
-
-    @SerializedName("otp")
-    @Expose
-    String otp;
 }

@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Aim;
@@ -16,15 +17,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class AboutUsActivity extends AppCompatActivity{
+import io.fabric.sdk.android.Fabric;
+
+public class AboutUsActivity extends BaseActivity {
 
 
     private BroadcastReceiver receiver;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_about_us;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_us);
+
         BottomNavigationView navigation = findViewById(R.id.nav_view);
 
         //initial fragment
@@ -48,25 +56,6 @@ public class AboutUsActivity extends AppCompatActivity{
             }
             return false;
         });
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        receiver = new NetworkChangeReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    @Override
-    protected void onDestroy() {
-        if(receiver !=null){
-            unregisterReceiver(receiver);
-            receiver=null;
-        }
-        super.onDestroy();
     }
 
     private void loadFragment(Fragment fragment) {

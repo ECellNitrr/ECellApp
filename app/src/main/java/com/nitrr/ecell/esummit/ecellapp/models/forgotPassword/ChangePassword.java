@@ -5,30 +5,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class ChangePassword {
 
+
+    @SerializedName("Access")
+    @Expose
+    String apptoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ";
+
     @SerializedName("email")
     @Expose
-    private
     String email;
 
-    @SerializedName("token")
+    @SerializedName("password")
     @Expose
-    private
-    String token;
-
-    @SerializedName("first_name")
-    @Expose
-    private
-    String firstName;
+    String password;
 
     public String getEmail() {
         return email;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public String getFirstName() {
-        return firstName;
     }
 }
