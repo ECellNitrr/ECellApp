@@ -17,9 +17,7 @@ public class LoginAnimation {
 
     private LinearLayout upperLinearLayout, lowerLinearLayout;
 //    private ImageView google, facebook;
-    private ImageView lowerPoly;
-    private ImageView upperPoly; /*downArrow, upArrow,*/ private ImageView lowerECell;
-    private ImageView upperECell;
+    private ImageView upperPoly, lowerECell, upperECell,lowerPoly ;
     private TextView toRegister, toSignIn, forgot;
     private TextView toRegisterText, toSignInText;
     private Button signInButton, registerButton;
@@ -37,8 +35,6 @@ public class LoginAnimation {
         lowerLinearLayout = view.findViewById(R.id.register_linear_layout);
         lowerPoly = view.findViewById(R.id.lower_poly);
         upperPoly = view.findViewById(R.id.upper_poly);
-//        google = view.findViewById(R.id.google_button);
-//        facebook = view.findViewById(R.id.fb_button);
         forgot = view.findViewById(R.id.forgot);
         signInButton = view.findViewById(R.id.sign_in_button);
         registerButton = view.findViewById(R.id.register_button);
@@ -70,25 +66,18 @@ public class LoginAnimation {
         doTranslationY(lowerPoly, distance);
         doTranslationY(upperPoly, distance);
         doTranslationY(lowerLinearLayout, distance);
-        doTranslationY(upperLinearLayout, distance); //-1400f
-//        doTranslationY(google, distance); //-1280f
-//        doTranslationY(facebook, distance);
-        doTranslationY(forgot, distance); //-1500f
+        doTranslationY(upperLinearLayout, distance);
+        doTranslationY(forgot, distance);
         forgot.setEnabled(true);
-        doTranslationY(signInButton, distance); //-1600f
+        doTranslationY(signInButton, distance);
         doAlphaTransition(signInButton, true);
         doTranslationY(registerButton, distance);
-
-//        doAlphaTransition(google, true);
-//        doAlphaTransition(facebook, true);
 
         doAlphaTransition(upperECell, true);
         doTranslationY(upperECell, distance);
         doAlphaTransition(lowerECell, false);
         doTranslationY(lowerECell, distance);
 
-//        google.setEnabled(true);
-//        facebook.setEnabled(true);
         lowerLinearLayout.setEnabled(false);
         upperLinearLayout.setEnabled(true);
 
@@ -122,7 +111,7 @@ public class LoginAnimation {
         doTranslationY(upperLinearLayout, 0f);
         doTranslationY(forgot, 0f);
         forgot.setEnabled(false);
-        doTranslationY(signInButton, 0f);
+        doTranslationY(signInButton, -150f);
         doAlphaTransition(signInButton, false);
         doTranslationY(registerButton, 0f);
 
@@ -155,14 +144,6 @@ public class LoginAnimation {
         firstName.setEnabled(true);
         lastName.setEnabled(true);
         registerNumber.setEnabled(true);
-
-//        FACEBOOK IMPLEMENTATION
-//        doTranslationY(google, 0f);
-//        doTranslationY(facebook, 0f);
-//        doAlphaTransition(google, false);
-//        doAlphaTransition(facebook, false);
-//        google.setEnabled(false);
-//        facebook.setEnabled(false);
     }
 
     private void doTranslationY(View view, float value) {

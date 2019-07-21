@@ -10,4 +10,8 @@ public class GenericMessage implements Serializable {
     @SerializedName("message")
     @Expose
     String message;
+
+    public String getMessage() {
+        return message;
+    }
 }

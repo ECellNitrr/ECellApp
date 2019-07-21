@@ -63,8 +63,8 @@
         app:layout_constraintGuide_percent="0.65"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:theme="@style/TextLabel"
         android:id="@+id/forgot_email_layout"
+        android:theme="@style/TextLabel"
         style="@style/ForgotTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,6 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/forgot_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -92,10 +93,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85"/>
+        app:layout_constraintGuide_percent="0.8"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/forgot_submit"
+        android:id="@+id/forgot_verify"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -110,5 +111,19 @@
         app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
         app:rippleColor="#5d65ff"
         tools:layout_editor_absoluteX="150dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/forgot_back"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Widget.MaterialComponents.Button"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/back_to_login_screen"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/forgot_verify"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class ChangePassword {
 
+    public ChangePassword(String email, String password, String otp) {
+        this.email = email;
+        this.password = password;
+        this.otp = otp;
+    }
 
     @SerializedName("Access")
     @Expose
@@ -18,7 +23,7 @@ public class ChangePassword {
     @Expose
     String password;
 
-    public String getEmail() {
-        return email;
-    }
+    @SerializedName("otp")
+    @Expose
+    String otp;
 }

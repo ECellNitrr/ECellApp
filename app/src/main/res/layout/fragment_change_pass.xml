@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/email_frag_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/email_frag_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.forgotPassword.EmailFragment"
-    android:background="#FFCFA2">
+    android:background="#FFCFA2"
+    tools:context=".fragments.forgotPassword.EmailFragment">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:srcCompat="@drawable/ic_key_design"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="90dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/forgot_guide"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/forgot_guide"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_key_design" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/forgot_guide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3"/>
+        app:layout_constraintGuide_percent="0.3" />
 
     <TextView
         android:id="@+id/forgot_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/acme"
         android:paddingTop="10dp"
         android:text="Set New Password"
         android:textAlignment="center"
         android:textSize="35sp"
         android:textStyle="bold"
-        android:fontFamily="@font/acme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/forgot_guide" />
@@ -47,30 +47,30 @@
         android:id="@+id/forgot_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:textAlignment="center"
+        android:fontFamily="casual"
         android:text="Enter a New Password for your\nE-Cell account"
-        app:layout_constraintTop_toBottomOf="@id/forgot_title"/>
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/forgot_edit_guide"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/forgot_edit_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.52" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/forgot_button_guide"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide"
-        app:layout_constraintBottom_toTopOf="@id/forgot_button_guide">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/change_number_layout"
@@ -82,13 +82,13 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:hint="New Password"
                 android:inputType="textPassword"
                 android:paddingStart="25dp"
-                android:paddingEnd="25dp"
                 android:paddingTop="15dp"
+                android:paddingEnd="25dp"
                 android:paddingBottom="15dp"
-                android:hint="New Password" />
+                android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,19 +97,19 @@
             style="@style/ForgotTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/forgot_button"
-            app:boxBackgroundColor="#FFCFA2">
+            app:boxBackgroundColor="#FFCFA2"
+            app:boxStrokeColor="@color/forgot_button">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:hint="Confirm Password"
                 android:inputType="textEmailAddress"
                 android:paddingStart="25dp"
-                android:paddingEnd="25dp"
                 android:paddingTop="15dp"
+                android:paddingEnd="25dp"
                 android:paddingBottom="15dp"
-                android:hint="Confirm Password" />
+                android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,23 +120,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85"/>
+        app:layout_constraintGuide_percent="0.8" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/forgot_submit"
+        android:id="@+id/change_reset"
         style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginEnd="30dp"
         android:fontFamily="@font/acme"
-        android:text="Verify"
+        android:text="Reset Password"
         android:textAppearance="@style/Widget.MaterialComponents.Button"
         android:textColor="@color/colorWhite"
         android:textSize="30sp"
         app:cornerRadius="30dp"
-        app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         app:rippleColor="#5d65ff"
-        tools:layout_editor_absoluteX="150dp" />
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/change_back"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Widget.MaterialComponents.Button"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/back_to_login_screen"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/change_reset"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
