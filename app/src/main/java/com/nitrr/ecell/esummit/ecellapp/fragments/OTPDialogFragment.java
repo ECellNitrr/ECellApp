@@ -29,17 +29,15 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     private TextView otp1, otp2, otp3, otp4;
     private String otp, email;
     private Button n1, n2, n3, n4, n5, n6, n7, n8, n9, n0, back, confirm;
-    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall(),
-            cancelListener = (dialog, which) -> {
+    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall(), cancelListener = (dialog, which) -> {
         dialog.cancel();
         getActivity().onBackPressed();
-    },
-            listener;
+    }, listener;
 
-    public OTPDialogFragment(){
+    public OTPDialogFragment() {
     }
 
-    public OTPDialogFragment getInstance(String email,DialogInterface.OnClickListener listener){
+    public OTPDialogFragment getInstance(String email, DialogInterface.OnClickListener listener) {
         this.email = email;
         this.listener = listener;
         return new OTPDialogFragment();
@@ -48,12 +46,12 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_otp,container,false);
+        View view = inflater.inflate(R.layout.layout_otp, container, false);
         initialize(view);
         return view;
     }
 
-    private void initialize(View v){
+    private void initialize(View v) {
         otp1 = v.findViewById(R.id.otp1);
         otp2 = v.findViewById(R.id.otp2);
         otp3 = v.findViewById(R.id.otp3);
@@ -86,7 +84,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.no0:
                 update(0);
                 break;
@@ -126,11 +124,11 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private void update(int n){
-        if(n==-1){
-            if(otp4.getText().toString().contentEquals("_"))
-                if(otp3.getText().toString().contentEquals("_"))
-                    if(otp2.getText().toString().contentEquals("_"))
+    private void update(int n) {
+        if (n == -1) {
+            if (otp4.getText().toString().contentEquals("_"))
+                if (otp3.getText().toString().contentEquals("_"))
+                    if (otp2.getText().toString().contentEquals("_"))
                         otp1.setText("_");
                     else
                         otp2.setText("_");
@@ -138,26 +136,24 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                     otp3.setText("_");
             else
                 otp4.setText("_");
-        }
-        else if(otp1.getText().toString().contentEquals("_"))
-            otp1.setText(""+n);
-        else if(otp2.getText().toString().contentEquals("_"))
-            otp2.setText(""+n);
-        else if(otp3.getText().toString().contentEquals("_"))
-            otp3.setText(""+n);
-        else if(otp4.getText().toString().contentEquals("_"))
-            otp4.setText(""+n);
+        } else if (otp1.getText().toString().contentEquals("_"))
+            otp1.setText("" + n);
+        else if (otp2.getText().toString().contentEquals("_"))
+            otp2.setText("" + n);
+        else if (otp3.getText().toString().contentEquals("_"))
+            otp3.setText("" + n);
+        else if (otp4.getText().toString().contentEquals("_"))
+            otp4.setText("" + n);
     }
 
     private void confirmOTP() {
-        if(!(otp4.getText().toString().contentEquals("_") &&
+        if (!(otp4.getText().toString().contentEquals("_") &&
                 otp2.getText().toString().contentEquals("_") &&
                 otp3.getText().toString().contentEquals("_") &&
-                otp4.getText().toString().contentEquals("_"))){
-            otp = otp1.getText().toString()+otp2.getText()+otp3.getText()+otp4.getText();
+                otp4.getText().toString().contentEquals("_"))) {
+            otp = otp1.getText().toString() + otp2.getText() + otp3.getText() + otp4.getText();
             APICall();
-        }
-        else{
+        } else {
             otp1.setText("_");
             otp2.setText("_");
             otp3.setText("_");
@@ -165,30 +161,29 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private void APICall(){
+    private void APICall() {
         Call<String> call = AppClient.getInstance().createService(APIServices.class).sendOTP(email);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if(getContext()!=null)
-                    if(response.isSuccessful()){
+                if (getContext() != null)
+                    if (response.isSuccessful()) {
                         String otp = response.body();
-                        if(otp!=null)
+                        if (otp != null)
                             setConfirmed();
                         else
-                            Utils.showDialog(getContext(),null,true,"Verification failed","","Retry",refreshListener,"Cancel",cancelListener);
-                    }
-                else
-                        Utils.showDialog(getContext(),null,false,"Server is down","Data wasn't able to load","Retry",refreshListener,"Cancel",cancelListener);
+                            Utils.showDialog(getContext(), null, true, "Verification failed", "", "Retry", refreshListener, "Cancel", cancelListener);
+                    } else
+                        Utils.showDialog(getContext(), null, false, "Server is down", "Data wasn't able to load", "Retry", refreshListener, "Cancel", cancelListener);
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                if(getContext()!=null){
-                    if(Utils.isNetworkAvailable(getContext()))
-                        Utils.showDialog(getContext(),null,false,"No Internet Connection","Please try again","Retry",refreshListener,"Cancel",cancelListener);
+                if (getContext() != null) {
+                    if (Utils.isNetworkAvailable(getContext()))
+                        Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", refreshListener, "Cancel", cancelListener);
                     else {
-                        Utils.showShortToast(getContext(),"Something went wrong");
+                        Utils.showShortToast(getContext(), "Something went wrong");
                         getActivity().onBackPressed();
                     }
                 }
@@ -196,7 +191,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         });
     }
 
-    private void setConfirmed(){
-        Utils.showDialog(getContext(),null,false,"Verified",null,"Next",listener,null,null);
+    private void setConfirmed() {
+        Utils.showDialog(getContext(), null, false, "Verified", null, "Next", listener, null, null);
     }
 }

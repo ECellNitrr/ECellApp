@@ -43,7 +43,7 @@ public class CustomHamburgerDialog {
             dialog.dismiss();
     };
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
-    private DialogInterface.OnClickListener confirmlistener = (dialog, which) -> {
+    private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
         //TODO add confirm code
     };
 
@@ -108,7 +108,7 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment().getInstance("", confirmlistener);
+        OTPDialogFragment fragment = new OTPDialogFragment().getInstance("", confirmListener);
         fragment.setArguments(new Bundle());
         AppCompatActivity act = (AppCompatActivity) activity;
         act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).commit();

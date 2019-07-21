@@ -43,7 +43,7 @@
     <string name="vision_text">Vision</string>
     <string name="name_college">National Institute of Technology, GE Road, Raipur [492001]</string>
     <string name="mobile_number">Mobile Number</string>
-    <string name="otp">Enter OTP here.</string>
+    <string name="otp">Verification Code</string>
     <string name="wasnt_able_to_load">Oops! data wasn\'t able to load</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
