@@ -3,6 +3,7 @@
     package="com.nitrr.ecell.esummit.ecellapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -21,13 +22,23 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".misc.SMSReceiver"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".activities.BQuizActivity"/>
 
         <activity android:name=".activities.SplashScreenActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
-            <!--<intent-filter>-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -36,7 +47,6 @@
             android:theme="@style/AppTheme.FullScreen"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:noHistory="true">
-
         </activity>
 
         <activity
@@ -55,55 +65,22 @@
             android:name=".activities.EventActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".activities.ESummitActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
         </activity>
-
-        <activity android:name=".fragments.SpeakerDetail" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
 </manifest>
-
-                        <!--****************FACEBOOK IMPLEMENTATION******************-->
-
-    <!--<activity android:name="com.facebook.FacebookActivity"-->
-    <!--android:configChanges=-->
-    <!--"keyboard|keyboardHidden|screenLayout|screenSize|orientation"-->
-    <!--android:label="@string/app_name" />-->
-    <!--<activity-->
-    <!--android:name="com.facebook.CustomTabActivity"-->
-    <!--android:exported="true">-->
-    <!--<intent-filter>-->
-    <!--<action android:name="android.intent.action.VIEW" />-->
-    <!--<category android:name="android.intent.category.DEFAULT" />-->
-    <!--<category android:name="android.intent.category.BROWSABLE" />-->
-    <!--<data android:scheme="@string/fb_login_protocol_scheme" />-->
-    <!--</intent-filter>-->
-    <!--</activity>-->
-
-    <!--<meta-data android:name="com.facebook.sdk.ApplicationId"-->
-    <!--android:value="@string/facebook_app_id"/>-->

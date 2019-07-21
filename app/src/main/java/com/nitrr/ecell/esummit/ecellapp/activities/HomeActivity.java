@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
+
 import android.widget.ImageButton;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
@@ -84,9 +85,10 @@ public class HomeActivity extends BaseActivity {
         });
 
         hamburger_button = findViewById(R.id.hamburgerButton);
-        hamburger_button.setOnClickListener((View view) -> CustomHamburgerDialog.getInstance().with(HomeActivity.this).build());
+        hamburger_button.setOnClickListener((View view) -> new CustomHamburgerDialog().with(HomeActivity.this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
+
         setUpRV();
     }
 

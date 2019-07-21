@@ -38,17 +38,16 @@ public class CustomHamburgerDialog {
     private SharedPref pref = new SharedPref();
     private Activity activity;
     private EditText oldNumber, newNumber;
-    private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) ->{
-        if(confirmNumber())
+    private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) -> {
+        if (confirmNumber())
             dialog.dismiss();
     };
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
-    private DialogInterface.OnClickListener confirmlistener = (dialog,which) -> {
+    private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
         //TODO add confirm code
     };
 
-
-    private CustomHamburgerDialog(){
+    public CustomHamburgerDialog() {
     }
 
     public static CustomHamburgerDialog getInstance() {
@@ -59,7 +58,7 @@ public class CustomHamburgerDialog {
         return dialog;
     }
 
-    public CustomHamburgerDialog with(Activity activity){
+    public CustomHamburgerDialog with(Activity activity) {
         this.activity = activity;
         return this;
     }
@@ -73,6 +72,7 @@ public class CustomHamburgerDialog {
         CardView item2 = alertView.findViewById(R.id.item2);
         CardView item3 = alertView.findViewById(R.id.item3);
         CardView item4 = alertView.findViewById(R.id.item4);
+        CardView changeNumber = alertView.findViewById(R.id.item4);
 
         item1.setText("Username");
 
@@ -108,20 +108,11 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment().getInstance("",confirmlistener);
+        OTPDialogFragment fragment = new OTPDialogFragment().getInstance("", confirmListener);
         fragment.setArguments(new Bundle());
         AppCompatActivity act = (AppCompatActivity) activity;
-        act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).commit();
+        act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
         alertDialog.dismiss();
-        TextView changeNumber=null;
-        if (changeNumber != null) {
-            changeNumber.setOnClickListener(view -> {
-                AlertDialog alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false,
-                        "Enter new Number", null, "Confirm", changeNumberConfirmListener, "Cancel", cancelListener);
-                });
-        }
-        oldNumber = alertDialog.findViewById(R.id.old_number);
-        newNumber = alertDialog.findViewById(R.id.new_number);
         sendOTP();
     }
 
@@ -132,8 +123,8 @@ public class CustomHamburgerDialog {
     }
 
     private boolean confirmNumber() {
-        if(checkPhone(oldNumber) && checkPhone(newNumber))
-            if(pref.getContact().contentEquals(oldNumber.getText().toString())){
+        if (checkPhone(oldNumber) && checkPhone(newNumber))
+            if (pref.getContact().contentEquals(oldNumber.getText().toString())) {
                 changeNumber(newNumber.getText().toString());
                 return true;
             }
@@ -174,6 +165,7 @@ public class CustomHamburgerDialog {
 
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<PhoneNumber> call, @NonNull Throwable t) {
             }

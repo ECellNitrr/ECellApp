@@ -7,22 +7,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static String BASE_URL = "https://55f78a0f.ngrok.io/";
+    private static String BASE_URL = "https://0f5df4de.ngrok.io/";
     private static AppClient mInstance;
 
     private AppClient() {
