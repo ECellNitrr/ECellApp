@@ -22,8 +22,8 @@ import android.widget.TextView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
-import com.nitrr.ecell.esummit.ecellapp.models.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 

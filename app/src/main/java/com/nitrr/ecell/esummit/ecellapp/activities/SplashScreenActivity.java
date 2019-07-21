@@ -1,5 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import androidx.annotation.NonNull;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -58,7 +60,6 @@ public class SplashScreenActivity extends BaseActivity {
         pref = new SharedPref();
 
         APICall();
-
         if (pref.isLoggedIn()) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
@@ -82,17 +83,17 @@ public class SplashScreenActivity extends BaseActivity {
         Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getAppdata();
         call.enqueue(new Callback<AppDetails>() {
             @Override
-            public void onResponse(Call<AppDetails> call, Response<AppDetails> response) {
-                if (response.isSuccessful() && getApplication() != null) {
+            public void onResponse(@NonNull Call<AppDetails> call, @NonNull Response<AppDetails> response) {
+                if (response.isSuccessful() && getApplicationContext() != null) {
                     details = response.body();
-
                     if (details != null) {
                         checkAppVersion();
                     } else {
 
                         try {
-                            Log.e("details null====", "error message is " +
-                                    (response.errorBody() != null ? response.errorBody().string() : null));
+                            if (response.errorBody() != null) {
+                                Log.e("details null====", "error message is " + response.errorBody().string());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -112,11 +113,11 @@ public class SplashScreenActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<AppDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppDetails> call, @NonNull Throwable t) {
                 if (Utils.isNetworkAvailable(getApplicationContext()))
                     Utils.showDialog(SplashScreenActivity.this, null, false, getString(R.string.no_internet), null, "Retry", retryListener, "Cancel", cancelListener);
                 else {
-                    Utils.showLongToast(SplashScreenActivity.this, "Something went wrong.");
+                    Utils.showLongToast(SplashScreenActivity.this, "Something went Wrong");
                 }
             }
         });

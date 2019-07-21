@@ -8,9 +8,9 @@ import android.os.Bundle;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Aim;
-import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.ContactUs;
-import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Team;
+import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Aim;
+import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.ContactUs;
+import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Team;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,11 +19,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import io.fabric.sdk.android.Fabric;
 
-public class AboutUsActivity extends BaseActivity{
+public class AboutUsActivity extends BaseActivity {
 
 
     private BroadcastReceiver receiver;
-    private IntentFilter filter;
 
     @Override
     protected int getLayoutResourceId() {

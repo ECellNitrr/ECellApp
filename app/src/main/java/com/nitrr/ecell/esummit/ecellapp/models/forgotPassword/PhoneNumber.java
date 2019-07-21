@@ -1,22 +1,25 @@
-package com.nitrr.ecell.esummit.ecellapp.models.ForgotPassword;
+package com.nitrr.ecell.esummit.ecellapp.models.forgotPassword;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+public class PhoneNumber {
 
-public class Forgot_Password implements Serializable {
-
-
-    @SerializedName("token")
+    @SerializedName("Access")
     @Expose
     String apptoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ";
 
     @SerializedName("email")
     @Expose
-    private String email;
+    String email;
 
-    public Forgot_Password(String email) {
+    @SerializedName("contact")
+    @Expose
+    String number;
+
+    public PhoneNumber(String email, String number) {
         this.email = email;
+        this.number = number;
     }
+
 }
