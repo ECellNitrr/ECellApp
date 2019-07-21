@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.models;
+package com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -16,4 +16,9 @@ public class SendNumber {
     @SerializedName("mobile")
     @Expose
     String mobile;
+
+    public SendNumber(String token, String mobile) {
+        this.token = token;
+        this.mobile = mobile;
+    }
 }

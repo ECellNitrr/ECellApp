@@ -17,4 +17,8 @@ public class ChangeContact {
     @Expose
     String number;
 
+    public ChangeContact(String email, String number) {
+        this.email = email;
+        this.number = number;
+    }
 }

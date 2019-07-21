@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.models;
+package com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

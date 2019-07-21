@@ -176,7 +176,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                         if(otp!=null)
                             setConfirmed();
                         else
-                            Utils.showDialog(getContext(),null,true,"Verification failed","","Retry",refreshListener,"Cancel",cancelListener);
+                            Utils.showDialog(getContext(),null,true,"Verification failed",null,"Retry",refreshListener,"Cancel",cancelListener);
                     }
                 else
                         Utils.showDialog(getContext(),null,false,"Server is down","Data wasn't able to load","Retry",refreshListener,"Cancel",cancelListener);
