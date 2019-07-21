@@ -6,7 +6,6 @@ import android.view.View;
 
 public class MySnapHelper extends LinearSnapHelper {
 
-
     @Override
     public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
 

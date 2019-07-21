@@ -1,23 +1,16 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
@@ -27,9 +20,7 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,7 +36,7 @@ public class EventActivity extends BaseActivity {
         EventActivity.this.finish();
     };
 
-    private ProgressDialog dialog;
+    private AlertDialog dialog;
 
     @Override
     protected int getLayoutResourceId() {
@@ -62,8 +53,7 @@ public class EventActivity extends BaseActivity {
 
     void APICall() {
 
-        dialog = ProgressDialog.show(this, "Loading Events",
-                "Please wait...", true);
+        dialog = Utils.showProgressBar(this, "Loading Events..");
 
         APIServices services = AppClient.getInstance().createService(APIServices.class);
         Call<EventModel> call = services.getEventDetails();

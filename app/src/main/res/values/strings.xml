@@ -60,6 +60,6 @@
 
     <string name="esummit_tagline">\"Genesis of Innovation\"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="back_to_login_screen"><![CDATA[<< Back to Login Screen]]></string>
+    <string name="agreement">By clicking \'Accept\' you agree to all Terms and Conditions.</string>
 
 </resources>

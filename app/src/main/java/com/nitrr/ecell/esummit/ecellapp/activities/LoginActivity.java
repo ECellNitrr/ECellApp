@@ -1,17 +1,22 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import androidx.annotation.NonNull;
-
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -19,12 +24,15 @@ import com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword.EmailFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
+import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,23 +91,27 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         register.setOnClickListener((View v) -> {
             //Validation for Register
             firstName.setTag(isNotEmpty(firstName, firstNameLayout));
-            lastName.setTag(isNotEmpty(lastName, lastNameLayout));
-            registerEmail.setTag(checkEmail(registerEmail, registerEmailLayout));
-            registerPassword.setTag(checkPassword(registerPassword, registerPasswordLayout));
-            registerNumber.setTag(checkPhone(registerNumber, registerNumberLayout));
+            lastName.setTag(isNotEmpty(lastName, firstNameLayout));
+            registerEmail.setTag(checkEmail(registerEmail, firstNameLayout));
+            registerPassword.setTag(checkPassword(registerPassword, firstNameLayout));
+            registerNumber.setTag(checkPhone(registerNumber, firstNameLayout));
 
-            if((boolean)firstName.getTag() &&
-                    (boolean)lastName.getTag() &&
-                    (boolean)registerEmail.getTag() &&
-                    (boolean)registerPassword.getTag() &&
-                    (boolean)registerNumber.getTag()){
-                register.setEnabled(false);
-                RegisterApiCall();
+            if ((boolean) firstName.getTag() &&
+                    (boolean) lastName.getTag() &&
+                    (boolean) registerEmail.getTag() &&
+                    (boolean) registerPassword.getTag() &&
+                    (boolean) registerNumber.getTag()) {
+
+                try {
+                    showAlertDialog();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         toRegister.setOnClickListener((View v) -> loginanimation.toRegisterScreen());
-
         toSignIn.setOnClickListener((View v) -> loginanimation.toSignInScreen());
     }
 
@@ -179,8 +191,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     }
 
     private void RegisterApiCall() {
-        ProgressDialog dialog = ProgressDialog.show(this, "Registering User",
-                "Please wait...", true);
+        AlertDialog dialog = Utils.showProgressBar(this, "Registering User..");
 
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
                 lastName.getText().toString(),
@@ -247,8 +258,8 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     }
 
     private void LoginApiCall() {
-        ProgressDialog loginDialog = ProgressDialog.show(this, "Signing in",
-                "Please wait...", true);
+        AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In..");
+
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
         Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
@@ -348,6 +359,58 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         return false;
     }
 
+    private void showAlertDialog() throws Exception {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.alert_dialog_privacy_policy, null);
+
+        builder.setView(view);
+
+        AlertDialog dialog = builder.create();
+
+        view.findViewById(R.id.alert_privacy_accept).setOnClickListener(v -> {
+            RegisterApiCall();
+
+            if (dialog.isShowing())
+                dialog.dismiss();
+        });
+
+        view.findViewById(R.id.alert_privacy_decline).setOnClickListener(v -> {
+            if(dialog.isShowing())
+                dialog.dismiss();
+        });
+
+        InputStream inputStream = getAssets().open("tnc.html");
+        String result = convertStreamToString(inputStream);
+
+        TextView tncText = view.findViewById(R.id.alert_privacy_text);
+        tncText.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+            tncText.setText(Html.fromHtml(result, Html.FROM_HTML_MODE_LEGACY));
+        else
+            tncText.setText(Html.fromHtml(result));
+
+        dialog.setCancelable(false);
+
+        if (dialog.getWindow() != null)
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialog.show();
+    }
+
+    private String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append('\n');
+        }
+
+        is.close();
+        return sb.toString();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -359,43 +422,3 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         toRegister.setEnabled(true);
     }
 }
-
-
-//                        ****************** FACEBOOK IMPLEMENTATION! ******************
-//
-//        fbButton = findViewById(R.id.fb_button);
-//        googleButton = findViewById(R.id.google_button);
-//
-//    private static final String EMAIL = "email";
-//    CallbackManager callbackManager;
-//
-//        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
-//
-//        fbButton.setOnClickListener((view -> {
-//
-//            callbackManager = CallbackManager.Factory.create();
-//
-//            LoginManager.getInstance().registerCallback(callbackManager,
-//                    new FacebookCallback<LoginResult>() {
-//                        @Override
-//                        public void onSuccess(LoginResult loginResult) {
-//                            // App code
-//                        }
-//
-//                        @Override
-//                        public void onCancel() {
-//                            // App code
-//                        }
-//
-//                        @Override
-//                        public void onError(FacebookException exception) {
-//                            // App code
-//                        }
-//                    });
-//        }));
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
