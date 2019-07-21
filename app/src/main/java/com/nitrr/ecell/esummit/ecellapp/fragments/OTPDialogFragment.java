@@ -31,7 +31,10 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     private Button n1, n2, n3, n4, n5, n6, n7, n8, n9, n0, back, confirm;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall(), cancelListener = (dialog, which) -> {
         dialog.cancel();
-        getActivity().onBackPressed();
+
+        if (getActivity() != null)
+            getActivity().onBackPressed();
+
     }, listener;
 
     public OTPDialogFragment() {
@@ -172,9 +175,9 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                         if (otp != null)
                             setConfirmed();
                         else
-                            Utils.showDialog(getContext(), null, true, "Verification failed", "", "Retry", refreshListener, "Cancel", cancelListener);
+                            Utils.showDialog(getContext(), null, true, "Verification Failed.", "", "Retry", refreshListener, "Cancel", cancelListener);
                     } else
-                        Utils.showDialog(getContext(), null, false, "Server is down", "Data wasn't able to load", "Retry", refreshListener, "Cancel", cancelListener);
+                        Utils.showDialog(getContext(), null, false, "There was an issue.", "Data wasn't able to load", "Retry", refreshListener, "Cancel", cancelListener);
             }
 
             @Override
@@ -182,9 +185,12 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                 if (getContext() != null) {
                     if (Utils.isNetworkAvailable(getContext()))
                         Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", refreshListener, "Cancel", cancelListener);
+
                     else {
                         Utils.showShortToast(getContext(), "Something went wrong");
-                        getActivity().onBackPressed();
+
+                        if (getActivity() != null)
+                            getActivity().onBackPressed();
                     }
                 }
             }

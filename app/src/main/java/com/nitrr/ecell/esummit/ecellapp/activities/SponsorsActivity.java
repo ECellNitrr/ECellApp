@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
@@ -54,7 +55,7 @@ public class SponsorsActivity extends BaseActivity {
 
     private SponsorsModel model;
     private List<SponsRVData> list = new ArrayList<SponsRVData>();
-    private ProgressDialog dialog;
+    private AlertDialog dialog;
 
     @Override
     protected int getLayoutResourceId() {
@@ -208,8 +209,7 @@ public class SponsorsActivity extends BaseActivity {
     }
 
     void APICall() {
-        dialog = ProgressDialog.show(this, "Loading Sponsors",
-                "Please wait...", true);
+        dialog = Utils.showProgressBar(this, "Loading Sponsors..");
 
         APIServices service = AppClient.getInstance().createService(APIServices.class);
         Call<SponsorsModel> call = service.getSponsData();

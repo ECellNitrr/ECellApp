@@ -91,7 +91,8 @@ public class SplashScreenActivity extends BaseActivity {
                     } else {
 
                         try {
-                            Log.e("details null====", "error message is " + response.errorBody().string());
+                            Log.e("details null====", "error message is " +
+                                    (response.errorBody() != null ? response.errorBody().string() : null));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -129,16 +130,10 @@ public class SplashScreenActivity extends BaseActivity {
                 finish();
             };
 
-            DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
-                dialog.dismiss();
-                goInsideApp();
-
-                Utils.showNotification(SplashScreenActivity.this, "Update Notification.", "Updates will allow you to enjoy latest features.", false);
-            };
 
             Utils.showDialog(SplashScreenActivity.this, null, false,
                     getString(R.string.update_msg), null,
-                    "Update", updateListener, "Later", cancelListener);
+                    "Update", updateListener, null, null);
         } else
             goInsideApp();
     }
