@@ -29,59 +29,58 @@ import retrofit2.Response;
 
 public class Team extends Fragment {
 
-
     private RecyclerView recycler;
     private TeamRVAdapter adapter;
     private TeamData model;
-    private List<TeamList> list = new ArrayList<TeamList>();
+    private List<TeamList> list = new ArrayList<>();
     private Call<TeamData> call;
-    private DialogInterface.OnClickListener refreshlistener = (dialog, which) -> APICall();
+    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
 
     public Team() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team, container, false);
         recycler = view.findViewById(R.id.team_recycler);
+
         APICall();
         return view;
     }
 
     void APICall() {
-        if(this.isHidden()==false){
-        APIServices service = AppClient.getInstance().createService(APIServices.class);
-        call = service.getTeamData();
-        call.enqueue(new Callback<TeamData>() {
-            @Override
-            public void onResponse(Call<TeamData> call, Response<TeamData> response) {
-                if(getContext()!=null){
-                    if (response.isSuccessful()) {
-                        model = response.body();
-                        if (model != null) {
-                            list = model.getList();
-                            setRecyclerView();
-                        }
-                    } else
-                        Utils.showDialog(getContext(), null, false, "Poor internet connection", getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, null,null);
-                }
-            }
+        if (!this.isHidden()) {
+            APIServices service = AppClient.getInstance().createService(APIServices.class);
 
-            @Override
-            public void onFailure(Call<TeamData> call, Throwable t) {
-                if (!Utils.isNetworkAvailable(getContext()))
-                    Utils.showDialog(getContext(), null, false, getContext().getString(R.string.no_internet), getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, null,null);
-                else {
-                    Utils.showLongToast(getActivity(), "Something went wrong.");
-                    Log.e("onfailure", "throable is " + t.toString());
-                    if(getContext()!=null)
-                    Utils.showDialog(getContext(), null, false, "Something went wrong", getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshlistener, null,null);
+            call = service.getTeamData();
+            call.enqueue(new Callback<TeamData>() {
+                @Override
+                public void onResponse(@NonNull Call<TeamData> call, @NonNull Response<TeamData> response) {
+                    if (getContext() != null) {
+                        if (response.isSuccessful()) {
+                            model = response.body();
+
+                            if (model != null) {
+                                list = model.getList();
+                                setRecyclerView();
+                            }
+                        } else {
+                            Utils.showLongToast(getContext(), "Unable to load data.");
+                        }
+                    }
                 }
-            }
-        });
-    }
+
+                @Override
+                public void onFailure(@NonNull Call<TeamData> call, @NonNull Throwable t) {
+                    Utils.showLongToast(getActivity(), "Something went wrong.");
+
+                    Log.e("onFailure", "throwable is " + t.toString());
+                    if (getContext() != null)
+                        Utils.showDialog(getContext(), null, false, "Something went wrong", getContext().getString(R.string.wasnt_able_to_load), "Retry", refreshListener, null, null);
+                }
+            });
+        }
     }
 
     @Override

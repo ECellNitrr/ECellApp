@@ -43,6 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             unregisterReceiver(receiver);
             receiver = null;
         }
+
         super.onDestroy();
     }
 

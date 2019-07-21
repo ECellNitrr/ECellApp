@@ -34,13 +34,13 @@ import retrofit2.Response;
 public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
-    private static CustomHamburgerDialog dialog = null;
     private SharedPref pref = new SharedPref();
     private Activity activity;
     private EditText otp1, otp2, otp3, otp4, oldNumber, newNumber;
     private String otp;
-    private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) ->{
-        if(confirmNumber())
+
+    private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) -> {
+        if (confirmNumber())
             dialog.dismiss();
     };
     private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
@@ -50,20 +50,7 @@ public class CustomHamburgerDialog {
 
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
 
-
-    private CustomHamburgerDialog() {
-
-    }
-
-    public static CustomHamburgerDialog getInstance() {
-
-        if (dialog == null)
-            dialog = new CustomHamburgerDialog();
-
-        return dialog;
-    }
-
-    public CustomHamburgerDialog with(Activity activity){
+    public CustomHamburgerDialog with(Activity activity) {
         this.activity = activity;
         return this;
     }
@@ -108,6 +95,7 @@ public class CustomHamburgerDialog {
             alertDialog.getWindow().setAttributes(params);
             alertDialog.getWindow().getAttributes().windowAnimations = R.style.MenuDialogAnimation;
         }
+
         alertDialog.show();
     }
 
@@ -198,14 +186,17 @@ public class CustomHamburgerDialog {
         String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
 
         TextView changeNumber = v.findViewById(R.id.change_number);
+
         if (changeNumber != null) {
             changeNumber.setOnClickListener(view -> {
-                AlertDialog alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false,
-                        "Enter new Number", null, "Confirm", changeNumberConfirmListener, "Cancel", cancelListener);
-                });
+                alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false,
+                        null, null, "Confirm", changeNumberConfirmListener, "Cancel", cancelListener);
+            });
         }
+
         oldNumber = alertDialog.findViewById(R.id.old_number);
         newNumber = alertDialog.findViewById(R.id.new_number);
+
         sendOTP();
     }
 
@@ -216,8 +207,8 @@ public class CustomHamburgerDialog {
     }
 
     private boolean confirmNumber() {
-        if(checkPhone(oldNumber) && checkPhone(newNumber))
-            if(pref.getContact().contentEquals(oldNumber.getText().toString())){
+        if (checkPhone(oldNumber) && checkPhone(newNumber))
+            if (pref.getContact().contentEquals(oldNumber.getText().toString())) {
                 changeNumber(newNumber.getText().toString());
                 return true;
             }
@@ -255,7 +246,6 @@ public class CustomHamburgerDialog {
             public void onResponse(@NonNull Call<PhoneNumber> call, @NonNull Response<PhoneNumber> response) {
                 if (response.isSuccessful() && !activity.isFinishing()) {
                     PhoneNumber number = response.body();
-
                 }
             }
 

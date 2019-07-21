@@ -43,7 +43,7 @@
     <string name="vision_text">Vision</string>
     <string name="name_college">National Institute of Technology, GE Road, Raipur [492001]</string>
     <string name="mobile_number">Mobile Number</string>
-    <string name="otp">Please verify OTP</string>
+    <string name="otp">Enter OTP here.</string>
     <string name="wasnt_able_to_load">Oops! data wasn\'t able to load</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
@@ -55,8 +55,8 @@
     <string name="fb_login_protocol_scheme">fb2421259651476627</string>
     <string name="update_msg">New Update Available</string>
     <string name="change_number">change number</string>
-    <string name="old_number">Enter old number: </string>
-    <string name="new_number">Enter new number: </string>
+    <string name="old_number">Old Number</string>
+    <string name="new_number">New Number</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -28,7 +30,7 @@ import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 public class Utils {
 
     private static AlertDialog dialog;
-    private static String NOTIFICAION_CHANNEL_ID = "e_cell_notif_channel_id_0";
+    private static String NOTIFICATION_CHANNEL_ID = "e_cell_notif_channel_id_0";
 
     public static void showLongToast(Context context, String message) {
         if (context != null)
@@ -50,7 +52,7 @@ public class Utils {
         return true;
     }
 
-    public static AlertDialog showDialog(Context context, Integer layout, boolean canclelable, String title, String message, String posbutton, DialogInterface.OnClickListener poslistener, String negbutton, DialogInterface.OnClickListener neglistener) {
+    public static AlertDialog showDialog(Context context, Integer layout, boolean cancelable, String title, String message, String posButton, DialogInterface.OnClickListener posListener, String negButton, DialogInterface.OnClickListener negListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (!((Activity) context).isFinishing()) {
@@ -62,25 +64,30 @@ public class Utils {
 
             builder.setTitle(title)
                     .setMessage(message)
-                    .setCancelable(canclelable);
+                    .setCancelable(cancelable);
 
-            if (posbutton != null)
-                builder.setPositiveButton(posbutton, poslistener);
+            if (posButton != null)
+                builder.setPositiveButton(posButton, posListener);
 
-            if (negbutton != null && neglistener != null)
-                builder.setNegativeButton(negbutton, neglistener);
+            if (negButton != null && negListener != null)
+                builder.setNegativeButton(negButton, negListener);
 
-            dialog = builder.show();
+            dialog = builder.create();
+
+            if (dialog.getWindow() != null)
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            dialog.show();
         }
+
         return dialog;
     }
 
-    public static void showNotification(Context context, @NonNull String title, @NonNull String message, Boolean isIntent) {
+    public static void showNotification(Context context, @NonNull String title, @NonNull String message, Boolean allowIntent) {
         if (context != null) {
             int notificationId = 0;
 
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICAION_CHANNEL_ID)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_ecell)
                     .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_close))
                     .setContentTitle(title)
@@ -89,7 +96,7 @@ public class Utils {
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setDefaults(NotificationCompat.DEFAULT_ALL);
 
-            if (isIntent) {
+            if (allowIntent) {
                 Intent intent = new Intent(context, HomeActivity.class);
                 PendingIntent pendingintent = PendingIntent.getActivity(context, 0, intent, 0);
                 builder.setContentIntent(pendingintent);
@@ -101,10 +108,10 @@ public class Utils {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel channel = new NotificationChannel(NOTIFICAION_CHANNEL_ID, "E-Cell Notifications", NotificationManager.IMPORTANCE_DEFAULT);
+                NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "E-Cell Notifications", NotificationManager.IMPORTANCE_DEFAULT);
 
                 notificationManager.createNotificationChannel(channel);
-                builder.setChannelId(NOTIFICAION_CHANNEL_ID);
+                builder.setChannelId(NOTIFICATION_CHANNEL_ID);
             }
 
             notificationManager.notify(notificationId, builder.build());
