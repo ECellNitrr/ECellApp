@@ -91,11 +91,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         register.setOnClickListener((View v) -> {
             //Validation for Register
-            firstName.setTag(isNotEmpty(firstName));
-            lastName.setTag(isNotEmpty(lastName));
-            registerEmail.setTag(checkEmail(registerEmail));
-            registerPassword.setTag(checkPassword(registerPassword));
-            registerNumber.setTag(checkPhone(registerNumber));
+            firstName.setTag(isNotEmpty(firstName, firstNameLayout));
+            lastName.setTag(isNotEmpty(lastName, firstNameLayout));
+            registerEmail.setTag(checkEmail(registerEmail, firstNameLayout));
+            registerPassword.setTag(checkPassword(registerPassword, firstNameLayout));
+            registerNumber.setTag(checkPhone(registerNumber, firstNameLayout));
 
             if ((boolean) firstName.getTag() &&
                     (boolean) lastName.getTag() &&
@@ -411,7 +411,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         is.close();
         return sb.toString();
     }
-}
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
