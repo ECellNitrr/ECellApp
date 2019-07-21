@@ -4,25 +4,25 @@ import android.app.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.text.Editable;
+import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.models.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
@@ -34,21 +34,30 @@ import retrofit2.Response;
 public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
+    private static CustomHamburgerDialog dialog = null;
     private SharedPref pref = new SharedPref();
     private Activity activity;
-    private EditText otp1, otp2, otp3, otp4, oldNumber, newNumber;
-    private String otp;
-
+    private EditText oldNumber, newNumber;
     private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) -> {
         if (confirmNumber())
             dialog.dismiss();
     };
-    private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
-        otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
-        dialog.dismiss();
+    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
+    private DialogInterface.OnClickListener confirmlistener = (dialog, which) -> {
+        //TODO add confirm code
     };
 
-    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
+
+    private CustomHamburgerDialog() {
+    }
+
+    public static CustomHamburgerDialog getInstance() {
+
+        if (dialog == null)
+            dialog = new CustomHamburgerDialog();
+
+        return dialog;
+    }
 
     public CustomHamburgerDialog with(Activity activity) {
         this.activity = activity;
@@ -95,108 +104,24 @@ public class CustomHamburgerDialog {
             alertDialog.getWindow().setAttributes(params);
             alertDialog.getWindow().getAttributes().windowAnimations = R.style.MenuDialogAnimation;
         }
-
         alertDialog.show();
     }
 
     private void showOTPDialog() {
-        AlertDialog v = Utils.showDialog(activity, R.layout.layout_otp, false, null, null, "CONFIRM", confirmListener, "CANCEL", cancelListener);
-
-        otp1 = v.findViewById(R.id.otp1);
-        otp2 = v.findViewById(R.id.otp2);
-        otp3 = v.findViewById(R.id.otp3);
-        otp4 = v.findViewById(R.id.otp4);
-
-        otp1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 1)
-                    otp2.requestFocus();
-            }
-        });
-
-        otp2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 1)
-                    otp3.requestFocus();
-                else if (s.length() == 0)
-                    otp1.requestFocus();
-            }
-        });
-
-        otp3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 1)
-                    otp4.requestFocus();
-                else if (s.length() == 0)
-                    otp2.requestFocus();
-            }
-        });
-
-        otp4.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (otp4.length() == 0)
-                    otp3.requestFocus();
-                else
-                    otp4.clearFocus();
-            }
-        });
-
-        String otp = otp1.getText().toString() + otp2.getText().toString() + otp3.getText().toString() + otp4.getText().toString();
-
-        TextView changeNumber = v.findViewById(R.id.change_number);
-
+        OTPDialogFragment fragment = new OTPDialogFragment().getInstance("", confirmlistener);
+        fragment.setArguments(new Bundle());
+        AppCompatActivity act = (AppCompatActivity) activity;
+        act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).commit();
+        alertDialog.dismiss();
+        TextView changeNumber = null;
         if (changeNumber != null) {
             changeNumber.setOnClickListener(view -> {
-                alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false,
-                        null, null, "Confirm", changeNumberConfirmListener, "Cancel", cancelListener);
+                AlertDialog alertDialog = Utils.showDialog(activity, R.layout.layout_changenumber, false,
+                        "Enter new Number", null, "Confirm", changeNumberConfirmListener, "Cancel", cancelListener);
             });
         }
-
         oldNumber = alertDialog.findViewById(R.id.old_number);
         newNumber = alertDialog.findViewById(R.id.new_number);
-
         sendOTP();
     }
 
@@ -246,12 +171,12 @@ public class CustomHamburgerDialog {
             public void onResponse(@NonNull Call<PhoneNumber> call, @NonNull Response<PhoneNumber> response) {
                 if (response.isSuccessful() && !activity.isFinishing()) {
                     PhoneNumber number = response.body();
+
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<PhoneNumber> call, @NonNull Throwable t) {
-
             }
         });
     }

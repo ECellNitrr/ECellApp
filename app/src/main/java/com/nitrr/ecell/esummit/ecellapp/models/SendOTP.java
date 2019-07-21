@@ -1,11 +1,9 @@
-package com.nitrr.ecell.esummit.ecellapp.models.ForgotPassword;
+package com.nitrr.ecell.esummit.ecellapp.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Forgot_Password implements Serializable {
+public class SendOTP {
 
 
     @SerializedName("token")
@@ -14,9 +12,5 @@ public class Forgot_Password implements Serializable {
 
     @SerializedName("email")
     @Expose
-    private String email;
-
-    public Forgot_Password(String email) {
-        this.email = email;
-    }
+    String email;
 }

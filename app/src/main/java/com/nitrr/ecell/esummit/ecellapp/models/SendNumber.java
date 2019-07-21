@@ -5,7 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class SendNumber {
 
-    @SerializedName("id")
+    @SerializedName("Access")
+    @Expose
+    String apptoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ";
+
+    @SerializedName("token")
     @Expose
     String token;
 

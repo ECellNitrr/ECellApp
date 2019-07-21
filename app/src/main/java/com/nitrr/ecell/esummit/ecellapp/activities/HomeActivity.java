@@ -53,7 +53,6 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         recyclerView = findViewById(R.id.home_recycler);
-
         bgCircle1 = findViewById(R.id.homebg_circle1);
         bgCircle2 = findViewById(R.id.homebg_circle2);
         bgCircle3 = findViewById(R.id.homebg_circle3);
