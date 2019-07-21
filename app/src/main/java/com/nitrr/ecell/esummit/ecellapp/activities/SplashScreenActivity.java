@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.BroadcastReceiver;
@@ -50,7 +51,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         pref = new SharedPref();
         APICall();
         if(pref.isLoggedIn()){
-            Intent intent = new Intent(this,HomeActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         }
     }
@@ -79,15 +80,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getAppdata();
         call.enqueue(new Callback<AppDetails>() {
             @Override
-            public void onResponse(Call<AppDetails> call, Response<AppDetails> response) {
-                if(response.isSuccessful() && getApplication()!=null){
+            public void onResponse(@NonNull Call<AppDetails> call, @NonNull Response<AppDetails> response) {
+                if(response.isSuccessful() && getApplicationContext() != null){
                     details = response.body();
-                    if(details!=null){
+                    if(details != null){
                         checkAppVersion();
                     }
                     else{
                         try {
-                            Log.e("details null====","error message is "+response.errorBody().string());
+                            if (response.errorBody() != null) {
+                                Log.e("details null====","error message is " + response.errorBody().string());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -100,7 +103,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AppDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<AppDetails> call, @NonNull Throwable t) {
                 if(Utils.isNetworkAvailable(getApplicationContext()))
                     Utils.showDialog(SplashScreenActivity.this,null,false,getString(R.string.no_internet),null,"Retry", retryListener,"Cancel", cancelListener);
                 else{
@@ -115,9 +118,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             DialogInterface.OnClickListener updateListener = (dialog, which) -> {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(details.getLink())));
             };
-            Utils.showDialog(SplashScreenActivity.this,null,false,
-                    getString(R.string.update_msg),null,
-                    "Update",updateListener,null,null);
+            Utils.showDialog(SplashScreenActivity.this,null,false, getString(R.string.update_msg),
+                    null, "Update",updateListener,null,null);
         }
         else{
             Intent intent;

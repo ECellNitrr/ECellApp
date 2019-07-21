@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.fragments.about_us;
+package com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

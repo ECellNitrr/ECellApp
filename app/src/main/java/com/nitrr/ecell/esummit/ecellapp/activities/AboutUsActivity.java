@@ -7,9 +7,9 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Aim;
-import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.ContactUs;
-import com.nitrr.ecell.esummit.ecellapp.fragments.about_us.Team;
+import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Aim;
+import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.ContactUs;
+import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Team;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,6 @@ public class AboutUsActivity extends AppCompatActivity{
 
 
     private BroadcastReceiver receiver;
-    private IntentFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class AboutUsActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         receiver = new NetworkChangeReceiver();
-        filter = new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
         registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }

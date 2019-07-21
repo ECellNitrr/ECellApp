@@ -5,7 +5,7 @@
     android:id="@+id/goal_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.about_us.Aim"
+    tools:context=".fragments.aboutUs.Aim"
     android:background="@color/transparent">
 
     <ScrollView

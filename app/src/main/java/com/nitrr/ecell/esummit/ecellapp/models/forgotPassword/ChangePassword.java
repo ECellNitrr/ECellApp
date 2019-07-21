@@ -1,21 +1,24 @@
-package com.nitrr.ecell.esummit.ecellapp.models.ForgotPassword;
+package com.nitrr.ecell.esummit.ecellapp.models.forgotPassword;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Change_Password {
+public class ChangePassword {
 
     @SerializedName("email")
     @Expose
+    private
     String email;
 
     @SerializedName("token")
     @Expose
+    private
     String token;
 
-    @SerializedName("frist_name")
+    @SerializedName("first_name")
     @Expose
-    String fristName;
+    private
+    String firstName;
 
     public String getEmail() {
         return email;
@@ -25,7 +28,7 @@ public class Change_Password {
         return token;
     }
 
-    public String getFristName() {
-        return fristName;
+    public String getFirstName() {
+        return firstName;
     }
 }

@@ -1,7 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.PhoneNumber;
+import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
@@ -11,7 +11,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorResponse;
-import com.nitrr.ecell.esummit.ecellapp.models.ForgotPassword.Forgot_Password;
+import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotPassword;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
@@ -50,7 +50,7 @@ public interface APIServices {
     Call<GenericMessage> getSendOTP();
 
     @POST("/user/verify_otp/")
-    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body Forgot_Password otpVerify);
+    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body ForgotPassword otpVerify);
 
 
     //Speakers

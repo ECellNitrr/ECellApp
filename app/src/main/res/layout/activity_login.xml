@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -42,7 +41,7 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="350dp"
+        android:layout_marginBottom="360dp"
         android:src="@drawable/ic_ecell"
         app:layout_constraintBottom_toBottomOf="@id/upper_poly"
         app:layout_constraintEnd_toEndOf="@id/upper_poly"
@@ -55,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/forgot"
         app:layout_constraintEnd_toEndOf="@+id/upper_poly"
@@ -63,10 +62,10 @@
         app:layout_constraintTop_toBottomOf="@id/ic_upper_ecell">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/login_email_layout"
+            style="@style/LoginTextInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginBottom="5dp">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_email"
@@ -78,14 +77,14 @@
                 android:singleLine="true"
                 android:nextFocusDown="@id/login_password"
                 android:textSize="20sp" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/upper_password_layout"
+            android:id="@+id/login_password_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
             app:passwordToggleContentDescription="To Show and Hide Password"
             app:passwordToggleDrawable="@drawable/login_password_eye"
             app:passwordToggleEnabled="true">
@@ -107,11 +106,13 @@
         android:id="@+id/forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:text="@string/forgot"
         android:textSize="12sp"
         android:textStyle="italic"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
         app:layout_constraintEnd_toEndOf="@id/upper_poly"
@@ -122,7 +123,7 @@
         android:id="@+id/sign_in_button"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"
         android:textAllCaps="false"
         android:background="@drawable/button_sign_in"
@@ -289,14 +290,15 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:layout_marginBottom="5dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/register_first_name_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -312,10 +314,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/register_last_name_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -333,9 +335,10 @@
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_email_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -354,7 +357,7 @@
             android:id="@+id/register_password_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             app:passwordToggleContentDescription="To Show and Hide Password"
             app:passwordToggleDrawable="@drawable/login_password_eye"
@@ -372,9 +375,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/register_number_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_number"
@@ -406,12 +410,12 @@
         app:layout_constraintHorizontal_bias="0.8"
         android:background="@drawable/button_sign_in"
         android:text="@string/register"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorWhite"
         android:textSize="24sp"
         android:textAllCaps="false"
         app:layout_constraintStart_toStartOf="@id/lower_poly"
         app:layout_constraintTop_toBottomOf="@+id/login_guide_83"
-        app:layout_constraintEnd_toEndOf="@id/lower_poly"/>
+        app:layout_constraintEnd_toEndOf="@id/lower_poly" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/login_guide_95"

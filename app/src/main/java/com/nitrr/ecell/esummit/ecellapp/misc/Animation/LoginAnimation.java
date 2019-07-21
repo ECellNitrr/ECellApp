@@ -1,7 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.misc.Animation;
 
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
 
@@ -24,7 +24,9 @@ public class LoginAnimation {
     private TextView toRegisterText, toSignInText;
     private Button signInButton, registerButton;
     private float distance;
-    private EditText loginEmail, loginPassword, firstName, lastName, registerEmail, registerPassword, contact;
+    private EditText loginEmail, loginPassword, firstName, lastName, registerEmail, registerPassword, registerNumber;
+    private TextInputLayout loginEmailLayout, loginPasswordLayout, registerEmailLayout, registerPasswordLayout,
+            firstNameLayout , lastNameLayout, registerNumberLayout;
 
     //Constructor to initialize all the objects that are to be animated
     public LoginAnimation(LoginActivity view){
@@ -53,7 +55,15 @@ public class LoginAnimation {
         lastName = view.findViewById(R.id.register_last_name);
         registerEmail = view.findViewById(R.id.register_email);
         registerPassword = view.findViewById(R.id.register_password);
-        contact = view.findViewById(R.id.register_number);
+        registerNumber = view.findViewById(R.id.register_number);
+
+        loginEmailLayout = view.findViewById(R.id.login_email_layout);
+        loginPasswordLayout = view.findViewById(R.id.login_password_layout);
+        firstNameLayout = view.findViewById(R.id.register_first_name_layout);
+        lastNameLayout = view.findViewById(R.id.register_last_name_layout);
+        registerEmailLayout = view.findViewById(R.id.register_email_layout);
+        registerPasswordLayout = view.findViewById(R.id.register_password_layout);
+        registerNumberLayout = view.findViewById(R.id.register_number_layout);
     }
 
     public void toSignInScreen(){
@@ -64,6 +74,7 @@ public class LoginAnimation {
 //        doTranslationY(google, distance); //-1280f
 //        doTranslationY(facebook, distance);
         doTranslationY(forgot, distance); //-1500f
+        forgot.setEnabled(true);
         doTranslationY(signInButton, distance); //-1600f
         doAlphaTransition(signInButton, true);
         doTranslationY(registerButton, distance);
@@ -95,11 +106,11 @@ public class LoginAnimation {
         doTranslationY(toRegister, distance);
         toRegister.setEnabled(true);
 
-        clearAll(registerEmail);
-        clearAll(registerPassword);
-        clearAll(firstName);
-        clearAll(lastName);
-        clearAll(contact);
+        clearAll(registerEmail, registerEmailLayout);
+        clearAll(registerPassword, registerPasswordLayout);
+        clearAll(firstName, firstNameLayout);
+        clearAll(lastName, lastNameLayout);
+        clearAll(registerNumber, registerNumberLayout);
         loginPassword.setEnabled(true);
         loginEmail.setEnabled(true);
     }
@@ -110,6 +121,7 @@ public class LoginAnimation {
         doTranslationY(lowerLinearLayout, 0f);
         doTranslationY(upperLinearLayout, 0f);
         doTranslationY(forgot, 0f);
+        forgot.setEnabled(false);
         doTranslationY(signInButton, 0f);
         doAlphaTransition(signInButton, false);
         doTranslationY(registerButton, 0f);
@@ -136,13 +148,13 @@ public class LoginAnimation {
         toSignIn.setEnabled(true);
         doTranslationY(toSignIn, 0f);
 
-        clearAll(loginEmail);
-        clearAll(loginPassword);
+        clearAll(loginEmail, loginEmailLayout);
+        clearAll(loginPassword, loginPasswordLayout);
         registerPassword.setEnabled(true);
         registerEmail.setEnabled(true);
         firstName.setEnabled(true);
         lastName.setEnabled(true);
-        contact.setEnabled(true);
+        registerNumber.setEnabled(true);
 
 //        FACEBOOK IMPLEMENTATION
 //        doTranslationY(google, 0f);
@@ -173,10 +185,10 @@ public class LoginAnimation {
         } //Disappear = false
     }
 
-    private void clearAll(EditText text) {
+    private void clearAll(EditText text, TextInputLayout layout) {
         text.setText("");
         text.clearFocus();
-        text.setError(null);
+        layout.setError(null);
         text.setEnabled(false);
     }
 }
