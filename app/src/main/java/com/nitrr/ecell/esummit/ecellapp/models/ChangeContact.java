@@ -1,10 +1,9 @@
-package com.nitrr.ecell.esummit.ecellapp.models.ForgotPassword;
+package com.nitrr.ecell.esummit.ecellapp.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Change_Password {
-
+public class ChangeContact {
 
     @SerializedName("token")
     @Expose
@@ -14,12 +13,8 @@ public class Change_Password {
     @Expose
     String email;
 
-    @SerializedName("otp")
+    @SerializedName("number")
     @Expose
-    String otp;
-
-    public String getEmail() {
-        return email;
-    }
+    String number;
 
 }

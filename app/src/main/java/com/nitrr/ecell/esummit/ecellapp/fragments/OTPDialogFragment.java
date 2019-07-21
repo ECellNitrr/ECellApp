@@ -36,9 +36,13 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     },
             listener;
 
-    public OTPDialogFragment(String email,DialogInterface.OnClickListener listener){
+    public OTPDialogFragment(){
+    }
+
+    public OTPDialogFragment getInstance(String email,DialogInterface.OnClickListener listener){
         this.email = email;
         this.listener = listener;
+        return new OTPDialogFragment();
     }
 
     @Nullable
@@ -122,28 +126,44 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    private void confirmOTP() {
-        otp = otp1.getText().toString()+otp2.getText()+otp3.getText()+otp4.getText();
-    }
-
     private void update(int n){
         if(n==-1){
-            if(otp2.getText()=="_")
-                otp1.setText("_");
-            else if(otp3.getText()=="_")
-                otp2.setText("_");
-            else if(otp4.getText()=="_")
-                otp3.setText("_");
+            if(otp4.getText().toString().contentEquals("_"))
+                if(otp3.getText().toString().contentEquals("_"))
+                    if(otp2.getText().toString().contentEquals("_"))
+                        otp1.setText("_");
+                    else
+                        otp2.setText("_");
+                else
+                    otp3.setText("_");
+            else
+                otp4.setText("_");
         }
-        else if(otp1.getText()=="_")
-            otp1.setText(n);
-        else if(otp2.getText()=="_")
-            otp2.setText(n);
-        else if(otp3.getText()=="_")
-            otp3.setText(n);
-        else if(otp4.getText()=="_")
-            otp4.setText(n);
+        else if(otp1.getText().toString().contentEquals("_"))
+            otp1.setText(""+n);
+        else if(otp2.getText().toString().contentEquals("_"))
+            otp2.setText(""+n);
+        else if(otp3.getText().toString().contentEquals("_"))
+            otp3.setText(""+n);
+        else if(otp4.getText().toString().contentEquals("_"))
+            otp4.setText(""+n);
+    }
+
+    private void confirmOTP() {
+        if(!(otp4.getText().toString().contentEquals("_") &&
+                otp2.getText().toString().contentEquals("_") &&
+                otp3.getText().toString().contentEquals("_") &&
+                otp4.getText().toString().contentEquals("_"))){
+            otp = otp1.getText().toString()+otp2.getText()+otp3.getText()+otp4.getText();
+            APICall();
         }
+        else{
+            otp1.setText("_");
+            otp2.setText("_");
+            otp3.setText("_");
+            otp4.setText("_");
+        }
+    }
 
     private void APICall(){
         Call<String> call = AppClient.getInstance().createService(APIServices.class).sendOTP(email);
@@ -169,17 +189,11 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                         Utils.showDialog(getContext(),null,false,"No Internet Connection","Please try again","Retry",refreshListener,"Cancel",cancelListener);
                     else {
                         Utils.showShortToast(getContext(),"Something went wrong");
+                        getActivity().onBackPressed();
                     }
-
                 }
             }
         });
-    }
-
-    boolean check(){
-        if(otp=="")
-            return true;
-        return false;
     }
 
     private void setConfirmed(){

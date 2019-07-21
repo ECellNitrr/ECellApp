@@ -43,6 +43,9 @@ public class CustomHamburgerDialog {
             dialog.dismiss();
     };
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
+    private DialogInterface.OnClickListener confirmlistener = (dialog,which) -> {
+        //TODO add confirm code
+    };
 
 
     private CustomHamburgerDialog(){
@@ -105,10 +108,11 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment();
+        OTPDialogFragment fragment = new OTPDialogFragment().getInstance("",confirmlistener);
         fragment.setArguments(new Bundle());
         AppCompatActivity act = (AppCompatActivity) activity;
-        act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
+        act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).commit();
+        alertDialog.dismiss();
         TextView changeNumber=null;
         if (changeNumber != null) {
             changeNumber.setOnClickListener(view -> {
@@ -170,10 +174,8 @@ public class CustomHamburgerDialog {
 
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<PhoneNumber> call, @NonNull Throwable t) {
-
             }
         });
     }

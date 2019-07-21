@@ -94,6 +94,6 @@ public interface APIServices {
     @GET("/users/change_contact")
     Call<PhoneNumber> changeNumber(@Body String string);
 
-    @POST
+    @POST("/send_otp")
     Call<String> sendOTP(@Body String email);
 }
