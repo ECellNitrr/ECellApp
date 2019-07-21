@@ -14,15 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
-//import com.facebook.CallbackManager;
-//import com.facebook.FacebookCallback;
-//import com.facebook.FacebookException;
-//import com.facebook.FacebookSdk;
-//import com.facebook.login.Login;
-//import com.facebook.login.LoginManager;
-//import com.facebook.login.LoginResult;
-//import com.facebook.login.widget.LoginButton;
-import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword.EmailFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
@@ -35,8 +26,6 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.Objects;
-
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

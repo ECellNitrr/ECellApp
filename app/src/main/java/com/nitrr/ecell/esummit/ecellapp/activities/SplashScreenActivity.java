@@ -51,7 +51,6 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         init();
     }
 
@@ -59,9 +58,10 @@ public class SplashScreenActivity extends BaseActivity {
         pref = new SharedPref();
 
         APICall();
-        if(pref.isLoggedIn()){
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
+
+        if(pref.isLoggedIn()) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
         }
 
         Animation animation = new AlphaAnimation(1.0f, 0.5f);

@@ -119,17 +119,21 @@
         app:layout_constraintStart_toStartOf="@id/upper_poly"
         app:layout_constraintTop_toBottomOf="@id/login_linear_layout" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_in_button"
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button"
+        android:textAppearance="@style/Widget.MaterialComponents.Button"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_sign_in"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:text="@string/sign_in"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        app:cornerRadius="30dp"
         app:layout_constraintBottom_toTopOf="@+id/to_sign_in"
         app:layout_constraintEnd_toEndOf="@id/upper_poly"
         app:layout_constraintHorizontal_bias="0.89"
@@ -271,7 +275,7 @@
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="@+id/lower_poly"
         app:layout_constraintTop_toBottomOf="@+id/login_guide_17"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintVertical_bias="0.7" />
 
     <LinearLayout
         android:id="@+id/register_linear_layout"
@@ -403,14 +407,19 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.85" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/register_button"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:background="@drawable/button_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button"
+        android:textAppearance="@style/Widget.MaterialComponents.Button"
         android:text="@string/register"
         android:textColor="@color/colorWhite"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:textAllCaps="false"
+        app:cornerRadius="30dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="@id/lower_poly"
         app:layout_constraintTop_toBottomOf="@+id/login_guide_83"

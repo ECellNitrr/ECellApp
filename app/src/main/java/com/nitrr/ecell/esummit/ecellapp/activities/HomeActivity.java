@@ -41,8 +41,6 @@ public class HomeActivity extends BaseActivity {
     private int distance = 0, offset;
     private float displacement = 0;
 
-    private ImageButton hamburger_button;
-
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_home;
@@ -84,7 +82,7 @@ public class HomeActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        hamburger_button = findViewById(R.id.hamburgerButton);
+        ImageButton hamburger_button = findViewById(R.id.hamburgerButton);
         hamburger_button.setOnClickListener((View view) -> new CustomHamburgerDialog().with(HomeActivity.this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
