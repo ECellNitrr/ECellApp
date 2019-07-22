@@ -64,7 +64,8 @@ public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
                 n=-2;
             else
                 n=Integer.parseInt(text);
-            OTPDialogFragment.update(n);
+            OTPDialogFragment fragment = new OTPDialogFragment();
+            fragment.update(n);
         }
     }
 }

@@ -31,7 +31,7 @@ import retrofit2.Response;
 
 public class OTPDialogFragment extends Fragment{
 
-    private static TextView otp1, otp2, otp3, otp4;
+    private TextView otp1, otp2, otp3, otp4;
     private String otp, email, prevFrag;
     private List<String> list = new ArrayList<>();
     private MessageModel msg;
@@ -167,7 +167,7 @@ public class OTPDialogFragment extends Fragment{
         list.add(s);
     }
 
-    public static void update(int n) {
+    public void update(int n) {
         if (n == -1) {
             if (otp4.getText().toString().contentEquals("_"))
                 if (otp3.getText().toString().contentEquals("_"))
@@ -245,36 +245,36 @@ public class OTPDialogFragment extends Fragment{
     }
 
     private void forgotOTPAPICall() {
-
-        Call<String> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).getTeamData();
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (getContext() != null)
-                    if (response.isSuccessful()) {
-                        String otp = response.body();
-                        if (otp != null)
-                            setConfirmed();
-                        else
-                            Utils.showDialog(getContext(), null, true, "Verification failed", "", "Retry", refreshListener, "Cancel", cancelListener);
-                    } else
-                        Utils.showDialog(getContext(), null, false, "Server is down", "Data wasn't able to load", "Retry", refreshListener, "Cancel", cancelListener);
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                if (getContext() != null) {
-                    {
-                        if (!Utils.isNetworkAvailable(getContext()))
-                            Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", refreshListener, "Cancel", cancelListener);
-                        else {
-                            Utils.showShortToast(getContext(), "Something went wrong");
-                            getActivity().onBackPressed();
-                        }
-                    }
-                }
-            }
-        });
+//
+//        Call<> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).getTeamData();
+//        call.enqueue(new Callback<String>() {
+//            @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                if (gt() != null)
+//                    if (response.isSuccessful()) {
+//                        String otp = response.body();
+//                        if (otp != null)
+//                            setConfirmed();
+//                        else
+//                            Utils.showDialog(getContext(), null, true, "Verification failed", "", "Retry", refreshListener, "Cancel", cancelListener);
+//                    } else
+//                        Utils.showDialog(getContext(), null, false, "Server is down", "Data wasn't able to load", "Retry", refreshListener, "Cancel", cancelListener);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                if (getContext() != null) {
+//                    {
+//                        if (!Utils.isNetworkAvailable(getContext()))
+//                            Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", refreshListener, "Cancel", cancelListener);
+//                        else {
+//                            Utils.showShortToast(getContext(), "Something went wrong");
+//                            getActivity().onBackPressed();
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void setConfirmed() {
