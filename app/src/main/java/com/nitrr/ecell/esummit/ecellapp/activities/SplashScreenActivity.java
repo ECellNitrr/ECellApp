@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.annotation.NonNull;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -51,7 +52,6 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         init();
     }
 
@@ -59,9 +59,10 @@ public class SplashScreenActivity extends BaseActivity {
         pref = new SharedPref();
 
         APICall();
-        if(pref.isLoggedIn()){
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
+        
+        if(pref.isLoggedIn()) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
         }
 
         Animation animation = new AlphaAnimation(1.0f, 0.5f);
@@ -83,15 +84,15 @@ public class SplashScreenActivity extends BaseActivity {
         call.enqueue(new Callback<AppDetails>() {
             @Override
             public void onResponse(@NonNull Call<AppDetails> call, @NonNull Response<AppDetails> response) {
-                if(response.isSuccessful() && getApplicationContext() != null){
+                if (response.isSuccessful() && getApplicationContext() != null) {
                     details = response.body();
-                    if(details != null){
+                    if (details != null) {
                         checkAppVersion();
                     } else {
 
                         try {
                             if (response.errorBody() != null) {
-                                Log.e("details null====","error MessageModel is " + response.errorBody().string());
+                                Log.e("details null====", "error message is " + response.errorBody().string());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -113,10 +114,10 @@ public class SplashScreenActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<AppDetails> call, @NonNull Throwable t) {
-                if(Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(SplashScreenActivity.this,null,false,getString(R.string.no_internet),null,"Retry", retryListener,"Cancel", cancelListener);
-                else{
-                    Utils.showLongToast(SplashScreenActivity.this,"Something went Wrong");
+                if (Utils.isNetworkAvailable(getApplicationContext()))
+                    Utils.showDialog(SplashScreenActivity.this, null, false, getString(R.string.no_internet), null, "Retry", retryListener, "Cancel", cancelListener);
+                else {
+                    Utils.showLongToast(SplashScreenActivity.this, "Something went Wrong");
                 }
             }
         });
@@ -130,16 +131,10 @@ public class SplashScreenActivity extends BaseActivity {
                 finish();
             };
 
-            DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
-                dialog.dismiss();
-                goInsideApp();
-
-                Utils.showNotification(SplashScreenActivity.this, "Update Notification.", "Updates will allow you to enjoy latest features.", false);
-            };
 
             Utils.showDialog(SplashScreenActivity.this, null, false,
                     getString(R.string.update_msg), null,
-                    "Update", updateListener, "Later", cancelListener);
+                    "Update", updateListener, null, null);
         } else
             goInsideApp();
     }

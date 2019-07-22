@@ -1,34 +1,27 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
-import android.view.View;
-import android.widget.ImageView;
-
-import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
-
-import android.widget.ImageButton;
-
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends BaseActivity {
 
@@ -40,8 +33,6 @@ public class HomeActivity extends BaseActivity {
 
     private int distance = 0, offset;
     private float displacement = 0;
-
-    private ImageButton hamburger_button;
 
     @Override
     protected int getLayoutResourceId() {
@@ -84,7 +75,7 @@ public class HomeActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        hamburger_button = findViewById(R.id.hamburgerButton);
+        ImageButton hamburger_button = findViewById(R.id.hamburgerButton);
         hamburger_button.setOnClickListener((View view) -> new CustomHamburgerDialog().with(HomeActivity.this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();

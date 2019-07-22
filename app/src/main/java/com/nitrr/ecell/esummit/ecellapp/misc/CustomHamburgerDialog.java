@@ -3,10 +3,10 @@ package com.nitrr.ecell.esummit.ecellapp.misc;
 import android.app.Activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -173,5 +173,6 @@ public class CustomHamburgerDialog {
     }
 
     private void sendOTP() {
+
     }
 }

@@ -35,9 +35,12 @@
         <activity android:name=".activities.SplashScreenActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
+<<<<<<< HEAD
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
+=======
+>>>>>>> 719965933b7f70d84fad24bea03b6e300ba40834
         </activity>
 
         <activity
@@ -46,6 +49,11 @@
             android:theme="@style/AppTheme.FullScreen"
             android:windowSoftInputMode="adjustResize|stateHidden"
             android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
 
         <activity

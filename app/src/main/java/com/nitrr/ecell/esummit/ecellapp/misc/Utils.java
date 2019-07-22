@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,10 +18,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.NotificationCompat;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -72,9 +77,13 @@ public class Utils {
             if (negButton != null && negListener != null)
                 builder.setNegativeButton(negButton, negListener);
 
+<<<<<<< HEAD
             dialog = builder.create();
 
             dialog.show();
+=======
+            builder.create().show();
+>>>>>>> 719965933b7f70d84fad24bea03b6e300ba40834
         }
 
         return dialog;
@@ -113,6 +122,31 @@ public class Utils {
 
             notificationManager.notify(notificationId, builder.build());
         }
+    }
+
+    public static AlertDialog showProgressBar(Context context, String text) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.alert_progress_layout, null);
+        AlertDialog dialog = builder.create();
+
+        Animation animation = new AlphaAnimation(1.0f, 0.5f);
+        animation.setDuration(500);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+
+        dialog.setView(view);
+
+        if (dialog.getWindow() != null)
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ((TextView) view.findViewById(R.id.alert_progress_dialog_text)).setText(text);
+
+        view.findViewById(R.id.alert_progress_dialog_image).setAnimation(animation);
+
+        dialog.show();
+
+        return dialog;
     }
 }
 

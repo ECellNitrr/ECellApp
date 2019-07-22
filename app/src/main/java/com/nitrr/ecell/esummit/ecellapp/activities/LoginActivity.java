@@ -1,50 +1,46 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import androidx.annotation.NonNull;
-
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.textfield.TextInputLayout;
-//import com.facebook.CallbackManager;
-//import com.facebook.FacebookCallback;
-//import com.facebook.FacebookException;
-//import com.facebook.FacebookSdk;
-//import com.facebook.login.Login;
-//import com.facebook.login.LoginManager;
-//import com.facebook.login.LoginResult;
-//import com.facebook.login.widget.LoginButton;
-import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword.EmailFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
+import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Objects;
-
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity implements View.OnFocusChangeListener {
 
-    private Context context;
     private Button signIn,register;
     private TextView toSignIn, toRegister, forgotPassword;
     private EditText loginEmail, loginPassword;
@@ -53,6 +49,8 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             firstNameLayout , lastNameLayout, registerNumberLayout;
     private LoginAnimation loginanimation;
     private AuthResponse authResponse;
+    ConstraintLayout layout;
+    private boolean isLoginScreen = true;
     EmailFragment fragment = new EmailFragment();
 
     @Override
@@ -65,6 +63,16 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         super.onCreate(savedInstanceState);
 
         initializeViews();
+
+        if(getIntent() != null) {
+            isLoginScreen = true;
+            signIn.setVisibility(View.VISIBLE);
+            register.setVisibility(View.VISIBLE);
+            loginEmail.setEnabled(true);
+            loginPassword.setEnabled(true);
+            signIn.setEnabled(true);
+            toRegister.setEnabled(true);
+        }
 
         loginanimation = new LoginAnimation(this);
         loginanimation.toSignInScreen();
@@ -83,7 +91,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         });
 
         forgotPassword.setOnClickListener(view -> {
-            getSupportFragmentManager().beginTransaction().replace(R.id.login_outer_constraint, fragment).addToBackStack(null).commit();
+            isLoginScreen = false;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.login_outer_constraint, fragment, "verify_email")
+                    .addToBackStack(null)
+                    .commit();
             signIn.setVisibility(View.GONE);
             register.setVisibility(View.GONE);
             loginEmail.setEnabled(false);
@@ -95,23 +107,27 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         register.setOnClickListener((View v) -> {
             //Validation for Register
             firstName.setTag(isNotEmpty(firstName, firstNameLayout));
-            lastName.setTag(isNotEmpty(lastName, lastNameLayout));
-            registerEmail.setTag(checkEmail(registerEmail, registerEmailLayout));
-            registerPassword.setTag(checkPassword(registerPassword, registerPasswordLayout));
-            registerNumber.setTag(checkPhone(registerNumber, registerNumberLayout));
+            lastName.setTag(isNotEmpty(lastName, firstNameLayout));
+            registerEmail.setTag(checkEmail(registerEmail, firstNameLayout));
+            registerPassword.setTag(checkPassword(registerPassword, firstNameLayout));
+            registerNumber.setTag(checkPhone(registerNumber, firstNameLayout));
 
-            if((boolean)firstName.getTag() &&
-                    (boolean)lastName.getTag() &&
-                    (boolean)registerEmail.getTag() &&
-                    (boolean)registerPassword.getTag() &&
-                    (boolean)registerNumber.getTag()){
-                register.setEnabled(false);
-                RegisterApiCall();
+            if ((boolean) firstName.getTag() &&
+                    (boolean) lastName.getTag() &&
+                    (boolean) registerEmail.getTag() &&
+                    (boolean) registerPassword.getTag() &&
+                    (boolean) registerNumber.getTag()) {
+
+                try {
+                    showAlertDialog();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         toRegister.setOnClickListener((View v) -> loginanimation.toRegisterScreen());
-
         toSignIn.setOnClickListener((View v) -> loginanimation.toSignInScreen());
     }
 
@@ -156,7 +172,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     }
 
     private void initializeViews() {
-        context = this;
+        layout = findViewById(R.id.login_outer_constraint);
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
         forgotPassword = findViewById(R.id.forgot);
@@ -191,8 +207,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     }
 
     private void RegisterApiCall() {
-        ProgressDialog dialog = ProgressDialog.show(this, "Registering User",
-                "Please wait...", true);
+        AlertDialog dialog = Utils.showProgressBar(this, "Registering User..");
 
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
                 lastName.getText().toString(),
@@ -231,7 +246,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                 pref.setIsLoggedIn(false, false, true);
                             else
                                 pref.setIsLoggedIn(true, false, false);
-                            startActivity(new Intent(context, HomeActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         } else {
                             dialog.dismiss();
                             Utils.showLongToast(getApplicationContext(), "Registration Failed");
@@ -253,14 +268,14 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 dialog.cancel();
-                Utils.showLongToast(context, "Registration Failed" + t.getMessage());
+                Utils.showLongToast(getApplicationContext(), "Registration Failed" + t.getMessage());
             }
         });
     }
 
     private void LoginApiCall() {
-        ProgressDialog loginDialog = ProgressDialog.show(this, "Signing in",
-                "Please wait...", true);
+        AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In..");
+
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
         Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
@@ -276,8 +291,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             SharedPref pref = new SharedPref();
                             pref.setAccessToken(authResponse.getToken(),getApplicationContext());
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-
-                            startActivity(new Intent(context, HomeActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                            authResponse = response.body();
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         } else {
                             loginDialog.dismiss();
                             if (response.errorBody() != null) {
@@ -302,7 +318,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                Utils.showLongToast(context, "There was an error " + t.getMessage());
+                Utils.showLongToast(getApplicationContext(), "There was an error " + t.getMessage());
             }
         });
     }
@@ -363,54 +379,61 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         return false;
     }
 
+    private void showAlertDialog() throws Exception {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.alert_dialog_privacy_policy, null);
+
+        builder.setView(view);
+
+        AlertDialog dialog = builder.create();
+
+        view.findViewById(R.id.alert_privacy_accept).setOnClickListener(v -> {
+            RegisterApiCall();
+
+            if (dialog.isShowing())
+                dialog.dismiss();
+        });
+
+        view.findViewById(R.id.alert_privacy_decline).setOnClickListener(v -> {
+            if(dialog.isShowing())
+                dialog.dismiss();
+        });
+
+        InputStream inputStream = getAssets().open("tnc.html");
+        String result = convertStreamToString(inputStream);
+
+        TextView tncText = view.findViewById(R.id.alert_privacy_text);
+        tncText.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+            tncText.setText(Html.fromHtml(result, Html.FROM_HTML_MODE_LEGACY));
+        else
+            tncText.setText(Html.fromHtml(result));
+
+        dialog.setCancelable(false);
+
+        if (dialog.getWindow() != null)
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialog.show();
+    }
+
+    private String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append('\n');
+        }
+
+        is.close();
+        return sb.toString();
+    }
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        signIn.setVisibility(View.VISIBLE);
-        register.setVisibility(View.VISIBLE);
-        loginEmail.setEnabled(true);
-        loginPassword.setEnabled(true);
-        signIn.setEnabled(true);
-        toRegister.setEnabled(true);
+        if(isLoginScreen)
+            super.onBackPressed();
     }
 }
-
-
-//                        ****************** FACEBOOK IMPLEMENTATION! ******************
-//
-//        fbButton = findViewById(R.id.fb_button);
-//        googleButton = findViewById(R.id.google_button);
-//
-//    private static final String EMAIL = "email";
-//    CallbackManager callbackManager;
-//
-//        googleButton.setOnClickListener((view) -> startActivity(new Intent(context, HomeActivity.class)));
-//
-//        fbButton.setOnClickListener((view -> {
-//
-//            callbackManager = CallbackManager.Factory.create();
-//
-//            LoginManager.getInstance().registerCallback(callbackManager,
-//                    new FacebookCallback<LoginResult>() {
-//                        @Override
-//                        public void onSuccess(LoginResult loginResult) {
-//                            // App code
-//                        }
-//
-//                        @Override
-//                        public void onCancel() {
-//                            // App code
-//                        }
-//
-//                        @Override
-//                        public void onError(FacebookException exception) {
-//                            // App code
-//                        }
-//                    });
-//        }));
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }

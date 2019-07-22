@@ -63,21 +63,6 @@ public class ESummitActivity extends BaseActivity {
         speakerRV = findViewById(R.id.es_speaker_rv);
         responseSpeakerObjectList = new ArrayList<>();
         findViewById(R.id.es_nested_sv).scrollTo(0,0);
-
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
-//                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
-//                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
-//                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
-//        responseSpeakerObjectList.add(new ResponseSpeakerData("Viren Khatri", "https://cdn.pixabay.com/photo/2016/09/25/15/11/android-1693894__340.jpg",
-//                "WeRain", "virenk2906", 2019, "Facebook", "1234567890"));
-//        ESRVAdapter adapter = new ESRVAdapter(responseSpeakerObjectList, ESummitActivity.this);
-//        speakerRV.setAdapter(adapter);
-//        speakerRV.setLayoutManager(new LinearLayoutManager(this));
-//        speakerRV.setNestedScrollingEnabled(false);
-//        adapter.notifyDataSetChanged();
-
         callAPI();
     }
 

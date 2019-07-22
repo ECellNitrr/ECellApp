@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.23" />
+        app:layout_constraintGuide_percent="0.27" />
 
     <TextView
         android:id="@+id/e_summit_text"
@@ -36,10 +36,22 @@
         android:textColor="#000"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/e_summit_tagline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upper_guide" />
+
+    <TextView
+        android:id="@+id/e_summit_tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/esummit_tagline"
+        android:textColor="#000"
+        android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/e_summit_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/e_summit_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/e_summit_text" />
 
     <TextView
         android:id="@+id/e_summit_date"
@@ -49,23 +61,26 @@
         android:lines="1"
         android:text="@string/es_date"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/es_guide_heading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/e_summit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/e_summit_tagline" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/es_guide_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".34" />
+        app:layout_constraintGuide_percent=".36" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/es_nested_sv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/e_summit_date">
 
@@ -88,6 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:padding="5dp"
+                    android:textColor="@color/black"
                     android:text="@string/about_es_19"
                     android:textAlignment="center"
                     android:textSize="30sp"/>

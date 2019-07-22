@@ -14,8 +14,17 @@ android {
     }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -78,6 +87,10 @@ dependencies {
     //Fabric
     implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-messaging:19.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

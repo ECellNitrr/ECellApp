@@ -58,8 +58,9 @@
     <string name="old_number">Old Number</string>
     <string name="new_number">New Number</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="esummit_tagline">\"Genesis of Innovation\"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="back_to_login_screen"><![CDATA[<< Back to Login Screen]]></string>
+    <string name="agreement">By clicking \'Accept\' you agree to all Terms and Conditions.</string>
+    <string name="back_to_login_screen"><![CDATA[<<Back To Login Screen]]></string>
 
 </resources>
