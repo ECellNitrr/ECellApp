@@ -17,24 +17,16 @@ public class ChangePassword {
 
     @SerializedName("email")
     @Expose
+    private
     String email;
 
     @SerializedName("password")
     @Expose
+    private
     String password;
 
-<<<<<<< HEAD
-
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-=======
     @SerializedName("otp")
     @Expose
+    private
     String otp;
->>>>>>> 719965933b7f70d84fad24bea03b6e300ba40834
 }

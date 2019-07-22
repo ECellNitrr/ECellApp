@@ -43,9 +43,7 @@ public class CustomHamburgerDialog {
             dialog.dismiss();
     };
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
-    private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
-        //TODO add confirm code
-    };
+
 
     public CustomHamburgerDialog() {
     }
@@ -108,7 +106,7 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment().getInstance(confirmListener);
+        OTPDialogFragment fragment = new OTPDialogFragment();
         fragment.setArguments(new Bundle());
         AppCompatActivity act = (AppCompatActivity) activity;
         act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
@@ -124,7 +122,7 @@ public class CustomHamburgerDialog {
 
     private boolean confirmNumber() {
         if (checkPhone(oldNumber) && checkPhone(newNumber))
-            if (pref.getContact().contentEquals(oldNumber.getText().toString())) {
+            if (pref.getContact(activity).contentEquals(oldNumber.getText().toString())) {
                 changeNumber(newNumber.getText().toString());
                 return true;
             }
