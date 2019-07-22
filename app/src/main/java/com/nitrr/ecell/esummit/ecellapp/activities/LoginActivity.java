@@ -289,7 +289,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             loginDialog.dismiss();
                             AuthResponse authResponse = response.body();
                             SharedPref pref = new SharedPref();
-                            pref.setAccessToken(authResponse.getToken(),getApplicationContext());
+                            pref.setAccessToken( getApplicationContext(), authResponse.getToken());
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             authResponse = response.body();

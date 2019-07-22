@@ -43,9 +43,7 @@ public class CustomHamburgerDialog {
             dialog.dismiss();
     };
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
-    private DialogInterface.OnClickListener confirmListener = (dialog, which) -> {
-        //TODO add confirm code
-    };
+
 
     public CustomHamburgerDialog() {
     }
@@ -75,7 +73,7 @@ public class CustomHamburgerDialog {
         CardView item5 = alertView.findViewById(R.id.item4);
 
         SharedPref pref = new SharedPref();
-        String email = pref.getEmail();
+        String email = pref.getEmail(activity);
         String name="Username";
         if(email!=null) {
             name = "";
@@ -126,7 +124,7 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment().getInstance(confirmListener);
+        OTPDialogFragment fragment = new OTPDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prevfrag","Home Activity");
         fragment.setArguments(bundle);
@@ -144,7 +142,7 @@ public class CustomHamburgerDialog {
 
     private boolean confirmNumber() {
         if (checkPhone(oldNumber) && checkPhone(newNumber))
-            if (pref.getContact().contentEquals(oldNumber.getText().toString())) {
+            if (pref.getContact(activity).contentEquals(oldNumber.getText().toString())) {
                 changeNumber(newNumber.getText().toString());
                 return true;
             }

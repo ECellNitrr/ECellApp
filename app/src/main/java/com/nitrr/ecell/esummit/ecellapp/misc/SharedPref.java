@@ -7,16 +7,7 @@ import android.preference.PreferenceManager;
 
 public class SharedPref {
 
-    private Activity activity;
     private SharedPreferences.Editor editor;
-    private String accessToken = null,
-            firstName = null,
-            lastName = null,
-            email = null,
-            contact = null,
-            avatar = null,
-            facebook = null,
-            linkedin = null;
 
     private boolean isLoggedIn = false,
             isFBLoggedIn = false,
@@ -27,22 +18,13 @@ public class SharedPref {
                               String email, String contact,
                               String avatar, String facebook,
                               String linkedin) {
-        activity = act;
-        this.accessToken = access_token;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.contact = contact;
-        this.avatar = avatar;
-        this.facebook = facebook;
-        this.linkedin = linkedin;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         editor = prefs.edit();
 
-        editor.putString("token", access_token);
-        editor.putString("first_name", firstName);
-        editor.putString("last_name", lastName);
+        editor.putString("accessToken", access_token);
+        editor.putString("firstName", firstName);
+        editor.putString("lastName", lastName);
         editor.putString("email", email);
         editor.putString("contact", contact);
         editor.putString("avatar", avatar);
@@ -53,6 +35,7 @@ public class SharedPref {
         editor.putBoolean("isGLoggedIn", isGLoggedIn);
 
         editor.apply();
+        editor.commit();
     }
 
     public void setIsLoggedIn( boolean isLoggedIn, boolean isFBLoggedIn, boolean isGLoggedIn) {
@@ -66,64 +49,55 @@ public class SharedPref {
         return preferences.getString("token", "");
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstName(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString("firstName", "");
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastName(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString("lastName", "");
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString("email", "");
     }
 
-    public String getContact() {
-        return contact;
+    public String getContact(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString("lastName", "");
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatar(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString("lastName", "");
     }
 
-    public String getFacebook() {
-        return facebook;
+    public String getFacebook(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString("lastName", "");
     }
 
-    public String getLinkedin() {
-        return linkedin;
+    public String getLinkedin(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString("lastName", "");
     }
 
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
-    public boolean isFBLoggedIn() {
-        return isFBLoggedIn;
-    }
-
-    public boolean isGLoggedIn() {
-        return isGLoggedIn;
+    public boolean isLoggedIn(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("isLoggedIn", false);
     }
 
     SharedPreferences.Editor getEditor(Activity activity) {
         return PreferenceManager.getDefaultSharedPreferences(activity).edit();
     }
 
-
-    void clearPrefs() {
+    void clearPrefs(Activity activity) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(activity).edit();
         editor.clear();
-        editor.apply();
-    }
-
-    public void setAccessToken(String accessToken,Context context) {
-        this.accessToken = accessToken;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        editor = prefs.edit();
-        editor.putString("token",accessToken);
+        editor.putBoolean("isLoggedIn", false);
         editor.apply();
         editor.commit();
+    }
 
+    public void setAccessToken(Context context, String accessToken) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = prefs.edit();
+        editor.putString("access_token",accessToken);
+        editor.apply();
+        editor.commit();
     }
 }

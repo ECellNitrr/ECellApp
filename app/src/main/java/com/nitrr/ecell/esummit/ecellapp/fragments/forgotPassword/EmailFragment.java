@@ -21,6 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotPassword;
@@ -64,9 +65,16 @@ public class EmailFragment extends Fragment {
 
         ((TextView)v.findViewById(R.id.forgot_title)).setTypeface(Typeface.createFromAsset(Objects.requireNonNull(getContext()).getAssets(), "fonts/Oswald-Regular.ttf"));
         verify.setOnClickListener(view -> {
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.login_outer_constraint, new ChangePasswordFragment(email.getText().toString()), "change_pass")
-                    .addToBackStack("verify_email")
+
+            OTPDialogFragment fragment = new OTPDialogFragment();
+            Bundle b = new Bundle();
+            b.putString("email", email.getText().toString());
+            fragment.setArguments(b);
+
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.login_outer_constraint, fragment)
+                    .remove(EmailFragment.this)
                     .commit();
 //            apiCall();
         });
@@ -75,12 +83,12 @@ public class EmailFragment extends Fragment {
 
     private void apiCall() {
         AlertDialog bar = Utils.showProgressBar(getContext(), "Verifying Email..");
-        ForgotPassword email = new ForgotPassword(this.email.getText().toString());
+        ForgotPassword emailObject = new ForgotPassword(this.email.getText().toString());
 
         if(!checkEmail(this.email, layout)) {
             bar.dismiss();
         } else {
-            Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(email);
+            Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(emailObject);
 
             call.enqueue(new Callback<GenericMessage>() {
                 @Override
@@ -92,7 +100,16 @@ public class EmailFragment extends Fragment {
                             bar.dismiss();
                             Utils.showLongToast(getContext(), response.body().getMessage());
 
-                            //REDIRECT TO OTP
+//                            OTPDialogFragment fragment = new OTPDialogFragment();
+//                            Bundle b = new Bundle();
+//                            b.putString("email", email.getText().toString());
+//                            fragment.setArguments(b);
+//
+//                            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+//                                    .beginTransaction()
+//                                    .replace(R.id.login_outer_constraint, fragment)
+//                                    .remove(EmailFragment.this)
+//                                    .commit();
 
                         } else {
                             Log.e(forgot, "Response Body Null");
@@ -126,7 +143,7 @@ public class EmailFragment extends Fragment {
                     Utils.showDialog(getContext(), null, false, "Network Error",
                             "There was a Connection Error. Make sure you have a stable connection", "Retry",
                             retryListener, "Cancel", cancelListener);
-                    Log.e(forgot, "API Failure");
+                    Log.e(forgot, "Network Error");
                 }
             });
         }

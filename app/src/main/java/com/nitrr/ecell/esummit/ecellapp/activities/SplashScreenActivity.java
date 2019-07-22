@@ -60,7 +60,7 @@ public class SplashScreenActivity extends BaseActivity {
 
         APICall();
         
-        if(pref.isLoggedIn()) {
+        if(pref.isLoggedIn(this)) {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
@@ -142,7 +142,7 @@ public class SplashScreenActivity extends BaseActivity {
     private void goInsideApp() {
         Intent intent;
 
-        if (pref.isLoggedIn()) {
+        if (pref.isLoggedIn(this)) {
             intent = new Intent(this, HomeActivity.class);
         } else
             intent = new Intent(this, LoginActivity.class);

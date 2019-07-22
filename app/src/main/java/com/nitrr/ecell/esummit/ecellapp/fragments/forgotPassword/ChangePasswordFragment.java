@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -39,8 +40,7 @@ public class ChangePasswordFragment extends Fragment {
     private TextInputLayout newPassLayout, confPassLayout;
     private String email, otp, change = "Change Password";
 
-    ChangePasswordFragment(String email) {
-        this.email = email;
+    public ChangePasswordFragment() {
     }
 
     @Override
@@ -55,18 +55,15 @@ public class ChangePasswordFragment extends Fragment {
         MaterialButton back = v.findViewById(R.id.change_back);
         back.getBackground().setColorFilter(this.getResources()
                 .getColor(R.color.transparent), PorterDuff.Mode.MULTIPLY);
-        back.setOnClickListener(view -> {
-           Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                   .beginTransaction()
-                   .replace(R.id.login_outer_constraint, new EmailFragment())
-                   .addToBackStack(null)
-                   .commit();
-        });
+        back.setOnClickListener(view -> startActivity(new Intent(getActivity(), LoginActivity.class)));
 
-        verify.setOnClickListener(view -> {
-            startActivity(new Intent(getContext(), LoginActivity.class));
-//            apiCall();
-        });
+        Bundle b = getArguments();
+        if (b != null) {
+            email = b.getString("email", "");
+            otp = b.getString("otp", "");
+        }
+
+        verify.setOnClickListener(view -> apiCall());
         return v;
     }
 
@@ -75,7 +72,7 @@ public class ChangePasswordFragment extends Fragment {
             if(newPass.getText().toString().equals(confirmPass.getText().toString())) {
                 String password = newPass.getText().toString();
 
-                AlertDialog bar = Utils.showProgressBar(getContext(), "Changing Password..");
+                AlertDialog bar = Utils.showProgressBar(getContext(), "Changing Password...");
 
                 Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
                         .postPasswordChange(new ChangePassword(email, password, otp));
@@ -90,7 +87,6 @@ public class ChangePasswordFragment extends Fragment {
                                 bar.dismiss();
                                 Utils.showLongToast(getContext(), response.body().getMessage());
                                 startActivity(new Intent(getContext(), LoginActivity.class));
-
                             } else {
                                 Log.e(change, "Response Body Null");
                             }
@@ -108,11 +104,26 @@ public class ChangePasswordFragment extends Fragment {
 
                     @Override
                     public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
+                        bar.dismiss();
+                        DialogInterface.OnClickListener retryListener = (dialogInterface, i) -> {
+                            apiCall();
+                            dialogInterface.dismiss();
+                        };
 
+                        DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> {
+                            startActivity(new Intent(getActivity(), LoginActivity.class));
+                            dialogInterface.dismiss();
+                        };
+
+                        Utils.showDialog(getContext(), null, false, "Network Unstable",
+                                "There was a Connection Error. Make sure you have a stable connection", "Retry",
+                                retryListener, "Cancel", cancelListener);
+                        Log.e("Change Password", "Network Error");
                     }
                 });
             } else {
                 confPassLayout.setError("Password Doesn't Match");
+                confirmPass.setText("");
             }
         }
 

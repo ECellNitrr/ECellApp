@@ -9,6 +9,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ChangePassword;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
+import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotVerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
@@ -33,8 +34,6 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    public static String access = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ";
-
     @GET("sponsors/list/2019")
     Call<SponsorsModel> getSponsData();
 
@@ -49,17 +48,19 @@ public interface APIServices {
     @POST("users/login/")
     Call<AuthResponse> postLoginUser(@Body LoginDetails loginDetails);
 
+
     //ForgotPassword
     @POST("users/forgot_password")
     Call<GenericMessage> postEmailVerify(@Body ForgotPassword password);
 
     @POST("users/check_otp")
-    Call<GenericMessage> postOPTVerify(@Body VerifyOTP verifyOTP);
+    Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
 
     @POST("users/change_password")
     Call<GenericMessage> postPasswordChange(@Body ChangePassword password);
 
-    //User
+
+    //User CA Profile
     @POST("/user/ca_profile/")
     Call<GenericMessage> postCAProfile(@Body CADetails caDetails);
 
