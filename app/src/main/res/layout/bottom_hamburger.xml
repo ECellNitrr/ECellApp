@@ -60,6 +60,22 @@
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
+            app:cardCornerRadius="8dp">
+
+            <TextView
+                style="@style/HamburgerAlertTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/change_number" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item4"
+            style="@style/HamburgerAlertCardViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/colorHamAlertCardBackground"
             app:cardCornerRadius="8dp">
 
@@ -72,7 +88,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item4"
+            android:id="@+id/item5"
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,5 +102,6 @@
                 android:layout_height="match_parent"
                 android:text="@string/log_out" />
         </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

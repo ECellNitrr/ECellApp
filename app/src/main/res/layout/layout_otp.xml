@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.7"
-        android:background="@color/colorWhite" />
+        android:background="#416A87" />
 
     <TextView
         android:id="@+id/verifyotp"
@@ -24,6 +24,7 @@
         android:textAlignment="center"
         android:textColor="@color/colorHamAlertCardBackground"
         android:textSize="24sp"
+        android:background="#5275A1"
         app:layout_constraintBottom_toTopOf="@+id/otp"
         app:layout_constraintTop_toTopOf="parent" />
 

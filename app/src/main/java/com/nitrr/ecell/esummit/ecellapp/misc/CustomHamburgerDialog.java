@@ -71,10 +71,24 @@ public class CustomHamburgerDialog {
         TextView item1 = alertView.findViewById(R.id.username);
         CardView item2 = alertView.findViewById(R.id.item2);
         CardView item3 = alertView.findViewById(R.id.item3);
-        CardView item4 = alertView.findViewById(R.id.item4);
-        CardView changeNumber = alertView.findViewById(R.id.item4);
+        CardView item4 = alertView.findViewById(R.id.item3);
+        CardView item5 = alertView.findViewById(R.id.item4);
 
-        item1.setText("Username");
+        SharedPref pref = new SharedPref();
+        String email = pref.getEmail();
+        String name="Username";
+        if(email!=null) {
+            name = "";
+            Character c;
+            for (int x = 0; x < email.length(); x++) {
+                c = email.charAt(x);
+                if (c.equals('@'))
+                    break;
+                name = name + c;
+            }
+        }
+
+        item1.setText(name);
 
         item2.setOnClickListener(v -> {
             showOTPDialog();
@@ -82,11 +96,15 @@ public class CustomHamburgerDialog {
         });
 
         item3.setOnClickListener(v -> {
+//            changeNumber();
+        });
+
+        item4.setOnClickListener(v -> {
             Intent intent = new Intent(activity, AboutUsActivity.class);
             activity.startActivity(intent);
         });
 
-        item4.setOnClickListener(v -> logout());
+        item5.setOnClickListener(v -> logout());
 
         builder.setView(alertView);
         alertDialog = builder.create();
@@ -109,7 +127,9 @@ public class CustomHamburgerDialog {
 
     private void showOTPDialog() {
         OTPDialogFragment fragment = new OTPDialogFragment().getInstance(confirmListener);
-        fragment.setArguments(new Bundle());
+        Bundle bundle = new Bundle();
+        bundle.putString("prevfrag","Home Activity");
+        fragment.setArguments(bundle);
         AppCompatActivity act = (AppCompatActivity) activity;
         act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
         alertDialog.dismiss();

@@ -77,13 +77,7 @@ public class Utils {
             if (negButton != null && negListener != null)
                 builder.setNegativeButton(negButton, negListener);
 
-<<<<<<< HEAD
-            dialog = builder.create();
-
-            dialog.show();
-=======
             builder.create().show();
->>>>>>> 719965933b7f70d84fad24bea03b6e300ba40834
         }
 
         return dialog;

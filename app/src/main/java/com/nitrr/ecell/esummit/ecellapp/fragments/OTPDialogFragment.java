@@ -68,7 +68,7 @@ public class OTPDialogFragment extends Fragment{
         View view = inflater.inflate(R.layout.layout_otp, container, false);
         if(prevFrag.equalsIgnoreCase("ForgotPassword"))
             email = bundle.getString("email");
-        else if(prevFrag.equalsIgnoreCase("verifyotp"))
+        else if(prevFrag.equalsIgnoreCase("Home Activity"))
             resendOTP();
         initialize(view);
         return view;
