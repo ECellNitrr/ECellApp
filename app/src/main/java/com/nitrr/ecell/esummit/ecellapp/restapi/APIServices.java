@@ -34,8 +34,6 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    public static String access = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ";
-
     @GET("sponsors/list/2019")
     Call<SponsorsModel> getSponsData();
 

@@ -185,7 +185,7 @@ public class OTPDialogFragment extends Fragment{
     private void resendOTP() {
         Call<MessageModel> call = AppClient.getInstance()
                 .createService(APIServices.class)
-                .resendOtp(new SharedPref().getAccessToken(getContext()),APIServices.access);
+                .resendOtp(new SharedPref().getAccessToken(getContext()), getActivity().getResources().getString(R.string.app_access_token));
 
         call.enqueue(new Callback<MessageModel>() {
             @Override
