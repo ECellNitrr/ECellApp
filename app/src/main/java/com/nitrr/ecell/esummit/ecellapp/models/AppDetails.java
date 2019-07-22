@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class AppDetails {
 
-    @SerializedName("message")
+    @SerializedName("MessageModel")
     @Expose
     String log;
 

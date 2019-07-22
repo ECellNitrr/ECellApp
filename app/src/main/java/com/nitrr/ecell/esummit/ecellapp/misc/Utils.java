@@ -74,9 +74,6 @@ public class Utils {
 
             dialog = builder.create();
 
-            if (dialog.getWindow() != null)
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
             dialog.show();
         }
 

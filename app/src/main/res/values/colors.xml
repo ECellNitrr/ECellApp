@@ -14,6 +14,8 @@
     <color name="black_overlay">#66000000</color>
     <color name="bgBottomNavigation">#fe485a</color>
     <color name="empty">#616161</color>
+    <color name="grey">#9B9FA8</color>
+    <color name="dark_grey">#92969F</color>
 
     <!--ABOUTUS SECTION BELOW-->
     <color name="aboutUsHeading">#414141</color>
@@ -22,5 +24,10 @@
     <color name="aboutusToolbarBg">#5AB1D8</color>
     <color name="aboutusCardBg">#4DA7CF</color>
     <color name="colorHamAlertCardBackground">#2f2f2f</color>
+
+    <color name="blue">#3498DB</color>
+    <color name="light_blue">#85C1E9</color>
+    <color name="green">#1D8348</color>
+    <color name="forgot_button">#ffac5d</color>
 
 </resources>

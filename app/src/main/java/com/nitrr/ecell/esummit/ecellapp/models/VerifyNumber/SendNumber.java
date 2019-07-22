@@ -13,12 +13,11 @@ public class SendNumber {
     @Expose
     String token;
 
-    @SerializedName("mobile")
+    @SerializedName("otp")
     @Expose
-    String mobile;
+    String otp;
 
-    public SendNumber(String token, String mobile) {
+    public SendNumber(String token) {
         this.token = token;
-        this.mobile = mobile;
     }
 }

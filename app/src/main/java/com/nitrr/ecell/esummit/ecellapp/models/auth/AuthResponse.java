@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class AuthResponse implements Serializable {
 
-    @SerializedName("message")
+    @SerializedName("MessageModel")
     @Expose
     String message;
 
@@ -34,7 +34,7 @@ public class AuthResponse implements Serializable {
     @Override
     public String toString() {
         return "AuthResponse{" +
-                "message='" + message + '\'' +
+                "MessageModel='" + message + '\'' +
                 ", token='" + token + '\'' +
                 ", details='" + details + '\'' +
                 '}';

@@ -108,7 +108,7 @@ public class CustomHamburgerDialog {
     }
 
     private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment().getInstance("", confirmListener);
+        OTPDialogFragment fragment = new OTPDialogFragment().getInstance(confirmListener);
         fragment.setArguments(new Bundle());
         AppCompatActivity act = (AppCompatActivity) activity;
         act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
@@ -156,7 +156,7 @@ public class CustomHamburgerDialog {
     }
 
     private void changeNumber(String newNumber) {
-        Call<PhoneNumber> call = AppClient.getInstance().createService(APIServices.class).changeNumber(newNumber);
+        Call<PhoneNumber> call = AppClient.getInstance().createService(APIServices.class).changeNumber("SDF");
         call.enqueue(new Callback<PhoneNumber>() {
             @Override
             public void onResponse(@NonNull Call<PhoneNumber> call, @NonNull Response<PhoneNumber> response) {

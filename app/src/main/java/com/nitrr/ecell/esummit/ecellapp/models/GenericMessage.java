@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class GenericMessage implements Serializable {
 
-    @SerializedName("message")
+    @SerializedName("MessageModel")
     @Expose
     String message;
 }

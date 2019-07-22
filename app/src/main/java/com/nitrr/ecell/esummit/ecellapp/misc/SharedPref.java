@@ -1,13 +1,14 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class SharedPref {
 
     private Activity activity;
-
+    private SharedPreferences.Editor editor;
     private String accessToken = null,
             firstName = null,
             lastName = null,
@@ -37,7 +38,7 @@ public class SharedPref {
         this.linkedin = linkedin;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = prefs.edit();
+        editor = prefs.edit();
 
         editor.putString("token", access_token);
         editor.putString("first_name", firstName);
@@ -60,8 +61,9 @@ public class SharedPref {
         this.isGLoggedIn = isGLoggedIn;
     }
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getAccessToken(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("token", "");
     }
 
     public String getFirstName() {
@@ -108,13 +110,20 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(activity).edit();
     }
 
+
     void clearPrefs() {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(activity).edit();
         editor.clear();
         editor.apply();
     }
 
-    public void setAccessToken(String accessToken) {
+    public void setAccessToken(String accessToken,Context context) {
         this.accessToken = accessToken;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = prefs.edit();
+        editor.putString("token",accessToken);
+        editor.apply();
+        editor.commit();
+
     }
 }

@@ -1,9 +1,11 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
+import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
+import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
@@ -11,7 +13,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorResponse;
-import com.nitrr.ecell.esummit.ecellapp.models.ForgotPassword.Forgot_Password;
+import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotPassword;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
@@ -22,10 +24,13 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface APIServices {
+
+    public static String access = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ";
 
     @GET("sponsors/list/2019")
     Call<SponsorsModel> getSponsData();
@@ -50,7 +55,7 @@ public interface APIServices {
     Call<GenericMessage> getSendOTP();
 
     @POST("/user/verify_otp/")
-    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body Forgot_Password otpVerify);
+    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body ForgotPassword otpVerify);
 
 
     //Speakers
@@ -94,6 +99,13 @@ public interface APIServices {
     @GET("/users/change_contact")
     Call<PhoneNumber> changeNumber(@Body String string);
 
-    @POST("/send_otp")
-    Call<String> sendOTP(@Body String email);
+    @POST("/users/verify_otp")
+    Call<String> verifyOtp(@Body VerifyOTP verifyOTP);
+
+    @GET("/users/resend_otp")
+    Call<MessageModel> resendOtp(@Header("Authorization") String auth, @Header("Access") String access);
+
+    @GET("/users/forgot_password")
+    Call<MessageModel> sendOtp(@Header("Access") String access, @Header("email") String email);
+
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -64,6 +64,19 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="forgot_email_button">
+        <item name="android:colorButtonNormal" tools:targetApi="lollipop">#ffba8f</item>
+    </style>
+
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorAccent">#f00</item>
+        <item name="android:strokeColor" tools:targetApi="lollipop">#f00</item>
+    </style>
+
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#f00</item>
     </style>
 
 </resources>

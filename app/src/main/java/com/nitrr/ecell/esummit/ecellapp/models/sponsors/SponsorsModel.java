@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SponsorsModel {
 
-    @SerializedName("message")
+    @SerializedName("MessageModel")
     @Expose
     String mesage;
     @SerializedName("data")

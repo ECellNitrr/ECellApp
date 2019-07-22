@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EventModel implements Serializable {
 
-    @SerializedName("message")
+    @SerializedName("MessageModel")
     @Expose
     private String message;
 

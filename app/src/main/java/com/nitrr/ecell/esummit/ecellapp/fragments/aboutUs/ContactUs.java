@@ -1,4 +1,4 @@
-package com.nitrr.ecell.esummit.ecellapp.fragments.about_us;
+package com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,17 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
-import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
-import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
-
-import retrofit2.Call;
 
 public class ContactUs extends Fragment implements View.OnClickListener {
 
@@ -87,7 +81,7 @@ public class ContactUs extends Fragment implements View.OnClickListener {
     }
 
     private void sendMessage() {
-        String token = pref.getAccessToken();
+        String token = pref.getAccessToken(getContext());
         String email = pref.getEmail();
         String name = pref.getFirstName();
 
