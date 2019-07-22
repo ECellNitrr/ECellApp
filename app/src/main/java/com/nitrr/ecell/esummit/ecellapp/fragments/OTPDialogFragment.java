@@ -36,10 +36,7 @@ public class OTPDialogFragment extends Fragment{
     private List<String> list = new ArrayList<>();
     private MessageModel msg;
     private DialogInterface.OnClickListener resendOTPListener = ((dialog, which) -> {
-        if(email==null)
             resendOTP();
-        else
-            sendOTP();
     });
     private DialogInterface.OnClickListener refreshListener = ((dialog, which) -> {
         if(email==null)
@@ -69,73 +66,12 @@ public class OTPDialogFragment extends Fragment{
         Bundle bundle = getArguments();
         prevFrag = bundle.getString("prevfrag");
         View view = inflater.inflate(R.layout.layout_otp, container, false);
-        if(prevFrag.equalsIgnoreCase("ForgotPassword")){
+        if(prevFrag.equalsIgnoreCase("ForgotPassword"))
             email = bundle.getString("email");
-            sendOTP();
-        }
         else if(prevFrag.equalsIgnoreCase("verifyotp"))
             resendOTP();
         initialize(view);
         return view;
-    }
-
-    private void sendOTP() {
-        Call<MessageModel> call = AppClient.getInstance()
-                .createService(APIServices.class)
-                .sendOtp(APIServices.access,email);
-        call.enqueue(new Callback<MessageModel>() {
-            @Override
-            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
-                if (response.isSuccessful() && getContext() != null) {
-                    msg = response.body();
-                    if (msg == null) {
-                        Utils.showLongToast(getContext(),msg.getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MessageModel> call, Throwable t) {
-                if (getContext() != null) {
-                    if (!Utils.isNetworkAvailable(getContext()))
-                        Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", resendOTPListener, "Cancel", cancelListener);
-                    else {
-                        Utils.showShortToast(getContext(), "Something went wrong");
-                        getActivity().onBackPressed();
-                    }
-                }
-            }
-        });
-    }
-
-    private void resendOTP() {
-        Call<MessageModel> call = AppClient.getInstance()
-                .createService(APIServices.class)
-                .resendOtp(new SharedPref().getAccessToken(getContext()),APIServices.access);
-
-        call.enqueue(new Callback<MessageModel>() {
-            @Override
-            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
-                if (response.isSuccessful() && getContext() != null) {
-                    msg = response.body();
-                    if (msg == null) {
-                        Utils.showLongToast(getContext(),msg.getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MessageModel> call, Throwable t) {
-                if (getContext() != null) {
-                    if (!Utils.isNetworkAvailable(getContext()))
-                        Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", resendOTPListener, "Cancel", cancelListener);
-                    else {
-                        Utils.showShortToast(getContext(), "Something went wrong");
-                        getActivity().onBackPressed();
-                    }
-                }
-            }
-        });
     }
 
     private void initialize(View v) {
@@ -211,6 +147,36 @@ public class OTPDialogFragment extends Fragment{
         }
     }
 
+    private void resendOTP() {
+        Call<MessageModel> call = AppClient.getInstance()
+                .createService(APIServices.class)
+                .resendOtp(new SharedPref().getAccessToken(getContext()),APIServices.access);
+
+        call.enqueue(new Callback<MessageModel>() {
+            @Override
+            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                if (response.isSuccessful() && getContext() != null) {
+                    msg = response.body();
+                    if (msg == null) {
+                        Utils.showLongToast(getContext(),msg.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessageModel> call, Throwable t) {
+                if (getContext() != null) {
+                    if (!Utils.isNetworkAvailable(getContext()))
+                        Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", resendOTPListener, "Cancel", cancelListener);
+                    else {
+                        Utils.showShortToast(getContext(), "Something went wrong");
+                        getActivity().onBackPressed();
+                    }
+                }
+            }
+        });
+    }
+
     private void verifyOTPAPICall() {
         SharedPref pref = new SharedPref();
         pref.getAccessToken(getContext());
@@ -248,36 +214,34 @@ public class OTPDialogFragment extends Fragment{
     }
 
     private void forgotOTPAPICall() {
-//
-//        Call<> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).getTeamData();
-//        call.enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                if (gt() != null)
-//                    if (response.isSuccessful()) {
-//                        String otp = response.body();
-//                        if (otp != null)
-//                            setConfirmed();
-//                        else
-//                            Utils.showDialog(getContext(), null, true, "Verification failed", "", "Retry", refreshListener, "Cancel", cancelListener);
-//                    } else
-//                        Utils.showDialog(getContext(), null, false, "Server is down", "Data wasn't able to load", "Retry", refreshListener, "Cancel", cancelListener);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                if (getContext() != null) {
-//                    {
-//                        if (!Utils.isNetworkAvailable(getContext()))
-//                            Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", refreshListener, "Cancel", cancelListener);
-//                        else {
-//                            Utils.showShortToast(getContext(), "Something went wrong");
-//                            getActivity().onBackPressed();
-//                        }
-//                    }
-//                }
-//            }
-//        });
+
+        Call<MessageModel> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).sendOtp(APIServices.access,email);
+        call.enqueue(new Callback<MessageModel>() {
+            @Override
+            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                    if (response.isSuccessful() && getContext() != null) {
+                        MessageModel otp = response.body();
+                        if (otp != null)
+                            setConfirmed();
+                        else
+                            Utils.showDialog(getContext(), null, true, "Verification failed", "", "Retry", refreshListener, "Cancel", cancelListener);
+                    } else
+                        Utils.showDialog(getContext(), null, false, "Server is down", "Data wasn't able to load", "Retry", refreshListener, "Cancel", cancelListener);
+            }
+            @Override
+            public void onFailure(Call<MessageModel> call, Throwable t) {
+                if (getContext() != null) {
+                    {
+                        if (!Utils.isNetworkAvailable(getContext()))
+                            Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", refreshListener, "Cancel", cancelListener);
+                        else {
+                            Utils.showShortToast(getContext(), "Something went wrong");
+                            getActivity().onBackPressed();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void setConfirmed() {

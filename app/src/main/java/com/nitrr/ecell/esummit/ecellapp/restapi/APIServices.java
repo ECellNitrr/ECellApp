@@ -1,19 +1,14 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
-<<<<<<< HEAD
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
-=======
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ChangePassword;
-import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
-import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.VerifyOTP;
->>>>>>> 719965933b7f70d84fad24bea03b6e300ba40834
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
