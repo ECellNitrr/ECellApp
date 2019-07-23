@@ -10,8 +10,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.7"
-        android:background="#416A87" />
+        android:alpha="1"
+        android:background="@color/dirt_blue" />
 
     <TextView
         android:id="@+id/verifyotp"
@@ -23,8 +23,8 @@
         android:text="@string/otp"
         android:textAlignment="center"
         android:textColor="@color/colorHamAlertCardBackground"
-        android:textSize="24sp"
-        android:background="#5275A1"
+        android:textSize="32sp"
+        android:background="@color/dark_blue"
         app:layout_constraintBottom_toTopOf="@+id/otp"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,47 +48,66 @@
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="4dp"
                 android:maxLength="1"
-                android:text="_"
+                android:text=" "
                 android:textAlignment="center"
                 android:textColor="@color/colorHamAlertCardBackground"
-                android:textSize="28sp" />
+                android:background="@color/dark_blue"
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/otp2"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="4dp"
                 android:maxLength="1"
-                android:text="_"
+                android:text=" "
                 android:textAlignment="center"
                 android:textColor="@color/colorHamAlertCardBackground"
-                android:textSize="28sp" />
+                android:background="@color/dark_blue"
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/otp3"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="4dp"
                 android:maxLength="1"
-                android:text="_"
+                android:text=" "
                 android:textAlignment="center"
                 android:textColor="@color/colorHamAlertCardBackground"
-                android:textSize="28sp" />
+                android:background="@color/dark_blue"
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/otp4"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="4dp"
                 android:maxLength="1"
-                android:text="_"
+                android:text=" "
                 android:textAlignment="center"
                 android:textColor="@color/colorHamAlertCardBackground"
-                android:textSize="28sp" />
+                android:background="@color/dark_blue"
+                android:textSize="32sp" />
         </LinearLayout>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/resend_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:padding="4dp"
+        android:text="@string/resend_otp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@+id/otp"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <RelativeLayout
         android:id="@+id/numberpad"

@@ -18,9 +18,11 @@ import java.util.List;
 public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
 
     private Context context;
+    private OTPDialogFragment fragment;
     private List<String> list;
 
-    public OTPAdapter(Context context, List<String> list) {
+    public OTPAdapter(Context context, List<String> list,OTPDialogFragment fragment) {
+        this.fragment = fragment;
         this.context = context;
         this.list = list;
     }
@@ -64,7 +66,6 @@ public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
                 n=-2;
             else
                 n=Integer.parseInt(text);
-            OTPDialogFragment fragment = new OTPDialogFragment();
             fragment.update(n);
         }
     }

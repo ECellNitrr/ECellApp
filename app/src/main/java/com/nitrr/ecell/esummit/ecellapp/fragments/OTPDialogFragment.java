@@ -37,9 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OTPDialogFragment extends Fragment{
+public class OTPDialogFragment extends Fragment implements View.OnClickListener {
 
-    private TextView otp1, otp2, otp3, otp4;
+    private TextView otp1, otp2, otp3, otp4, resend;
     private String otp = "";
     private String email;
     private List<String> list = new ArrayList<>();
@@ -92,6 +92,8 @@ public class OTPDialogFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_otp, container, false);
         Bundle bundle = getArguments();
+        OTPDialogFragment fragment = this;
+        initialize(view,fragment);
         if (bundle != null) {
             if(bundle.getString("email", null) != null) {
                 email = bundle.getString("email", null);
@@ -101,22 +103,24 @@ public class OTPDialogFragment extends Fragment{
                 resendOTP();
             }
         } else {
-            Utils.showLongToast(getContext(), "An Error occurred. Please Try Again");
+            Utils.showShortToast(getContext(), "An Error occurred. Please Try Again");
             if(new SharedPref().isLoggedIn(getActivity())) {
                 startActivity(new Intent(getActivity(), HomeActivity.class));
             } else {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         }
-        initialize(view);
         return view;
     }
 
-    private void initialize(View v) {
+    private void initialize(View v,OTPDialogFragment fragment) {
         otp1 = v.findViewById(R.id.otp1);
         otp2 = v.findViewById(R.id.otp2);
         otp3 = v.findViewById(R.id.otp3);
         otp4 = v.findViewById(R.id.otp4);
+        resend = v.findViewById(R.id.resend_otp);
+
+        resend.setOnClickListener(this);
 
         list.add("1");
         list.add("2");
@@ -135,34 +139,43 @@ public class OTPDialogFragment extends Fragment{
         if(getContext() != null) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
             recyclerView.setLayoutManager(gridLayoutManager);
-            OTPAdapter adapter = new OTPAdapter(getContext(), list);
+            OTPAdapter adapter = new OTPAdapter(getContext(), list,fragment);
             recyclerView.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.resend_otp:
+                resendOTP();
+                break;
         }
     }
 
     public void update(int n) {
         if (n == -1) {
-            if (otp4.getText().toString().contentEquals("_"))
-                if (otp3.getText().toString().contentEquals("_"))
-                    if (otp2.getText().toString().contentEquals("_"))
-                        otp1.setText("_");
+            if (otp4.getText().toString().contentEquals("  "))
+                if (otp3.getText().toString().contentEquals("  "))
+                    if (otp2.getText().toString().contentEquals("  "))
+                        otp1.setText(" ");
                     else
-                        otp2.setText("_");
+                        otp2.setText(" ");
                 else
-                    otp3.setText("_");
+                    otp3.setText(" ");
             else
-                otp4.setText("_");
+                otp4.setText(" ");
         }
         else if (n == -2) {
             confirmOTP();
         }
-        else if (otp1.getText().toString().contentEquals("_"))
+        else if (otp1.getText().toString().contentEquals(" "))
             otp1.setText("" + n);
-        else if (otp2.getText().toString().contentEquals("_"))
+        else if (otp2.getText().toString().contentEquals(" "))
             otp2.setText("" + n);
-        else if (otp3.getText().toString().contentEquals("_"))
+        else if (otp3.getText().toString().contentEquals(" "))
             otp3.setText("" + n);
-        else if (otp4.getText().toString().contentEquals("_"))
+        else if (otp4.getText().toString().contentEquals(" "))
             otp4.setText("" + n);
     }
 

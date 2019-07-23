@@ -10,8 +10,8 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:gravity="center"
-    android:textSize="16sp"
-    android:textColor="#000"
+    android:textSize="24dp"
+    android:textColor="@color/colorHamAlertCardBackground"
     android:textAppearance="@style/Widget.MaterialComponents.Button"/>
     <!--android:background="?attr/selectableItemBackground"/>-->
 </LinearLayout>
