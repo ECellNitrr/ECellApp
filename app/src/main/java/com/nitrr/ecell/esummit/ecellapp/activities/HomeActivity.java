@@ -101,14 +101,14 @@ public class HomeActivity extends BaseActivity {
                 offset = recyclerView.computeHorizontalScrollOffset();
                 if (offset < distance / 4) {
                     displacement = (float) offset / (distance / 4);
-                    setColor(147, 223, 204, 241, 140, 120, displacement);
+                    setColor(98, 91, 93, 241, 104, 133, displacement);
 
                 } else if (offset < distance / 2) {
                     displacement = (float) (offset - (distance / 4)) / (distance / 4);
-                    setColor(241, 140, 120, 123, 193, 227, displacement);
+                    setColor(241, 104, 133, 146, 82, 130, displacement);
                 } else if (offset < (distance * 3 / 4)) {
                     displacement = (float) (offset - (distance / 2)) / (distance / 4);
-                    setColor(123, 193, 227, 248, 212, 130, displacement);
+                    setColor(146, 82, 130, 245, 173, 76, displacement);
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }

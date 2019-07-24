@@ -89,10 +89,9 @@ public class SplashScreenActivity extends BaseActivity {
                     if (details != null) {
                         checkAppVersion();
                     } else {
-
                         try {
                             if (response.errorBody() != null) {
-                                Log.e("details null====", "error message is " + response.errorBody().string());
+                                Log.e("details null====", "Error message is " + response.errorBody().string());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
