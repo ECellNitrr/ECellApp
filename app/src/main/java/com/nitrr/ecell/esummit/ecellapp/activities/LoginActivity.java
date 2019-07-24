@@ -305,7 +305,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                     } else {
                         loginDialog.cancel();
                         if (response.errorBody() != null) {
-                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[0]);
                         }
                     }
 

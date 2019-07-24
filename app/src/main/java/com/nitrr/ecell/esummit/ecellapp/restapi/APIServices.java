@@ -28,7 +28,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -113,7 +112,7 @@ public interface APIServices {
     Call<PhoneNumber> changeNumber(@Body String string);
 
     @POST("/users/verify_otp")
-    Call<String> verifyOtp(@Body VerifyOTP verifyOTP);
+    Call<String> verifyOtp(@Header("Access") String access, @Header("token") String token, @Body VerifyOTP verifyOTP);
 
     @GET("/users/resend_otp")
     Call<MessageModel> resendOtp(@Header("Authorization") String auth, @Header("Access") String access);

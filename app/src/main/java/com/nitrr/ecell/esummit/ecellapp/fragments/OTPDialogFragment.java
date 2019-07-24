@@ -227,10 +227,10 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
     private void verifyOTPAPICall() {
         SharedPref pref = new SharedPref();
-        pref.getAccessToken(getContext());
+        String token = pref.getAccessToken(getContext());
         VerifyOTP OTP = new VerifyOTP();
         OTP.setOtp(otp);
-        Call<String> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).verifyOtp(OTP);
+        Call<String> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).verifyOtp(getContext().getString(R.string.app_access_token), token, OTP);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
