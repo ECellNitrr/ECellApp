@@ -41,8 +41,8 @@
     </style>
 
     <style name="MenuDialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_up</item>
-        <item name="android:windowExitAnimation">@anim/slide_down</item>
+        <item name="android:windowEnterAnimation">@anim/slide_down</item>
+        <item name="android:windowExitAnimation">@anim/slide_up</item>
     </style>
 
     <style name="OTPDialogAnimation">

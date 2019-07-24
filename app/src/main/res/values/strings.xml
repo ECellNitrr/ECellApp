@@ -54,7 +54,7 @@
     <string name="facebook_app_id">2421259651476627</string>
     <string name="fb_login_protocol_scheme">fb2421259651476627</string>
     <string name="update_msg">New Update Available</string>
-    <string name="change_number">change number</string>
+    <string name="change_number">Change Number</string>
     <string name="old_number">Old Number</string>
     <string name="new_number">New Number</string>
 

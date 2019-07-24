@@ -38,15 +38,23 @@ public class SharedPref {
         editor.commit();
     }
 
-    public void setIsLoggedIn( boolean isLoggedIn, boolean isFBLoggedIn, boolean isGLoggedIn) {
+    public void setIsLoggedIn(boolean isLoggedIn, boolean isFBLoggedIn, boolean isGLoggedIn) {
         this.isLoggedIn = isLoggedIn;
         this.isFBLoggedIn = isFBLoggedIn;
         this.isGLoggedIn = isGLoggedIn;
     }
 
+    public void setMobileVerified(Activity activity, boolean isVerified) {
+        SharedPreferences.Editor editor = getEditor(activity);
+        editor.putBoolean("mobileVerification", isVerified);
+    }
+
+    public boolean getMobileVerified(Activity activity) {
+        return PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("mobileVerification", false);
+    }
+
     public String getAccessToken(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString("token", "");
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("token", "");
     }
 
     public String getFirstName(Activity activity) {
@@ -81,12 +89,12 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("isLoggedIn", false);
     }
 
-    SharedPreferences.Editor getEditor(Activity activity) {
+    private SharedPreferences.Editor getEditor(Activity activity) {
         return PreferenceManager.getDefaultSharedPreferences(activity).edit();
     }
 
     void clearPrefs(Activity activity) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(activity).edit();
+        SharedPreferences.Editor editor = getEditor(activity);
         editor.clear();
         editor.putBoolean("isLoggedIn", false);
         editor.apply();

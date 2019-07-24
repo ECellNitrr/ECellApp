@@ -45,8 +45,8 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     private TextView toSignIn, toRegister, forgotPassword;
     private EditText loginEmail, loginPassword;
     private EditText firstName, lastName, registerPassword, registerEmail, registerNumber;
-    private TextInputLayout loginEmailLayout, loginPasswordLayout, registerEmailLayout, registerPasswordLayout,
-            firstNameLayout , lastNameLayout, registerNumberLayout;
+    private TextInputLayout loginEmailLayout, loginPasswordLayout, registerEmailLayout,
+            registerPasswordLayout, firstNameLayout , lastNameLayout, registerNumberLayout;
     private LoginAnimation loginanimation;
     private AuthResponse authResponse;
     ConstraintLayout layout;
@@ -255,7 +255,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                         }
                     } else {
                         dialog.cancel();
-                        Utils.showLongToast(getApplicationContext(), "Registration Failed");
+                        if(response.errorBody() != null) {
+                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                        }
                     }
 
                 } catch (Exception e) {
@@ -289,10 +291,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             loginDialog.dismiss();
                             AuthResponse authResponse = response.body();
                             SharedPref pref = new SharedPref();
-                            pref.setAccessToken( getApplicationContext(), authResponse.getToken());
+                            pref.setAccessToken(getApplicationContext(), authResponse.getToken());
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                            authResponse = response.body();
+                            Log.e("User Logging In", response.body().getMessage());
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         } else {
                             loginDialog.dismiss();
@@ -348,7 +349,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         return false;
     }
 
-    private boolean checkEmail(EditText editText, TextInputLayout layout){
+    private boolean checkEmail(EditText editText, TextInputLayout layout) {
         if(!isNotEmpty(editText, layout))
             return false;
         String email = editText.getText().toString();
