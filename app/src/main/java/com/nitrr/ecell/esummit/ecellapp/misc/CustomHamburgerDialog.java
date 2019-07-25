@@ -1,11 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,9 +14,14 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.fragments.ChangeNumberFragment;
 import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
@@ -34,26 +34,12 @@ import retrofit2.Response;
 public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
-    private static CustomHamburgerDialog dialog = null;
     private SharedPref pref = new SharedPref();
     private Activity activity;
-    private EditText oldNumber, newNumber;
-    private DialogInterface.OnClickListener changeNumberConfirmListener = (dialog, which) -> {
-        if (confirmNumber())
-            dialog.dismiss();
-    };
+    private AppCompatActivity act = (AppCompatActivity) activity;
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
 
-
     public CustomHamburgerDialog() {
-    }
-
-    public static CustomHamburgerDialog getInstance() {
-
-        if (dialog == null)
-            dialog = new CustomHamburgerDialog();
-
-        return dialog;
     }
 
     public CustomHamburgerDialog with(Activity activity) {
@@ -67,42 +53,48 @@ public class CustomHamburgerDialog {
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
 
         TextView item1 = alertView.findViewById(R.id.username);
-        CardView item2 = alertView.findViewById(R.id.item1);
-        CardView item3 = alertView.findViewById(R.id.item2);
-        CardView item4 = alertView.findViewById(R.id.item3);
-        CardView item5 = alertView.findViewById(R.id.item4);
+        CardView verifyNumber = alertView.findViewById(R.id.hamburger_verify_number);
+        CardView changeNumber = alertView.findViewById(R.id.hamburger_change_number);
+        CardView aboutUs = alertView.findViewById(R.id.hamburger_about_us);
+        CardView logOut = alertView.findViewById(R.id.hamburger_log_out);
 
+        String name="ECellApp Visitor";
         SharedPref pref = new SharedPref();
-        String email = pref.getEmail(activity);
-        String name="Username";
-        if(email!=null) {
-            name = "";
-            Character c;
-            for (int x = 0; x < email.length(); x++) {
-                c = email.charAt(x);
-                if (c.equals('@'))
-                    break;
-                name = name + c;
+        if(pref.getFirstName(activity).equals("")) {
+            String email = pref.getEmail(activity);
+            try {
+                name = email.split("@")[0];
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-
         item1.setText(name);
 
-        item2.setOnClickListener(v -> {
+        verifyNumber.setOnClickListener(v -> {
             showOTPDialog();
             builder.setOnDismissListener(DialogInterface::dismiss);
         });
 
-        item3.setOnClickListener(v -> {
-//            changeNumber();
+        changeNumber.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            act.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_parent_layout, new ChangeNumberFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
 
-        item4.setOnClickListener(v -> {
+        aboutUs.setOnClickListener(v -> {
             Intent intent = new Intent(activity, AboutUsActivity.class);
             activity.startActivity(intent);
         });
 
-        item5.setOnClickListener(v -> logout());
+        logOut.setOnClickListener(v -> {
+            pref.clearPrefs(activity);
+            Utils.showLongToast(activity, "Logged Out Successfully!");
+            activity.startActivity(new Intent(activity, LoginActivity.class));
+            activity.finish();
+        });
 
         builder.setView(alertView);
         alertDialog = builder.create();
@@ -128,26 +120,13 @@ public class CustomHamburgerDialog {
         Bundle bundle = new Bundle();
         bundle.putString("prevfrag","Home Activity");
         fragment.setArguments(bundle);
-        AppCompatActivity act = (AppCompatActivity) activity;
-        act.getSupportFragmentManager().beginTransaction().replace(R.id.parentLayout, fragment).addToBackStack(null).commit();
+        act.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_parent_layout, fragment)
+                .addToBackStack(null)
+                .commit();
         alertDialog.dismiss();
         sendOTP();
-    }
-
-    private void logout() {
-        pref.clearPrefs(activity);
-        Utils.showLongToast(activity, "Logged Out Successfully!");
-        activity.startActivity(new Intent(activity, LoginActivity.class));
-        activity.finish();
-    }
-
-    private boolean confirmNumber() {
-        if (checkPhone(oldNumber) && checkPhone(newNumber))
-            if (pref.getContact(activity).contentEquals(oldNumber.getText().toString())) {
-                changeNumber(newNumber.getText().toString());
-                return true;
-            }
-        return false;
     }
 
     private boolean checkPhone(EditText editText) {

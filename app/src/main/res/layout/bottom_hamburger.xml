@@ -40,7 +40,7 @@
             android:background="#AFAFAF" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item1"
+            android:id="@+id/hamburger_verify_number"
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,12 +51,12 @@
                 style="@style/HamburgerAlertTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/verify_otp" />
+                android:text="@string/verify_number" />
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item2"
+            android:id="@+id/hamburger_change_number"
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item3"
+            android:id="@+id/hamburger_about_us"
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/item4"
+            android:id="@+id/hamburger_log_out"
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

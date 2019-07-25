@@ -47,7 +47,7 @@
     <string name="wasnt_able_to_load">Oops! data wasn\'t able to load</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="verify_otp">Verify OTP</string>
+    <string name="verify_number">Verify Mobile Number</string>
     <string name="no_internet">No internet Connection.</string>
 
     <!--facebook-->
