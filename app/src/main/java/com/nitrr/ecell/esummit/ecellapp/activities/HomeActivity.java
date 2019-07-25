@@ -83,7 +83,6 @@ public class HomeActivity extends BaseActivity {
         setUpRV();
     }
 
-
     public void setUpRV() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);

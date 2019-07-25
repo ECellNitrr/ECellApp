@@ -67,8 +67,8 @@ public class CustomHamburgerDialog {
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
 
         TextView item1 = alertView.findViewById(R.id.username);
-        CardView item2 = alertView.findViewById(R.id.item2);
-        CardView item3 = alertView.findViewById(R.id.item3);
+        CardView item2 = alertView.findViewById(R.id.item1);
+        CardView item3 = alertView.findViewById(R.id.item2);
         CardView item4 = alertView.findViewById(R.id.item3);
         CardView item5 = alertView.findViewById(R.id.item4);
 
@@ -135,7 +135,8 @@ public class CustomHamburgerDialog {
     }
 
     private void logout() {
-        pref.getEditor(activity).clear().apply();
+        pref.clearPrefs(activity);
+        Utils.showLongToast(activity, "Logged Out Successfully!");
         activity.startActivity(new Intent(activity, LoginActivity.class));
         activity.finish();
     }

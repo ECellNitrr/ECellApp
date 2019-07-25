@@ -45,6 +45,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onStop();
     }
 
-
     protected abstract int getLayoutResourceId();
 }
