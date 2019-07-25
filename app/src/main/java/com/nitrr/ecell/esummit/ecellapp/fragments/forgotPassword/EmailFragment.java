@@ -76,7 +76,6 @@ public class EmailFragment extends Fragment {
                     .replace(R.id.login_outer_constraint, fragment)
                     .remove(EmailFragment.this)
                     .commit();
-//            apiCall();
         });
         return v;
     }

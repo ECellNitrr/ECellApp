@@ -22,7 +22,7 @@ public class SharedPref {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
         editor = prefs.edit();
 
-        editor.putString("accessToken", access_token);
+        editor.putString("access_token", access_token);
         editor.putString("firstName", firstName);
         editor.putString("lastName", lastName);
         editor.putString("email", email);
@@ -54,7 +54,7 @@ public class SharedPref {
     }
 
     public String getAccessToken(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("token", "");
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("access_token", "");
     }
 
     public String getFirstName(Activity activity) {

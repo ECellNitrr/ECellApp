@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
+import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
@@ -33,7 +34,7 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    @GET("sponsors/list/2019")
+    @GET("/sponsors/list/2019/")
     Call<SponsorsModel> getSponsData();
 
     @GET("events/list/2019/")
@@ -49,13 +50,13 @@ public interface APIServices {
 
 
     //ForgotPassword
-    @POST("users/forgot_password")
+    @POST("users/forgot_password/")
     Call<GenericMessage> postEmailVerify(@Body ForgotPassword password);
 
-    @POST("users/check_otp")
+    @POST("users/check_otp/")
     Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
 
-    @POST("users/change_password")
+    @POST("users/change_password/")
     Call<GenericMessage> postPasswordChange(@Body ChangePassword password);
 
 
@@ -105,19 +106,19 @@ public interface APIServices {
     @GET("/spons")
     Call<TeamData> getTeamData();
 
-    @GET("/is_update_available")
+    @GET("/is_update_available/")
     Call<AppDetails> getAppdata();
 
-    @GET("/users/change_contact")
+    @GET("/users/change_contact/")
     Call<PhoneNumber> changeNumber(@Body String string);
 
-    @POST("/users/verify_otp")
-    Call<String> verifyOtp(@Header("Access") String access, @Header("token") String token, @Body VerifyOTP verifyOTP);
+    @POST("/users/verify_otp/")
+    Call<OTPVerification> verifyOtp(@Header("Access") String access, @Header("Authorization") String token, @Body VerifyOTP verifyOTP);
 
-    @GET("/users/resend_otp")
+    @GET("/users/resend_otp/")
     Call<MessageModel> resendOtp(@Header("Authorization") String auth, @Header("Access") String access);
 
-    @GET("/users/forgot_password")
+    @GET("/users/forgot_password/")
     Call<MessageModel> sendOtp(@Header("Access") String access, @Header("email") String email);
 
 }

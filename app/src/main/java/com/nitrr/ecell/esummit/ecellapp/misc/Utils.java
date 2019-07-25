@@ -124,6 +124,7 @@ public class Utils {
     public static AlertDialog showProgressBar(Context context, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.alert_progress_layout, null);
+        builder.setCancelable(false);
         AlertDialog dialog = builder.create();
 
         Animation animation = new AlphaAnimation(1.0f, 0.5f);

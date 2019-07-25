@@ -24,11 +24,13 @@ import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
+import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotVerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +58,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
-        if (email != null) {
+        if (email == null) {
             //Verify OTP Path
             startActivity(new Intent(getActivity(), HomeActivity.class));
         }
@@ -68,9 +70,10 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
     private DialogInterface.OnClickListener nextListener = (dialog, which) -> {
         if(email == null) {
-            //Verify OTP Path
-            //TODO add confirm code
-        } else {
+            Intent intent = new Intent(getContext(),HomeActivity.class);
+            startActivity(intent);
+        }
+        else {
             //Forgot Password Path
             ChangePasswordFragment fragment = new ChangePasswordFragment();
             Bundle b = new Bundle();
@@ -155,27 +158,27 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
     public void update(int n) {
         if (n == -1) {
-            if (otp4.getText().toString().contentEquals("  "))
-                if (otp3.getText().toString().contentEquals("  "))
-                    if (otp2.getText().toString().contentEquals("  "))
-                        otp1.setText(" ");
+            if (otp4.getText().toString().contentEquals("-"))
+                if (otp3.getText().toString().contentEquals("-"))
+                    if (otp2.getText().toString().contentEquals("-"))
+                        otp1.setText("-");
                     else
-                        otp2.setText(" ");
+                        otp2.setText("-");
                 else
-                    otp3.setText(" ");
+                    otp3.setText("-");
             else
-                otp4.setText(" ");
+                otp4.setText("-");
         }
         else if (n == -2) {
             confirmOTP();
         }
-        else if (otp1.getText().toString().contentEquals(" "))
+        else if (otp1.getText().toString().contentEquals("-"))
             otp1.setText("" + n);
-        else if (otp2.getText().toString().contentEquals(" "))
+        else if (otp2.getText().toString().contentEquals("-"))
             otp2.setText("" + n);
-        else if (otp3.getText().toString().contentEquals(" "))
+        else if (otp3.getText().toString().contentEquals("-"))
             otp3.setText("" + n);
-        else if (otp4.getText().toString().contentEquals(" "))
+        else if (otp4.getText().toString().contentEquals("-"))
             otp4.setText("" + n);
     }
 
@@ -196,9 +199,11 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     }
 
     private void resendOTP() {
+        String s = new SharedPref().getAccessToken(getActivity());
+        Log.e("token===="," value is: "+s);
         Call<MessageModel> call = AppClient.getInstance()
                 .createService(APIServices.class)
-                .resendOtp(new SharedPref().getAccessToken(getContext()), getActivity().getResources().getString(R.string.app_access_token));
+                .resendOtp(s, getContext().getString(R.string.app_access_token));
 
         call.enqueue(new Callback<MessageModel>() {
             @Override
@@ -230,23 +235,30 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         String token = pref.getAccessToken(getContext());
         VerifyOTP OTP = new VerifyOTP();
         OTP.setOtp(otp);
-        Call<String> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).verifyOtp(getContext().getString(R.string.app_access_token), token, OTP);
-        call.enqueue(new Callback<String>() {
+        Call<OTPVerification> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).verifyOtp(getContext().getString(R.string.app_access_token), token, OTP);
+        call.enqueue(new Callback<OTPVerification>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<OTPVerification> call, Response<OTPVerification> response) {
                 if (getContext() != null)
                     if (response.isSuccessful()) {
-                        String otp = response.body();
+                        OTPVerification otp = response.body();
                         if (otp != null)
                             setConfirmed();
                         else
                             Utils.showDialog(getContext(), null, true, "Verification Failed.", "", "Retry", retryListener, "Cancel", cancelListener);
-                    } else
-                        Utils.showDialog(getContext(), null, false, "There was an issue.", "Data wasn't able to load", "Retry", retryListener, "Cancel", cancelListener);
+                    } else {
+                        try {
+                            String message = response.errorBody().string();
+                            if(message.contentEquals("{\"message\":\"Invalid otp\"}"))
+                                Utils.showDialog(getContext(), null, false, message.substring(12,23), null, "Retry", retryListener, "Cancel", cancelListener);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<OTPVerification> call, Throwable t) {
                 if (getContext() != null) {
                     {
                         if (!Utils.isNetworkAvailable(getContext()))
