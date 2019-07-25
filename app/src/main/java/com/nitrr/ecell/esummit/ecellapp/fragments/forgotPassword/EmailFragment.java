@@ -63,7 +63,8 @@ public class EmailFragment extends Fragment {
             startActivity(new Intent(getContext(), LoginActivity.class));
         });
 
-        ((TextView)v.findViewById(R.id.forgot_title)).setTypeface(Typeface.createFromAsset(Objects.requireNonNull(getContext()).getAssets(), "fonts/Oswald-Regular.ttf"));
+        ((TextView)v.findViewById(R.id.forgot_title)).setTypeface(Typeface
+                .createFromAsset(Objects.requireNonNull(getContext()).getAssets(), "fonts/Oswald-Regular.ttf"));
         verify.setOnClickListener(view -> {
 
             OTPDialogFragment fragment = new OTPDialogFragment();
