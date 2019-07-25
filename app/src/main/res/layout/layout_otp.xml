@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="1"
-        android:background="@color/dirt_blue" />
+        android:src="@drawable/otp_bg"/>
 
     <TextView
         android:id="@+id/verifyotp"
@@ -22,9 +22,8 @@
         android:paddingBottom="10dp"
         android:text="@string/otp"
         android:textAlignment="center"
-        android:textColor="@color/colorHamAlertCardBackground"
+        android:textColor="@color/colorWhite"
         android:textSize="32sp"
-        android:background="@color/dark_blue"
         app:layout_constraintBottom_toTopOf="@+id/otp"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,12 +35,20 @@
         app:layout_constraintBottom_toTopOf="@+id/numberpad"
         app:layout_constraintTop_toBottomOf="@+id/verifyotp">
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            app:cardCornerRadius="35dp"
+            app:cardElevation="3dp">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp">
 
             <TextView
                 android:id="@+id/otp1"
@@ -50,11 +57,10 @@
                 android:layout_margin="10dp"
                 android:padding="4dp"
                 android:maxLength="1"
-                android:text=" "
+                android:text="-"
                 android:textAlignment="center"
-                android:textColor="@color/colorHamAlertCardBackground"
-                android:background="@color/dark_blue"
-                android:textSize="32sp" />
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/otp2"
@@ -63,11 +69,10 @@
                 android:layout_margin="10dp"
                 android:padding="4dp"
                 android:maxLength="1"
-                android:text=" "
+                android:text="-"
                 android:textAlignment="center"
-                android:textColor="@color/colorHamAlertCardBackground"
-                android:background="@color/dark_blue"
-                android:textSize="32sp" />
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/otp3"
@@ -76,11 +81,10 @@
                 android:layout_margin="10dp"
                 android:padding="4dp"
                 android:maxLength="1"
-                android:text=" "
+                android:text="-"
                 android:textAlignment="center"
-                android:textColor="@color/colorHamAlertCardBackground"
-                android:background="@color/dark_blue"
-                android:textSize="32sp" />
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/otp4"
@@ -89,12 +93,13 @@
                 android:layout_margin="10dp"
                 android:padding="4dp"
                 android:maxLength="1"
-                android:text=" "
+                android:text="-"
                 android:textAlignment="center"
-                android:textColor="@color/colorHamAlertCardBackground"
-                android:background="@color/dark_blue"
-                android:textSize="32sp" />
+                android:textColor="@color/black"
+                android:textSize="24sp" />
         </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 
@@ -105,6 +110,8 @@
         android:layout_margin="24dp"
         android:padding="4dp"
         android:text="@string/resend_otp"
+        android:textSize="18sp"
+        android:textColor="@color/colorWhite"
         android:textStyle="italic"
         app:layout_constraintTop_toBottomOf="@+id/otp"
         app:layout_constraintEnd_toEndOf="parent"/>

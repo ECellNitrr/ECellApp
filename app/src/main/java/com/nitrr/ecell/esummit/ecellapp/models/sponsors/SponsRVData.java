@@ -15,7 +15,7 @@ public class SponsRVData{
     @SerializedName("spons_type")
     @Expose
     String type;
-    @SerializedName("pic")
+    @SerializedName("pic_url")
     @Expose
     String img;
 

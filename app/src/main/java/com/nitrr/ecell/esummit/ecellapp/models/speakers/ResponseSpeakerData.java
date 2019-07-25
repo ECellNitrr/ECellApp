@@ -25,7 +25,7 @@ public class ResponseSpeakerData implements Serializable {
     @Expose
     String name;
 
-    @SerializedName("profile_pic")
+    @SerializedName("profile_pic_url")
     @Expose
     String image;
 

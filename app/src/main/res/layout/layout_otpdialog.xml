@@ -11,7 +11,8 @@
     android:layout_height="60dp"
     android:gravity="center"
     android:textSize="24dp"
-    android:textColor="@color/colorHamAlertCardBackground"
+    android:textColor="@color/colorWhite"
+    app:rippleColor="@color/black_overlay"
     android:textAppearance="@style/Widget.MaterialComponents.Button"/>
     <!--android:background="?attr/selectableItemBackground"/>-->
 </LinearLayout>

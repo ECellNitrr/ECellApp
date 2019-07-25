@@ -28,7 +28,7 @@ public class SpeakerDetails implements Serializable {
     @Expose
     int experience;
 
-    @SerializedName("profile_pic")
+    @SerializedName("profile_pic_url")
     @Expose
     String image;
 

@@ -46,7 +46,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         SponsRVData data = list.get(i);
-        Glide.with(context).load(R.drawable.loading1).transform(new CircleCrop()).into(holder.loadingimg);
+        Glide.with(context).load(data.getImg()).transform(new CircleCrop()).into(holder.loadingimg);
         switch(pos){
             case 0:{
                 holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);

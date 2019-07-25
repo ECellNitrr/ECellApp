@@ -33,8 +33,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:paddingTop="0dp"
-                android:paddingBottom="0dp"
-                android:src="@drawable/loading1" />
+                android:paddingBottom="0dp" />
         </RelativeLayout>
 
         <LinearLayout
