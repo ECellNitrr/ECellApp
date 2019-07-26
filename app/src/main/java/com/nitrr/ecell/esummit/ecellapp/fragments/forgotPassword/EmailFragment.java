@@ -81,13 +81,13 @@ public class EmailFragment extends Fragment {
     }
 
     private void apiCall() {
-        AlertDialog bar = Utils.showProgressBar(getContext(), "Verifying Email..");
+        AlertDialog bar = Utils.showProgressBar(getContext(), "Verifying Email...");
         ForgotPassword emailObject = new ForgotPassword(this.email.getText().toString());
 
         if(!checkEmail(this.email, layout)) {
             bar.dismiss();
         } else {
-            Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(emailObject);
+            Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(getContext().getString(R.string.app_access_token),emailObject);
 
             call.enqueue(new Callback<GenericMessage>() {
                 @Override
@@ -97,7 +97,7 @@ public class EmailFragment extends Fragment {
                         if(response.body() != null) {
                             Log.e(forgot, "response body received and toasted");
                             bar.dismiss();
-                            Utils.showLongToast(getContext(), response.body().getMessage());
+                            Utils.showShortToast(getContext(), response.body().getMessage());
 
                             OTPDialogFragment fragment = new OTPDialogFragment();
                             Bundle b = new Bundle();
@@ -139,10 +139,19 @@ public class EmailFragment extends Fragment {
                         }
                         dialogInterface.dismiss();
                     };
-                    Utils.showDialog(getContext(), null, false, "Network Error",
-                            "There was a Connection Error. Make sure you have a stable connection", "Retry",
-                            retryListener, "Cancel", cancelListener);
-                    Log.e(forgot, "Network Error");
+                    if(!Utils.isNetworkAvailable(getContext())){
+                        Utils.showDialog(getContext(), null, false, "Network Error",
+                                "There was a Connection Error. Make sure you have a stable connection", "Retry",
+                                retryListener, "Cancel", cancelListener);
+                    }
+                    else {
+                        Utils.showShortToast(getContext(),"Something went wrong");
+
+                        Fragment fragment = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentByTag("verify_email");
+                        if (fragment != null) {
+                            getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                        }
+                    }
                 }
             });
         }

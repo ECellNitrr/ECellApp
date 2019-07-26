@@ -57,6 +57,9 @@ public class ChangePasswordFragment extends Fragment {
                 .getColor(R.color.transparent), PorterDuff.Mode.MULTIPLY);
         back.setOnClickListener(view -> startActivity(new Intent(getActivity(), LoginActivity.class)));
 
+        newPass = v.findViewById(R.id.new_pass);
+        confirmPass = v.findViewById(R.id.confirm_new_pass);
+
         Bundle b = getArguments();
         if (b != null) {
             email = b.getString("email", "");
@@ -75,7 +78,7 @@ public class ChangePasswordFragment extends Fragment {
                 AlertDialog bar = Utils.showProgressBar(getContext(), "Changing Password...");
 
                 Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
-                        .postPasswordChange(new ChangePassword(email, password, otp));
+                        .postPasswordChange(getContext().getString(R.string.app_access_token),new ChangePassword(email, password, otp));
 
                 call.enqueue(new Callback<GenericMessage>() {
                     @Override
@@ -85,7 +88,7 @@ public class ChangePasswordFragment extends Fragment {
                             if(response.body() != null) {
                                 Log.e(change, "response body received");
                                 bar.dismiss();
-                                Utils.showLongToast(getContext(), response.body().getMessage());
+                                Utils.showShortToast(getContext(), response.body().getMessage());
                                 startActivity(new Intent(getContext(), LoginActivity.class));
                             } else {
                                 Log.e(change, "Response Body Null");
@@ -104,21 +107,27 @@ public class ChangePasswordFragment extends Fragment {
 
                     @Override
                     public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
-                        bar.dismiss();
-                        DialogInterface.OnClickListener retryListener = (dialogInterface, i) -> {
-                            apiCall();
-                            dialogInterface.dismiss();
-                        };
+                        if(getContext()!=null){
+                            bar.dismiss();
+                            DialogInterface.OnClickListener retryListener = (dialogInterface, i) -> {
+                                apiCall();
+                                dialogInterface.dismiss();
+                            };
 
-                        DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> {
-                            startActivity(new Intent(getActivity(), LoginActivity.class));
-                            dialogInterface.dismiss();
-                        };
-
-                        Utils.showDialog(getContext(), null, false, "Network Unstable",
-                                "There was a Connection Error. Make sure you have a stable connection", "Retry",
-                                retryListener, "Cancel", cancelListener);
-                        Log.e("Change Password", "Network Error");
+                            DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> {
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                                dialogInterface.dismiss();
+                            };
+                            if(!Utils.isNetworkAvailable(getContext())){
+                                Utils.showDialog(getContext(), null, false, "Network Unstable",
+                                        "There was a Connection Error. Make sure you have a stable connection", "Retry",
+                                        retryListener, "Cancel", cancelListener);
+                            }
+                            else{
+                                Utils.showShortToast(getContext(),"Something went wrong");
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                            }
+                        }
                     }
                 });
             } else {

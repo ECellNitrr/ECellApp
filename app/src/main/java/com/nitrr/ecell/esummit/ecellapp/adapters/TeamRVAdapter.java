@@ -37,20 +37,24 @@ public class TeamRVAdapter extends RecyclerView.Adapter<TeamRVAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         TeamList data = list.get(i);
         holder.name.setText(data.getName());
-        holder.post.setText(data.getType());
-        Glide.with(context).load(data.getUrl())./*listener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                holder.img.setVisibility(View.GONE);
-                return false;
-            }
+        if(data.getType().equalsIgnoreCase("dir"))
+            holder.post.setText(R.string.dir);
+        else if(data.getType().equalsIgnoreCase("hcd"))
+            holder.post.setText(R.string.hcd);
+        else if(data.getType().equalsIgnoreCase("fct"))
+            holder.post.setText(R.string.fct);
+        else if(data.getType().equalsIgnoreCase("oco"))
+            holder.post.setText(R.string.oco);
+        else if(data.getType().equalsIgnoreCase("hco"))
+            holder.post.setText(R.string.hco);
+        else if(data.getType().equalsIgnoreCase("mng"))
+            holder.post.setText(R.string.mng);
+        else if(data.getType().equalsIgnoreCase("exc"))
+            holder.post.setText(R.string.exc);
+        else
+            holder.post.setText(data.getType());
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                holder.img.setVisibility(View.GONE);
-                return false;
-            }
-        }).*/into(holder.img);
+            Glide.with(context).load(data.getUrl()).into(holder.img);
     }
 
     @Override

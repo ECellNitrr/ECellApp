@@ -33,6 +33,13 @@ public class Team extends Fragment {
     private TeamRVAdapter adapter;
     private TeamData model;
     private List<TeamList> list = new ArrayList<>();
+    private List<TeamList> DIR = new ArrayList<>(),
+            HCD  = new ArrayList<>()/*(Head of Career Dapartment)*/,
+            FCT  = new ArrayList<>()/*(faculty incharge)*/,
+            MNG  = new ArrayList<>(),
+            HCO  = new ArrayList<>(),
+            OCO  = new ArrayList<>(),
+            EXC  = new ArrayList<>();
     private Call<TeamData> call;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
 
@@ -60,7 +67,6 @@ public class Team extends Fragment {
                     if (getContext() != null) {
                         if (response.isSuccessful()) {
                             model = response.body();
-
                             if (model != null) {
                                 list = model.getList();
                                 setRecyclerView();
@@ -90,6 +96,33 @@ public class Team extends Fragment {
     }
 
     private void setRecyclerView() {
+
+        for(int x=0; x<list.size();x++){
+            TeamList member = list.get(x);
+            if(member.getType().contentEquals("HCD"))
+                HCD.add(member);
+            else if(member.getType().contentEquals("DIR"))
+                DIR.add(member);
+            else if(member.getType().contentEquals("FCT"))
+                FCT.add(member);
+            else if(member.getType().contentEquals("MNG"))
+                MNG.add(member);
+            else if(member.getType().contentEquals("HCO"))
+                HCO.add(member);
+            else if(member.getType().contentEquals("OCO"))
+                OCO.add(member);
+            else if(member.getType().contentEquals("EXC"))
+                EXC.add(member);
+        }
+        list.clear();
+        list.addAll(DIR);
+        list.addAll(HCD);
+        list.addAll(FCT);
+        list.addAll(OCO);
+        list.addAll(HCO);
+        list.addAll(MNG);
+        list.addAll(EXC);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recycler.setLayoutManager(linearLayoutManager);
         adapter = new TeamRVAdapter(getContext(), list);

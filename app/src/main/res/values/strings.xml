@@ -63,6 +63,14 @@
     <string name="agreement">By clicking \'Accept\' you agree to all Terms and Conditions.</string>
     <string name="back_to_login_screen">Back To Login Screen</string>
 
+    <string name="dir">Director</string>
+    <string name="hcd">Head of Career Department</string>
+    <string name="fct">Faculty Incharge</string>
+    <string name="oco">Overall Coordinator</string>
+    <string name="hco">Head Coordinator</string>
+    <string name="mng">Manager</string>
+    <string name="exc">Executive</string>
+
     <string name="app_access_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ</string>
     <string name="resend_otp">Resend OTP ?</string>
 </resources>

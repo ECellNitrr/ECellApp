@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
 import java.util.concurrent.TimeUnit;
 
