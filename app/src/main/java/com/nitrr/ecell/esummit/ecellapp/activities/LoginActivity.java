@@ -296,7 +296,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                         } else {
                             loginDialog.dismiss();
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(), response.errorBody().string());
+                                Utils.showLongToast(getApplicationContext(), "Hello "+response.errorBody().string());
                             }
                             Log.e("LoginApiCall =====", "Response Body NULL.");
                             Log.e("LoginApiCall =====", Objects.requireNonNull(response.errorBody()).string() + " ");
@@ -304,7 +304,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                     } else {
                         loginDialog.cancel();
                         if (response.errorBody() != null) {
-                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[0]);
+                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
                         }
                     }
 

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,18 +18,26 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
-
+    private SharedPref pref = new SharedPref();
     private ImageView bgCircle1, bgCircle2, bgCircle3;
 
     private int distance = 0, offset;
@@ -132,5 +141,29 @@ public class HomeActivity extends BaseActivity {
     public void initializeList(String name, int cardImage, String color, View.OnClickListener listener) {
         HomeRVData data = new HomeRVData(name, color, cardImage, listener);
         homeRVDataList.add(data);
+    }
+
+    void APICall(){
+        Call<MessageModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
+
+        call.enqueue(new Callback<MessageModel>() {
+            @Override
+            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                if(getApplicationContext()!=null && response.isSuccessful()){
+                    MessageModel model = response.body();
+                    if(model!=null){
+                        if(model.getMessage().contentEquals(""))
+                            pref.setMobileVerified(HomeActivity.this,true);
+                    }
+                    else
+                        Log.e("HomeActivity====","null response recived");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessageModel> call, Throwable t) {
+
+            }
+        });
     }
 }

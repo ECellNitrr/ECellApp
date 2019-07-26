@@ -51,13 +51,13 @@ public interface APIServices {
 
     //ForgotPassword
     @POST("users/forgot_password/")
-    Call<GenericMessage> postEmailVerify(@Body ForgotPassword password);
+    Call<GenericMessage> postEmailVerify(@Header("Access") String access,@Body ForgotPassword password);
 
     @POST("users/check_otp/")
     Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
 
     @POST("users/change_password/")
-    Call<GenericMessage> postPasswordChange(@Body ChangePassword password);
+    Call<GenericMessage> postPasswordChange(@Header("Access") String access,@Body ChangePassword password);
 
 
     //User CA Profile
@@ -68,7 +68,7 @@ public interface APIServices {
     Call<GenericMessage> getSendOTP();
 
     @POST("/user/verify_otp/")
-    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body ForgotPassword otpVerify);
+    Call<GenericMessage> postSendOTP(@Header("Authorization") String token, @Body ForgotPassword otpVerify);
 
 
     //Speakers
@@ -121,4 +121,6 @@ public interface APIServices {
     @GET("/users/forgot_password/")
     Call<MessageModel> sendOtp(@Header("Access") String access, @Header("email") String email);
 
+    @GET
+    Call<MessageModel> isVerified(@Header("Access") String string);
 }

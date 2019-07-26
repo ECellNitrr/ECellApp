@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static String BASE_URL = "https://fe7ee693.ngrok.io/";
+    private static String BASE_URL = "https://207e332a.ngrok.io/";
     private static AppClient mInstance;
 
     private AppClient() {

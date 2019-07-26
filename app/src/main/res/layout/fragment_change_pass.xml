@@ -80,6 +80,7 @@
             app:boxBackgroundColor="#FFCFA2">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/new_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="New Password"
@@ -101,6 +102,7 @@
             app:boxStrokeColor="@color/forgot_button">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_new_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm Password"
