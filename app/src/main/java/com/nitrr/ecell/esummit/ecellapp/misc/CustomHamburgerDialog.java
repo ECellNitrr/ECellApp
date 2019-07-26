@@ -35,14 +35,13 @@ public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
-    private Activity activity;
-    private AppCompatActivity act = (AppCompatActivity) activity;
+    private AppCompatActivity activity;
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
 
     public CustomHamburgerDialog() {
     }
 
-    public CustomHamburgerDialog with(Activity activity) {
+    public CustomHamburgerDialog with(AppCompatActivity activity) {
         this.activity = activity;
         return this;
     }
@@ -77,7 +76,7 @@ public class CustomHamburgerDialog {
 
         changeNumber.setOnClickListener(v -> {
             alertDialog.dismiss();
-            act.getSupportFragmentManager()
+            activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.home_parent_layout, new ChangeNumberFragment())
                     .addToBackStack(null)
@@ -120,7 +119,7 @@ public class CustomHamburgerDialog {
         Bundle bundle = new Bundle();
         bundle.putString("prevfrag","Home Activity");
         fragment.setArguments(bundle);
-        act.getSupportFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.home_parent_layout, fragment)
                 .addToBackStack(null)

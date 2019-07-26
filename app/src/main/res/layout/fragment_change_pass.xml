@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm Password"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:paddingStart="25dp"
                 android:paddingTop="15dp"
                 android:paddingEnd="25dp"

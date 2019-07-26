@@ -55,28 +55,27 @@ public class EmailFragment extends Fragment {
         verify.getBackground().setColorFilter(this.getResources()
                 .getColor(R.color.forgot_button), PorterDuff.Mode.MULTIPLY);
 
-        MaterialButton back = v.findViewById(R.id.forgot_back);
-        back.getBackground().setColorFilter(this.getResources()
-                .getColor(R.color.transparent), PorterDuff.Mode.MULTIPLY);
+//        MaterialButton back = v.findViewById(R.id.forgot_back);
 
-        back.setOnClickListener(view -> {
-            startActivity(new Intent(getContext(), LoginActivity.class));
-        });
+//        back.setOnClickListener(view -> {
+//            startActivity(new Intent(getContext(), LoginActivity.class));
+//        });
 
         ((TextView)v.findViewById(R.id.forgot_title)).setTypeface(Typeface
                 .createFromAsset(Objects.requireNonNull(getContext()).getAssets(), "fonts/Oswald-Regular.ttf"));
         verify.setOnClickListener(view -> {
 
-            OTPDialogFragment fragment = new OTPDialogFragment();
-            Bundle b = new Bundle();
-            b.putString("email", email.getText().toString());
-            fragment.setArguments(b);
-
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.login_outer_constraint, fragment)
-                    .remove(EmailFragment.this)
-                    .commit();
+            apiCall();
+//            OTPDialogFragment fragment = new OTPDialogFragment();
+//            Bundle b = new Bundle();
+//            b.putString("email", email.getText().toString());
+//            fragment.setArguments(b);
+//
+//            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.login_outer_constraint, fragment)
+//                    .remove(EmailFragment.this)
+//                    .commit();
         });
         return v;
     }
@@ -100,16 +99,16 @@ public class EmailFragment extends Fragment {
                             bar.dismiss();
                             Utils.showLongToast(getContext(), response.body().getMessage());
 
-//                            OTPDialogFragment fragment = new OTPDialogFragment();
-//                            Bundle b = new Bundle();
-//                            b.putString("email", email.getText().toString());
-//                            fragment.setArguments(b);
-//
-//                            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-//                                    .beginTransaction()
-//                                    .replace(R.id.login_outer_constraint, fragment)
-//                                    .remove(EmailFragment.this)
-//                                    .commit();
+                            OTPDialogFragment fragment = new OTPDialogFragment();
+                            Bundle b = new Bundle();
+                            b.putString("email", email.getText().toString());
+                            fragment.setArguments(b);
+
+                            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.login_outer_constraint, fragment)
+                                    .remove(EmailFragment.this)
+                                    .commit();
 
                         } else {
                             Log.e(forgot, "Response Body Null");
