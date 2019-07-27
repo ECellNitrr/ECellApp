@@ -1,6 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -26,12 +25,14 @@ public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
-    private Activity activity;
-    private AppCompatActivity act;
+    private AppCompatActivity activity;
 
-    public CustomHamburgerDialog with(Activity activity) {
+
+    public CustomHamburgerDialog() {
+    }
+
+    public CustomHamburgerDialog with(AppCompatActivity activity) {
         this.activity = activity;
-         act = (AppCompatActivity) activity;
         return this;
     }
 
@@ -71,7 +72,7 @@ public class CustomHamburgerDialog {
 
         changeNumber.setOnClickListener(v -> {
             alertDialog.dismiss();
-            act.getSupportFragmentManager()
+            activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.home_parent_layout, new ChangeNumberFragment())
                     .addToBackStack(null)
@@ -88,8 +89,10 @@ public class CustomHamburgerDialog {
             alertDialog.dismiss();
             pref.clearPrefs(activity);
             Utils.showLongToast(activity, "Logged Out Successfully!");
-            activity.startActivity(new Intent(activity, LoginActivity.class));
             activity.finish();
+            Intent i = new Intent(activity, LoginActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(i);
         });
 
         builder.setView(alertView);
@@ -115,13 +118,11 @@ public class CustomHamburgerDialog {
         Bundle bundle = new Bundle();
         bundle.putString("prevfrag","Home Activity");
         fragment.setArguments(bundle);
-        if(act!=null){
-            act.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.home_parent_layout, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_parent_layout, fragment)
+                .addToBackStack(null)
+                .commit();
         alertDialog.dismiss();
     }
 }

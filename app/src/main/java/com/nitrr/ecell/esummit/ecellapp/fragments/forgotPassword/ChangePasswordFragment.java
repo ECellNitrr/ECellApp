@@ -135,7 +135,6 @@ public class ChangePasswordFragment extends Fragment {
                 confirmPass.setText("");
             }
         }
-
     }
 
     private boolean checkPassword(EditText editText, TextInputLayout layout) {
