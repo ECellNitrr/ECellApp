@@ -170,6 +170,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(getContext().getString(R.string.app_access_token),emailObject);
         call.enqueue(new Callback<GenericMessage>() {
+
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
                 if(response.isSuccessful() && getContext() != null) {
@@ -188,6 +189,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                     }
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
                 DialogInterface.OnClickListener retryListener = (dialogInterface, i) -> {
@@ -284,7 +286,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                         Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", resendOTPListener, "Cancel", cancelListener);
                     else {
                         Utils.showShortToast(getContext(), "Something went wrong");
-                        Objects.requireNonNull(getActivity()).onBackPressed();
+//                        Objects.requireNonNull(getActivity()).onBackPressed();
                     }
                 }
             }
@@ -326,7 +328,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                             Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", retryListener, "Cancel", cancelListener);
                         else {
                             Utils.showShortToast(getContext(), "Something went wrong");
-                            getActivity().onBackPressed();
+//                            getActivity().onBackPressed();
                         }
                     }
                 }
