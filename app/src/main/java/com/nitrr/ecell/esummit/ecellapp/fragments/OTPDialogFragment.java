@@ -99,7 +99,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_otp, container, false);
+        View view = inflater.inflate(R.layout.fragment_otp, container, false);
         Bundle bundle = getArguments();
         OTPDialogFragment fragment = this;
         initialize(view,fragment);
