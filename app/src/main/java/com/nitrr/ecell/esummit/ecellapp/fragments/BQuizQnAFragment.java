@@ -1,18 +1,16 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
@@ -22,21 +20,11 @@ import com.nitrr.ecell.esummit.ecellapp.rxsocket.WebSocket;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class BQuizFragment extends DialogFragment {
+public class BQuizQnAFragment extends Fragment {
 
     private WebSocket webSocket;
     private TextView response;
     private EditText resText;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Dialog dialog = getDialog();
-
-        if (dialog != null)
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-    }
 
     @Nullable
     @Override

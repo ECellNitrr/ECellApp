@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             firstNameLayout , lastNameLayout, registerNumberLayout;
     private LoginAnimation loginanimation;
     private AuthResponse authResponse;
-    EmailFragment fragment = new EmailFragment();
+    private EmailFragment fragment = new EmailFragment();
 
     @Override
     protected int getLayoutResourceId() {
