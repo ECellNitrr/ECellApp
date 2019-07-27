@@ -107,17 +107,18 @@ public class EmailFragment extends Fragment {
                             Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.login_outer_constraint, fragment)
-                                    .remove(EmailFragment.this)
                                     .commit();
 
                         } else {
                             Log.e(forgot, "Response Body Null");
+                            bar.dismiss();
                         }
                     } else {
                         try {
                             if (response.errorBody() != null) {
                                 Log.e(forgot, "ErrorBodyPrinted");
                                 Utils.showShortToast(getContext(), response.errorBody().string());
+                                bar.dismiss();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
