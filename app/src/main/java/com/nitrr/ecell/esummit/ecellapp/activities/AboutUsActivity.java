@@ -1,23 +1,17 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.widget.ImageView;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Aim;
 import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.ContactUs;
 import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Team;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import io.fabric.sdk.android.Fabric;
 
 public class AboutUsActivity extends BaseActivity {
 
@@ -34,6 +28,8 @@ public class AboutUsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         BottomNavigationView navigation = findViewById(R.id.nav_view);
+        ImageView back = findViewById(R.id.aboutus_back);
+        back.setOnClickListener(v -> finish());
 
         //initial fragment
         loadFragment(new Aim());

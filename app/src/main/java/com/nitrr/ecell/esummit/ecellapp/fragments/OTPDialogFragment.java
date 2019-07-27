@@ -90,13 +90,18 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         }
     };
 
+    private DialogInterface.OnClickListener backListener = (dialog, which) -> Objects.requireNonNull(getActivity())
+            .getSupportFragmentManager().popBackStack();
+
+    private DialogInterface.OnClickListener noListener = ((dialog, which) -> dialog.dismiss());
+
     public OTPDialogFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_otp, container, false);
+        View view = inflater.inflate(R.layout.fragment_otp, container, false);
         Bundle bundle = getArguments();
         OTPDialogFragment fragment = this;
         initialize(view,fragment);
@@ -106,7 +111,8 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                 Log.e("OTPFrag", "Email has been received, Changing Password");
             } else {
                 Log.e("OTPFrag", "Null has been received, Verifying OTP");
-                verifyResendOTP();
+                if(!bundle.getBoolean("greeted"))
+                    verifyResendOTP();
             }
         } else {
             Utils.showShortToast(getContext(), "An Error occurred. Please Try Again");
@@ -220,7 +226,9 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         if (n == -1) {
             if (otp4.getText().toString().contentEquals("-"))
                 if (otp3.getText().toString().contentEquals("-"))
-                    if (otp2.getText().toString().contentEquals("-"))
+                    if (otp1.getText().toString().contentEquals("-"))
+                        Utils.showDialog(getContext(),null,true,"Are u sure u want to go back?","OTP won't be verified","Yes",backListener,"No",noListener);
+                    else if(otp2.getText().toString().contentEquals("-"))
                         otp1.setText("-");
                     else
                         otp2.setText("-");

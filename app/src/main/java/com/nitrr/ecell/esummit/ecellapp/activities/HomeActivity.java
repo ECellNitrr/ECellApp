@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,12 +17,14 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
+import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.UserVerifiedModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -39,6 +42,20 @@ public class HomeActivity extends BaseActivity {
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
     private SharedPref pref = new SharedPref();
     private ImageView bgCircle1, bgCircle2, bgCircle3;
+    private DialogInterface.OnClickListener yesListener = (dialog, which) -> {
+        pref.setGreeted(HomeActivity.this);
+        OTPDialogFragment fragment = new OTPDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("prevfrag","Home Activity");
+        bundle.putBoolean("greeted",true);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_parent_layout, fragment)
+                .addToBackStack(null)
+                .commit();
+    };
+    private DialogInterface.OnClickListener noListener = (dialog, which) -> {dialog.cancel();};
 
     private int distance = 0, offset;
     private float displacement = 0;
@@ -52,6 +69,18 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(!pref.isGreeted(this)){
+            Utils.showDialog(this,
+                    null,
+                    false,
+                    "Welcome "+pref.getFirstName(this)+" "+ pref.getLastName(this),
+                    "Do u wish to verify OTP?",
+                    "Yes",
+                    yesListener,
+                    "NO",
+                    noListener);
+        }
+
         recyclerView = findViewById(R.id.home_recycler);
         bgCircle1 = findViewById(R.id.homebg_circle1);
         bgCircle2 = findViewById(R.id.homebg_circle2);
@@ -60,8 +89,6 @@ public class HomeActivity extends BaseActivity {
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
         adapter = new HomeRVAdapter(this, homeRVDataList);
-        setUpRV();
-
         initializeList("E Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
             Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
             startActivity(intent);
@@ -90,6 +117,7 @@ public class HomeActivity extends BaseActivity {
         recyclerView.hasFixedSize();
 
         setUpRV();
+        APICall();
     }
 
     public void setUpRV() {
@@ -144,15 +172,14 @@ public class HomeActivity extends BaseActivity {
     }
 
     void APICall(){
-        Call<MessageModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
-
-        call.enqueue(new Callback<MessageModel>() {
+        Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
+        call.enqueue(new Callback<UserVerifiedModel>() {
             @Override
-            public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+            public void onResponse(Call<UserVerifiedModel> call, Response<UserVerifiedModel> response) {
                 if(getApplicationContext()!=null && response.isSuccessful()){
-                    MessageModel model = response.body();
+                    UserVerifiedModel model = response.body();
                     if(model!=null){
-                        if(model.getMessage().contentEquals(""))
+                        if(model.getVerified())
                             pref.setMobileVerified(HomeActivity.this,true);
                     }
                     else
@@ -161,8 +188,7 @@ public class HomeActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<MessageModel> call, Throwable t) {
-
+            public void onFailure(Call<UserVerifiedModel> call, Throwable t) {
             }
         });
     }

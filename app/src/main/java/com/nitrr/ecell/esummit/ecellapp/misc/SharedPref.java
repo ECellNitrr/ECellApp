@@ -47,6 +47,7 @@ public class SharedPref {
     public void setMobileVerified(Activity activity, boolean isVerified) {
         SharedPreferences.Editor editor = getEditor(activity);
         editor.putBoolean("mobileVerification", isVerified);
+        editor.commit();
     }
 
     public boolean getMobileVerified(Activity activity) {
@@ -106,6 +107,16 @@ public class SharedPref {
         editor = prefs.edit();
         editor.putString("access_token",accessToken);
         editor.apply();
+        editor.commit();
+    }
+
+    public boolean isGreeted(Activity activity){
+        return PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("greeted",false);
+    }
+
+    public void setGreeted(Activity activity){
+        SharedPreferences.Editor editor = getEditor(activity);
+        editor.putBoolean("greeted",true);
         editor.commit();
     }
 }

@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
+import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.UserVerifiedModel;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
@@ -121,6 +122,6 @@ public interface APIServices {
     @GET("/users/forgot_password/")
     Call<MessageModel> sendOtp(@Header("Access") String access, @Header("email") String email);
 
-    @GET
-    Call<MessageModel> isVerified(@Header("Access") String string);
+    @GET("/users/is_user_verified")
+    Call<UserVerifiedModel> isVerified(@Header("Access") String string);
 }

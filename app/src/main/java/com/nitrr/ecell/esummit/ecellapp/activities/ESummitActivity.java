@@ -10,6 +10,7 @@ import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -59,8 +60,9 @@ public class ESummitActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Initialization
         speakerRV = findViewById(R.id.es_speaker_rv);
+        ImageView back = findViewById(R.id.esummit_back);
+        back.setOnClickListener(v -> finish());
         responseSpeakerObjectList = new ArrayList<>();
         findViewById(R.id.es_nested_sv).scrollTo(0,0);
         callAPI();

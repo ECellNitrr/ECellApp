@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -23,30 +22,24 @@ import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
 import com.nitrr.ecell.esummit.ecellapp.fragments.ChangeNumberFragment;
 import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
-import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
-import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
-import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
     private AppCompatActivity activity;
-    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> dialog.cancel();
 
     public CustomHamburgerDialog() {
     }
 
     public CustomHamburgerDialog with(AppCompatActivity activity) {
         this.activity = activity;
+         this.activity = activity;
         return this;
     }
 
     public void build() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
@@ -56,6 +49,8 @@ public class CustomHamburgerDialog {
         CardView changeNumber = alertView.findViewById(R.id.hamburger_change_number);
         CardView aboutUs = alertView.findViewById(R.id.hamburger_about_us);
         CardView logOut = alertView.findViewById(R.id.hamburger_log_out);
+        if(pref.getMobileVerified(activity))
+            verifyNumber.setVisibility(View.GONE);
 
         String name="ECellApp Visitor";
         SharedPref pref = new SharedPref();
@@ -70,6 +65,7 @@ public class CustomHamburgerDialog {
         item1.setText(name);
 
         verifyNumber.setOnClickListener(v -> {
+            alertDialog.dismiss();
             showOTPDialog();
             builder.setOnDismissListener(DialogInterface::dismiss);
         });
@@ -84,11 +80,13 @@ public class CustomHamburgerDialog {
         });
 
         aboutUs.setOnClickListener(v -> {
+            alertDialog.dismiss();
             Intent intent = new Intent(activity, AboutUsActivity.class);
             activity.startActivity(intent);
         });
 
         logOut.setOnClickListener(v -> {
+            alertDialog.dismiss();
             pref.clearPrefs(activity);
             Utils.showLongToast(activity, "Logged Out Successfully!");
             activity.startActivity(new Intent(activity, LoginActivity.class));
@@ -125,51 +123,5 @@ public class CustomHamburgerDialog {
                 .addToBackStack(null)
                 .commit();
         alertDialog.dismiss();
-        sendOTP();
-    }
-
-    private boolean checkPhone(EditText editText) {
-        String phoneNo = editText.getText().toString();
-
-        if (!isNotEmpty(editText))
-            return false;
-
-        if (phoneNo.length() == 10) {
-            if (phoneNo.charAt(0) == '6' || phoneNo.charAt(0) == '7' || phoneNo.charAt(0) == '8' || phoneNo.charAt(0) == '9')
-                return true;
-            else
-                editText.setError("Invalid Number!");
-        } else
-            editText.setError("Enter a 10 digit number.");
-        return false;
-    }
-
-    private boolean isNotEmpty(EditText editText) {
-        if (!TextUtils.isEmpty(editText.getText()))
-            return true;
-        else
-            editText.setError("Field Required!");
-        return false;
-    }
-
-    private void changeNumber(String newNumber) {
-        Call<PhoneNumber> call = AppClient.getInstance().createService(APIServices.class).changeNumber("SDF");
-        call.enqueue(new Callback<PhoneNumber>() {
-            @Override
-            public void onResponse(@NonNull Call<PhoneNumber> call, @NonNull Response<PhoneNumber> response) {
-                if (response.isSuccessful() && !activity.isFinishing()) {
-                    PhoneNumber number = response.body();
-
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<PhoneNumber> call, @NonNull Throwable t) {
-            }
-        });
-    }
-
-    private void sendOTP() {
-
     }
 }

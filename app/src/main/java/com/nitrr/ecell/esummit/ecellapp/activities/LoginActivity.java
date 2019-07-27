@@ -292,6 +292,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             pref.setAccessToken(getApplicationContext(), authResponse.getToken());
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                             Log.e("User Logging In", response.body().getMessage());
+                            pref.setGreeted(LoginActivity.this);
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         } else {
                             loginDialog.dismiss();
