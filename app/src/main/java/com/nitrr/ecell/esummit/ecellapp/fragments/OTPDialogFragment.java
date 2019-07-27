@@ -89,6 +89,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                     .commit();
         }
     };
+
     public OTPDialogFragment() {
     }
 
@@ -118,7 +119,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         return view;
     }
 
-    private void initialize(View v,OTPDialogFragment fragment) {
+    private void initialize(View v, OTPDialogFragment fragment) {
         otp1 = v.findViewById(R.id.otp1);
         otp2 = v.findViewById(R.id.otp2);
         otp3 = v.findViewById(R.id.otp3);

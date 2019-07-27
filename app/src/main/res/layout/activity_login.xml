@@ -139,7 +139,9 @@
         app:layout_constraintBottom_toTopOf="@id/login_signin_guide"
         app:layout_constraintEnd_toEndOf="@id/upper_poly"
         app:layout_constraintStart_toStartOf="@id/upper_poly"
-        app:layout_constraintTop_toBottomOf="@+id/forgot" />
+        app:layout_constraintTop_toBottomOf="@+id/forgot"
+        android:elevation="0dp"
+        tools:targetApi="lollipop" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/login_signin_guide"

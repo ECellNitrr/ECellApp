@@ -94,12 +94,12 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                     .replace(R.id.login_outer_constraint, fragment, "verify_email")
                     .addToBackStack(null)
                     .commit();
-            signIn.setVisibility(View.GONE);
-            register.setVisibility(View.GONE);
-            loginEmail.setEnabled(false);
-            loginPassword.setEnabled(false);
-            signIn.setEnabled(false);
-            toRegister.setEnabled(false);
+//            signIn.setVisibility(View.GONE);
+//            register.setVisibility(View.GONE);
+//            loginEmail.setEnabled(false);
+//            loginPassword.setEnabled(false);
+//            signIn.setEnabled(false);
+//            toRegister.setEnabled(false);
         });
 
         register.setOnClickListener((View v) -> {
@@ -296,7 +296,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                         } else {
                             loginDialog.dismiss();
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(), "Hello "+response.errorBody().string());
+                                Utils.showLongToast(getApplicationContext(), response.errorBody().string());
                             }
                             Log.e("LoginApiCall =====", "Response Body NULL.");
                             Log.e("LoginApiCall =====", Objects.requireNonNull(response.errorBody()).string() + " ");
@@ -428,11 +428,5 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         is.close();
         return sb.toString();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(isLoginScreen)
-            super.onBackPressed();
     }
 }

@@ -77,7 +77,8 @@
             style="@style/ForgotTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="#FFCFA2">
+            app:passwordToggleDrawable="@drawable/login_password_eye"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/new_pass"
@@ -98,8 +99,9 @@
             style="@style/ForgotTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="#FFCFA2"
-            app:boxStrokeColor="@color/forgot_button">
+            app:boxStrokeColor="@color/forgot_button"
+            app:passwordToggleDrawable="@drawable/login_password_eye"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirm_new_pass"

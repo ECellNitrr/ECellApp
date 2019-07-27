@@ -156,7 +156,7 @@ public class HomeActivity extends BaseActivity {
                             pref.setMobileVerified(HomeActivity.this,true);
                     }
                     else
-                        Log.e("HomeActivity====","null response recived");
+                        Log.e("HomeActivity====","null response received");
                 }
             }
 
