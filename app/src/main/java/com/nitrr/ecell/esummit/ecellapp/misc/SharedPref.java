@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -93,8 +94,8 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(context).edit();
     }
 
-    void clearPrefs(Context context) {
-        SharedPreferences.Editor editor = getEditor(context);
+    public void clearPrefs(Activity activity) {
+        SharedPreferences.Editor editor = getEditor(activity);
         editor.clear();
         editor.putBoolean("isLoggedIn", false);
         editor.apply();

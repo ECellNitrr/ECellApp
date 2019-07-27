@@ -90,11 +90,6 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         }
     };
 
-    private DialogInterface.OnClickListener backListener = (dialog, which) -> Objects.requireNonNull(getActivity())
-            .getSupportFragmentManager().popBackStack();
-
-    private DialogInterface.OnClickListener noListener = ((dialog, which) -> dialog.dismiss());
-
     public OTPDialogFragment() {
     }
 
@@ -161,7 +156,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.resend_otp:
-                if(email!=null)
+                if(email==null)
                     verifyResendOTP();
                 else
                     forgotPasswordResendOTP();
@@ -170,7 +165,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     }
 
     private void forgotPasswordResendOTP() {
-        AlertDialog bar = Utils.showProgressBar(getContext(), "Verifying Email...");
+
         ForgotPassword emailObject = new ForgotPassword(email);
 
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(getContext().getString(R.string.app_access_token),emailObject);
@@ -179,7 +174,6 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
                 if(response.isSuccessful() && getContext() != null) {
                     if(response.body() != null) {
-                        bar.dismiss();
                         Utils.showShortToast(getContext(), response.body().getMessage());
                     } else {
 
@@ -196,7 +190,6 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
             }
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
-                bar.dismiss();
                 DialogInterface.OnClickListener retryListener = (dialogInterface, i) -> {
                     forgotPasswordResendOTP();
                     dialogInterface.dismiss();
@@ -228,9 +221,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         if (n == -1) {
             if (otp4.getText().toString().contentEquals("-"))
                 if (otp3.getText().toString().contentEquals("-"))
-                    if (otp1.getText().toString().contentEquals("-"))
-                        Utils.showDialog(getContext(),null,true,"Are u sure u want to go back?","OTP won't be verified","Yes",backListener,"No",noListener);
-                    else if(otp2.getText().toString().contentEquals("-"))
+                    if(otp2.getText().toString().contentEquals("-"))
                         otp1.setText("-");
                     else
                         otp2.setText("-");

@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ public class CustomHamburgerDialog {
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
     private AppCompatActivity activity;
+
 
     public CustomHamburgerDialog() {
     }
@@ -58,6 +60,8 @@ public class CustomHamburgerDialog {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            if(name.contentEquals(""))
+                name = "Username";
         }
         item1.setText(name);
 
@@ -94,20 +98,19 @@ public class CustomHamburgerDialog {
 
         builder.setView(alertView);
         alertDialog = builder.create();
-        alertDialog.setCancelable(false);
-        alertDialog.setCanceledOnTouchOutside(true);
 
         if (alertDialog.getWindow() != null) {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
             params.gravity = Gravity.TOP;
-
             params.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            params.verticalMargin = 0.05f;
 
             alertDialog.getWindow().setAttributes(params);
             alertDialog.getWindow().getAttributes().windowAnimations = R.style.MenuDialogAnimation;
         }
+
         alertDialog.show();
     }
 
