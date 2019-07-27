@@ -2,16 +2,15 @@ package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,9 +28,6 @@ public class CustomHamburgerDialog {
     private SharedPref pref = new SharedPref();
     private Activity activity;
     private AppCompatActivity act;
-
-    public CustomHamburgerDialog() {
-    }
 
     public CustomHamburgerDialog with(Activity activity) {
         this.activity = activity;
@@ -62,6 +58,8 @@ public class CustomHamburgerDialog {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            if(name.contentEquals(""))
+                name = "Username";
         }
         item1.setText(name);
 
@@ -96,20 +94,19 @@ public class CustomHamburgerDialog {
 
         builder.setView(alertView);
         alertDialog = builder.create();
-        alertDialog.setCancelable(false);
-        alertDialog.setCanceledOnTouchOutside(true);
 
         if (alertDialog.getWindow() != null) {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
             params.gravity = Gravity.TOP;
-            params.verticalMargin = 0.05f;
             params.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            params.verticalMargin = 0.05f;
 
             alertDialog.getWindow().setAttributes(params);
             alertDialog.getWindow().getAttributes().windowAnimations = R.style.MenuDialogAnimation;
         }
+
         alertDialog.show();
     }
 

@@ -94,7 +94,7 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(activity).edit();
     }
 
-    void clearPrefs(Activity activity) {
+    public void clearPrefs(Activity activity) {
         SharedPreferences.Editor editor = getEditor(activity);
         editor.clear();
         editor.putBoolean("isLoggedIn", false);
