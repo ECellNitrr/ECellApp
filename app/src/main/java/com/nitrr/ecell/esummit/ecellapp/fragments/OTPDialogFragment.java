@@ -90,9 +90,11 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         }
     };
 
-    private DialogInterface.OnClickListener backListener = (dialog, which) -> {getActivity().getSupportFragmentManager().popBackStack();};
+    private DialogInterface.OnClickListener backListener = (dialog, which) -> Objects.requireNonNull(getActivity())
+            .getSupportFragmentManager().popBackStack();
 
     private DialogInterface.OnClickListener noListener = ((dialog, which) -> dialog.dismiss());
+
     public OTPDialogFragment() {
     }
 
@@ -100,6 +102,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_otp, container, false);
+        view.setBackgroundColor(getResources().getColor(R.color.colorWhite));
         Bundle bundle = getArguments();
         OTPDialogFragment fragment = this;
         initialize(view,fragment);
@@ -123,7 +126,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         return view;
     }
 
-    private void initialize(View v,OTPDialogFragment fragment) {
+    private void initialize(View v, OTPDialogFragment fragment) {
         otp1 = v.findViewById(R.id.otp1);
         otp2 = v.findViewById(R.id.otp2);
         otp3 = v.findViewById(R.id.otp3);
@@ -179,6 +182,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                         bar.dismiss();
                         Utils.showShortToast(getContext(), response.body().getMessage());
                     } else {
+
                     }
                 } else {
                     try {

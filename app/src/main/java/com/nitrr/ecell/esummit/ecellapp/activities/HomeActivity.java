@@ -55,7 +55,8 @@ public class HomeActivity extends BaseActivity {
                 .addToBackStack(null)
                 .commit();
     };
-    private DialogInterface.OnClickListener noListener = (dialog, which) -> {dialog.cancel();};
+
+    private DialogInterface.OnClickListener noListener = (dialog, which) -> dialog.cancel();
 
     private int distance = 0, offset;
     private float displacement = 0;
@@ -175,7 +176,7 @@ public class HomeActivity extends BaseActivity {
         Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
         call.enqueue(new Callback<UserVerifiedModel>() {
             @Override
-            public void onResponse(Call<UserVerifiedModel> call, Response<UserVerifiedModel> response) {
+            public void onResponse(@NonNull Call<UserVerifiedModel> call, @NonNull Response<UserVerifiedModel> response) {
                 if(getApplicationContext()!=null && response.isSuccessful()){
                     UserVerifiedModel model = response.body();
                     if(model!=null){
@@ -183,7 +184,7 @@ public class HomeActivity extends BaseActivity {
                             pref.setMobileVerified(HomeActivity.this,true);
                     }
                     else
-                        Log.e("HomeActivity====","null response recived");
+                        Log.e("HomeActivity====","null response received");
                 }
             }
 

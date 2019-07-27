@@ -1,6 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,8 +29,8 @@ public class CustomHamburgerDialog {
     public CustomHamburgerDialog() {
     }
 
-    public CustomHamburgerDialog with(Activity activity) {
-        this.activity = (AppCompatActivity) activity;
+    public CustomHamburgerDialog with(AppCompatActivity activity) {
+        this.activity = activity;
         return this;
     }
 
@@ -87,8 +86,10 @@ public class CustomHamburgerDialog {
             alertDialog.dismiss();
             pref.clearPrefs(activity);
             Utils.showLongToast(activity, "Logged Out Successfully!");
-            activity.startActivity(new Intent(activity, LoginActivity.class));
             activity.finish();
+            Intent i = new Intent(activity, LoginActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(i);
         });
 
         builder.setView(alertView);

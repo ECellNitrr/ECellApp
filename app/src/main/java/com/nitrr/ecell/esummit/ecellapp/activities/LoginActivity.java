@@ -62,16 +62,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         initializeViews();
 
-        if(getIntent() != null) {
-            isLoginScreen = true;
-            signIn.setVisibility(View.VISIBLE);
-            register.setVisibility(View.VISIBLE);
-            loginEmail.setEnabled(true);
-            loginPassword.setEnabled(true);
-            signIn.setEnabled(true);
-            toRegister.setEnabled(true);
-        }
-
         loginanimation = new LoginAnimation(this);
         loginanimation.toSignInScreen();
 
@@ -90,16 +80,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         forgotPassword.setOnClickListener(view -> {
             isLoginScreen = false;
-            getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager()
+                    .beginTransaction()
                     .replace(R.id.login_outer_constraint, fragment, "verify_email")
                     .addToBackStack(null)
                     .commit();
-            signIn.setVisibility(View.GONE);
-            register.setVisibility(View.GONE);
-            loginEmail.setEnabled(false);
-            loginPassword.setEnabled(false);
-            signIn.setEnabled(false);
-            toRegister.setEnabled(false);
         });
 
         register.setOnClickListener((View v) -> {
@@ -429,11 +414,5 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         is.close();
         return sb.toString();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(isLoginScreen)
-            super.onBackPressed();
     }
 }
