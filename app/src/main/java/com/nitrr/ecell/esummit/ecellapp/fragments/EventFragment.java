@@ -37,6 +37,9 @@ public class EventFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
+
+        ImageView back = view.findViewById(R.id.eventfrag_back);
+        back.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             initalize(view);

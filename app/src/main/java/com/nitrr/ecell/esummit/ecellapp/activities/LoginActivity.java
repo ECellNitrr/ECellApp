@@ -292,11 +292,12 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             pref.setAccessToken(getApplicationContext(), authResponse.getToken());
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                             Log.e("User Logging In", response.body().getMessage());
+                            pref.setGreeted(LoginActivity.this);
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         } else {
                             loginDialog.dismiss();
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(), "Hello "+response.errorBody().string());
+                                Utils.showLongToast(getApplicationContext(), response.errorBody().string());
                             }
                             Log.e("LoginApiCall =====", "Response Body NULL.");
                             Log.e("LoginApiCall =====", Objects.requireNonNull(response.errorBody()).string() + " ");

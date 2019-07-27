@@ -89,6 +89,10 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                     .commit();
         }
     };
+
+    private DialogInterface.OnClickListener backListener = (dialog, which) -> {getActivity().getSupportFragmentManager().popBackStack();};
+
+    private DialogInterface.OnClickListener noListener = ((dialog, which) -> dialog.dismiss());
     public OTPDialogFragment() {
     }
 
@@ -105,7 +109,8 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
                 Log.e("OTPFrag", "Email has been received, Changing Password");
             } else {
                 Log.e("OTPFrag", "Null has been received, Verifying OTP");
-                verifyResendOTP();
+                if(!bundle.getBoolean("greeted"))
+                    verifyResendOTP();
             }
         } else {
             Utils.showShortToast(getContext(), "An Error occurred. Please Try Again");
@@ -219,7 +224,9 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         if (n == -1) {
             if (otp4.getText().toString().contentEquals("-"))
                 if (otp3.getText().toString().contentEquals("-"))
-                    if (otp2.getText().toString().contentEquals("-"))
+                    if (otp1.getText().toString().contentEquals("-"))
+                        Utils.showDialog(getContext(),null,true,"Are u sure u want to go back?","OTP won't be verified","Yes",backListener,"No",noListener);
+                    else if(otp2.getText().toString().contentEquals("-"))
                         otp1.setText("-");
                     else
                         otp2.setText("-");

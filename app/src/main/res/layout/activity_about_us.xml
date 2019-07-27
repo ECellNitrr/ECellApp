@@ -25,6 +25,16 @@
             <!--android:paddingStart="20dp"-->
             <!--android:paddingEnd="20dp"/>-->
 
+        <ImageView
+            android:id="@+id/aboutus_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_back"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <TextView
             android:id="@+id/about_us_toolbar_text"
             android:layout_width="match_parent"
