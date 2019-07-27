@@ -1,9 +1,11 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,26 +17,48 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
+import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
+import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.UserVerifiedModel;
+import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
+import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
-
+    private SharedPref pref = new SharedPref();
     private ImageView bgCircle1, bgCircle2, bgCircle3;
+    private DialogInterface.OnClickListener yesListener = (dialog, which) -> {
+        pref.setGreeted(HomeActivity.this);
+        OTPDialogFragment fragment = new OTPDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("prevfrag","Home Activity");
+        bundle.putBoolean("greeted",true);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_parent_layout, fragment)
+                .addToBackStack(null)
+                .commit();
+    };
+    private DialogInterface.OnClickListener noListener = (dialog, which) -> {dialog.cancel();};
 
     private int distance = 0, offset;
     private float displacement = 0;
-
-    private ImageButton hamburger_button;
 
     @Override
     protected int getLayoutResourceId() {
@@ -45,6 +69,18 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(!pref.isGreeted(this)){
+            Utils.showDialog(this,
+                    null,
+                    false,
+                    "Welcome "+pref.getFirstName(this)+" "+ pref.getLastName(this),
+                    "Do u wish to verify OTP?",
+                    "Yes",
+                    yesListener,
+                    "NO",
+                    noListener);
+        }
+
         recyclerView = findViewById(R.id.home_recycler);
         bgCircle1 = findViewById(R.id.homebg_circle1);
         bgCircle2 = findViewById(R.id.homebg_circle2);
@@ -53,8 +89,6 @@ public class HomeActivity extends BaseActivity {
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
         adapter = new HomeRVAdapter(this, homeRVDataList);
-        setUpRV();
-
         initializeList("E Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
             Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
             startActivity(intent);
@@ -77,14 +111,14 @@ public class HomeActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        hamburger_button = findViewById(R.id.hamburgerButton);
+        ImageButton hamburger_button = findViewById(R.id.hamburgerButton);
         hamburger_button.setOnClickListener((View view) -> new CustomHamburgerDialog().with(HomeActivity.this).build());
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
 
         setUpRV();
+        APICall();
     }
-
 
     public void setUpRV() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -104,14 +138,14 @@ public class HomeActivity extends BaseActivity {
                 offset = recyclerView.computeHorizontalScrollOffset();
                 if (offset < distance / 4) {
                     displacement = (float) offset / (distance / 4);
-                    setColor(147, 223, 204, 241, 140, 120, displacement);
+                    setColor(98, 91, 93, 241, 104, 133, displacement);
 
                 } else if (offset < distance / 2) {
                     displacement = (float) (offset - (distance / 4)) / (distance / 4);
-                    setColor(241, 140, 120, 123, 193, 227, displacement);
+                    setColor(241, 104, 133, 146, 82, 130, displacement);
                 } else if (offset < (distance * 3 / 4)) {
                     displacement = (float) (offset - (distance / 2)) / (distance / 4);
-                    setColor(123, 193, 227, 248, 212, 130, displacement);
+                    setColor(146, 82, 130, 245, 173, 76, displacement);
                 }
                 super.onScrolled(recyclerView, dx, dy);
             }
@@ -135,5 +169,27 @@ public class HomeActivity extends BaseActivity {
     public void initializeList(String name, int cardImage, String color, View.OnClickListener listener) {
         HomeRVData data = new HomeRVData(name, color, cardImage, listener);
         homeRVDataList.add(data);
+    }
+
+    void APICall(){
+        Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
+        call.enqueue(new Callback<UserVerifiedModel>() {
+            @Override
+            public void onResponse(Call<UserVerifiedModel> call, Response<UserVerifiedModel> response) {
+                if(getApplicationContext()!=null && response.isSuccessful()){
+                    UserVerifiedModel model = response.body();
+                    if(model!=null){
+                        if(model.getVerified())
+                            pref.setMobileVerified(HomeActivity.this,true);
+                    }
+                    else
+                        Log.e("HomeActivity====","null response recived");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserVerifiedModel> call, Throwable t) {
+            }
+        });
     }
 }

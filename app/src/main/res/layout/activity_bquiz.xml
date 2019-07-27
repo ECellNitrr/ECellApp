@@ -5,5 +5,4 @@
     android:layout_height="match_parent"
     tools:context=".activities.BQuizActivity">
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

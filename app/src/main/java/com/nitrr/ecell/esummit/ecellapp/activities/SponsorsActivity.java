@@ -198,6 +198,9 @@ public class SponsorsActivity extends BaseActivity {
         circle3 = findViewById(R.id.spons_bgcircle_3);
         circle4 = findViewById(R.id.spons_bgcircle_4);
         circle5 = findViewById(R.id.spons_bgcircle_5);
+
+        ImageView back = findViewById(R.id.sponsor_back);
+        back.setOnClickListener(v -> finish());
     }
 
     int colorValue(int Initial, int Final, float pos) {

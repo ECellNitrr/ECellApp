@@ -17,13 +17,13 @@
     <string name="settings">Settings</string>
     <string name="event">Event</string>
     <string name="text_esummit">ESummit</string>
-    <string name="color_esummit">#44C7A6</string>
+    <string name="color_esummit">#2A2426</string>
     <string name="text_events">Events</string>
-    <string name="color_events">#ED5958</string>
+    <string name="color_events">#F50F46</string>
     <string name="text_bquiz">BQuiz</string>
-    <string name="color_bquiz">#2492C8</string>
+    <string name="color_bquiz">#800064</string>
     <string name="text_spons">Sponsors</string>
-    <string name="color_spons">#F2B531</string>
+    <string name="color_spons">#F39B15</string>
 
     <!--ESUMMIT STRINGS-->
     <string name="e_summit_19">E SUMMIT \'19</string>
@@ -47,19 +47,31 @@
     <string name="wasnt_able_to_load">Oops! data wasn\'t able to load</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
-    <string name="verify_otp">Verify OTP</string>
+    <string name="verify_number">Verify Mobile Number</string>
     <string name="no_internet">No internet Connection.</string>
 
     <!--facebook-->
     <string name="facebook_app_id">2421259651476627</string>
     <string name="fb_login_protocol_scheme">fb2421259651476627</string>
     <string name="update_msg">New Update Available</string>
-    <string name="change_number">change number</string>
+    <string name="change_number">Change Number</string>
     <string name="old_number">Old Number</string>
     <string name="new_number">New Number</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="esummit_tagline">\"Genesis of Innovation\"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="agreement">By clicking \'Accept\' you agree to all Terms and Conditions.</string>
+    <string name="back_to_login_screen"><![CDATA[<<Back To Login Screen]]></string>
+
+    <string name="dir">Director</string>
+    <string name="hcd">Head of Career Department</string>
+    <string name="fct">Faculty Incharge</string>
+    <string name="oco">Overall Coordinator</string>
+    <string name="hco">Head Coordinator</string>
+    <string name="mng">Manager</string>
+    <string name="exc">Executive</string>
+
+    <string name="app_access_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ</string>
+    <string name="resend_otp">Resend OTP ?</string>
 
 </resources>

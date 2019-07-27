@@ -42,6 +42,6 @@ public class SocketEventMessage extends SocketEvent {
 
     @Override
     public String toString() {
-        return "SocketEventMessage{" + "message='" + message + '\'' + ", bytes=" + byteString + '}';
+        return "SocketEventMessage{" + "MessageModel='" + message + '\'' + ", bytes=" + byteString + '}';
     }
 }

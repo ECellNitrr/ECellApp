@@ -31,6 +31,8 @@ import androidx.core.app.NotificationCompat;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 
+import retrofit2.http.HEAD;
+
 
 public class Utils {
 
@@ -57,7 +59,9 @@ public class Utils {
         return true;
     }
 
-    public static AlertDialog showDialog(Context context, Integer layout, boolean cancelable, String title, String message, String posButton, DialogInterface.OnClickListener posListener, String negButton, DialogInterface.OnClickListener negListener) {
+    public static AlertDialog showDialog(Context context, Integer layout, boolean cancelable, String title,
+                                         String message, String posButton, DialogInterface.OnClickListener posListener,
+                                         String negButton, DialogInterface.OnClickListener negListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
         if (!((Activity) context).isFinishing()) {
@@ -76,7 +80,6 @@ public class Utils {
 
             if (negButton != null && negListener != null)
                 builder.setNegativeButton(negButton, negListener);
-
             builder.create().show();
         }
 
@@ -121,6 +124,7 @@ public class Utils {
     public static AlertDialog showProgressBar(Context context, String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.alert_progress_layout, null);
+        builder.setCancelable(false);
         AlertDialog dialog = builder.create();
 
         Animation animation = new AlphaAnimation(1.0f, 0.5f);

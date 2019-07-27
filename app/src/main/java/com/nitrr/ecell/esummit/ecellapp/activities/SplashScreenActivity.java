@@ -48,7 +48,6 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         init();
     }
 
@@ -56,9 +55,10 @@ public class SplashScreenActivity extends BaseActivity {
         pref = new SharedPref();
 
         APICall();
-        if (pref.isLoggedIn()) {
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
+        
+        if(pref.isLoggedIn(this)) {
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
         }
 
         Animation animation = new AlphaAnimation(1.0f, 0.5f);
@@ -85,10 +85,9 @@ public class SplashScreenActivity extends BaseActivity {
                     if (details != null) {
                         checkAppVersion();
                     } else {
-
                         try {
                             if (response.errorBody() != null) {
-                                Log.e("details null====", "error message is " + response.errorBody().string());
+                                Log.e("details null====", "Error message is " + response.errorBody().string());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -135,7 +134,7 @@ public class SplashScreenActivity extends BaseActivity {
     private void goInsideApp() {
         Intent intent;
 
-        if (pref.isLoggedIn()) {
+        if (pref.isLoggedIn(this)) {
             intent = new Intent(this, HomeActivity.class);
         } else
             intent = new Intent(this, LoginActivity.class);

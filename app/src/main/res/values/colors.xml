@@ -9,7 +9,7 @@
     <color name="transparent">#00000000</color>
     <color name="colorLightBlack">#353533</color>
     <color name="border">#FF0000FF</color>
-    <color name="es_bg_color">#55D8B7</color>
+    <color name="es_bg_color">#2A2426</color>
     <color name="associateSponsBlue">#010C54</color>
     <color name="black_overlay">#66000000</color>
     <color name="bgBottomNavigation">#fe485a</color>
@@ -24,10 +24,14 @@
     <color name="aboutusToolbarBg">#5AB1D8</color>
     <color name="aboutusCardBg">#4DA7CF</color>
     <color name="colorHamAlertCardBackground">#2f2f2f</color>
+    <color name="black">#000</color>
 
     <color name="blue">#3498DB</color>
     <color name="light_blue">#85C1E9</color>
     <color name="green">#1D8348</color>
     <color name="forgot_button">#ffac5d</color>
+    <color name="change_pass_button">#ff3ea7</color>
+    <color name="dirt_blue">#416A87</color>
+    <color name="dark_blue">#5275A1</color>
 
 </resources>

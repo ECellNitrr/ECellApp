@@ -22,7 +22,7 @@ public class EventData {
     @SerializedName("details")
     @Expose
     private String details;
-    @SerializedName("icon")
+    @SerializedName("icon_url")
     @Expose
     private String img;
     @SerializedName("email")

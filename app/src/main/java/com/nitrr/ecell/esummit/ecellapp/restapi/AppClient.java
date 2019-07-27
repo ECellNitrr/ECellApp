@@ -1,29 +1,24 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 
+import android.app.Activity;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static String BASE_URL = "https://0f5df4de.ngrok.io/";
-
+    private static String BASE_URL = "https://207e332a.ngrok.io/";
     private static AppClient mInstance;
 
     private AppClient() {
@@ -46,13 +41,15 @@ public class AppClient {
         return retrofit.create(serviceClass);
     }
 
-    public <S> S createServiceWithAuth(Class<S> serviceClass, final AppCompatActivity activity) {
+    public <S> S createServiceWithAuth(Class<S> serviceClass, Activity activity) {
         SharedPref pref = new SharedPref();
         Interceptor interceptorReq = chain -> {
             Request request = chain.request().newBuilder()
-                    .addHeader("authId", pref.getAccessToken()).build();
+                    .header("Access", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ")
+                    .header("authorization", new SharedPref().getAccessToken(activity))
+                    .build();
 
-            Log.e("Header====", pref.getAccessToken()  );
+            Log.e("Header====", pref.getAccessToken(activity));
             return chain.proceed(request);
         };
 

@@ -1,7 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-
+import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword.EmailFragment;
@@ -34,22 +33,22 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity implements View.OnFocusChangeListener {
 
-    private Context context;
     private Button signIn,register;
     private TextView toSignIn, toRegister, forgotPassword;
     private EditText loginEmail, loginPassword;
     private EditText firstName, lastName, registerPassword, registerEmail, registerNumber;
-    private TextInputLayout loginEmailLayout, loginPasswordLayout, registerEmailLayout, registerPasswordLayout,
-            firstNameLayout , lastNameLayout, registerNumberLayout;
+    private TextInputLayout loginEmailLayout, loginPasswordLayout, registerEmailLayout,
+            registerPasswordLayout, firstNameLayout , lastNameLayout, registerNumberLayout;
     private LoginAnimation loginanimation;
     private AuthResponse authResponse;
+    private ConstraintLayout layout;
+    private boolean isLoginScreen = true;
     private EmailFragment fragment = new EmailFragment();
 
     @Override
@@ -62,6 +61,16 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         super.onCreate(savedInstanceState);
 
         initializeViews();
+
+        if(getIntent() != null) {
+            isLoginScreen = true;
+            signIn.setVisibility(View.VISIBLE);
+            register.setVisibility(View.VISIBLE);
+            loginEmail.setEnabled(true);
+            loginPassword.setEnabled(true);
+            signIn.setEnabled(true);
+            toRegister.setEnabled(true);
+        }
 
         loginanimation = new LoginAnimation(this);
         loginanimation.toSignInScreen();
@@ -80,7 +89,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         });
 
         forgotPassword.setOnClickListener(view -> {
-            getSupportFragmentManager().beginTransaction().replace(R.id.login_outer_constraint, fragment).addToBackStack(null).commit();
+            isLoginScreen = false;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.login_outer_constraint, fragment, "verify_email")
+                    .addToBackStack(null)
+                    .commit();
             signIn.setVisibility(View.GONE);
             register.setVisibility(View.GONE);
             loginEmail.setEnabled(false);
@@ -157,7 +170,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     }
 
     private void initializeViews() {
-        context = this;
+        layout = findViewById(R.id.login_outer_constraint);
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
         forgotPassword = findViewById(R.id.forgot);
@@ -231,7 +244,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                 pref.setIsLoggedIn(false, false, true);
                             else
                                 pref.setIsLoggedIn(true, false, false);
-                            startActivity(new Intent(context, HomeActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         } else {
                             dialog.dismiss();
                             Utils.showLongToast(getApplicationContext(), "Registration Failed");
@@ -240,7 +253,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                         }
                     } else {
                         dialog.cancel();
-                        Utils.showLongToast(getApplicationContext(), "Registration Failed");
+                        if(response.errorBody() != null) {
+                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                        }
                     }
 
                 } catch (Exception e) {
@@ -253,7 +268,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 dialog.cancel();
-                Utils.showLongToast(context, "Registration Failed" + t.getMessage());
+                Utils.showLongToast(getApplicationContext(), "Registration Failed" + t.getMessage());
             }
         });
     }
@@ -272,9 +287,13 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                     if (getApplicationContext() != null && response.isSuccessful()) {
                         if (response.body() != null) {
                             loginDialog.dismiss();
+                            AuthResponse authResponse = response.body();
+                            SharedPref pref = new SharedPref();
+                            pref.setAccessToken(getApplicationContext(), authResponse.getToken());
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-                            authResponse = response.body();
-                            startActivity(new Intent(context, HomeActivity.class));
+                            Log.e("User Logging In", response.body().getMessage());
+                            pref.setGreeted(LoginActivity.this);
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         } else {
                             loginDialog.dismiss();
                             if (response.errorBody() != null) {
@@ -299,7 +318,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                Utils.showLongToast(context, "There was an error " + t.getMessage());
+                Utils.showLongToast(getApplicationContext(), "There was an error " + t.getMessage());
             }
         });
     }
@@ -329,7 +348,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         return false;
     }
 
-    private boolean checkEmail(EditText editText, TextInputLayout layout){
+    private boolean checkEmail(EditText editText, TextInputLayout layout) {
         if(!isNotEmpty(editText, layout))
             return false;
         String email = editText.getText().toString();
@@ -414,12 +433,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        signIn.setVisibility(View.VISIBLE);
-        register.setVisibility(View.VISIBLE);
-        loginEmail.setEnabled(true);
-        loginPassword.setEnabled(true);
-        signIn.setEnabled(true);
-        toRegister.setEnabled(true);
+        if(isLoginScreen)
+            super.onBackPressed();
     }
 }

@@ -29,7 +29,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         receiver = new NetworkChangeReceiver();
 
         IntentFilter filter = new IntentFilter();
@@ -38,15 +37,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         if (receiver != null) {
             unregisterReceiver(receiver);
             receiver = null;
         }
-
-        super.onDestroy();
+        super.onStop();
     }
-
 
     protected abstract int getLayoutResourceId();
 }

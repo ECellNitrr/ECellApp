@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class MentorResponse implements Serializable {
-    @SerializedName("message")
+    @SerializedName("MessageModel")
     @Expose
     String message;
 

@@ -1,9 +1,17 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.PhoneNumber;
+import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
+import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.UserVerifiedModel;
+import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
+import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
+import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
+import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ChangePassword;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
+import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
+import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotVerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
@@ -27,7 +35,7 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    @GET("sponsors/list/2019")
+    @GET("/sponsors/list/2019/")
     Call<SponsorsModel> getSponsData();
 
     @GET("events/list/2019/")
@@ -42,7 +50,18 @@ public interface APIServices {
     Call<AuthResponse> postLoginUser(@Body LoginDetails loginDetails);
 
 
-    //User
+    //ForgotPassword
+    @POST("users/forgot_password/")
+    Call<GenericMessage> postEmailVerify(@Header("Access") String access,@Body ForgotPassword password);
+
+    @POST("users/check_otp/")
+    Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
+
+    @POST("users/change_password/")
+    Call<GenericMessage> postPasswordChange(@Header("Access") String access,@Body ChangePassword password);
+
+
+    //User CA Profile
     @POST("/user/ca_profile/")
     Call<GenericMessage> postCAProfile(@Body CADetails caDetails);
 
@@ -50,7 +69,7 @@ public interface APIServices {
     Call<GenericMessage> getSendOTP();
 
     @POST("/user/verify_otp/")
-    Call<GenericMessage> postSendOTP(@Header("token") String token, @Body ForgotPassword otpVerify);
+    Call<GenericMessage> postSendOTP(@Header("Authorization") String token, @Body ForgotPassword otpVerify);
 
 
     //Speakers
@@ -88,12 +107,21 @@ public interface APIServices {
     @GET("/spons")
     Call<TeamData> getTeamData();
 
-    @GET("/is_update_available")
+    @GET("/is_update_available/")
     Call<AppDetails> getAppdata();
 
-    @GET("/users/change_contact")
+    @GET("/users/change_contact/")
     Call<PhoneNumber> changeNumber(@Body String string);
 
-    @POST("/send_otp")
-    Call<String> sendOTP(@Body String email);
+    @POST("/users/verify_otp/")
+    Call<OTPVerification> verifyOtp(@Header("Access") String access, @Header("Authorization") String token, @Body VerifyOTP verifyOTP);
+
+    @GET("/users/resend_otp/")
+    Call<MessageModel> resendOtp(@Header("Authorization") String auth, @Header("Access") String access);
+
+    @GET("/users/forgot_password/")
+    Call<MessageModel> sendOtp(@Header("Access") String access, @Header("email") String email);
+
+    @GET("/users/is_user_verified")
+    Call<UserVerifiedModel> isVerified(@Header("Access") String string);
 }

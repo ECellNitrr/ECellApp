@@ -81,9 +81,9 @@ public class ContactUs extends Fragment implements View.OnClickListener {
     }
 
     private void sendMessage() {
-        String token = pref.getAccessToken();
-        String email = pref.getEmail();
-        String name = pref.getFirstName();
+        String token = pref.getAccessToken(getContext());
+        String email = pref.getEmail(getActivity());
+        String name = pref.getFirstName(getActivity());
 
 //        Call<> call =  AppClient.getInstance().createService(APIServices.class).methordName;
     }

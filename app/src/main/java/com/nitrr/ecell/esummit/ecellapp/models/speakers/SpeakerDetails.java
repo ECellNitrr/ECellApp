@@ -7,10 +7,6 @@ import java.io.Serializable;
 
 public class SpeakerDetails implements Serializable {
 
-    public SpeakerDetails(String name, String image) {
-        this.name = name;
-        this.image = image;
-    }
 
     @SerializedName("id")
     @Expose
@@ -28,7 +24,7 @@ public class SpeakerDetails implements Serializable {
     @Expose
     int experience;
 
-    @SerializedName("profile_pic")
+    @SerializedName("profile_pic_url")
     @Expose
     String image;
 
@@ -56,8 +52,7 @@ public class SpeakerDetails implements Serializable {
     @Expose
     int year;
 
-    public SpeakerDetails(int id, String name, String image) {
-        this.id = id;
+    public SpeakerDetails(String name, String image) {
         this.name = name;
         this.image = image;
     }
