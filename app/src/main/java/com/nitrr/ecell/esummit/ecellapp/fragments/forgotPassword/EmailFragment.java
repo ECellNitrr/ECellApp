@@ -107,6 +107,7 @@ public class EmailFragment extends Fragment {
                             Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.login_outer_constraint, fragment)
+                                    .addToBackStack(null)
                                     .commit();
 
                         } else {

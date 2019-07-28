@@ -41,7 +41,6 @@ public class CustomHamburgerDialog {
         builder = new AlertDialog.Builder(activity);
 
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
-
         initalizeList(alertView);
 
         builder.setView(alertView);
@@ -62,19 +61,6 @@ public class CustomHamburgerDialog {
         alertDialog.show();
     }
 
-    private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("prevfrag","Home Activity");
-        fragment.setArguments(bundle);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_parent_layout, fragment)
-                .addToBackStack(null)
-                .commit();
-        alertDialog.dismiss();
-    }
-
     void initalizeList(View v){
 
         TextView item1 = v.findViewById(R.id.username);
@@ -85,9 +71,9 @@ public class CustomHamburgerDialog {
         if(pref.getMobileVerified(activity))
             verifyNumber.setVisibility(View.GONE);
 
-        String name="ECellApp Visitor";
+        String name = "ECellApp Visitor";
         SharedPref pref = new SharedPref();
-        if(pref.getFirstName(activity).equals("")) {
+        if (pref.getFirstName(activity).equals("")) {
             String email = pref.getEmail(activity);
             try {
                 name = email.split("@")[0];
@@ -129,5 +115,21 @@ public class CustomHamburgerDialog {
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(i);
         });
+    }
+
+    private void showOTPDialog() {
+        OTPDialogFragment fragment = new OTPDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("prevfrag", "Home Activity");
+        fragment.setArguments(bundle);
+
+        if (activity != null) {
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_parent_layout, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        alertDialog.dismiss();
     }
 }
