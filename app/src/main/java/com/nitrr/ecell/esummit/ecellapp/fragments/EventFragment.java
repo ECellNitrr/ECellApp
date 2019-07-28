@@ -44,7 +44,7 @@ public class EventFragment extends Fragment {
         if (bundle != null) {
             initalize(view);
             setData(bundle.getString("event_name"),
-                    bundle.getString("event_image"),
+                    bundle.getString("event_img"),
                     bundle.getString("event_details"),
                     bundle.getString("event_time"),
                     bundle.getString("event_date"),

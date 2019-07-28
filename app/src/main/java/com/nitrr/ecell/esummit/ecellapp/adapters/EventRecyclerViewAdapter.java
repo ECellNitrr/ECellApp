@@ -25,12 +25,12 @@ import java.util.List;
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.MyViewHolder> {
     private List<EventData> list;
     private Context context;
-    private float alpha = 0.2f;
+    private List<Float> floats;
 
-
-    public EventRecyclerViewAdapter(Context context,List<EventData> list) {
+    public EventRecyclerViewAdapter(Context context,List<EventData> list,List<Float> floats) {
         this.context = context;
         this.list = list;
+        this.floats = floats;
     }
 
     @NonNull
@@ -45,11 +45,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         EventData data = list.get(i);
         Glide.with(context).load(data.getImage()).into(myViewHolder.eventimg);
         myViewHolder.event.setText(data.getName());
-        myViewHolder.eventbg.setAlpha(alpha);
-        if((i+1)%3==0)
-            alpha-=0.2f;
-        else
-            alpha+=0.2f;
+        myViewHolder.eventbg.setAlpha(floats.get(i));
 
         myViewHolder.card.setOnClickListener(v -> {
 

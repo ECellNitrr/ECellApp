@@ -61,7 +61,7 @@
 
     <style name="HamburgerAlertTextViewStyle">
         <item name="android:layout_margin">8dp</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
