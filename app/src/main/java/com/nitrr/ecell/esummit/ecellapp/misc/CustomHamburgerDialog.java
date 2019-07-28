@@ -1,7 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,6 +25,7 @@ public class CustomHamburgerDialog {
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
     private AppCompatActivity activity;
+    private AlertDialog.Builder builder;
 
 
     public CustomHamburgerDialog() {
@@ -38,62 +38,11 @@ public class CustomHamburgerDialog {
 
     public void build() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder = new AlertDialog.Builder(activity);
 
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
 
-        TextView item1 = alertView.findViewById(R.id.username);
-        CardView verifyNumber = alertView.findViewById(R.id.hamburger_verify_number);
-        CardView changeNumber = alertView.findViewById(R.id.hamburger_change_number);
-        CardView aboutUs = alertView.findViewById(R.id.hamburger_about_us);
-        CardView logOut = alertView.findViewById(R.id.hamburger_log_out);
-        if(pref.getMobileVerified(activity))
-            verifyNumber.setVisibility(View.GONE);
-
-        String name="ECellApp Visitor";
-        SharedPref pref = new SharedPref();
-        if(pref.getFirstName(activity).equals("")) {
-            String email = pref.getEmail(activity);
-            try {
-                name = email.split("@")[0];
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if(name.contentEquals(""))
-                name = "Username";
-        }
-        item1.setText(name);
-
-        verifyNumber.setOnClickListener(v -> {
-            alertDialog.dismiss();
-            showOTPDialog();
-            builder.setOnDismissListener(DialogInterface::dismiss);
-        });
-
-        changeNumber.setOnClickListener(v -> {
-            alertDialog.dismiss();
-            activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.home_parent_layout, new ChangeNumberFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-
-        aboutUs.setOnClickListener(v -> {
-            alertDialog.dismiss();
-            Intent intent = new Intent(activity, AboutUsActivity.class);
-            activity.startActivity(intent);
-        });
-
-        logOut.setOnClickListener(v -> {
-            alertDialog.dismiss();
-            pref.clearPrefs(activity);
-            Utils.showLongToast(activity, "Logged Out Successfully!");
-            activity.finish();
-            Intent i = new Intent(activity, LoginActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivity(i);
-        });
+        initalizeList(alertView);
 
         builder.setView(alertView);
         alertDialog = builder.create();
@@ -124,5 +73,61 @@ public class CustomHamburgerDialog {
                 .addToBackStack(null)
                 .commit();
         alertDialog.dismiss();
+    }
+
+    void initalizeList(View v){
+
+        TextView item1 = v.findViewById(R.id.username);
+        CardView verifyNumber = v.findViewById(R.id.hamburger_verify_number);
+        CardView changeNumber = v.findViewById(R.id.hamburger_change_number);
+        CardView aboutUs = v.findViewById(R.id.hamburger_about_us);
+        CardView logOut = v.findViewById(R.id.hamburger_log_out);
+        if(pref.getMobileVerified(activity))
+            verifyNumber.setVisibility(View.GONE);
+
+        String name="ECellApp Visitor";
+        SharedPref pref = new SharedPref();
+        if(pref.getFirstName(activity).equals("")) {
+            String email = pref.getEmail(activity);
+            try {
+                name = email.split("@")[0];
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if(name.contentEquals(""))
+                name = "Username";
+        }
+        item1.setText(name);
+
+        verifyNumber.setOnClickListener(view -> {
+            alertDialog.dismiss();
+            showOTPDialog();
+            builder.setOnDismissListener(DialogInterface::dismiss);
+        });
+
+        changeNumber.setOnClickListener(view -> {
+            alertDialog.dismiss();
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_parent_layout, new ChangeNumberFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        aboutUs.setOnClickListener(view -> {
+            alertDialog.dismiss();
+            Intent intent = new Intent(activity, AboutUsActivity.class);
+            activity.startActivity(intent);
+        });
+
+        logOut.setOnClickListener(view -> {
+            alertDialog.dismiss();
+            pref.clearPrefs(activity);
+            Utils.showLongToast(activity, "Logged Out Successfully!");
+            activity.finish();
+            Intent i = new Intent(activity, LoginActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(i);
+        });
     }
 }
