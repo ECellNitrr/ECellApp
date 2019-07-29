@@ -8,6 +8,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
+import com.nitrr.ecell.esummit.ecellapp.models.events.EventRegistrationModel;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ChangePassword;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
@@ -124,4 +125,7 @@ public interface APIServices {
 
     @GET("/users/is_user_verified")
     Call<UserVerifiedModel> isVerified(@Header("Access") String string);
+
+    @POST("/event//")
+    Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token,@Body EventRegistrationModel model);
 }
