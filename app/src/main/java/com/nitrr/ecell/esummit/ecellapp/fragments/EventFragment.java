@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EventFragment extends Fragment implements View.OnClickListener {
+public class EventFragment extends Fragment {
 
     private TextView event;
     private TextView eventDetails;
@@ -78,6 +79,8 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         eventDetails = v.findViewById(R.id.event_text);
         venueField = v.findViewById(R.id.event_venue);
         timeField = v.findViewById(R.id.date_time);
+        Button register = v.findViewById(R.id.event_register_button);
+        register.setOnClickListener(v1 -> registerAPI(id));
     }
 
     private void setData(String name, String image, String details, String time, String date, String venue) {
@@ -119,16 +122,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         super.onDestroy();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.event_register_button:
-                registerAPI(eventName, id);
-                break;
-        }
-    }
-
-    private void registerAPI(String name, String id) {
+    private void registerAPI( String id) {
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Registring...");
         SharedPref pref = new SharedPref();
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).registerForEvent(getContext().getString(R.string.app_access_token),pref.getAccessToken(getContext()),id);
@@ -155,10 +149,11 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(Call<GenericMessage> call, Throwable t) {
                 dialog.cancel();
-                if(Utils.isNetworkAvailable(getContext()))
+                if(!Utils.isNetworkAvailable(getContext()))
                     Utils.showShortToast(getContext(),"No Internet Connection");
                 else
                     Utils.showShortToast(getContext(),"Something went Wrong");
+                Log.e("EvtregFailure===","response is a failure");
             }
         });
     }

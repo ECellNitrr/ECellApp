@@ -56,6 +56,14 @@ public class HomeActivity extends BaseActivity {
 
     private DialogInterface.OnClickListener noListener = (dialog, which) -> dialog.cancel();
 
+    private DialogInterface.OnClickListener retryListener = (dialog, which) -> {
+        isVerifiedAPICall();
+    };
+
+    private DialogInterface.OnClickListener closeListener = (dialog, which) -> {
+        finish();
+    };
+
     private int distance = 0, offset;
     private float displacement = 0;
 
@@ -171,10 +179,12 @@ public class HomeActivity extends BaseActivity {
     }
 
     void isVerifiedAPICall() {
+        AlertDialog dialog = Utils.showProgressBar(this,"Please wait for a moment");
         Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
         call.enqueue(new Callback<UserVerifiedModel>() {
             @Override
             public void onResponse(@NonNull Call<UserVerifiedModel> call, @NonNull Response<UserVerifiedModel> response) {
+                dialog.dismiss();
                 if(getApplicationContext()!=null && response.isSuccessful()){
                     UserVerifiedModel model = response.body();
                     if(model!=null){
@@ -188,6 +198,11 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<UserVerifiedModel> call, @NonNull Throwable t) {
+                if(Utils.isNetworkAvailable(getApplicationContext()))
+                    Utils.showDialog(getApplicationContext(),null,false,
+                            "No Internet Commection","Please connect to internet and try again",
+                            "Retry",retryListener,
+                            "Close App",closeListener);
             }
         });
     }

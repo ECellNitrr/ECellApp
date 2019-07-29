@@ -35,8 +35,8 @@
 
     <ImageView
         android:id="@+id/eventfrag_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         app:srcCompat="@drawable/ic_back"
         android:focusable="true"
         android:clickable="true"
