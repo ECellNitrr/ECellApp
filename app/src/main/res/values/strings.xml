@@ -73,4 +73,6 @@
 
     <string name="app_access_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ</string>
     <string name="resend_otp">Resend OTP ?</string>
+    <string name="about_us_contact">08094966697</string>
+    <string name="about_us_website">ecell@nitrr.ac.in</string>
 </resources>

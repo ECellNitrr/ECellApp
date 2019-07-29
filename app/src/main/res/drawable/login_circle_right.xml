@@ -12,8 +12,8 @@
                 android:startColor="#FFFFBA8F"
                 android:endColor="#FFFF3E8F" />
 
-            <size android:width="30dp"
-                android:height="30dp"/>
+            <size android:width="40dp"
+                android:height="40dp"/>
         </shape>
     </item>
 </layer-list>

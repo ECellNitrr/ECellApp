@@ -5,15 +5,19 @@ import com.google.gson.annotations.SerializedName;
 
 public class TeamList {
 
-    @SerializedName("id")
+    public String getImage() {
+        return image;
+    }
+
+    @SerializedName("image")
     @Expose
-    int id;
+    String image;
 
     @SerializedName("name")
     @Expose
     String name;
 
-    @SerializedName("url")
+    @SerializedName("profile_url")
     @Expose
     String url;
 
@@ -32,4 +36,6 @@ public class TeamList {
     public String getType() {
         return type;
     }
+
+    //Executives and Managers ka image and profile_url nai dikhana
 }

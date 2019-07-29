@@ -131,6 +131,7 @@
             android:text="Date: 2019-07-29 | Time: 10:00am"
             android:textColor="@color/colorLightBlack"
             android:textSize="22dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -180,7 +181,6 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-
             android:id="@+id/event_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

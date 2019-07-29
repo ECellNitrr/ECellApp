@@ -73,8 +73,8 @@ public class EmailFragment extends Fragment {
 //
 //            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
 //                    .beginTransaction()
-//                    .replace(R.id.login_outer_constraint, fragment)
-//                    .remove(EmailFragment.this)
+//                    .replace(R.id.login_outer_constraint, fragment, "otp")
+//                    .addToBackStack("verify_email")
 //                    .commit();
         });
         return v;
@@ -106,7 +106,8 @@ public class EmailFragment extends Fragment {
 
                             Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                                     .beginTransaction()
-                                    .replace(R.id.login_outer_constraint, fragment)
+                                    .add(R.id.login_outer_constraint, fragment)
+                                    .addToBackStack("email")
                                     .commit();
 
                         } else {
@@ -117,7 +118,7 @@ public class EmailFragment extends Fragment {
                         try {
                             if (response.errorBody() != null) {
                                 Log.e(forgot, "ErrorBodyPrinted");
-                                Utils.showShortToast(getContext(), response.errorBody().string());
+                                Utils.showShortToast(getContext(), response.errorBody().string().split("\"")[3]);
                                 bar.dismiss();
                             }
                         } catch (IOException e) {

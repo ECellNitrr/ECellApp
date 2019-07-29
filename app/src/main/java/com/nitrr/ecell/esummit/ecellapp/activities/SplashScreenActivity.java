@@ -80,7 +80,7 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void APICall() {
-        Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getAppdata();
+        Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getAppData();
         call.enqueue(new Callback<AppDetails>() {
             @Override
             public void onResponse(@NonNull Call<AppDetails> call, @NonNull Response<AppDetails> response) {

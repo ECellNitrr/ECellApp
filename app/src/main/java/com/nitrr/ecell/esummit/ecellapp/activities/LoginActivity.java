@@ -275,6 +275,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             AuthResponse authResponse = response.body();
                             SharedPref pref = new SharedPref();
                             pref.setAccessToken(getApplicationContext(), authResponse.getToken());
+                            pref.setIsLoggedIn(true, false, false);
                             Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                             Log.e("User Logging In", response.body().getMessage());
                             pref.setGreeted(LoginActivity.this);

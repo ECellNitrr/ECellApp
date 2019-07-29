@@ -7,27 +7,39 @@ public class EventData {
     @SerializedName("id")
     @Expose
     private int pos;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("venue")
     @Expose
     private String venue;
+
     @SerializedName("date")
     @Expose
     private String date;
+
     @SerializedName("time")
     @Expose
     private String time;
+
     @SerializedName("details")
     @Expose
     private String details;
+
+//    @SerializedName("cover_pic")
+//    @Expose
+//    private String coverPic;
+
     @SerializedName("icon_url")
     @Expose
     private String img;
+
     @SerializedName("email")
     @Expose
     private String email;
+
     @SerializedName("flag")
     @Expose
     private boolean flag;

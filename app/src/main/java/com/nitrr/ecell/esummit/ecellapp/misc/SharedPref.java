@@ -114,9 +114,9 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("greeted",false);
     }
 
-    public void setGreeted(Activity activity){
+    public void setGreeted(Activity activity, boolean isGreeted) {
         SharedPreferences.Editor editor = getEditor(activity);
-        editor.putBoolean("greeted",true);
+        editor.putBoolean("greeted", isGreeted);
         editor.commit();
     }
 }

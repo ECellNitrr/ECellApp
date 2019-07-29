@@ -82,7 +82,7 @@
                         android:id="@+id/contactus_number"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="08827544244"
+                        android:text="@string/about_us_contact"
                         android:layout_gravity="center"
                         android:textSize="20sp"
                         android:textColor="@color/aboutUsHeading"
@@ -110,7 +110,7 @@
                         android:id="@+id/contactus_website"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="ecell@nitrr.ac.in"
+                        android:text="@string/about_us_website"
                         android:layout_gravity="center"
                         android:textSize="20sp"
                         android:textColor="@color/aboutUsHeading"
@@ -201,7 +201,7 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         app:srcCompat="@drawable/about_us_feedback"
                         android:padding="10dp"
                         android:layout_weight="1"/>
@@ -218,6 +218,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"/>
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -227,10 +228,10 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Submit"
-                    android:textSize="24sp"
                     android:background="@color/transparent"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:text="Submit"
+                    android:textSize="24sp" />
 
             </LinearLayout>
             </androidx.cardview.widget.CardView>
