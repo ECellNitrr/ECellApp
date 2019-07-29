@@ -262,8 +262,9 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     }
 
     private void verifyResendOTP() {
+
+        AlertDialog dialog = Utils.showProgressBar(getContext(),"Verifying...");
         String s = new SharedPref().getAccessToken(getActivity());
-        Log.e("token===="," value is: "+s);
         Call<MessageModel> call = AppClient.getInstance()
                 .createService(APIServices.class)
                 .resendOtp(s, getContext().getString(R.string.app_access_token));
@@ -271,6 +272,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         call.enqueue(new Callback<MessageModel>() {
             @Override
             public void onResponse(@NonNull Call<MessageModel> call, @NonNull Response<MessageModel> response) {
+                dialog.dismiss();
                 if (response.isSuccessful() && getContext() != null) {
                     msg = response.body();
                     if (msg == null) {
@@ -281,6 +283,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void onFailure(@NonNull Call<MessageModel> call, @NonNull Throwable t) {
+                dialog.cancel();
                 if (getContext() != null) {
                     if (!Utils.isNetworkAvailable(getContext()))
                         Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", resendOTPListener, "Cancel", cancelListener);
@@ -294,6 +297,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
     }
 
     private void verifyOTPAPICall() {
+        AlertDialog dialog = Utils.showProgressBar(getContext(),"Verifying OTP...");
         SharedPref pref = new SharedPref();
         String token = pref.getAccessToken(getContext());
         VerifyOTP OTP = new VerifyOTP();
@@ -302,6 +306,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
         call.enqueue(new Callback<OTPVerification>() {
             @Override
             public void onResponse(Call<OTPVerification> call, Response<OTPVerification> response) {
+                dialog.dismiss();
                 if (getContext() != null)
                     if (response.isSuccessful()) {
                         OTPVerification otp = response.body();
@@ -322,6 +327,7 @@ public class OTPDialogFragment extends Fragment implements View.OnClickListener 
 
             @Override
             public void onFailure(Call<OTPVerification> call, Throwable t) {
+                dialog.cancel();
                 if (getContext() != null) {
                     {
                         if (!Utils.isNetworkAvailable(getContext()))

@@ -153,7 +153,10 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(Call<GenericMessage> call, Throwable t) {
                 dialog.cancel();
-                if(Utils.isNetworkAvailable(getContext())){}
+                if(Utils.isNetworkAvailable(getContext()))
+                    Utils.showShortToast(getContext(),"No Internet Connection");
+                else
+                    Utils.showShortToast(getContext(),"Something went Wrong");
             }
         });
     }
