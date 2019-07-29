@@ -2,17 +2,17 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    app:cardBackgroundColor="#E6FFFFFF"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
     android:paddingBottom="16dp"
+    app:cardBackgroundColor="@color/dirt_blue"
     app:cardCornerRadius="16dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="16dp"
@@ -24,9 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:padding="2dp"
             android:text="@string/name"
-            android:textColor="@color/colorLightBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -44,13 +45,14 @@
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
             app:cardCornerRadius="8dp">
 
             <TextView
                 style="@style/HamburgerAlertTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="@string/verify_number" />
 
         </androidx.cardview.widget.CardView>
@@ -60,13 +62,14 @@
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
             app:cardCornerRadius="8dp">
 
             <TextView
                 style="@style/HamburgerAlertTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="@string/change_number" />
         </androidx.cardview.widget.CardView>
 
@@ -75,13 +78,14 @@
             style="@style/HamburgerAlertCardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
             app:cardCornerRadius="8dp">
 
             <TextView
                 style="@style/HamburgerAlertTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="@string/about_us" />
 
         </androidx.cardview.widget.CardView>
@@ -92,13 +96,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
             app:cardCornerRadius="8dp">
 
             <TextView
                 style="@style/HamburgerAlertTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="@string/log_out" />
         </androidx.cardview.widget.CardView>
 

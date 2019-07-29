@@ -18,7 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static String BASE_URL = "https://ecell.nitrr.ac.in";
+    private static String BASE_URL = "https://ecell.nitrr.ac.in/";
+
     private static AppClient mInstance;
 
     private AppClient() {

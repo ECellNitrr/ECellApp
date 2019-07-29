@@ -61,8 +61,8 @@ public interface APIServices {
     @POST("/speaker/add_new/")
     Call<GenericMessage> postAddNewSpeaker(@Header("token") String token, @Body SpeakerDetails speakerDetails);
 
-    @GET("speakers/list/{year}/")
-    Call<ResponseSpeaker> getSpeakerList(@Path("year") int year);
+    @GET("speakers/list/2018/")
+    Call<ResponseSpeaker> getSpeakerList(@Header("Access") String access);
 
     @GET("/speaker/generate_sheet/")
     Call getSpeakerSheet();

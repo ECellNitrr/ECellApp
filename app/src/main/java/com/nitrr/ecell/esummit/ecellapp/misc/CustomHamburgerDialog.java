@@ -25,6 +25,8 @@ public class CustomHamburgerDialog {
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
     private AppCompatActivity activity;
+    private AlertDialog.Builder builder;
+
 
     public CustomHamburgerDialog() {
     }
@@ -36,37 +38,60 @@ public class CustomHamburgerDialog {
 
     public void build() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder = new AlertDialog.Builder(activity);
 
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
+        initalizeList(alertView);
 
-        TextView item1 = alertView.findViewById(R.id.username);
-        CardView verifyNumber = alertView.findViewById(R.id.hamburger_verify_number);
-        CardView changeNumber = alertView.findViewById(R.id.hamburger_change_number);
-        CardView aboutUs = alertView.findViewById(R.id.hamburger_about_us);
-        CardView logOut = alertView.findViewById(R.id.hamburger_log_out);
+        builder.setView(alertView);
+        alertDialog = builder.create();
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
+            params.gravity = Gravity.TOP;
+            params.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            params.verticalMargin = 0.05f;
+
+            alertDialog.getWindow().setAttributes(params);
+            alertDialog.getWindow().getAttributes().windowAnimations = R.style.MenuDialogAnimation;
+        }
+
+        alertDialog.show();
+    }
+
+    void initalizeList(View v){
+
+        TextView item1 = v.findViewById(R.id.username);
+        CardView verifyNumber = v.findViewById(R.id.hamburger_verify_number);
+        CardView changeNumber = v.findViewById(R.id.hamburger_change_number);
+        CardView aboutUs = v.findViewById(R.id.hamburger_about_us);
+        CardView logOut = v.findViewById(R.id.hamburger_log_out);
         if(pref.getMobileVerified(activity))
             verifyNumber.setVisibility(View.GONE);
 
-        String name="ECellApp Visitor";
+        String name = "ECellApp Visitor";
         SharedPref pref = new SharedPref();
-        if(pref.getFirstName(activity).equals("")) {
+        if (pref.getFirstName(activity).equals("")) {
             String email = pref.getEmail(activity);
             try {
                 name = email.split("@")[0];
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            if(name.contentEquals(""))
+                name = "Username";
         }
         item1.setText(name);
 
-        verifyNumber.setOnClickListener(v -> {
+        verifyNumber.setOnClickListener(view -> {
             alertDialog.dismiss();
             showOTPDialog();
             builder.setOnDismissListener(DialogInterface::dismiss);
         });
 
-        changeNumber.setOnClickListener(v -> {
+        changeNumber.setOnClickListener(view -> {
             alertDialog.dismiss();
             activity.getSupportFragmentManager()
                     .beginTransaction()
@@ -75,13 +100,13 @@ public class CustomHamburgerDialog {
                     .commit();
         });
 
-        aboutUs.setOnClickListener(v -> {
+        aboutUs.setOnClickListener(view -> {
             alertDialog.dismiss();
             Intent intent = new Intent(activity, AboutUsActivity.class);
             activity.startActivity(intent);
         });
 
-        logOut.setOnClickListener(v -> {
+        logOut.setOnClickListener(view -> {
             alertDialog.dismiss();
             pref.clearPrefs(activity);
             Utils.showLongToast(activity, "Logged Out Successfully!");
@@ -90,36 +115,21 @@ public class CustomHamburgerDialog {
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(i);
         });
-
-        builder.setView(alertView);
-        alertDialog = builder.create();
-        alertDialog.setCancelable(false);
-        alertDialog.setCanceledOnTouchOutside(true);
-
-        if (alertDialog.getWindow() != null) {
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-            WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
-            params.gravity = Gravity.TOP;
-            params.verticalMargin = 0.05f;
-            params.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-
-            alertDialog.getWindow().setAttributes(params);
-            alertDialog.getWindow().getAttributes().windowAnimations = R.style.MenuDialogAnimation;
-        }
-        alertDialog.show();
     }
 
     private void showOTPDialog() {
         OTPDialogFragment fragment = new OTPDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("prevfrag","Home Activity");
+        bundle.putString("prevfrag", "Home Activity");
         fragment.setArguments(bundle);
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_parent_layout, fragment)
-                .addToBackStack(null)
-                .commit();
+
+        if (activity != null) {
+            activity.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_parent_layout, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
         alertDialog.dismiss();
     }
 }

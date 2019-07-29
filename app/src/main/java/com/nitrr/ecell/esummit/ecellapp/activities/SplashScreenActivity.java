@@ -39,10 +39,6 @@ public class SplashScreenActivity extends BaseActivity {
         dialog.dismiss();
     };
 
-    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
-        this.finish();
-        dialog.dismiss();
-    };
 
     @Override
     protected int getLayoutResourceId() {
@@ -99,6 +95,7 @@ public class SplashScreenActivity extends BaseActivity {
                     }
 
                 } else {
+
                     Utils.showDialog(SplashScreenActivity.this,
                             null,
                             false,
@@ -113,11 +110,7 @@ public class SplashScreenActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<AppDetails> call, @NonNull Throwable t) {
-                if (Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(SplashScreenActivity.this, null, false, getString(R.string.no_internet), null, "Retry", retryListener, "Cancel", cancelListener);
-                else {
-                    Utils.showLongToast(SplashScreenActivity.this, "Something went Wrong");
-                }
+                Utils.showLongToast(SplashScreenActivity.this, "Something went Wrong");
             }
         });
     }

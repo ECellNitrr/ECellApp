@@ -88,11 +88,6 @@ public class OTPDialogFragment extends Fragment {
         }
     };
 
-    private DialogInterface.OnClickListener backListener = (dialog, which) -> Objects.requireNonNull(getActivity())
-            .getSupportFragmentManager().popBackStack();
-
-    private DialogInterface.OnClickListener noListener = ((dialog, which) -> dialog.dismiss());
-
     public OTPDialogFragment() {
     }
 
@@ -160,16 +155,16 @@ public class OTPDialogFragment extends Fragment {
     }
 
     private void forgotPasswordResendOTP() {
-        AlertDialog bar = Utils.showProgressBar(getContext(), "Verifying Email...");
+
         ForgotPassword emailObject = new ForgotPassword(email);
 
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(getContext().getString(R.string.app_access_token),emailObject);
         call.enqueue(new Callback<GenericMessage>() {
+
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
                 if(response.isSuccessful() && getContext() != null) {
                     if(response.body() != null) {
-                        bar.dismiss();
                         Utils.showShortToast(getContext(), response.body().getMessage());
                     } else {
 
@@ -184,9 +179,9 @@ public class OTPDialogFragment extends Fragment {
                     }
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
-                bar.dismiss();
                 DialogInterface.OnClickListener retryListener = (dialogInterface, i) -> {
                     forgotPasswordResendOTP();
                     dialogInterface.dismiss();
@@ -218,10 +213,7 @@ public class OTPDialogFragment extends Fragment {
         if (n == -1) {
             if (otp4.getText().toString().contentEquals("-"))
                 if (otp3.getText().toString().contentEquals("-"))
-                    if (otp1.getText().toString().contentEquals("-"))
-                        Utils.showDialog(getContext(),null,true,"Are u sure u want to go back?",
-                                "OTP won't be verified", "Yes", backListener,"No", noListener);
-                    else if(otp2.getText().toString().contentEquals("-"))
+                    if(otp2.getText().toString().contentEquals("-"))
                         otp1.setText("-");
                     else
                         otp2.setText("-");
@@ -284,7 +276,7 @@ public class OTPDialogFragment extends Fragment {
                         Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", resendOTPListener, "Cancel", cancelListener);
                     else {
                         Utils.showShortToast(getContext(), "Something went wrong");
-                        Objects.requireNonNull(getActivity()).onBackPressed();
+//                        Objects.requireNonNull(getActivity()).onBackPressed();
                     }
                 }
             }
@@ -299,7 +291,7 @@ public class OTPDialogFragment extends Fragment {
         Call<OTPVerification> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).verifyOtp(getContext().getString(R.string.app_access_token), token, verifyOTP);
         call.enqueue(new Callback<OTPVerification>() {
             @Override
-            public void onResponse(Call<OTPVerification> call, Response<OTPVerification> response) {
+            public void onResponse(@NonNull Call<OTPVerification> call, @NonNull Response<OTPVerification> response) {
                 if (getContext() != null)
                     if (response.isSuccessful()) {
                         OTPVerification otp = response.body();
@@ -326,7 +318,7 @@ public class OTPDialogFragment extends Fragment {
                             Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", retryListener, "Cancel", cancelListener);
                         else {
                             Utils.showShortToast(getContext(), "Something went wrong");
-                            getActivity().onBackPressed();
+//                            getActivity().onBackPressed();
                         }
                     }
                 }

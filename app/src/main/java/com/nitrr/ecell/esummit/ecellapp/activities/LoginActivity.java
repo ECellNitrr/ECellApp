@@ -47,9 +47,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             registerPasswordLayout, firstNameLayout , lastNameLayout, registerNumberLayout;
     private LoginAnimation loginanimation;
     private AuthResponse authResponse;
-    ConstraintLayout layout;
+    private ConstraintLayout layout;
     private boolean isLoginScreen = true;
-    EmailFragment fragment = new EmailFragment();
+    private EmailFragment fragment = new EmailFragment();
 
     @Override
     protected int getLayoutResourceId() {
@@ -213,6 +213,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             authResponse = response.body();
 
                             SharedPref pref = new SharedPref();
+                            pref.clearPrefs(LoginActivity.this);
                             pref.setSharedPref(LoginActivity.this,
                                     authResponse.getToken(),
                                     details.getFirstName(),
