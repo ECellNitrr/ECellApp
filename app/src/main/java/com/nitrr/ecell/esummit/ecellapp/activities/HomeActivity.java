@@ -23,8 +23,7 @@ import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
-import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
-import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.UserVerifiedModel;
+import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -43,11 +42,10 @@ public class HomeActivity extends BaseActivity {
     private SharedPref pref = new SharedPref();
     private ImageView bgCircle1, bgCircle2, bgCircle3;
     private DialogInterface.OnClickListener yesListener = (dialog, which) -> {
-        pref.setGreeted(HomeActivity.this);
+        pref.setGreeted(HomeActivity.this, true);
         OTPDialogFragment fragment = new OTPDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putString("prevfrag","Home Activity");
-        bundle.putBoolean("greeted",true);
         fragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -74,7 +72,7 @@ public class HomeActivity extends BaseActivity {
             Utils.showDialog(this,
                     null,
                     false,
-                    "Welcome "+pref.getFirstName(this)+" "+ pref.getLastName(this),
+                    "Welcome " + pref.getFirstName(this) + " " + pref.getLastName(this),
                     "Do u wish to verify OTP?",
                     "Yes",
                     yesListener,
@@ -118,7 +116,7 @@ public class HomeActivity extends BaseActivity {
         recyclerView.hasFixedSize();
 
         setUpRV();
-        APICall();
+        isVerifiedAPICall();
     }
 
     public void setUpRV() {
@@ -172,7 +170,7 @@ public class HomeActivity extends BaseActivity {
         homeRVDataList.add(data);
     }
 
-    void APICall(){
+    void isVerifiedAPICall() {
         Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
         call.enqueue(new Callback<UserVerifiedModel>() {
             @Override
@@ -180,7 +178,7 @@ public class HomeActivity extends BaseActivity {
                 if(getApplicationContext()!=null && response.isSuccessful()){
                     UserVerifiedModel model = response.body();
                     if(model!=null){
-                        if(model.getVerified())
+                        if(model.getUserIsVerified())
                             pref.setMobileVerified(HomeActivity.this,true);
                     }
                     else
@@ -189,7 +187,7 @@ public class HomeActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<UserVerifiedModel> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserVerifiedModel> call, @NonNull Throwable t) {
             }
         });
     }

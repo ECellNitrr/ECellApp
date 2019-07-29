@@ -7,18 +7,19 @@ import java.util.List;
 
 public class SponsorsModel {
 
-    @SerializedName("MessageModel")
+    @SerializedName("message")
     @Expose
-    String mesage;
+    String message;
+
     @SerializedName("data")
     @Expose
-    List<com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData> list;
+    List<SponsRVData> list;
 
-    public String getMesage() {
-        return mesage;
+    public String getMessage() {
+        return message;
     }
 
-    public List<com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData> getList() {
+    public List<SponsRVData> getList() {
         return list;
     }
 }

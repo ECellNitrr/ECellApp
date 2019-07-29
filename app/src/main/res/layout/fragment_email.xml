@@ -10,7 +10,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.forgotPassword.EmailFragment"
     android:background="#ff68a2"
-    android:elevation="10dp"
+    android:elevation="2dp"
     tools:targetApi="lollipop">
 
     <ImageView
@@ -52,19 +52,19 @@
         android:layout_height="wrap_content"
         android:fontFamily="casual"
         android:textSize="20sp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:textAlignment="center"
         android:text="No Problem . . .\nYou just need to enter your registered Email-ID to Reset your Password"
-        app:layout_constraintTop_toBottomOf="@id/forgot_title"/>
+        app:layout_constraintTop_toBottomOf="@id/forgot_title"
+        app:layout_constraintBottom_toTopOf="@id/forgot_edit_guide"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/forgot_edit_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65"/>
+        app:layout_constraintGuide_percent="0.6"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/forgot_email_layout"
@@ -72,6 +72,7 @@
         android:layout_height="wrap_content"
         style="@style/ForgotTextInputLayoutStyle"
         app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide"
+        app:layout_constraintBottom_toBottomOf="@id/forgot_button_guide"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -83,7 +84,8 @@
             android:paddingEnd="25dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-
+            android:singleLine="true"
+            android:imeOptions="actionDone"
             android:hint="Registered Email"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +121,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8"/>
+        app:layout_constraintGuide_percent="0.85"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/forgot_verify"

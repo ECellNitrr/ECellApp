@@ -52,14 +52,10 @@ public class ChangePasswordFragment extends Fragment {
         ((TextView)v.findViewById(R.id.forgot_title)).setTypeface(Typeface.createFromAsset(Objects.requireNonNull(getContext())
                 .getAssets(), "fonts/Oswald-Regular.ttf"));
 
-        MaterialButton back = v.findViewById(R.id.change_back);
-        back.getBackground().setColorFilter(this.getResources()
-                .getColor(R.color.transparent), PorterDuff.Mode.MULTIPLY);
-        back.setOnClickListener(view -> startActivity(new Intent(getActivity(), LoginActivity.class)));
-
         newPass = v.findViewById(R.id.new_pass);
-        confirmPass = v.findViewById(R.id.confirm_new_pass);
-
+        newPassLayout = v.findViewById(R.id.new_pass_layout);
+        confirmPass = v.findViewById(R.id.confirm_pass);
+        confPassLayout = v.findViewById(R.id.confirm_pass_layout);
         Bundle b = getArguments();
         if (b != null) {
             email = b.getString("email", "");
@@ -78,7 +74,8 @@ public class ChangePasswordFragment extends Fragment {
                 AlertDialog bar = Utils.showProgressBar(getContext(), "Changing Password...");
 
                 Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
-                        .postPasswordChange(getContext().getString(R.string.app_access_token),new ChangePassword(email, password, otp));
+                        .postPasswordChange(getContext().getString(R.string.app_access_token),
+                                new ChangePassword(email, password, otp));
 
                 call.enqueue(new Callback<GenericMessage>() {
                     @Override
@@ -120,8 +117,8 @@ public class ChangePasswordFragment extends Fragment {
                             };
                             if(!Utils.isNetworkAvailable(getContext())){
                                 Utils.showDialog(getContext(), null, false, "Network Unstable",
-                                        "There was a Connection Error. Make sure you have a stable connection", "Retry",
-                                        retryListener, "Cancel", cancelListener);
+                                        "There was a Connection Error. Make sure you have a stable connection",
+                                        "Retry", retryListener, "Cancel", cancelListener);
                             }
                             else{
                                 Utils.showShortToast(getContext(),"Something went wrong");

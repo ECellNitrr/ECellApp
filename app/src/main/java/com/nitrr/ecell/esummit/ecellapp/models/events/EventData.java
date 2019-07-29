@@ -6,34 +6,42 @@ import com.google.gson.annotations.SerializedName;
 public class EventData {
     @SerializedName("id")
     @Expose
-    private int pos;
+    private int id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("venue")
     @Expose
     private String venue;
+
     @SerializedName("date")
     @Expose
     private String date;
+
     @SerializedName("time")
     @Expose
     private String time;
+
     @SerializedName("details")
     @Expose
     private String details;
+
     @SerializedName("icon_url")
     @Expose
     private String img;
+
     @SerializedName("email")
     @Expose
     private String email;
+
     @SerializedName("flag")
     @Expose
     private boolean flag;
 
-    public int getPos() {
-        return pos;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -67,5 +75,6 @@ public class EventData {
     public boolean isFlag() {
         return flag;
     }
+
 
 }

@@ -52,9 +52,11 @@
         android:text="Register"
         android:textSize="18sp"
         android:textColor="@color/colorWhite"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16sp"
         android:padding="4dp"
+        android:focusable="true"
+        android:clickable="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -145,6 +147,7 @@
             android:text="Date: 2019-07-29 | Time: 10:00am"
             android:textColor="@color/black"
             android:textSize="22dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -198,7 +201,6 @@
             android:layout_gravity="center"
             android:padding="4dp">
         <TextView
-
             android:id="@+id/event_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

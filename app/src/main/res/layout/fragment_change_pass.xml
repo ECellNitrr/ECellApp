@@ -6,20 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFCFA2"
-    tools:context=".fragments.forgotPassword.EmailFragment">
+    tools:context=".fragments.forgotPassword.EmailFragment"
+    android:elevation="2dp"
+    tools:targetApi="lollipop">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="90dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@id/forgot_guide"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_key_design" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -27,14 +31,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.32" />
 
     <TextView
         android:id="@+id/forgot_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/acme"
-        android:paddingTop="10dp"
         android:text="Set New Password"
         android:textAlignment="center"
         android:textSize="35sp"
@@ -60,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.52" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -73,10 +76,11 @@
         app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/change_number_layout"
+            android:id="@+id/new_pass_layout"
             style="@style/ForgotTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             app:passwordToggleDrawable="@drawable/login_password_eye"
             app:passwordToggleEnabled="true">
 
@@ -90,12 +94,15 @@
                 android:paddingTop="15dp"
                 android:paddingEnd="25dp"
                 android:paddingBottom="15dp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@id/confirm_pass"
                 android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/change_confirm_layout"
+            android:id="@+id/confirm_pass_layout"
             style="@style/ForgotTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +111,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confirm_new_pass"
+                android:id="@+id/confirm_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm Password"
@@ -113,7 +120,9 @@
                 android:paddingTop="15dp"
                 android:paddingEnd="25dp"
                 android:paddingBottom="15dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +133,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/change_reset"
@@ -144,19 +153,5 @@
         app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/change_back"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Widget.MaterialComponents.Button"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/back_to_login_screen"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/change_reset"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,25 +1,23 @@
-package com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber;
+package com.nitrr.ecell.esummit.ecellapp.models.verifyNumber;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PhoneNumber {
+public class SendNumber {
 
     @SerializedName("Access")
     @Expose
     String apptoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ";
 
-    @SerializedName("email")
+    @SerializedName("token")
     @Expose
-    String email;
+    String token;
 
-    @SerializedName("contact")
+    @SerializedName("otp")
     @Expose
-    String number;
+    String otp;
 
-    public PhoneNumber(String email, String number) {
-        this.email = email;
-        this.number = number;
+    public SendNumber(String token) {
+        this.token = token;
     }
-
 }

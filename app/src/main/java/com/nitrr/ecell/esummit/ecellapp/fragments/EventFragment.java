@@ -44,7 +44,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     private TextView venueField;
     private TextView timeField;
     private BroadcastReceiver receiver;
-    private String eventName;
+    private String eventName, id;
 
     public EventFragment() {
     }
@@ -60,6 +60,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         if (bundle != null) {
             initalize(view);
             eventName = bundle.getString("event_name");
+            id = bundle.getString("id");
             setData(bundle.getString("event_name"),
                     bundle.getString("event_img"),
                     bundle.getString("event_details"),
@@ -122,27 +123,28 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.event_register_button:
-                registerAPI(eventName);
+                registerAPI(eventName, id);
                 break;
         }
     }
 
-    private void registerAPI(String name) {
+    private void registerAPI(String name, String id) {
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Registring...");
         SharedPref pref = new SharedPref();
-        EventRegistrationModel model = new EventRegistrationModel(pref.getEmail(getContext()),name);
-        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).registerForEvent(getContext().getString(R.string.app_access_token),pref.getAccessToken(getContext()),model);
+        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).registerForEvent(getContext().getString(R.string.app_access_token),pref.getAccessToken(getContext()),id);
         call.enqueue(new Callback<GenericMessage>() {
             @Override
             public void onResponse(Call<GenericMessage> call, Response<GenericMessage> response) {
                 dialog.dismiss();
                 if(getContext()!=null && response.isSuccessful()){
                     String msg = response.body().getMessage();
-                    if(msg!=null)
+                    if(msg!=null){
                         Log.e("EvtReg. respons msg","Message is: "+msg);
+                        Utils.showShortToast(getContext(),"Registration Successfull");
+                    }
                     else {
                         try {
-                            Log.e("EvtReg. empty respons",response.errorBody().string());
+                            Log.e("EvtReg. empty response",response.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

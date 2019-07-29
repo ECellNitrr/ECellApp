@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.OTPDialogFragment"
+    android:elevation="2dp"
+    tools:targetApi="lollipop"
     android:clickable="true"
     android:focusable="true">
 
@@ -13,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="1"
-        android:src="@drawable/otp_bg"/>
+        android:src="@drawable/background_otp"/>
 
     <TextView
         android:id="@+id/verifyotp"
