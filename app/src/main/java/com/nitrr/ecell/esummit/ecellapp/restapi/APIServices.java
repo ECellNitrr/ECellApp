@@ -1,6 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
-import com.google.gson.annotations.SerializedName;
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
 import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
@@ -15,7 +14,6 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotPassword;
-import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
 
@@ -57,16 +55,8 @@ public interface APIServices {
     Call<GenericMessage> changeNumber(@Header("Access") String access, @Header("Authorization") String token, @Body ChangeNumber number);
 
 
-    //Speakers
-    @POST("/speaker/add_new/")
-    Call<GenericMessage> postAddNewSpeaker(@Header("token") String token, @Body SpeakerDetails speakerDetails);
-
     @GET("speakers/list/2018/")
     Call<ResponseSpeaker> getSpeakerList(@Header("Access") String access);
-
-    @GET("/speaker/generate_sheet/")
-    Call getSpeakerSheet();
-
 
     @GET("team/list/")
     Call<TeamData> getTeamData();
@@ -82,4 +72,7 @@ public interface APIServices {
 
     @GET("users/is_user_verified/")
     Call<UserVerifiedModel> isVerified(@Header("Access") String string);
+
+    @POST("/events/register/{id}/")
+    Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token,@Path("id") String id);
 }

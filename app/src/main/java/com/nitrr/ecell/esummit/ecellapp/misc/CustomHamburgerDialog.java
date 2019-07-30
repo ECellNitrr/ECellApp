@@ -13,19 +13,28 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.AboutUsActivity;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.adapters.HamburgerRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.fragments.ChangeNumberFragment;
 import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
+import com.nitrr.ecell.esummit.ecellapp.models.HamburgerItemModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
     private AppCompatActivity activity;
+    List<HamburgerItemModel> list = new ArrayList<>();
     private AlertDialog.Builder builder;
+    private RecyclerView recycler;
 
 
     public CustomHamburgerDialog() {
@@ -41,7 +50,10 @@ public class CustomHamburgerDialog {
         builder = new AlertDialog.Builder(activity);
 
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
-        initalizeList(alertView);
+
+        recycler = alertView.findViewById(R.id.hamburger_recycler);
+        initalizeList();
+        setRecycler();
 
         builder.setView(alertView);
         alertDialog = builder.create();
@@ -61,15 +73,7 @@ public class CustomHamburgerDialog {
         alertDialog.show();
     }
 
-    void initalizeList(View v){
-
-        TextView item1 = v.findViewById(R.id.username);
-        CardView verifyNumber = v.findViewById(R.id.hamburger_verify_number);
-        CardView changeNumber = v.findViewById(R.id.hamburger_change_number);
-        CardView aboutUs = v.findViewById(R.id.hamburger_about_us);
-        CardView logOut = v.findViewById(R.id.hamburger_log_out);
-        if(pref.getMobileVerified(activity))
-            verifyNumber.setVisibility(View.GONE);
+    void initalizeList(){
 
         String name = "ECellApp Visitor";
         SharedPref pref = new SharedPref();
@@ -83,39 +87,50 @@ public class CustomHamburgerDialog {
             if(name.contentEquals(""))
                 name = "Username";
         }
-        item1.setText(name);
 
-        verifyNumber.setOnClickListener(view -> {
-            alertDialog.dismiss();
-            showOTPDialog();
-            builder.setOnDismissListener(DialogInterface::dismiss);
-        });
+        additem(name,R.drawable.ic_username,null);
+        if(!pref.getMobileVerified(activity)){
+            additem(activity.getString(R.string.verify_number), R.drawable.ic_otp, v1 -> {
+                alertDialog.dismiss();
+                showOTPDialog();
+                builder.setOnDismissListener(DialogInterface::dismiss);
+            });
+        }
 
-        changeNumber.setOnClickListener(view -> {
+        additem(activity.getString(R.string.change_number),R.drawable.ic_call,v1 -> {
             alertDialog.dismiss();
             activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.home_parent_layout, new ChangeNumberFragment())
                     .addToBackStack(null)
-                    .commit();
-        });
+                    .commit();});
 
-        aboutUs.setOnClickListener(view -> {
+        additem(activity.getString(R.string.about_us),R.drawable.about_us_team,v1 -> {
             alertDialog.dismiss();
             Intent intent = new Intent(activity, AboutUsActivity.class);
-            activity.startActivity(intent);
-        });
+            activity.startActivity(intent);});
 
-        logOut.setOnClickListener(view -> {
+        additem(activity.getString(R.string.log_out),R.drawable.ic_log_out,v1 -> {
             alertDialog.dismiss();
             pref.clearPrefs(activity);
             Utils.showLongToast(activity, "Logged Out Successfully!");
             activity.finish();
             Intent i = new Intent(activity, LoginActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivity(i);
-        });
+            activity.startActivity(i);});
     }
+
+    void additem(String name, int img, View.OnClickListener listener){
+        list.add(new HamburgerItemModel(name,img,listener));
+    }
+
+
+    private void setRecycler() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity.getApplicationContext());
+        recycler.setLayoutManager(layoutManager);
+        recycler.setAdapter(new HamburgerRecyclerViewAdapter(activity.getApplicationContext(),list));
+    }
+
 
     private void showOTPDialog() {
         OTPDialogFragment fragment = new OTPDialogFragment();

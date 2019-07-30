@@ -114,6 +114,8 @@
         android:layout_margin="24dp"
         android:padding="4dp"
         android:text="@string/resend_otp"
+        android:focusable="true"
+        android:clickable="true"
         android:textSize="18sp"
         android:textColor="@color/colorWhite"
         android:textStyle="italic"

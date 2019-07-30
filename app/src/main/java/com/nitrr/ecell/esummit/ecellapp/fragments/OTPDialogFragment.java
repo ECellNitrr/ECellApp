@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OTPDialogFragment extends Fragment {
+public class OTPDialogFragment extends Fragment{
 
     private TextView otp1, otp2, otp3, otp4;
     private String otp = "";
@@ -100,7 +100,7 @@ public class OTPDialogFragment extends Fragment {
         initialize(view, this);
         if (bundle != null) {
             if(bundle.getString("email", null) != null) {
-                email = bundle.getString("email", null);
+                email = bundle.getString("email");
                 Log.e("OTPFrag", "Email has been received, Changing Password");
             } else {
                 Log.e("OTPFrag", "Null has been received, Verifying OTP");
@@ -125,7 +125,7 @@ public class OTPDialogFragment extends Fragment {
         otp4 = v.findViewById(R.id.otp4);
         TextView resend = v.findViewById(R.id.resend_otp);
         resend.setOnClickListener(view -> {
-            if(email!=null)
+            if(email==null)
                 verifyResendOTP();
             else
                 forgotPasswordResendOTP();
@@ -154,13 +154,52 @@ public class OTPDialogFragment extends Fragment {
         }
     }
 
+    public void update(int n) {
+        if (n == -1) {
+            if (otp4.getText().toString().contentEquals("-"))
+                if (otp3.getText().toString().contentEquals("-"))
+                    if(otp2.getText().toString().contentEquals("-"))
+                        otp1.setText("-");
+                    else
+                        otp2.setText("-");
+                else
+                    otp3.setText("-");
+            else
+                otp4.setText("-");
+        }
+        else if (n == -2) {
+            confirmOTP();
+        }
+        else if (otp1.getText().toString().contentEquals("-"))
+            otp1.setText("" + n);
+        else if (otp2.getText().toString().contentEquals("-"))
+            otp2.setText("" + n);
+        else if (otp3.getText().toString().contentEquals("-"))
+            otp3.setText("" + n);
+        else if (otp4.getText().toString().contentEquals("-"))
+            otp4.setText("" + n);
+    }
+
+    private void confirmOTP() {
+        if (!(otp4.getText().toString().contentEquals("_"))) {
+            otp = otp1.getText().toString() + otp2.getText() + otp3.getText() + otp4.getText();
+            if(email == null)
+                verifyOTPAPICall();
+            else
+                forgotOTPAPICall();
+        } else {
+            otp1.setText("_");
+            otp2.setText("_");
+            otp3.setText("_");
+            otp4.setText("_");
+            Utils.showShortToast(getContext(),"Please enter OTP correctly");
+        }
+    }
+
     private void forgotPasswordResendOTP() {
-
         ForgotPassword emailObject = new ForgotPassword(email);
-
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(getContext().getString(R.string.app_access_token),emailObject);
         call.enqueue(new Callback<GenericMessage>() {
-
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
                 if(response.isSuccessful() && getContext() != null) {
@@ -209,51 +248,8 @@ public class OTPDialogFragment extends Fragment {
         });
     }
 
-    public void update(int n) {
-        if (n == -1) {
-            if (otp4.getText().toString().contentEquals("-"))
-                if (otp3.getText().toString().contentEquals("-"))
-                    if(otp2.getText().toString().contentEquals("-"))
-                        otp1.setText("-");
-                    else
-                        otp2.setText("-");
-                else
-                    otp3.setText("-");
-            else
-                otp4.setText("-");
-        }
-        else if (n == -2) {
-            confirmOTP();
-        }
-        else if (otp1.getText().toString().contentEquals("-"))
-            otp1.setText("" + n);
-        else if (otp2.getText().toString().contentEquals("-"))
-            otp2.setText("" + n);
-        else if (otp3.getText().toString().contentEquals("-"))
-            otp3.setText("" + n);
-        else if (otp4.getText().toString().contentEquals("-"))
-            otp4.setText("" + n);
-    }
-
-    private void confirmOTP() {
-        if (!(otp4.getText().toString().contentEquals("_"))) {
-            otp = otp1.getText().toString() + otp2.getText() + otp3.getText() + otp4.getText();
-            if(email == null)
-                verifyOTPAPICall();
-            else
-                forgotOTPAPICall();
-        } else {
-            otp1.setText("_");
-            otp2.setText("_");
-            otp3.setText("_");
-            otp4.setText("_");
-            Utils.showShortToast(getContext(),"Please enter OTP correctly");
-        }
-    }
-
     private void verifyResendOTP() {
         String s = new SharedPref().getAccessToken(getActivity());
-        Log.e("token===="," value is: "+s);
         Call<GenericMessage> call = AppClient.getInstance()
                 .createService(APIServices.class)
                 .resendOtp(s, getContext().getString(R.string.app_access_token));
@@ -266,9 +262,10 @@ public class OTPDialogFragment extends Fragment {
                     if (msg == null) {
                         Utils.showLongToast(getContext(), msg.getMessage());
                     }
+                    else
+                        Log.e("verifyotpresponse","response is: "+ msg.getMessage());
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
                 if (getContext() != null) {
@@ -276,7 +273,7 @@ public class OTPDialogFragment extends Fragment {
                         Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", resendOTPListener, "Cancel", cancelListener);
                     else {
                         Utils.showShortToast(getContext(), "Something went wrong");
-//                        Objects.requireNonNull(getActivity()).onBackPressed();
+                        Objects.requireNonNull(getActivity()).onBackPressed();
                     }
                 }
             }
@@ -284,6 +281,7 @@ public class OTPDialogFragment extends Fragment {
     }
 
     private void verifyOTPAPICall() {
+        AlertDialog dialog = Utils.showProgressBar(getContext(),"Verifying OTP...");
         SharedPref pref = new SharedPref();
         String token = pref.getAccessToken(getContext());
         VerifyOTP verifyOTP = new VerifyOTP();
@@ -292,6 +290,7 @@ public class OTPDialogFragment extends Fragment {
         call.enqueue(new Callback<OTPVerification>() {
             @Override
             public void onResponse(@NonNull Call<OTPVerification> call, @NonNull Response<OTPVerification> response) {
+                dialog.dismiss();
                 if (getContext() != null)
                     if (response.isSuccessful()) {
                         OTPVerification otp = response.body();
@@ -309,16 +308,16 @@ public class OTPDialogFragment extends Fragment {
                         }
                     }
             }
-
             @Override
             public void onFailure(Call<OTPVerification> call, Throwable t) {
+                dialog.cancel();
                 if (getContext() != null) {
                     {
                         if (!Utils.isNetworkAvailable(getContext()))
                             Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", retryListener, "Cancel", cancelListener);
                         else {
                             Utils.showShortToast(getContext(), "Something went wrong");
-//                            getActivity().onBackPressed();
+                            getActivity().onBackPressed();
                         }
                     }
                 }
@@ -328,10 +327,12 @@ public class OTPDialogFragment extends Fragment {
 
     //Forgot Password OTP Verification API Call
     private void forgotOTPAPICall() {
+        AlertDialog dialog = Utils.showProgressBar(getContext(),"Verifying ...");
         Call<GenericMessage> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).postForgotOPTVerify(new ForgotVerifyOTP(otp, email));
         call.enqueue(new Callback<GenericMessage>() {
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
+                dialog.dismiss();
                 if(response.isSuccessful() && getContext() != null) {
                     if (response.body() != null) {
                         Log.e("ForgotOTPVerify", "response body received");
@@ -349,6 +350,7 @@ public class OTPDialogFragment extends Fragment {
             }
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
+                dialog.cancel();
                 if (getContext() != null) {
                     {
                         if (!Utils.isNetworkAvailable(getContext()))
@@ -366,7 +368,11 @@ public class OTPDialogFragment extends Fragment {
     }
 
     private void setConfirmed() {
-        Utils.showDialog(getContext(), null, false, "Verified", "OTP Verified Successfully",
-                "Next", nextListener, null, null);
+        if(getContext()!=null){
+            SharedPref pref = new SharedPref();
+            pref.setMobileVerified(getContext(),true);
+            Utils.showDialog(getContext(), null, false, "Verified", "OTP Verified Successfully",
+                    "Next", nextListener, null, null);
+        }
     }
 }
