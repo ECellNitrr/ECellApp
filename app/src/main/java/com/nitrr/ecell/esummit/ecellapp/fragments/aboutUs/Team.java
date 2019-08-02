@@ -58,9 +58,7 @@ public class Team extends Fragment {
 
     void APICall() {
         if (!this.isHidden()) {
-            APIServices service = AppClient.getInstance().createService(APIServices.class);
-
-            call = service.getTeamData();
+            call = AppClient.getInstance().createService(APIServices.class).getTeamData();
             call.enqueue(new Callback<TeamData>() {
                 @Override
                 public void onResponse(@NonNull Call<TeamData> call, @NonNull Response<TeamData> response) {
@@ -97,7 +95,7 @@ public class Team extends Fragment {
 
     private void setRecyclerView() {
 
-        for(int x=0; x<list.size();x++){
+        for(int x=0; x < list.size(); x++){
             TeamList member = list.get(x);
             if(member.getType().contentEquals("HCD"))
                 HCD.add(member);

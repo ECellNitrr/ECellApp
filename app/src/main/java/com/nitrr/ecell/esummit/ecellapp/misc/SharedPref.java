@@ -9,44 +9,33 @@ public class SharedPref {
 
     private SharedPreferences.Editor editor;
 
-    private boolean isLoggedIn = false,
-            isFBLoggedIn = false,
-            isGLoggedIn = false;
+    private boolean isLoggedIn = false;
 
-    public void setSharedPref(Context act, String access_token,
+    public void setSharedPref(Context context, String access_token,
                               String firstName, String lastName,
-                              String email, String contact,
-                              String avatar, String facebook,
-                              String linkedin) {
+                              String email) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(act);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
 
         editor.putString("access_token", access_token);
         editor.putString("firstName", firstName);
         editor.putString("lastName", lastName);
         editor.putString("email", email);
-        editor.putString("contact", contact);
-        editor.putString("avatar", avatar);
-        editor.putString("facebook", facebook);
-        editor.putString("linkedin", linkedin);
         editor.putBoolean("isLoggedIn", isLoggedIn);
-        editor.putBoolean("isFBLoggedIn", isFBLoggedIn);
-        editor.putBoolean("isGLoggedIn", isGLoggedIn);
 
         editor.apply();
         editor.commit();
     }
 
-    public void setIsLoggedIn(boolean isLoggedIn, boolean isFBLoggedIn, boolean isGLoggedIn) {
+    public void setIsLoggedIn(boolean isLoggedIn) {
         this.isLoggedIn = isLoggedIn;
-        this.isFBLoggedIn = isFBLoggedIn;
-        this.isGLoggedIn = isGLoggedIn;
     }
 
     public void setMobileVerified(Context context, boolean isVerified) {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putBoolean("mobileVerification", isVerified);
+        editor.apply();
         editor.commit();
     }
 
@@ -70,22 +59,6 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(context).getString("email", "");
     }
 
-    public String getContact(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("lastName", "");
-    }
-
-    public String getAvatar(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("lastName", "");
-    }
-
-    public String getFacebook(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("lastName", "");
-    }
-
-    public String getLinkedin(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString("lastName", "");
-    }
-
     public boolean isLoggedIn(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("isLoggedIn", false);
     }
@@ -95,7 +68,7 @@ public class SharedPref {
     }
 
     public void clearPrefs(Activity activity) {
-        SharedPreferences.Editor editor = getEditor(activity);
+        editor = getEditor(activity);
         editor.clear();
         editor.putBoolean("isLoggedIn", false);
         editor.apply();
@@ -103,20 +76,20 @@ public class SharedPref {
     }
 
     public void setAccessToken(Context context, String accessToken) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        editor = prefs.edit();
+        editor = getEditor(context);
         editor.putString("access_token",accessToken);
         editor.apply();
         editor.commit();
     }
 
-    public boolean isGreeted(Context context){
+    public boolean isGreeted(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("greeted",false);
     }
 
     public void setGreeted(Activity activity, boolean isGreeted) {
         SharedPreferences.Editor editor = getEditor(activity);
         editor.putBoolean("greeted", isGreeted);
+        editor.apply();
         editor.commit();
     }
 }

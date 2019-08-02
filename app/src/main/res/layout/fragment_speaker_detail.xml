@@ -19,10 +19,12 @@
 
     <TextView
         android:id="@+id/detail_speaker_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_speaker_image" />
@@ -38,48 +40,35 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="10"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Company:"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
+                style="@style/ESummitSpeakerDetail"
                 android:textAlignment="textEnd"/>
-
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Year:"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
+                style="@style/ESummitSpeakerDetail"
                 android:textAlignment="textEnd"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email:"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
-                android:textAlignment="textEnd"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Contact:"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
+                style="@style/ESummitSpeakerDetail"
                 android:textAlignment="textEnd"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Social Media:"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
+                style="@style/ESummitSpeakerDetail"
                 android:textAlignment="textEnd"/>
 
         </LinearLayout>
@@ -87,15 +76,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="12"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/speaker_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
+                style="@style/ESummitSpeakerDetail"
                 android:textAlignment="textStart"/>
 
 
@@ -103,32 +91,21 @@
                 android:id="@+id/detail_speaker_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textAlignment="textStart"
-                android:textSize="24sp" />
+                style="@style/ESummitSpeakerDetail"
+                android:textAlignment="textStart" />
 
             <TextView
                 android:id="@+id/speaker_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
+                style="@style/ESummitSpeakerDetail"
                 android:textAlignment="textStart"/>
-
-            <TextView
-                android:id="@+id/speaker_contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textAlignment="textStart"
-                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/speaker_social_media"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_margin="10dp"
+                style="@style/ESummitSpeakerDetail"
                 android:textAlignment="textStart"/>
 
         </LinearLayout>

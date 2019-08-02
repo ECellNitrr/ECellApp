@@ -1,42 +1,26 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.ObjectAnimator;
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
-import android.content.IntentFilter;
-import android.media.Image;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.ESRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.adapters.ESummitRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,7 +64,7 @@ public class ESummitActivity extends BaseActivity {
                     else {
                         ResponseSpeaker data = response.body();
                         responseSpeakerObjectList = data.getList();
-                        ESRVAdapter adapter = new ESRVAdapter(responseSpeakerObjectList, ESummitActivity.this);
+                        ESummitRecyclerViewAdapter adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
                         speakerRV.setAdapter(adapter);
                         speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
                         adapter.notifyDataSetChanged();

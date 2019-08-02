@@ -266,6 +266,7 @@ public class OTPDialogFragment extends Fragment{
                         Log.e("verifyotpresponse","response is: "+ msg.getMessage());
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
                 if (getContext() != null) {

@@ -29,7 +29,6 @@ public class SpeakerFragment extends Fragment {
     private TextView company;
     private TextView year;
     private TextView email;
-    private TextView contact;
     private TextView socialMedia;
     private BroadcastReceiver receiver;
 
@@ -44,7 +43,7 @@ public class SpeakerFragment extends Fragment {
         if (data != null) {
             initialize(view);
             setData(data.get(0), data.get(1), data.get(2), this.getArguments().getInt("year"),
-                    data.get(3), data.get(4), data.get(5));
+                    data.get(3), data.get(4));
         }
         return view;
     }
@@ -57,22 +56,23 @@ public class SpeakerFragment extends Fragment {
         email = v.findViewById(R.id.speaker_email);
         year = v.findViewById(R.id.detail_speaker_year);
         socialMedia = v.findViewById(R.id.speaker_social_media);
-        contact = v.findViewById(R.id.speaker_contact);
     }
 
-    private void setData(String image, String name, String company, int year, String email, String contact, String socialMedia) {
+    private void setData(String image, String name, String company, int year, String email, String socialMedia) {
         try{
             if(image != null){
-                Glide.with(Objects.requireNonNull(getContext())).load(image).apply(RequestOptions.circleCropTransform()).into(this.image);}
+                Glide.with(Objects.requireNonNull(getContext()))
+                        .load(image)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(this.image);}
         }
         catch(Exception e){
-            setData(image, name, company, year, email, contact, socialMedia);
+            setData(image, name, company, year, email, socialMedia);
         }
         this.name.setText(name);
         this.company.setText(company);
         this.year.setText((Integer.toString(year)));
         this.email.setText(email);
-        this.contact.setText(contact);
         this.socialMedia.setText(socialMedia);
     }
 

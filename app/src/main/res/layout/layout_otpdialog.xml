@@ -12,7 +12,7 @@
     android:gravity="center"
     android:textSize="24dp"
     android:textColor="@color/colorWhite"
-    app:rippleColor="@color/black_overlay"
+    app:rippleColor="#e40d21"
     android:textAppearance="@style/Widget.MaterialComponents.Button"/>
     <!--android:background="?attr/selectableItemBackground"/>-->
 </LinearLayout>

@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toTopOf="@+id/numberpad"
+        app:layout_constraintBottom_toTopOf="@+id/number_pad"
         app:layout_constraintTop_toBottomOf="@+id/verifyotp">
 
         <com.google.android.material.card.MaterialCardView
@@ -123,7 +123,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <RelativeLayout
-        android:id="@+id/numberpad"
+        android:id="@+id/number_pad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,6 +131,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/otp_recycler"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
