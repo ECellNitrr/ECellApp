@@ -47,12 +47,13 @@ public class Team extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team, container, false);
         recycler = view.findViewById(R.id.team_recycler);
-
-        APICall();
+        if (list.isEmpty()) {
+            APICall();
+        }
         return view;
     }
 
-    void APICall() {
+    private void APICall() {
         if (!this.isHidden()) {
             APIServices service = AppClient.getInstance().createService(APIServices.class);
 

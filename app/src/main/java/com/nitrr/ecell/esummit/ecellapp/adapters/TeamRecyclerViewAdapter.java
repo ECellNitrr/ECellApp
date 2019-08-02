@@ -23,7 +23,7 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
     private Context context;
     private List<TeamList> list;
 
-    public TeamRecyclerViewAdapter(Context context, List<TeamList> list) {
+    TeamRecyclerViewAdapter(Context context, List<TeamList> list) {
         this.context = context;
         this.list = list;
     }
