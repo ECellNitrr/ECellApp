@@ -38,7 +38,6 @@ public class EventActivity extends BaseActivity {
         dialog.cancel();
         EventActivity.this.finish();
     };
-
     private AlertDialog dialog;
 
     @Override

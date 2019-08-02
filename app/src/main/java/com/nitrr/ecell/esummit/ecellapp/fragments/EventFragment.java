@@ -21,15 +21,12 @@ import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
-import com.nitrr.ecell.esummit.ecellapp.models.events.EventRegistrationModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
@@ -56,10 +53,10 @@ public class EventFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
 
         ImageView back = view.findViewById(R.id.eventfrag_back);
-        back.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
+        back.setOnClickListener(v -> Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack());
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            initalize(view);
+            initialize(view);
             eventName = bundle.getString("event_name");
             id = bundle.getString("id");
             setData(bundle.getString("event_name"),
@@ -72,8 +69,7 @@ public class EventFragment extends Fragment {
         return view;
     }
 
-
-    private void initalize(View v) {
+    private void initialize(View v) {
         event = v.findViewById(R.id.event_name);
         eventImage = v.findViewById(R.id.event_img);
         eventDetails = v.findViewById(R.id.event_text);
@@ -122,37 +118,43 @@ public class EventFragment extends Fragment {
     }
 
     private void registerAPI( String id) {
-        AlertDialog dialog = Utils.showProgressBar(getContext(),"Registring...");
+        AlertDialog dialog = Utils.showProgressBar(getContext(),"Registering you for " + eventName);
         SharedPref pref = new SharedPref();
-        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).registerForEvent(getContext().getString(R.string.app_access_token),pref.getAccessToken(getContext()),id);
+        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
+                .registerForEvent(getContext().getString(R.string.app_access_token), pref.getAccessToken(getContext()), id);
+
         call.enqueue(new Callback<GenericMessage>() {
             @Override
-            public void onResponse(Call<GenericMessage> call, Response<GenericMessage> response) {
+            public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
                 dialog.dismiss();
-                if(getContext()!=null && response.isSuccessful()){
-                    String msg = response.body().getMessage();
-                    if(msg!=null){
-                        Log.e("EvtReg. respons msg","Message is: "+msg);
-                        Utils.showShortToast(getContext(),"Registration Successfull");
-                    }
-                    else {
-                        try {
-                            Log.e("EvtReg. empty response",response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                if (getContext() != null) {
+                    if(response.isSuccessful()) {
+                        if (response.body() != null) {
+                            Utils.showShortToast(getContext(), "You have been Successfully Registered for " + eventName + ".\nDo Come!");
+                            Log.e("Event Registration","Response Successful! Registered Successful");
+                        } else {
+                            Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
+                            Log.e("Event Registration", "Response Successful! Response body null");
                         }
+                    } else if(response.code() == 404) {
+                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
+                        Log.e("Event Registration" ,"Response Unsuccessful! Code 404, Event not found. Event Id:" + id);
+                    } else {
+                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
+                        Log.e("Event Registration" ,"Response Unsuccessful. Error Code:" + response.code());
                     }
                 }
+
             }
 
             @Override
-            public void onFailure(Call<GenericMessage> call, Throwable t) {
-                dialog.cancel();
+            public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
+                dialog.dismiss();
                 if(!Utils.isNetworkAvailable(getContext()))
                     Utils.showShortToast(getContext(),"No Internet Connection");
                 else
                     Utils.showShortToast(getContext(),"Something went Wrong");
-                Log.e("EvtregFailure===","response is a failure");
+                Log.e("Event Registration","API call Failure :" + t.getMessage());
             }
         });
     }

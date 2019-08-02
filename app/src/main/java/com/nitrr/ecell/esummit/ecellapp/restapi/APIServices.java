@@ -50,6 +50,7 @@ public interface APIServices {
     @POST("users/change_password/")
     Call<GenericMessage> postPasswordChange(@Header("Access") String access, @Body ChangePassword password);
 
+
     //Change Number
     @POST("users/change_contact/")
     Call<GenericMessage> changeNumber(@Header("Access") String access, @Header("Authorization") String token, @Body ChangeNumber number);
@@ -62,7 +63,7 @@ public interface APIServices {
     Call<TeamData> getTeamData(@Path("year") String year);
 
     @GET("is_update_available/")
-    Call<AppDetails> getAppData();
+    Call<AppDetails> getIsUpdateAvailable();//200 available, 404 not
 
     @POST("users/verify_otp/")
     Call<OTPVerification> verifyOtp(@Header("Access") String access, @Header("Authorization") String token, @Body VerifyOTP verifyOTP);
@@ -71,8 +72,8 @@ public interface APIServices {
     Call<GenericMessage> resendOtp(@Header("Authorization") String auth, @Header("Access") String access);
 
     @GET("users/is_user_verified/")
-    Call<UserVerifiedModel> isVerified(@Header("Access") String string);
+    Call<UserVerifiedModel> isVerified(@Header("Access") String appAccessToken, @Header("Authorization") String userAccessToken); //only 200
 
     @POST("/events/register/{id}/")
-    Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token,@Path("id") String id);
+    Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
 }
