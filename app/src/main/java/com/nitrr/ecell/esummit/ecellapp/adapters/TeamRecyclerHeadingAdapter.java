@@ -43,28 +43,23 @@ public class TeamRecyclerHeadingAdapter extends RecyclerView.Adapter<TeamRecycle
         if(position==0)
             data = list.get(0);
         else
-            data = list.get(size[position]-1);
+            data = list.get(size[position-1]);
+
         if(data.getDomain().contentEquals("none"))
             if(data.getType().contentEquals("OCO"))
-                holder.heading.setText("Overall Coordinator");
+                holder.heading.setText(R.string.oco);
             else
-                holder.heading.setText("Faculty");
-        else if(data.getDomain().contentEquals("tech"))
-            holder.heading.setText("Technology");
-        else if(data.getDomain().contentEquals("design"))
-            holder.heading.setText("Design");
-        else if(data.getDomain().contentEquals("spons"))
-            holder.heading.setText("Sponsors");
-        else if(data.getDomain().contentEquals("pr"))
-            holder.heading.setText("PR and Marketing");
-        else if(data.getDomain().contentEquals("doc"))
-            holder.heading.setText("Documentation");
+                holder.heading.setText(R.string.fct);
+        else if(data.getType().contentEquals("HCO"))
+            holder.heading.setText(R.string.hco);
+        else if(data.getType().contentEquals("MNG"))
+            holder.heading.setText(R.string.mng);
+        else if(data.getType().contentEquals("EXC"))
+            holder.heading.setText(R.string.exc);
 
         if (context != null) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
             holder.teamRecycler.setLayoutManager(linearLayoutManager);
-
-
             holder.dropdown.setOnClickListener(v -> {
 
                 if (holder.teamRecycler.getVisibility() == View.GONE) {
@@ -73,7 +68,7 @@ public class TeamRecyclerHeadingAdapter extends RecyclerView.Adapter<TeamRecycle
                     if (position == 0)
                         adapter = new TeamRecyclerViewAdapter(context, list.subList(0, size[position]));
                     else
-                        adapter = new TeamRecyclerViewAdapter(context, list.subList(size[position-1], size[position]));
+                        adapter = new TeamRecyclerViewAdapter(context, list.subList(size[position-1] , size[position]));
                     holder.teamRecycler.setAdapter(adapter);
                 } else if (holder.teamRecycler.getVisibility() == View.VISIBLE) {
                     holder.dropdown.setRotation(270);

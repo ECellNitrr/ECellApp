@@ -32,35 +32,39 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = li.inflate(R.layout.layout_element_team,parent, false);
+        View view = li.inflate(R.layout.layout_element_team, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
-        if(i%2==0)
-            holder.bg.setBackgroundColor(Color.parseColor("#888888"));
+        if (i % 2 == 0)
+            holder.bg.setBackgroundColor(Color.parseColor("#999999"));
         else
-            holder.bg.setBackgroundColor(Color.parseColor("#777777"));
+            holder.bg.setBackgroundColor(Color.parseColor("#AAAAAA"));
         TeamList data = list.get(i);
         holder.name.setText(data.getName());
-        if(data.getType().equalsIgnoreCase("DIR"))
+        if (data.getType().equalsIgnoreCase("DIR"))
             holder.post.setText(R.string.dir);
-        else if(data.getType().equalsIgnoreCase("HCD"))
+        else if (data.getType().equalsIgnoreCase("HCD"))
             holder.post.setText(R.string.hcd);
-        else if(data.getType().equalsIgnoreCase("FCT"))
+        else if (data.getType().equalsIgnoreCase("FCT"))
             holder.post.setText(R.string.fct);
-        else if(data.getType().equalsIgnoreCase("OCO"))
+        else if (data.getType().equalsIgnoreCase("OCO"))
             holder.post.setText(R.string.oco);
-        else if(data.getType().equalsIgnoreCase("HCO"))
-            holder.post.setText(R.string.hco);
-        else if(data.getType().equalsIgnoreCase("MNG"))
-            holder.post.setText(R.string.mng);
-        else if(data.getType().equalsIgnoreCase("EXC"))
-            holder.post.setText(R.string.exc);
+        else if (data.getDomain().equalsIgnoreCase("spons"))
+            holder.post.setText(R.string.text_spons);
+        else if (data.getDomain().equalsIgnoreCase("doc"))
+            holder.post.setText(R.string.doc);
+        else if (data.getDomain().equalsIgnoreCase("pr"))
+            holder.post.setText(R.string.pr);
+        else if (data.getDomain().equalsIgnoreCase("tech"))
+            holder.post.setText(R.string.tech);
+        else if(data.getDomain().equalsIgnoreCase("design"))
+            holder.post.setText(R.string.design);
         else
-            holder.post.setText(data.getType());
-            Glide.with(context).load(data.getUrl()).into(holder.img);
+            holder.post.setText(data.getDomain());
+        Glide.with(context).load(data.getUrl()).into(holder.img);
     }
 
     @Override

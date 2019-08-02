@@ -35,7 +35,7 @@ public class Team extends Fragment {
     private TeamRecyclerHeadingAdapter adapter;
     private TeamData model;
     private List<TeamList> list = new ArrayList<>();
-    private int[] size = new int[7];
+    private int[] size = new int[5];
     private Call<TeamData> call;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
 
@@ -98,99 +98,44 @@ public class Team extends Fragment {
     }
 
     private void setRecyclerView() {
-
-        List<TeamList> faculty = new ArrayList<>(),
-                oc = new ArrayList<>(),
-                tech = new ArrayList<>(),
-                pr = new ArrayList<>(),
-                spons = new ArrayList<>(),
-                design = new ArrayList<>(),
-                doc = new ArrayList<>();
-        //Sorting as per domain
-        for(int x=0; x<list.size();x++){
-            TeamList member = list.get(x);
-            if(member.getDomain().contentEquals("none"))
-                if(member.getType().contentEquals("OCO"))
-                    oc.add(member);
-                else
-                    faculty.add(member);
-            else if(member.getDomain().contentEquals("tech"))
-                tech.add(member);
-            else if(member.getDomain().contentEquals("doc"))
-                doc.add(member);
-            else if(member.getDomain().contentEquals("pr"))
-                pr.add(member);
-            else if(member.getDomain().contentEquals("spons"))
-                spons.add(member);
-            else if(member.getDomain().contentEquals("design"))
-                design.add(member);
-        }
-
-        list.clear();
-
-        faculty = sortList(faculty);
-        size[0] = faculty.size();
-        list.addAll(faculty);
-
-        oc = sortList(oc);
-        size[1] = size[0]+oc.size();
-        list.addAll(oc);
-
-        tech = sortList(tech);
-        size[2] = size[1]+tech.size();
-        list.addAll(tech);
-
-        design = sortList(design);
-        size[3] = size[2]+design.size();
-        list.addAll(design);
-
-        spons = sortList(spons);
-        size[4] = size[3]+spons.size();
-        list.addAll(spons);
-
-        pr = sortList(pr);
-        size[5] = size[4]+pr.size();
-        list.addAll(pr);
-
-        doc = sortList(doc);
-        size[6] = size[5]+doc.size();
-        list.addAll(doc);
+        sortList(list);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recycler.setLayoutManager(linearLayoutManager);
         adapter = new TeamRecyclerHeadingAdapter(getContext(), list,size);
         recycler.setAdapter(adapter);
 
-//        final boolean[] loading = {true};
-//        final int[] pastVisibleItems = new int[1];
-//        final int[] visibleItemsCount = new int[1];
-//        final int[] totalItemCount = new int[1];
-//        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                if(dy > 0){
-//                    visibleItemsCount[0] = linearLayoutManager.getChildCount();
-//                    totalItemCount[0] = linearLayoutManager.getItemCount();
-//                    pastVisibleItems[0] = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-//
-//                    if(loading[0]){
-//                        if((visibleItemsCount[0] + pastVisibleItems[0]) >= totalItemCount[0]){
-//                            loading[0] = false;
-//                            Log.e("...","LastItemNow");
-//                        }
-//                    }
-//                    if(!loading[0] && (totalItemCount[0] - visibleItemsCount[0]) <= (pastVisibleItems[0] + 5)){
-//                        Log.e("loading false", "element changed");
-//                        loading[0] = true;
-//                    }
-//
-//                }
-//                super.onScrolled(recyclerView, dx, dy);
-//            }
-//        });
     }
 
     List<TeamList> sortList(List<TeamList> list){
+
+//        List<TeamList> faculty = new ArrayList<>(),
+//                oc = new ArrayList<>(),
+//                tech = new ArrayList<>(),
+//                pr = new ArrayList<>(),
+//                spons = new ArrayList<>(),
+//                design = new ArrayList<>(),
+//                doc = new ArrayList<>();
+//        //Sorting as per domain
+//        for(int x=0; x<list.size();x++){
+//            TeamList member = list.get(x);
+//            if(member.getDomain().contentEquals("none"))
+//                if(member.getType().contentEquals("OCO"))
+//                    oc.add(member);
+//                else
+//                    faculty.add(member);
+//            else if(member.getDomain().contentEquals("tech"))
+//                tech.add(member);
+//            else if(member.getDomain().contentEquals("doc"))
+//                doc.add(member);
+//            else if(member.getDomain().contentEquals("pr"))
+//                pr.add(member);
+//            else if(member.getDomain().contentEquals("spons"))
+//                spons.add(member);
+//            else if(member.getDomain().contentEquals("design"))
+//                design.add(member);
+//        }
+
         List<TeamList> DIR = new ArrayList<>(),
                 HCD  = new ArrayList<>(),/*(Head of Career Dapartment)*/
                 FCT  = new ArrayList<>(),/*(faculty incharge)*/
@@ -217,12 +162,17 @@ public class Team extends Fragment {
         }
 
         list.clear();
+        size[0] = DIR.size()+HCD.size()+FCT.size();
         list.addAll(DIR);
         list.addAll(HCD);
         list.addAll(FCT);
+        size[1] = size[0]+OCO.size();
         list.addAll(OCO);
+        size[2] = size[1]+HCO.size();
         list.addAll(HCO);
+        size[3] = size[2]+MNG.size();
         list.addAll(MNG);
+        size[4] = size[3]+EXC.size();
         list.addAll(EXC);
         return list;
     }
