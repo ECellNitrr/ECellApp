@@ -112,7 +112,6 @@ public class EventFragment extends Fragment {
         Objects.requireNonNull(getContext()).registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
-
     @Override
     public void onDestroy() {
         if (receiver != null) {
@@ -123,7 +122,6 @@ public class EventFragment extends Fragment {
     }
 
     private void registerAPI( String id) {
-
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Registring...");
         SharedPref pref = new SharedPref();
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).registerForEvent(getContext().getString(R.string.app_access_token),pref.getAccessToken(getContext()),id);

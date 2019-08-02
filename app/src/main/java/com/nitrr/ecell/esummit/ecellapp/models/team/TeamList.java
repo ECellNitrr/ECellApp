@@ -13,6 +13,10 @@ public class TeamList {
     @Expose
     String image;
 
+    @SerializedName("domain")
+    @Expose
+    String domain;
+
     @SerializedName("name")
     @Expose
     String name;
@@ -35,6 +39,10 @@ public class TeamList {
 
     public String getType() {
         return type;
+    }
+
+    public String getDomain() {
+        return domain;
     }
 
     //Executives and Managers ka image and profile_url nai dikhana

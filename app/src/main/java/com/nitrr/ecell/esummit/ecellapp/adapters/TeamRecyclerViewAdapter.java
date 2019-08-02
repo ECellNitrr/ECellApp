@@ -16,12 +16,12 @@ import com.nitrr.ecell.esummit.ecellapp.models.team.TeamList;
 
 import java.util.List;
 
-public class TeamRVAdapter extends RecyclerView.Adapter<TeamRVAdapter.MyViewHolder> {
+public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
     private List<TeamList> list;
 
-    public TeamRVAdapter(Context context, List<TeamList> list) {
+    public TeamRecyclerViewAdapter(Context context, List<TeamList> list) {
         this.context = context;
         this.list = list;
     }
@@ -29,7 +29,8 @@ public class TeamRVAdapter extends RecyclerView.Adapter<TeamRVAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_card_team,parent,false);
+        LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = li.inflate(R.layout.layout_element_team,parent, false);
         return new MyViewHolder(view);
     }
 
@@ -62,12 +63,12 @@ public class TeamRVAdapter extends RecyclerView.Adapter<TeamRVAdapter.MyViewHold
         return list.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView post;
         ImageView img;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.membername);
             post = itemView.findViewById(R.id.memberpost);

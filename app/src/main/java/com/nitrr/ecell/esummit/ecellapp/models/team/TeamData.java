@@ -11,7 +11,7 @@ public class TeamData {
     @Expose
     String message;
 
-    @SerializedName("members")
+    @SerializedName("data")
     @Expose
     List<TeamList> list;
 
