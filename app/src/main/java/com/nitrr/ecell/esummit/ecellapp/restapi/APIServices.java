@@ -59,7 +59,7 @@ public interface APIServices {
     Call<ResponseSpeaker> getSpeakerList(@Header("Access") String access);
 
     @GET("team/list/{year}/")
-    Call<TeamData> getTeamData(@Header("Access") String access, @Path("year") String year);
+    Call<TeamData> getTeamData(@Path("year") String year);
 
     @GET("is_update_available/")
     Call<AppDetails> getAppData();

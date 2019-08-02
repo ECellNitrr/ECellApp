@@ -56,7 +56,7 @@ public class Team extends Fragment {
         if (!this.isHidden()) {
             APIServices service = AppClient.getInstance().createService(APIServices.class);
 
-            call = service.getTeamData(getContext().getString(R.string.app_access_token),"2019");
+            call = service.getTeamData("2019");
             call.enqueue(new Callback<TeamData>() {
                 @Override
                 public void onResponse(@NonNull Call<TeamData> call, @NonNull Response<TeamData> response) {
@@ -105,11 +105,14 @@ public class Team extends Fragment {
                 spons = new ArrayList<>(),
                 design = new ArrayList<>(),
                 doc = new ArrayList<>();
-
+        //Sorting as per domain
         for(int x=0; x<list.size();x++){
             TeamList member = list.get(x);
             if(member.getDomain().contentEquals("none"))
-                faculty.add(member);
+                if(member.getType().contentEquals("OCO"))
+                    oc.add(member);
+                else
+                    faculty.add(member);
             else if(member.getDomain().contentEquals("tech"))
                 tech.add(member);
             else if(member.getDomain().contentEquals("doc"))
@@ -121,25 +124,33 @@ public class Team extends Fragment {
             else if(member.getDomain().contentEquals("design"))
                 design.add(member);
         }
+
         list.clear();
+
         faculty = sortList(faculty);
         size[0] = faculty.size();
         list.addAll(faculty);
+
         oc = sortList(oc);
         size[1] = size[0]+oc.size();
         list.addAll(oc);
+
         tech = sortList(tech);
         size[2] = size[1]+tech.size();
         list.addAll(tech);
+
         design = sortList(design);
         size[3] = size[2]+design.size();
         list.addAll(design);
+
         spons = sortList(spons);
         size[4] = size[3]+spons.size();
         list.addAll(spons);
+
         pr = sortList(pr);
         size[5] = size[4]+pr.size();
         list.addAll(pr);
+
         doc = sortList(doc);
         size[6] = size[5]+doc.size();
         list.addAll(doc);

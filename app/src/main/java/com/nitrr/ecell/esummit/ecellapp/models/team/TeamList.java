@@ -34,7 +34,7 @@ public class TeamList {
     }
 
     public String getUrl() {
-        return url;
+        return image;
     }
 
     public String getType() {

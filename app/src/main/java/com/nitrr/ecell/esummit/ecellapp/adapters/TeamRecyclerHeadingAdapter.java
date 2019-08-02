@@ -29,12 +29,6 @@ public class TeamRecyclerHeadingAdapter extends RecyclerView.Adapter<TeamRecycle
         this.size = size;
     }
 
-//    android.view.InflateException: Binary XML file line #8: Binary XML file line #8: Error inflating class <unknown>
-//    Caused by: android.view.InflateException: Binary XML file line #8: Error inflating class <unknown>
-//    Caused by: java.lang.reflect.InvocationTargetException
-//at java.lang.reflect.Constructor.newInstance0(Native Method)
-//    at java.lang.reflect.Constructor.newInstance(Constructor.java:343)
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,21 +43,37 @@ public class TeamRecyclerHeadingAdapter extends RecyclerView.Adapter<TeamRecycle
         if(position==0)
             data = list.get(0);
         else
-            data = list.get(size[position-1]);
-        holder.heading.setText(data.getDomain());
+            data = list.get(size[position]-1);
+        if(data.getDomain().contentEquals("none"))
+            if(data.getType().contentEquals("OCO"))
+                holder.heading.setText("Overall Coordinator");
+            else
+                holder.heading.setText("Faculty");
+        else if(data.getDomain().contentEquals("tech"))
+            holder.heading.setText("Technology");
+        else if(data.getDomain().contentEquals("design"))
+            holder.heading.setText("Design");
+        else if(data.getDomain().contentEquals("spons"))
+            holder.heading.setText("Sponsors");
+        else if(data.getDomain().contentEquals("pr"))
+            holder.heading.setText("PR and Marketing");
+        else if(data.getDomain().contentEquals("doc"))
+            holder.heading.setText("Documentation");
 
         if (context != null) {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
             holder.teamRecycler.setLayoutManager(linearLayoutManager);
-            if (position == 0)
-                adapter = new TeamRecyclerViewAdapter(context, list.subList(0, size[position]));
-            else
-                adapter = new TeamRecyclerViewAdapter(context, list.subList(size[position-1], size[position]));
+
 
             holder.dropdown.setOnClickListener(v -> {
+
                 if (holder.teamRecycler.getVisibility() == View.GONE) {
                     holder.dropdown.setRotation(90);
                     holder.teamRecycler.setVisibility(View.VISIBLE);
+                    if (position == 0)
+                        adapter = new TeamRecyclerViewAdapter(context, list.subList(0, size[position]));
+                    else
+                        adapter = new TeamRecyclerViewAdapter(context, list.subList(size[position-1], size[position]));
                     holder.teamRecycler.setAdapter(adapter);
                 } else if (holder.teamRecycler.getVisibility() == View.VISIBLE) {
                     holder.dropdown.setRotation(270);

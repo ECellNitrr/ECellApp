@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/about_us_card">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/team_member_backround"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="2dp">
 
             <ImageView
                 android:id="@+id/memberpic"
@@ -35,12 +36,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:gravity="start"
                     android:maxLines="1"
                     android:text="@string/name"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="24sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/memberpost"
@@ -50,7 +50,7 @@
                     android:layout_margin="5dp"
                     android:text="@string/post"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
         </LinearLayout>
