@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.fragment.app.FragmentManager;
@@ -30,10 +31,9 @@ public class BQuizActivity extends BaseActivity {
                 .apply(new RequestOptions().centerCrop())
                 .into(bQuizBG);
 
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
+        findViewById(R.id.bquiz_proceed).setOnClickListener(v -> {
             BQuizQnAFragment fragment = new BQuizQnAFragment();
             fragment.show(getSupportFragmentManager(), "Bquiz");
-        }, 5000);
+        });
     }
 }

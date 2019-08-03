@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.R;
 
-public class BottomSheetFragmentBquiz extends BottomSheetDialogFragment{
+public class BottomSheetFragmentBquiz extends BottomSheetDialogFragment {
 
     private TextView messageTextView;
 
@@ -25,11 +25,16 @@ public class BottomSheetFragmentBquiz extends BottomSheetDialogFragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_sheet_fragment_bquiz, container, false);
         messageTextView = view.findViewById(R.id.bquiz_bottom_sheet_message);
+
+        if (getDialog().getWindow() != null)
+            getDialog().getWindow().setDimAmount(0.8f);
+
         return view;
     }
 
-    public void setMessage(String message){
+    public void setMessage(String message) {
         if (message != null)
             messageTextView.setText(message);
     }
+
 }

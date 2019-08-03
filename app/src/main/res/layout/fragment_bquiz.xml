@@ -1,78 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bquiz_gradient"
     tools:context=".activities.BQuizActivity">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/ll_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="40dp">
 
-        <LinearLayout
-            android:id="@+id/ll_parent"
+        <TextView
+            android:id="@+id/bquiz_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="8dp"
+            android:text="0sec."
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+
+        <ImageView
+            android:id="@+id/iv_bquiz_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_ecell"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_bquiz_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_margin="16dp"
+            android:background="@drawable/bquiz_question_bg"
+            android:fontFamily="@font/bebas_neue"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="22sp" />
 
-            <ImageView
-                android:id="@+id/iv_bquiz_logo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_ecell" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bquiz_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp" />
 
-            <TextView
-                android:id="@+id/bquiz_timer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/bquiz_question_bg"
-                android:padding="8dp"
-                android:text="00"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/tv_bquiz_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bquiz_question_bg"
-                android:padding="8dp"
-                android:textColor="@android:color/black" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_margin="16dp"
-                android:id="@+id/rv_bquiz_option"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:id="@+id/btn_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/bquiz_button_style"
-                android:text="submit"
-                android:textColor="@color/colorWhite" />
-
-            <Button
-                android:id="@+id/btn_retry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bquiz_button_style"
-                android:text="retry"
-                android:textColor="@color/colorWhite" />
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

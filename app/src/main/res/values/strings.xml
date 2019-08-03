@@ -79,4 +79,7 @@
     <string name="resend_otp">Resend OTP ?</string>
     <string name="about_us_contact">09406220952</string>
     <string name="about_us_website">ecell@nitrr.ac.in</string>
+    <string name="proceed">PROCEED</string>
+    <string name="placeholder">Lorem ipsum dolor</string>
+    <string name="business_quiz">BUSINESS QUIZ</string>
 </resources>

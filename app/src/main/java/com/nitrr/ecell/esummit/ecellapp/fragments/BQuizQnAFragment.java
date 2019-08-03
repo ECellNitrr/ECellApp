@@ -48,7 +48,6 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     private ImageView bquizLogo;
     private TextView tvBquizQuestion, timeAllotted;
-    private Button btnSubmit, btnRetry;
     public int timeGiven;
     private RecyclerView rvBquizOptions;
     private BquizOptionsAdapter bquizOptionsAdapter;
@@ -68,6 +67,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         gson = new Gson();
         fragmentBquiz = BottomSheetFragmentBquiz.newInstance();
+        fragmentBquiz.setCancelable(false);
         fragmentBquiz.show(getFragmentManager(), "Bquiz");
 
         initview(view);
@@ -94,14 +94,9 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     private void initview(View view) {
         bquizLogo = view.findViewById(R.id.iv_bquiz_logo);
         tvBquizQuestion = view.findViewById(R.id.tv_bquiz_question);
-        btnSubmit = view.findViewById(R.id.btn_submit);
         timeAllotted = view.findViewById(R.id.bquiz_timer);
-        btnRetry = view.findViewById(R.id.btn_retry);
         rvBquizOptions = view.findViewById(R.id.rv_bquiz_option);
         rvBquizOptions.setLayoutManager(new LinearLayoutManager(getContext()));
-        btnRetry.setVisibility(View.GONE);
-
-        // btnSubmit.setOnClickListener(view1 -> submitAnswer());
 
         bquizOptionsAdapter = new BquizOptionsAdapter(getContext(), null);
         rvBquizOptions.setLayoutManager(new LinearLayoutManager(getActivity()));
