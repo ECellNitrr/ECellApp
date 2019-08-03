@@ -218,7 +218,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                         details.getFirstName(),
                                         details.getLastName(),
                                         details.getEmail());
-                                pref.setIsLoggedIn(true);
+                                pref.setIsLoggedIn(getApplicationContext(), true);
                                 pref.setGreeted(LoginActivity.this, false);
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                                 finish();
@@ -266,7 +266,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                 AuthResponse authResponse = response.body();
                                 SharedPref pref = new SharedPref();
                                 pref.setAccessToken(getApplicationContext(), authResponse.getToken());
-                                pref.setIsLoggedIn(true);
+                                pref.setIsLoggedIn(getApplicationContext(), true);
                                 Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 Log.e("LoginActivity Login", response.body().getMessage());
                                 pref.setGreeted(LoginActivity.this,true);

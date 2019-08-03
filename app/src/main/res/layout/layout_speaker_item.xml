@@ -44,6 +44,9 @@
                 android:layout_height="60dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="22sp"
+                android:lines="2"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textAlignment="center"/>

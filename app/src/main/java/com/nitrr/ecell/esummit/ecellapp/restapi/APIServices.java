@@ -26,7 +26,7 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    @GET("/sponsors/list/2019/")
+    @GET("/sponsors/list/2018/")
     Call<SponsorsModel> getSponsData();
 
     @GET("events/list/2019/")
