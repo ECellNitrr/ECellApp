@@ -1,6 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.rxsocket.helpers;
 
-import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizAnswerModel;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.events.SocketEvent;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.events.SocketEventClosed;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.events.SocketEventClosing;
@@ -12,7 +11,6 @@ import io.reactivex.FlowableEmitter;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
-import okio.ByteString;
 
 public class SocketEventRouter extends WebSocketListener {
 

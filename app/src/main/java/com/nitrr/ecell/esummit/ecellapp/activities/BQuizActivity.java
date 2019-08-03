@@ -1,12 +1,17 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.ImageView;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.BQuizQnAFragment;
+import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizResponseModel;
 
 public class BQuizActivity extends BaseActivity {
 
@@ -25,7 +30,10 @@ public class BQuizActivity extends BaseActivity {
                 .apply(new RequestOptions().centerCrop())
                 .into(bQuizBG);
 
-        BQuizQnAFragment fragment = new BQuizQnAFragment();
-        fragment.show(getSupportFragmentManager(), "BQUIZ");
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            BQuizQnAFragment fragment = new BQuizQnAFragment();
+            fragment.show(getSupportFragmentManager(), "Bquiz");
+        }, 5000);
     }
 }
