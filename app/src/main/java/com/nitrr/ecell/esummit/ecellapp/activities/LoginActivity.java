@@ -9,6 +9,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,9 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,9 +50,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             registerPasswordLayout, firstNameLayout , lastNameLayout, registerNumberLayout;
     private LoginAnimation loginanimation;
     private AuthResponse authResponse;
-    ConstraintLayout layout;
-    private boolean isLoginScreen = true;
-    EmailFragment fragment = new EmailFragment();
+    private EmailFragment emailFragment;
 
     @Override
     protected int getLayoutResourceId() {
@@ -62,16 +63,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         initializeViews();
 
-        if(getIntent() != null) {
-            isLoginScreen = true;
-            signIn.setVisibility(View.VISIBLE);
-            register.setVisibility(View.VISIBLE);
-            loginEmail.setEnabled(true);
-            loginPassword.setEnabled(true);
-            signIn.setEnabled(true);
-            toRegister.setEnabled(true);
-        }
-
         loginanimation = new LoginAnimation(this);
         loginanimation.toSignInScreen();
 
@@ -79,42 +70,38 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         signIn.setOnClickListener((View v) -> {
             //Validation for Sign In
-            loginEmail.setTag(checkEmail(loginEmail, loginEmailLayout));
-            loginPassword.setTag(checkPassword(loginPassword, loginPasswordLayout));
+            loginEmailLayout.setError(checkEmail(loginEmail));
+            loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" :
+                    loginPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
 
-            if (loginEmail.getText().toString().equals("DebugMode"))
-                startActivity(new Intent(this, HomeActivity.class));
-            else if ((boolean) loginEmail.getTag() && (boolean) loginPassword.getTag())
+            if (loginEmailLayout.getError() == null &&
+                    loginPasswordLayout.getError() == null)
                 LoginApiCall();
         });
 
         forgotPassword.setOnClickListener(view -> {
-            isLoginScreen = false;
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.login_outer_constraint, fragment, "verify_email")
+            emailFragment = new EmailFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.login_outer_constraint, emailFragment, "verify_email")
                     .addToBackStack(null)
                     .commit();
-            signIn.setVisibility(View.GONE);
-            register.setVisibility(View.GONE);
-            loginEmail.setEnabled(false);
-            loginPassword.setEnabled(false);
-            signIn.setEnabled(false);
-            toRegister.setEnabled(false);
         });
 
         register.setOnClickListener((View v) -> {
             //Validation for Register
-            firstName.setTag(isNotEmpty(firstName, firstNameLayout));
-            lastName.setTag(isNotEmpty(lastName, firstNameLayout));
-            registerEmail.setTag(checkEmail(registerEmail, firstNameLayout));
-            registerPassword.setTag(checkPassword(registerPassword, firstNameLayout));
-            registerNumber.setTag(checkPhone(registerNumber, firstNameLayout));
+            firstNameLayout.setError(TextUtils.isEmpty(firstName.getText()) ? "Field Required!" : null);
+            lastNameLayout.setError(TextUtils.isEmpty(lastName.getText()) ? "Field Required!" : null);
+            registerEmailLayout.setError(checkEmail(registerEmail));
+            registerPasswordLayout.setError((TextUtils.isEmpty(registerPassword.getText())) ? "Field Required!" :
+                    registerPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
+            registerNumberLayout.setError(checkNumber(registerNumber));
 
-            if ((boolean) firstName.getTag() &&
-                    (boolean) lastName.getTag() &&
-                    (boolean) registerEmail.getTag() &&
-                    (boolean) registerPassword.getTag() &&
-                    (boolean) registerNumber.getTag()) {
+            if (firstNameLayout.getError() == null &&
+                    lastNameLayout.getError() == null &&
+                    registerEmailLayout.getError() == null &&
+                    registerPasswordLayout.getError() == null &&
+                    registerNumberLayout.getError() == null) {
 
                 try {
                     showAlertDialog();
@@ -132,45 +119,41 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         switch (v.getId()) {
-            case R.id.register_first_name:
-                if(!firstName.hasFocus())
-                    isNotEmpty(firstName, firstNameLayout);
-                break;
-
-            case R.id.register_last_name:
-                if(!lastName.hasFocus())
-                    isNotEmpty(lastName, lastNameLayout);
-                break;
-
-            case R.id.register_email:
-                if(!registerEmail.hasFocus())
-                    checkEmail(registerEmail, registerEmailLayout);
-                break;
-
-            case R.id.register_password:
-                if(!registerPassword.hasFocus())
-                    checkPassword(registerPassword, registerPasswordLayout);
-                break;
-
-            case R.id.register_number:
-                if(!registerNumber.hasFocus())
-                    checkPhone(registerNumber, registerNumberLayout);
-                break;
-
             case R.id.login_email:
-                if(!loginEmail.hasFocus())
-                    checkEmail(loginEmail, loginEmailLayout);
+                loginEmailLayout.setError(checkEmail(loginEmail));
                 break;
 
             case R.id.login_password:
+                loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" :
+                        loginPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
                 if(!loginPassword.hasFocus())
-                    checkPassword(loginPassword, loginPasswordLayout);
+
+                    break;
+
+            case R.id.register_first_name:
+                firstNameLayout.setError(TextUtils.isEmpty(firstName.getText()) ? "Field Required!" : null);
+                break;
+
+            case R.id.register_last_name:
+                lastNameLayout.setError(TextUtils.isEmpty(lastName.getText()) ? "Field Required!" : null);
+                break;
+
+            case R.id.register_email:
+                registerEmailLayout.setError(checkEmail(registerEmail));
+                break;
+
+            case R.id.register_password:
+                registerPasswordLayout.setError((TextUtils.isEmpty(registerPassword.getText())) ? "Field Required!" :
+                        registerPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
+                break;
+
+            case R.id.register_number:
+                registerNumberLayout.setError(checkNumber(registerNumber));
                 break;
         }
     }
 
     private void initializeViews() {
-        layout = findViewById(R.id.login_outer_constraint);
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
         forgotPassword = findViewById(R.id.forgot);
@@ -205,7 +188,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     }
 
     private void RegisterApiCall() {
-        AlertDialog dialog = Utils.showProgressBar(this, "Registering User..");
+        AlertDialog registerDialog = Utils.showProgressBar(this, "Registering User...");
 
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
                 lastName.getText().toString(),
@@ -219,62 +202,54 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+                registerDialog.dismiss();
                 try {
-                    if (getApplicationContext() != null && response.isSuccessful()) {
-                        if (response.body() != null) {
-                            dialog.dismiss();
+                    if (getApplicationContext() != null) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
 
-                            Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-                            authResponse = response.body();
+                                Utils.showLongToast(LoginActivity.this, response.body().getMessage());
+                                authResponse = response.body();
 
-                            SharedPref pref = new SharedPref();
-                            pref.setSharedPref(LoginActivity.this,
-                                    authResponse.getToken(),
-                                    details.getFirstName(),
-                                    details.getLastName(),
-                                    details.getEmail(),
-                                    details.getContact(),
-                                    details.getAvatar(),
-                                    details.getFacebook(),
-                                    details.getLinkedin());
-
-                            if (details.getFacebook() != null)
-                                pref.setIsLoggedIn(false, true, false);
-                            else if (details.getLinkedin() != null)
-                                pref.setIsLoggedIn(false, false, true);
-                            else
-                                pref.setIsLoggedIn(true, false, false);
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                SharedPref pref = new SharedPref();
+                                pref.clearPrefs(LoginActivity.this);
+                                pref.setSharedPref(LoginActivity.this,
+                                        authResponse.getToken(),
+                                        details.getFirstName(),
+                                        details.getLastName(),
+                                        details.getEmail());
+                                pref.setIsLoggedIn(getApplicationContext(), true);
+                                pref.setGreeted(LoginActivity.this, false);
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                finish();
+                            } else {
+                                Utils.showLongToast(getApplicationContext(), "Something went wrong!");
+                                Log.e("LoginActivity Register", "Response Successful, Response Body NULL");
+                            }
                         } else {
-                            dialog.dismiss();
-                            Utils.showLongToast(getApplicationContext(), "Registration Failed");
-                            Log.e("RegisterApiCall =====", "Response Body NULL.");
-                            Log.e("RegisterApiCall =====", Objects.requireNonNull(response.errorBody()).string() + " ");
-                        }
-                    } else {
-                        dialog.cancel();
-                        if(response.errorBody() != null) {
-                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                            if(response.errorBody() != null) {
+                                Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                            } else {
+                                Log.e("LoginActivity Register", "Response Unsuccessful, Response Error Body NULL");
+                            }
                         }
                     }
 
                 } catch (Exception e) {
-                    dialog.cancel();
-                    Log.e("RegisterApiCall =======", e.getMessage() + " ");
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                dialog.cancel();
+                registerDialog.dismiss();
                 Utils.showLongToast(getApplicationContext(), "Registration Failed" + t.getMessage());
             }
         });
     }
 
     private void LoginApiCall() {
-        AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In..");
+        AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In...");
 
         LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
 
@@ -283,100 +258,63 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         call.enqueue(new Callback<AuthResponse>() {
             @Override
             public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+                loginDialog.dismiss();
                 try {
-                    if (getApplicationContext() != null && response.isSuccessful()) {
-                        if (response.body() != null) {
-                            loginDialog.dismiss();
-                            AuthResponse authResponse = response.body();
-                            SharedPref pref = new SharedPref();
-                            pref.setAccessToken(getApplicationContext(), authResponse.getToken());
-                            Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-                            Log.e("User Logging In", response.body().getMessage());
-                            pref.setGreeted(LoginActivity.this);
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        } else {
-                            loginDialog.dismiss();
-                            if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(), response.errorBody().string());
+                    if (getApplicationContext() != null) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                AuthResponse authResponse = response.body();
+                                SharedPref pref = new SharedPref();
+                                pref.setAccessToken(getApplicationContext(), authResponse.getToken());
+                                pref.setIsLoggedIn(getApplicationContext(), true);
+                                Utils.showLongToast(LoginActivity.this, response.body().getMessage());
+                                Log.e("LoginActivity Login", response.body().getMessage());
+                                pref.setGreeted(LoginActivity.this,true);
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                finish();
+                            } else {
+                                Log.e("LoginActivity Login", "Response Successful, Response Body NULL");
                             }
-                            Log.e("LoginApiCall =====", "Response Body NULL.");
-                            Log.e("LoginApiCall =====", Objects.requireNonNull(response.errorBody()).string() + " ");
-                        }
-                    } else {
-                        loginDialog.cancel();
-                        if (response.errorBody() != null) {
-                            Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                        } else {
+                            Log.e("LoginActivity Login", "Response Unsuccessful with code:" + response.code());
+                            if (response.errorBody() != null) {
+                                Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                            } else
+                                Log.e("LoginActivity Login", "Response ErrorBody NULL");
                         }
                     }
-
                 } catch (Exception e) {
-                    loginDialog.cancel();
-                    Log.e("LoginApiCall =======", e.getMessage() + " ");
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
+                loginDialog.dismiss();
                 Utils.showLongToast(getApplicationContext(), "There was an error " + t.getMessage());
             }
         });
     }
 
-    private boolean checkPhone(EditText editText, TextInputLayout layout) {
+    private String checkNumber(EditText editText) {
+        if(TextUtils.isEmpty(editText.getText()))
+            return "Field Required!";
         String phoneNo = editText.getText().toString();
-        if(!isNotEmpty(editText, layout))
-            return false;
         if (phoneNo.length() == 10) {
             if (phoneNo.charAt(0) == '6' || phoneNo.charAt(0) == '7' || phoneNo.charAt(0) == '8' || phoneNo.charAt(0) == '9')
-                return true;
+                return null;
             else
-                editText.setError("Invalid Number!");
+                return "Invalid Number!";
         }
-        else
-            layout.setError("Enter a 10 digit number");
-        return false;
+        return "Enter a 10 digit number";
     }
 
-    private boolean checkPassword(EditText editText, TextInputLayout layout) {
-        if(!isNotEmpty(editText, layout)) {
-            return false;
-        }
-        if (editText.getText().length() >= 8)
-            return true;
-        editText.setError("Required Min 8 Characters!");
-        return false;
-    }
-
-    private boolean checkEmail(EditText editText, TextInputLayout layout) {
-        if(!isNotEmpty(editText, layout))
-            return false;
-        String email = editText.getText().toString();
-        int check = email.length() - 1;
-        boolean dot = false;
-        Character character;
-        while (check >= 0) {
-            character = email.charAt(check);
-            if (character.compareTo('.') == 0 && !dot) {
-                dot = true;
-                check--;
-            }
-
-            if (dot)
-                if (character.compareTo('@') == 0)
-                    return true;
-            check--;
-        }
-        layout.setError("Invalid Email!");
-        return false;
-    }
-
-    private boolean isNotEmpty(EditText editText, TextInputLayout layout){
-        if(!TextUtils.isEmpty(editText.getText()))
-            return true;
-        else
-            layout.setError("Field Required!");
-        return false;
+    private String checkEmail(EditText editText) {
+        String emailValidation = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        Pattern emailPattern = Pattern.compile(emailValidation, Pattern.CASE_INSENSITIVE);
+        Matcher emailMatcher = emailPattern.matcher(editText.getText().toString());
+        if (emailMatcher.matches()) return null;
+        else return "Invalid Email!";
     }
 
     private void showAlertDialog() throws Exception {
@@ -429,11 +367,5 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         is.close();
         return sb.toString();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(isLoginScreen)
-            super.onBackPressed();
     }
 }

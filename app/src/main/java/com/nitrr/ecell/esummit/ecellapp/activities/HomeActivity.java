@@ -23,11 +23,11 @@ import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
-import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
-import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.UserVerifiedModel;
+import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,11 +43,10 @@ public class HomeActivity extends BaseActivity {
     private SharedPref pref = new SharedPref();
     private ImageView bgCircle1, bgCircle2, bgCircle3;
     private DialogInterface.OnClickListener yesListener = (dialog, which) -> {
-        pref.setGreeted(HomeActivity.this);
+        pref.setGreeted(HomeActivity.this, true);
         OTPDialogFragment fragment = new OTPDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("prevfrag","Home Activity");
-        bundle.putBoolean("greeted",true);
+        bundle.putString("prevfrag", "Home Activity");
         fragment.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -55,7 +54,12 @@ public class HomeActivity extends BaseActivity {
                 .addToBackStack(null)
                 .commit();
     };
-    private DialogInterface.OnClickListener noListener = (dialog, which) -> {dialog.cancel();};
+
+    private DialogInterface.OnClickListener noListener = (dialog, which) -> dialog.cancel();
+
+    private DialogInterface.OnClickListener retryListener = (dialog, which) -> isVerifiedAPICall();
+
+    private DialogInterface.OnClickListener closeListener = (dialog, which) -> finish();
 
     private int distance = 0, offset;
     private float displacement = 0;
@@ -73,8 +77,8 @@ public class HomeActivity extends BaseActivity {
             Utils.showDialog(this,
                     null,
                     false,
-                    "Welcome "+pref.getFirstName(this)+" "+ pref.getLastName(this),
-                    "Do u wish to verify OTP?",
+                    "Welcome " + pref.getFirstName(this) + " " + pref.getLastName(this),
+                    "Do u wish to verify Your Mobile Number?",
                     "Yes",
                     yesListener,
                     "NO",
@@ -117,7 +121,46 @@ public class HomeActivity extends BaseActivity {
         recyclerView.hasFixedSize();
 
         setUpRV();
-        APICall();
+        isVerifiedAPICall();
+    }
+
+    void isVerifiedAPICall() {
+        AlertDialog dialog = Utils.showProgressBar(this,"Please wait for a moment");
+        Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class)
+                .isVerified(getString(R.string.app_access_token), pref.getAccessToken(this));
+        call.enqueue(new Callback<UserVerifiedModel>() {
+            @Override
+            public void onResponse(@NonNull Call<UserVerifiedModel> call, @NonNull Response<UserVerifiedModel> response) {
+                dialog.dismiss();
+                if (getApplicationContext() != null) {
+                    if(response.isSuccessful()) {
+                        if(response.body() != null) {
+                            pref.setMobileVerified(HomeActivity.this, response.body().getUserIsVerified());
+                            Log.e("HomeActivity isVerified", "Response Successful! Response:"
+                                    + response.body().getUserIsVerified());
+                        } else
+                            Log.e("HomeActivity isVerified","Response Successful: Response Body NULL");
+                    } else {
+                        if (response.errorBody() != null) {
+                            try {
+                                Log.e("HomeActivity isVerified", "Response Unsuccessful: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserVerifiedModel> call, @NonNull Throwable t) {
+                if(Utils.isNetworkAvailable(getApplicationContext()))
+                    Utils.showDialog(getApplicationContext(),null,false,
+                            "No Internet Connection","Please connect to internet and try again",
+                            "Retry",retryListener,
+                            "Close App",closeListener);
+            }
+        });
     }
 
     public void setUpRV() {
@@ -171,25 +214,4 @@ public class HomeActivity extends BaseActivity {
         homeRVDataList.add(data);
     }
 
-    void APICall(){
-        Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class).isVerified(getString(R.string.app_access_token));
-        call.enqueue(new Callback<UserVerifiedModel>() {
-            @Override
-            public void onResponse(Call<UserVerifiedModel> call, Response<UserVerifiedModel> response) {
-                if(getApplicationContext()!=null && response.isSuccessful()){
-                    UserVerifiedModel model = response.body();
-                    if(model!=null){
-                        if(model.getVerified())
-                            pref.setMobileVerified(HomeActivity.this,true);
-                    }
-                    else
-                        Log.e("HomeActivity====","null response recived");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserVerifiedModel> call, Throwable t) {
-            }
-        });
-    }
 }

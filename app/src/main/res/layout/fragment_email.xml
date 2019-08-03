@@ -5,9 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.forgotPassword.EmailFragment"
-    android:background="#ff68a2">
+    android:background="#ff68a2"
+    android:elevation="2dp"
+    tools:targetApi="lollipop">
 
     <ImageView
         android:layout_width="0dp"
@@ -20,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/forgot_guide"/>
+        app:layout_constraintBottom_toTopOf="@id/forgot_guide" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/forgot_guide"
@@ -47,53 +51,77 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="casual"
-        android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:textAlignment="center"
         android:text="No Problem . . .\nYou just need to enter your registered Email-ID to Reset your Password"
-        app:layout_constraintTop_toBottomOf="@id/forgot_title"/>
+        app:layout_constraintTop_toBottomOf="@id/forgot_title"
+        app:layout_constraintBottom_toTopOf="@id/forgot_edit_guide"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/forgot_edit_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65"/>
+        app:layout_constraintGuide_percent="0.6"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/forgot_email_layout"
-        android:theme="@style/TextLabel"
-        style="@style/ForgotTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxBackgroundColor="#ff68a2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide">
+        style="@style/ForgotTextInputLayoutStyle"
+        app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide"
+        app:layout_constraintBottom_toBottomOf="@id/forgot_button_guide"
+        app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/forgot_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="@color/colorWhite"
-            android:inputType="textEmailAddress|textNoSuggestions"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
-            android:hint="Registered Email" />
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:hint="Registered Email"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <!--<com.google.android.material.textfield.TextInputLayout-->
+        <!--android:id="@+id/forgot_email_layout"-->
+        <!--android:theme="@style/TextLabel"-->
+        <!--style="@style/ForgotTextInputLayoutStyle"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:boxBackgroundColor="#ff68a2"-->
+        <!--app:errorTextAppearance="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--android:textAppearance="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/forgot_edit_guide"-->
+        <!--app:errorEnabled="true">-->
+
+        <!--<com.google.android.material.textfield.TextInputEditText-->
+            <!--android:id="@+id/forgot_email"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/colorWhite"-->
+            <!--android:inputType="textEmailAddress"-->
+
+            <!--android:hint="Registered Email" />-->
+
+    <!--</com.google.android.material.textfield.TextInputLayout>-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/forgot_button_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8"/>
+        app:layout_constraintGuide_percent="0.85"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/forgot_verify"
@@ -111,19 +139,5 @@
         app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
         app:rippleColor="#5d65ff"
         tools:layout_editor_absoluteX="150dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/forgot_back"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Widget.MaterialComponents.Button"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/back_to_login_screen"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/forgot_verify"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

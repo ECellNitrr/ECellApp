@@ -49,24 +49,9 @@ public class BquizOptionsAdapter extends RecyclerView.Adapter<BquizOptionsAdapte
                     holder.tvAnswerText.setText(data.getValue());
                 }
 
-                holder.cvAnswer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        lastSelected = holder.getAdapterPosition();
-                        notifyDataSetChanged();
-                    }
+                holder.cvAnswer.setOnClickListener(view -> {
+                    // call back
                 });
-
-                if(position == lastSelected){
-                    holder.cvAnswer.setCardBackgroundColor(context.getResources().getColor(R.color.bquizDarkBg));
-                    holder.tvAnswerText.setTextColor(context.getResources().getColor(R.color.colorWhite));
-                    holder.tvAnswerNumber.setTextColor(context.getResources().getColor(R.color.colorWhite));
-                }
-                else{
-                    holder.cvAnswer.setCardBackgroundColor(context.getResources().getColor(R.color.colorWhite));
-                    holder.tvAnswerText.setTextColor(context.getResources().getColor(R.color.colorText));
-                    holder.tvAnswerNumber.setTextColor(context.getResources().getColor(R.color.colorText));
-                }
             }
         }
     }
@@ -76,7 +61,7 @@ public class BquizOptionsAdapter extends RecyclerView.Adapter<BquizOptionsAdapte
         return questionDetailsModels.size();
     }
 
-    public class MyViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvAnswerNumber, tvAnswerText;
         CardView cvAnswer;

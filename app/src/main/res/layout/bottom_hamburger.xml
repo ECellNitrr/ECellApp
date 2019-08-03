@@ -5,102 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    app:cardBackgroundColor="#E6FFFFFF"
-    android:paddingBottom="16dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    app:cardBackgroundColor="#F4F4F4"
     app:cardCornerRadius="16dp">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hamburger_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="16dp"
-        android:layout_margin="4dp"
-        android:layout_marginBottom="16dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="24dp"/>
 
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="32dp"
-            android:padding="2dp"
-            android:text="@string/name"
-            android:textColor="@color/colorLightBlack"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            android:background="#AFAFAF" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/hamburger_verify_number"
-            style="@style/HamburgerAlertCardViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                style="@style/HamburgerAlertTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/verify_number" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/hamburger_change_number"
-            style="@style/HamburgerAlertCardViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                style="@style/HamburgerAlertTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/change_number" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/hamburger_about_us"
-            style="@style/HamburgerAlertCardViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                style="@style/HamburgerAlertTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/about_us" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/hamburger_log_out"
-            style="@style/HamburgerAlertCardViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardBackgroundColor="@color/colorHamAlertCardBackground"
-            app:cardCornerRadius="8dp">
-
-            <TextView
-                style="@style/HamburgerAlertTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/log_out" />
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

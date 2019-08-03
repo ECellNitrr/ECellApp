@@ -2,29 +2,20 @@ package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
-import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.UserVerifiedModel;
+import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
-import com.nitrr.ecell.esummit.ecellapp.models.VerifyNumber.PhoneNumber;
+import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.ChangeNumber;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
-import com.nitrr.ecell.esummit.ecellapp.models.MessageModel;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ChangePassword;
-import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
-import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotVerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamData;
-import com.nitrr.ecell.esummit.ecellapp.models.auth.CAProfile.CADetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.LoginDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
-import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.mentors.MentorResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotPassword;
-import com.nitrr.ecell.esummit.ecellapp.models.speakers.SpeakerDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
-import com.nitrr.ecell.esummit.ecellapp.models.startUps.StartUpDetails;
-import com.nitrr.ecell.esummit.ecellapp.models.startUps.StartUpResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -35,12 +26,11 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
-    @GET("/sponsors/list/2019/")
+    @GET("/sponsors/list/2018/")
     Call<SponsorsModel> getSponsData();
 
     @GET("events/list/2019/")
     Call<EventModel> getEventDetails();
-
 
     //Auth
     @POST("users/register/")
@@ -58,70 +48,32 @@ public interface APIServices {
     Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
 
     @POST("users/change_password/")
-    Call<GenericMessage> postPasswordChange(@Header("Access") String access,@Body ChangePassword password);
+    Call<GenericMessage> postPasswordChange(@Header("Access") String access, @Body ChangePassword password);
 
 
-    //User CA Profile
-    @POST("/user/ca_profile/")
-    Call<GenericMessage> postCAProfile(@Body CADetails caDetails);
-
-    @GET("/user/send_otp/")
-    Call<GenericMessage> getSendOTP();
-
-    @POST("/user/verify_otp/")
-    Call<GenericMessage> postSendOTP(@Header("Authorization") String token, @Body ForgotPassword otpVerify);
+    //Change Number
+    @POST("users/change_contact/")
+    Call<GenericMessage> changeNumber(@Header("Access") String access, @Header("Authorization") String token, @Body ChangeNumber number);
 
 
-    //Speakers
-    @POST("/speaker/add_new/")
-    Call<GenericMessage> postAddNewSpeaker(@Header("token") String token, @Body SpeakerDetails speakerDetails);
+    @GET("speakers/list/2018/")
+    Call<ResponseSpeaker> getSpeakerList(@Header("Access") String access);
 
-    @GET("speakers/list/{year}/")
-    Call<ResponseSpeaker> getSpeakerList(@Path("year") int year);
+    @GET("team/list/{year}/")
+    Call<TeamData> getTeamData(@Path("year") String year);
 
-    @GET("/speaker/generate_sheet/")
-    Call getSpeakerSheet();
+    @GET("is_update_available/")
+    Call<AppDetails> getIsUpdateAvailable();//200 available, 404 not
 
-
-    //mentors
-    @POST("/mentors/add_new/")
-    Call<GenericMessage> postAddNewMentor(@Header("token") String token, @Body MentorDetails mentorDetails);
-
-    @GET("/mentors/list/{year}/")
-    Call<MentorResponse> getMentorList(@Path("year") int year);
-
-    @GET("/mentors/generate_sheet/")
-    Call getMentorSheet();
-
-
-    //startUp
-    @POST("/startup/add_new/")
-    Call<GenericMessage> postAddNewStartup(@Header("token") String token, @Body StartUpDetails startUpDetails);
-
-    @GET("/startup/list/{year}/")
-    Call<StartUpResponse> getStartupList(@Path("year") int year);
-
-    @GET("/startup/generate_sheet/")
-    Call getStartupSheet();
-
-    @GET("/spons")
-    Call<TeamData> getTeamData();
-
-    @GET("/is_update_available/")
-    Call<AppDetails> getAppdata();
-
-    @GET("/users/change_contact/")
-    Call<PhoneNumber> changeNumber(@Body String string);
-
-    @POST("/users/verify_otp/")
+    @POST("users/verify_otp/")
     Call<OTPVerification> verifyOtp(@Header("Access") String access, @Header("Authorization") String token, @Body VerifyOTP verifyOTP);
 
-    @GET("/users/resend_otp/")
-    Call<MessageModel> resendOtp(@Header("Authorization") String auth, @Header("Access") String access);
+    @GET("users/resend_otp/")
+    Call<GenericMessage> resendOtp(@Header("Authorization") String auth, @Header("Access") String access);
 
-    @GET("/users/forgot_password/")
-    Call<MessageModel> sendOtp(@Header("Access") String access, @Header("email") String email);
+    @GET("users/is_user_verified/")
+    Call<UserVerifiedModel> isVerified(@Header("Access") String appAccessToken, @Header("Authorization") String userAccessToken); //only 200
 
-    @GET("/users/is_user_verified")
-    Call<UserVerifiedModel> isVerified(@Header("Access") String string);
+    @POST("/events/register/{id}/")
+    Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
 }

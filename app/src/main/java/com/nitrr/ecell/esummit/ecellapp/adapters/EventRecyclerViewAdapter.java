@@ -25,12 +25,12 @@ import java.util.List;
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.MyViewHolder> {
     private List<EventData> list;
     private Context context;
-    private float alpha = 0.2f;
+    private List<Float> floats;
 
-
-    public EventRecyclerViewAdapter(Context context,List<EventData> list) {
+    public EventRecyclerViewAdapter(Context context,List<EventData> list,List<Float> floats) {
         this.context = context;
         this.list = list;
+        this.floats = floats;
     }
 
     @NonNull
@@ -43,33 +43,34 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         EventData data = list.get(i);
-        Glide.with(context).load(data.getImage()).into(myViewHolder.eventimg);
+        Glide.with(context).load(data.getImage()).into(myViewHolder.eventImage);
         myViewHolder.event.setText(data.getName());
-        myViewHolder.eventbg.setAlpha(alpha);
-        if((i+1)%3==0)
-            alpha-=0.2f;
-        else
-            alpha+=0.2f;
+        myViewHolder.eventbg.setAlpha(floats.get(i));
 
         myViewHolder.card.setOnClickListener(v -> {
 
-            Log.e("card selected","card index "+i+"is selected");
+            Log.e("EventRecyclerView","Event Card Index " + i + " is selected");
             if(data.isFlag()){
-                Log.e("Flag is true","card index "+i+"is selected");
-            Bundle bundle = new Bundle();
-            bundle.putInt("position", i);
-            bundle.putString("event_img",data.getImage());
-            bundle.putString("event_name",data.getName());
-            bundle.putString("event_venue",data.getVenue());
-            bundle.putString("event_data",data.getDate());
-            bundle.putString("event_time",data.getTime());
-            bundle.putString("event_details",data.getDetails());
-            EventFragment fragment = new EventFragment();
-            fragment.setArguments(bundle);
-            AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.event_layout, fragment).addToBackStack(null).commit();
+                Log.e("Flag is true","Event Card Index " + i + " is selected");
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", i);
+                bundle.putString("event_img", data.getImage());
+                bundle.putString("event_name", data.getName());
+                bundle.putString("event_venue", data.getVenue());
+                bundle.putString("event_data", data.getDate());
+                bundle.putString("event_time", data.getTime());
+                bundle.putString("event_details", data.getDetails());
+                bundle.putString("id", data.getId() + "");
+                EventFragment fragment = new EventFragment();
+                fragment.setArguments(bundle);
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.event_layout, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
-            else{
+            else {
                 Utils.showLongToast(context,"This Event hasn't been approved yet");
             }
         });
@@ -81,7 +82,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView eventimg;
+        ImageView eventImage;
         TextView event;
         ImageView eventbg;
         CardView card;
@@ -90,7 +91,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             super(itemView);
             event = itemView.findViewById(R.id.event_name);
             eventbg = itemView.findViewById(R.id.event_bg);
-            eventimg = itemView.findViewById(R.id.event_img);
+            eventImage = itemView.findViewById(R.id.event_img);
             card = itemView.findViewById(R.id.event_card);
         }
     }

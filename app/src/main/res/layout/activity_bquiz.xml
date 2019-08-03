@@ -31,7 +31,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bquiz_question_bg"
                 android:text="00"
+                android:id="@+id/bquiz_timer"
                 android:padding="8dp"
+                android:textSize="25dp"
+                android:layout_marginRight="25dp"
                 android:layout_gravity="right"
                 android:layout_marginBottom="8dp"
                 />

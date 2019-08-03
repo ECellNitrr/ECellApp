@@ -9,9 +9,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_ecell_round"
+        android:icon="@mipmap/ic_ecell_icon_round_new"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_ecell_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
 
@@ -38,18 +37,17 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
 
         <activity

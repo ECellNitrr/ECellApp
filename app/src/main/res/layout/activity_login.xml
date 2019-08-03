@@ -121,12 +121,10 @@
         app:layout_constraintStart_toStartOf="@id/upper_poly"
         app:layout_constraintTop_toBottomOf="@id/login_linear_layout" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button"
-        android:textAppearance="@style/Widget.MaterialComponents.Button"
         android:layout_marginTop="5dp"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
@@ -134,12 +132,32 @@
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="26sp"
-        app:cornerRadius="30dp"
+        android:background="@drawable/button_sign_in"
         app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintBottom_toTopOf="@id/login_signin_guide"
         app:layout_constraintEnd_toEndOf="@id/upper_poly"
         app:layout_constraintStart_toStartOf="@id/upper_poly"
         app:layout_constraintTop_toBottomOf="@+id/forgot" />
+
+    <!--<com.google.android.material.button.MaterialButton-->
+        <!--android:id="@+id/sign_in_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--style="@style/Widget.MaterialComponents.Button"-->
+        <!--android:textAppearance="@style/Widget.MaterialComponents.Button"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:paddingStart="30dp"-->
+        <!--android:paddingEnd="30dp"-->
+        <!--android:text="@string/sign_in"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="@color/colorWhite"-->
+        <!--android:textSize="26sp"-->
+        <!--app:cornerRadius="30dp"-->
+        <!--app:layout_constraintHorizontal_bias="0.89"-->
+        <!--app:layout_constraintBottom_toTopOf="@id/login_signin_guide"-->
+        <!--app:layout_constraintEnd_toEndOf="@id/upper_poly"-->
+        <!--app:layout_constraintStart_toStartOf="@id/upper_poly"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/forgot" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/login_signin_guide"
@@ -381,7 +399,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.88" />
+        app:layout_constraintGuide_percent="0.87" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_button"

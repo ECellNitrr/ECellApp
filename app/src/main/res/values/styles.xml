@@ -61,9 +61,9 @@
 
     <style name="HamburgerAlertTextViewStyle">
         <item name="android:layout_margin">8dp</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="forgot_email_button">
@@ -79,7 +79,7 @@
         <item name="android:textColor">#f00</item>
     </style>
 
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
+    <style name="TextLabelLogin" parent="TextAppearance.AppCompat">
         <item name="android:textColorHint">@color/colorLightBlack</item>
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorAccent">@color/black</item>
@@ -96,5 +96,15 @@
         <item name="android:layout_marginStart">30dp</item>
         <item name="android:layout_marginEnd">30dp</item>
         <item name="boxStrokeColor">@color/colorWhite</item>
+    </style>
+
+    <style name="EditTextLabelForgot" parent="TextAppearance.AppCompat">
+        <item name="colorControlActivated">@color/colorWhite</item>
+    </style>
+
+    <style name="ESummitSpeakerDetail">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_margin">10dp</item>
     </style>
 </resources>

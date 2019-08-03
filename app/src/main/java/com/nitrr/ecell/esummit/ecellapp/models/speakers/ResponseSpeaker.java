@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ResponseSpeaker implements Serializable {
 
-    @SerializedName("MessageModel")
+    @SerializedName("message")
     @Expose
     private String message;
 
