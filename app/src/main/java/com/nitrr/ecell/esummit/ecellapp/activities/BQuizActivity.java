@@ -1,11 +1,12 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
-import com.crashlytics.android.Crashlytics;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
-
-import io.fabric.sdk.android.Fabric;
+import com.nitrr.ecell.esummit.ecellapp.fragments.BQuizQnAFragment;
 
 public class BQuizActivity extends BaseActivity {
 
@@ -17,5 +18,14 @@ public class BQuizActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ImageView bQuizBG = findViewById(R.id.bquiz_bg);
+        Glide.with(this)
+                .load(R.drawable.bquizbg)
+                .apply(new RequestOptions().centerCrop())
+                .into(bQuizBG);
+
+        BQuizQnAFragment fragment = new BQuizQnAFragment();
+        fragment.show(getSupportFragmentManager(), "BQUIZ");
     }
 }
