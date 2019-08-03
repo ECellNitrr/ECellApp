@@ -1,6 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
