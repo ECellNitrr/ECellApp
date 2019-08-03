@@ -9,8 +9,6 @@ public class SharedPref {
 
     private SharedPreferences.Editor editor;
 
-    private boolean isLoggedIn = false;
-
     public void setSharedPref(Context context, String access_token,
                               String firstName, String lastName,
                               String email) {
@@ -22,14 +20,15 @@ public class SharedPref {
         editor.putString("firstName", firstName);
         editor.putString("lastName", lastName);
         editor.putString("email", email);
-        editor.putBoolean("isLoggedIn", isLoggedIn);
 
         editor.apply();
         editor.commit();
     }
 
-    public void setIsLoggedIn(boolean isLoggedIn) {
-        this.isLoggedIn = isLoggedIn;
+
+    public void setIsLoggedIn(Context context, boolean isLoggedIn) {
+        getEditor(context).putBoolean("isLoggedIn", isLoggedIn).apply();
+        getEditor(context).commit();
     }
 
     public void setMobileVerified(Context context, boolean isVerified) {
@@ -53,6 +52,11 @@ public class SharedPref {
 
     public String getLastName(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString("lastName", "");
+    }
+
+    public void setEmail(Context context, String email) {
+        getEditor(context).putString("email", email).apply();
+        getEditor(context).commit();
     }
 
     public String getEmail(Context context) {

@@ -27,7 +27,6 @@ public class SpeakerFragment extends Fragment {
     private ImageView image;
     private TextView name;
     private TextView company;
-    private TextView year;
     private TextView email;
     private TextView socialMedia;
     private BroadcastReceiver receiver;
@@ -54,7 +53,6 @@ public class SpeakerFragment extends Fragment {
         image = v.findViewById(R.id.detail_speaker_image);
         company = v.findViewById(R.id.speaker_company);
         email = v.findViewById(R.id.speaker_email);
-        year = v.findViewById(R.id.detail_speaker_year);
         socialMedia = v.findViewById(R.id.speaker_social_media);
     }
 
@@ -71,7 +69,6 @@ public class SpeakerFragment extends Fragment {
         }
         this.name.setText(name);
         this.company.setText(company);
-        this.year.setText((Integer.toString(year)));
         this.email.setText(email);
         this.socialMedia.setText(socialMedia);
     }
