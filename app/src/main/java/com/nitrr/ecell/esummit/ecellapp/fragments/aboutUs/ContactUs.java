@@ -62,8 +62,9 @@ public class ContactUs extends Fragment implements View.OnClickListener {
             case R.id.messagesubmit:
                 sendMessage();
                 break;
+
             case R.id.contactus_address:{
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("geo:21.2479,81.6039"));
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("geo: 21.2479,81.6039"));
                 startActivity(intent);
                 break;
             }
@@ -73,7 +74,7 @@ public class ContactUs extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.contactus_number:{
-                Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel: 8827544244"));
+                Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel: 09406220952"));
                 startActivity(intent);
                 break;
             }

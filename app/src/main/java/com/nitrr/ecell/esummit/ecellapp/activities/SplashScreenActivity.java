@@ -31,13 +31,13 @@ import retrofit2.Response;
 
 public class SplashScreenActivity extends BaseActivity {
 
-    private AppDetails details;
     private SharedPref pref;
 
     private DialogInterface.OnClickListener retryListener = (dialog, which) -> {
-        APICall();
+        appVersionAPICall();
         dialog.dismiss();
     };
+    private DialogInterface.OnClickListener cancelListener = (dialog, which) -> finish();
 
 
     @Override
@@ -54,12 +54,7 @@ public class SplashScreenActivity extends BaseActivity {
     private void init() {
         pref = new SharedPref();
 
-        APICall();
-        
-        if(pref.isLoggedIn(this)) {
-            startActivity(new Intent(this, HomeActivity.class));
-            finish();
-        }
+        appVersionAPICall();
 
         Animation animation = new AlphaAnimation(1.0f, 0.5f);
         animation.setDuration(500);
@@ -75,55 +70,50 @@ public class SplashScreenActivity extends BaseActivity {
             ((ImageView) findViewById(R.id.ecell_splash_icon)).setImageResource(R.drawable.ic_esummit);
     }
 
-    private void APICall() {
-        Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getAppdata();
+    private void appVersionAPICall() {
+        Call<AppDetails> call = AppClient.getInstance().createService(APIServices.class).getIsUpdateAvailable();
         call.enqueue(new Callback<AppDetails>() {
             @Override
             public void onResponse(@NonNull Call<AppDetails> call, @NonNull Response<AppDetails> response) {
-                if (response.isSuccessful() && getApplicationContext() != null) {
-                    details = response.body();
-                    if (details != null) {
-                        checkAppVersion();
+                if(getApplicationContext() != null) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            checkAppVersion(response.body());
+                        } else {
+                            Log.e("SplashScreen AppUpdate", "Response Successful, empty response body");
+                        }
                     } else {
-                        try {
-                            if (response.errorBody() != null) {
-                                Log.e("details null====", "Error message is " + response.errorBody().string());
+                        if (response.errorBody() != null) {
+                            try {
+                                Log.e("SplashScreen AppUpdate", "Response Unsuccessful: " + response.errorBody().string());
+                                goInsideApp();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
                     }
-
-                } else {
-
-                    Utils.showDialog(SplashScreenActivity.this,
-                            null,
-                            false,
-                            "Something's wrong!",
-                            null,
-                            "Retry", retryListener,
-                            null, null);
                 }
-
-                Log.e("unsucess API Screen===", response.toString());
             }
 
             @Override
             public void onFailure(@NonNull Call<AppDetails> call, @NonNull Throwable t) {
-                Utils.showLongToast(SplashScreenActivity.this, "Something went Wrong");
+                Utils.showDialog(SplashScreenActivity.this,
+                        null,
+                        false,
+                        "Internet Connection Error!",
+                        null,
+                        "Retry", retryListener,
+                        "Cancel", cancelListener);
             }
         });
     }
 
-    private void checkAppVersion() {
+    private void checkAppVersion(AppDetails details) {
         if (details.getVersion() > BuildConfig.VERSION_CODE) {
-
             DialogInterface.OnClickListener updateListener = (dialog, which) -> {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(details.getLink())));
                 finish();
             };
-
-
             Utils.showDialog(SplashScreenActivity.this, null, false,
                     getString(R.string.update_msg), null,
                     "Update", updateListener, null, null);
@@ -132,14 +122,13 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void goInsideApp() {
-        Intent intent;
-
         if (pref.isLoggedIn(this)) {
-            intent = new Intent(this, HomeActivity.class);
-        } else
-            intent = new Intent(this, LoginActivity.class);
-
-        startActivity(intent);
+            startActivity(new Intent(this, HomeActivity.class));
+            Log.e("SplashScreen onSuccess", "User is Logged In");
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+            Log.e("SplashScreen onSuccess", "User is not Logged In");
+        }
         finish();
     }
 }

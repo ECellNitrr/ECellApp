@@ -10,7 +10,7 @@
 
     <item
         android:top="47dp"
-        android:left="36dp"
+        android:left="40dp"
         android:right="-25dp"
         android:bottom="-12dp"
         android:drawable="@drawable/login_circle_right"/>

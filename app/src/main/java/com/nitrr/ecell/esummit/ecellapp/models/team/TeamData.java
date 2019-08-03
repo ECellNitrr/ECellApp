@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TeamData {
 
-    @SerializedName("MessageModel")
+    @SerializedName("message")
     @Expose
     String message;
 

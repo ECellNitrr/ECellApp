@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
@@ -27,39 +30,59 @@ public class LoginAnimation {
             firstNameLayout , lastNameLayout, registerNumberLayout;
 
     //Constructor to initialize all the objects that are to be animated
-    public LoginAnimation(LoginActivity view){
+    public LoginAnimation(LoginActivity activity){
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        view.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         this.distance = displayMetrics.heightPixels * 0.71f;
-        upperLinearLayout = view.findViewById(R.id.login_linear_layout);
-        lowerLinearLayout = view.findViewById(R.id.register_linear_layout);
-        lowerPoly = view.findViewById(R.id.lower_poly);
-        upperPoly = view.findViewById(R.id.upper_poly);
-        forgot = view.findViewById(R.id.forgot);
-        signInButton = view.findViewById(R.id.sign_in_button);
-        registerButton = view.findViewById(R.id.register_button);
-        toRegisterText = view.findViewById(R.id.to_register_text);
-        toRegister = view.findViewById(R.id.to_register);
-        toSignInText = view.findViewById(R.id.to_sign_in_text);
-        toSignIn = view.findViewById(R.id.to_sign_in);
-        upperECell = view.findViewById(R.id.ic_upper_ecell);
-        lowerECell = view.findViewById(R.id.ic_lower_ecell);
+        upperLinearLayout = activity.findViewById(R.id.login_linear_layout);
+        lowerLinearLayout = activity.findViewById(R.id.register_linear_layout);
+        lowerPoly = activity.findViewById(R.id.lower_poly);
+        upperPoly = activity.findViewById(R.id.upper_poly);
+        forgot = activity.findViewById(R.id.forgot);
+        signInButton = activity.findViewById(R.id.sign_in_button);
+        registerButton = activity.findViewById(R.id.register_button);
+        toRegisterText = activity.findViewById(R.id.to_register_text);
+        toRegister = activity.findViewById(R.id.to_register);
+        toSignInText = activity.findViewById(R.id.to_sign_in_text);
+        toSignIn = activity.findViewById(R.id.to_sign_in);
+        upperECell = activity.findViewById(R.id.ic_upper_ecell);
+        lowerECell = activity.findViewById(R.id.ic_lower_ecell);
 
-        loginEmail = view.findViewById(R.id.login_email);
-        loginPassword = view.findViewById(R.id.login_password);
-        firstName = view.findViewById(R.id.register_first_name);
-        lastName = view.findViewById(R.id.register_last_name);
-        registerEmail = view.findViewById(R.id.register_email);
-        registerPassword = view.findViewById(R.id.register_password);
-        registerNumber = view.findViewById(R.id.register_number);
+        loginEmail = activity.findViewById(R.id.login_email);
+        loginPassword = activity.findViewById(R.id.login_password);
+        firstName = activity.findViewById(R.id.register_first_name);
+        lastName = activity.findViewById(R.id.register_last_name);
+        registerEmail = activity.findViewById(R.id.register_email);
+        registerPassword = activity.findViewById(R.id.register_password);
+        registerNumber = activity.findViewById(R.id.register_number);
 
-        loginEmailLayout = view.findViewById(R.id.login_email_layout);
-        loginPasswordLayout = view.findViewById(R.id.login_password_layout);
-        firstNameLayout = view.findViewById(R.id.register_first_name_layout);
-        lastNameLayout = view.findViewById(R.id.register_last_name_layout);
-        registerEmailLayout = view.findViewById(R.id.register_email_layout);
-        registerPasswordLayout = view.findViewById(R.id.register_password_layout);
-        registerNumberLayout = view.findViewById(R.id.register_number_layout);
+        loginEmailLayout = activity.findViewById(R.id.login_email_layout);
+        loginPasswordLayout = activity.findViewById(R.id.login_password_layout);
+        firstNameLayout = activity.findViewById(R.id.register_first_name_layout);
+        lastNameLayout = activity.findViewById(R.id.register_last_name_layout);
+        registerEmailLayout = activity.findViewById(R.id.register_email_layout);
+        registerPasswordLayout = activity.findViewById(R.id.register_password_layout);
+        registerNumberLayout = activity.findViewById(R.id.register_number_layout);
+
+        //adding upper poly
+        ConstraintLayout layout = activity.findViewById(R.id.login_outer_constraint);
+        layout.removeView(upperPoly);
+        layout.addView(upperPoly);
+
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(layout);
+        constraintSet.connect(upperPoly.getId(), ConstraintSet.START, layout.getId(), ConstraintSet.START, (int)((displayMetrics.density * 20f) + 0.5f));
+        constraintSet.connect(upperPoly.getId(), ConstraintSet.END, layout.getId(), ConstraintSet.END, (int)((displayMetrics.density * 20f) + 0.5f));
+        constraintSet.connect(upperPoly.getId(), ConstraintSet.BOTTOM, R.id.login_guide_17, ConstraintSet.TOP);
+//        constraintSet.constrainDefaultHeight();
+        constraintSet.constrainHeight(upperPoly.getId(), (int)(displayMetrics.heightPixels * 0.78));
+        constraintSet.applyTo(layout);
+
+        upperLinearLayout.bringToFront();
+        upperECell.bringToFront();
+        toSignInText.bringToFront();
+        toSignIn.bringToFront();
+        forgot.bringToFront();
     }
 
     public void toSignInScreen(){

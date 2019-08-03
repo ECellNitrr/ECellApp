@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class AppDetails {
 
-    @SerializedName("MessageModel")
+    @SerializedName("message")
     @Expose
     String log;
 
@@ -16,7 +16,6 @@ public class AppDetails {
     @SerializedName("version")
     @Expose
     Integer version;
-
 
     public String getLog() {
         return log;
@@ -29,5 +28,4 @@ public class AppDetails {
     public Integer getVersion() {
         return version;
     }
-
 }

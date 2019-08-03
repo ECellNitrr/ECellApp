@@ -32,7 +32,7 @@
     <string name="es_intro">The Entrepreneurship Summit is not just and name to provide platform where the students, faculty, investors, participants, speakers and start-ups can interact with each other and gain traction to improve them. We believe in a growth where everyone grows together and hence is this summit. The bright minds shall gain the motivation, resources and the pathway to realise their potential and convert their ideas to innovative start-ups.</string>
     <string name="about_es_19">About E Summit \'19</string>
     <string name="speakers">SPEAKERS</string>
-    <string name="es_date"><![CDATA[31 Aug & 1 Sept, 2k19 | NIT Raipur]]></string>
+    <string name="es_date"><![CDATA[31 Aug & 1 Sept, 2019 | NIT Raipur]]></string>
     <string name="post">Post</string>
 
     <!--About Us Strings-->
@@ -58,7 +58,7 @@
     <string name="old_number">Old Number</string>
     <string name="new_number">New Number</string>
 
-    <string name="esummit_tagline">\"Genesis of Innovation\"</string>
+    <string name="esummit_tagline">Genesis of Innovation</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="agreement">By clicking \'Accept\' you agree to all Terms and Conditions.</string>
     <string name="back_to_login_screen">Back To Login Screen</string>
@@ -70,7 +70,13 @@
     <string name="hco">Head Coordinator</string>
     <string name="mng">Manager</string>
     <string name="exc">Executive</string>
+    <string name="tech">Technology</string>
+    <string name="pr">PR and Marketing</string>
+    <string name="doc">Documentation</string>
+    <string name="design">Design</string>
 
     <string name="app_access_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ</string>
     <string name="resend_otp">Resend OTP ?</string>
+    <string name="about_us_contact">09406220952</string>
+    <string name="about_us_website">ecell@nitrr.ac.in</string>
 </resources>

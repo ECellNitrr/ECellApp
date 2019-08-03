@@ -38,7 +38,6 @@ public class EventActivity extends BaseActivity {
         dialog.cancel();
         EventActivity.this.finish();
     };
-
     private AlertDialog dialog;
 
     @Override
@@ -105,9 +104,19 @@ public class EventActivity extends BaseActivity {
     }
 
     private void setRecycler() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        int increment = list.size()/2+2;
+        float alpha=increment*2;
+        List<Float> floats = new ArrayList<>();
+        for(int x = 0;x<list.size();x++){
+            if(x%2==0)
+                alpha-=increment;
+            else
+                alpha+=increment;
+            floats.add(alpha);
+        }
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        adapter = new EventRecyclerViewAdapter(this, list);
+        adapter = new EventRecyclerViewAdapter(this, list, floats);
         recyclerView.setAdapter(adapter);
         dialog.dismiss();
     }

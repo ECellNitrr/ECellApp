@@ -61,7 +61,7 @@
 
     <style name="HamburgerAlertTextViewStyle">
         <item name="android:layout_margin">8dp</item>
-        <item name="android:textAlignment">center</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
@@ -96,10 +96,15 @@
         <item name="android:layout_marginStart">30dp</item>
         <item name="android:layout_marginEnd">30dp</item>
         <item name="boxStrokeColor">@color/colorWhite</item>
-        <item name="android:colorControlActivated" tools:targetApi="lollipop"></item>
     </style>
 
     <style name="EditTextLabelForgot" parent="TextAppearance.AppCompat">
         <item name="colorControlActivated">@color/colorWhite</item>
+    </style>
+
+    <style name="ESummitSpeakerDetail">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_margin">10dp</item>
     </style>
 </resources>
