@@ -1,9 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/bquiz_gradient"
     android:layout_height="match_parent"
     tools:context=".activities.BQuizActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/ll_parent"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:id="@+id/iv_bquiz_logo"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_ecell"
+                android:layout_gravity="center_horizontal"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bquiz_question_bg"
+                android:text="00"
+                android:padding="8dp"
+                android:layout_gravity="right"
+                android:layout_marginBottom="8dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_bquiz_question"
+                android:background="@drawable/bquiz_question_bg"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:padding="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_bquiz_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bquiz_button_style"
+                android:text="submit"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bquiz_button_style"
+                android:text="retry"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center_horizontal"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
