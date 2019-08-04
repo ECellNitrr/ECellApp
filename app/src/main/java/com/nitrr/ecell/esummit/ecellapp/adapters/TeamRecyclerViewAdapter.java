@@ -74,7 +74,6 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             progressDrawable.setCenterRadius(30f);
             progressDrawable.start();
             Glide.with(context).load(data.getImg()).placeholder(progressDrawable).transform(new CropSquareTransformation()).into(holder.img);
-        }
 
         holder.bg.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -88,6 +87,7 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             Glide.with(context).load(data.getImg()).into(memberImg);
             builder.create().show();
         });
+        }
     }
 
     @Override
