@@ -17,11 +17,11 @@ public class AppDetails {
     @Expose
     Integer version;
 
-    @SerializedName("idate")
+    @SerializedName("i_date")
     @Expose
     String sdate;
 
-    @SerializedName("fdate")
+    @SerializedName("f_date")
     @Expose
     String fdate;
 

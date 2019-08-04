@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
@@ -59,7 +61,7 @@ public class EventActivity extends BaseActivity {
         dialog = Utils.showProgressBar(this, "Loading Events..");
 
         APIServices services = AppClient.getInstance().createService(APIServices.class);
-        Call<EventModel> call = services.getEventDetails();
+        Call<EventModel> call = services.getEventDetails(new SharedPref().getAccessToken(EventActivity.this));
         call.enqueue(new Callback<EventModel>() {
             @Override
             public void onResponse(@NonNull Call<EventModel> call, @NonNull Response<EventModel> response) {
@@ -119,5 +121,11 @@ public class EventActivity extends BaseActivity {
         adapter = new EventRecyclerViewAdapter(this, list, floats);
         recyclerView.setAdapter(adapter);
         dialog.dismiss();
+    }
+
+    @Override
+    protected void onDestroy() {
+        HomeActivity.setSelected(false);
+        super.onDestroy();
     }
 }

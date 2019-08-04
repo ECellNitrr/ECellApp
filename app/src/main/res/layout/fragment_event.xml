@@ -180,9 +180,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:text="TBD"
+                    android:ellipsize="end"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

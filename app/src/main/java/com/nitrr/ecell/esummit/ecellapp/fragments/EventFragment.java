@@ -24,6 +24,7 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 import java.io.IOException;
 import java.util.Objects;
 
+import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
@@ -44,6 +45,7 @@ public class EventFragment extends Fragment {
     private TextView timeField;
     private BroadcastReceiver receiver;
     private String eventName, id;
+    private Button register;
 
     public EventFragment() {
     }
@@ -58,6 +60,8 @@ public class EventFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             initialize(view);
+            if(bundle.getBoolean("registered"))
+                register.setVisibility(View.GONE);
             eventName = bundle.getString("event_name");
             id = bundle.getString("id");
             setData(bundle.getString("event_name"),
@@ -76,7 +80,7 @@ public class EventFragment extends Fragment {
         eventDetails = v.findViewById(R.id.event_text);
         venueField = v.findViewById(R.id.event_venue);
         timeField = v.findViewById(R.id.date_time);
-        Button register = v.findViewById(R.id.event_register_button);
+        register = v.findViewById(R.id.event_register_button);
         register.setOnClickListener(v1 -> registerAPI(id));
     }
 
@@ -117,6 +121,7 @@ public class EventFragment extends Fragment {
     public void onDestroy() {
         if (receiver != null) {
             Objects.requireNonNull(getContext()).unregisterReceiver(receiver);
+            EventRecyclerViewAdapter.setSelected(false);
             receiver = null;
         }
         super.onDestroy();

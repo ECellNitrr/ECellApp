@@ -79,10 +79,11 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             View view = LayoutInflater.from(context).inflate(R.layout.layout_spons_alertdialog, null);
             builder.setView(view);
             builder.setCancelable(true);
-            TextView sponsname = view.findViewById(R.id._name);
-            ImageView sponsimg = view.findViewById(R.id._image);
-            sponsname.setText(data.getName());
-            Glide.with(context).load(data.getImg()).into(sponsimg);
+            view.setMinimumHeight(view.getWidth());
+            TextView sponsName = view.findViewById(R.id._name);
+            ImageView sponsImg = view.findViewById(R.id._image);
+            sponsName.setText(data.getName());
+            Glide.with(context).load(data.getImg()).into(sponsImg);
             builder.create().show();
         });
 

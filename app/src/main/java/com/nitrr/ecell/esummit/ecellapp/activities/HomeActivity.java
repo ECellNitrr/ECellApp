@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
@@ -38,6 +37,7 @@ import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
 
+    private static Boolean selected = false;
     private RecyclerView recyclerView;
     private HomeRVAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
@@ -55,15 +55,15 @@ public class HomeActivity extends BaseActivity {
                 .addToBackStack(null)
                 .commit();
     };
-
     private DialogInterface.OnClickListener noListener = (dialog, which) -> dialog.cancel();
-
-    private DialogInterface.OnClickListener retryListener = (dialog, which) -> isVerifiedAPICall();
-
     private DialogInterface.OnClickListener closeListener = (dialog, which) -> finish();
-
+    private DialogInterface.OnClickListener retryListener = (dialog, which) -> isVerifiedAPICall();
     private int distance = 0, offset;
     private float displacement = 0;
+
+    public static void setSelected(Boolean selected) {
+        HomeActivity.selected = selected;
+    }
 
     @Override
     protected int getLayoutResourceId() {
@@ -74,7 +74,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!pref.isGreeted(this)){
+        if (!pref.isGreeted(this)) {
             Utils.showDialog(this,
                     null,
                     false,
@@ -95,25 +95,36 @@ public class HomeActivity extends BaseActivity {
         recyclerView.hasFixedSize();
         adapter = new HomeRVAdapter(this, homeRVDataList);
         initializeList("E Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
-            Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
-            startActivity(intent);
+            if (!selected) {
+                selected = true;
+                Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
+                startActivity(intent);
+            }
         });
 
         initializeList("Events", R.drawable.ic_events, this.getString(R.string.color_events), v -> {
-            Intent intent = new Intent(HomeActivity.this, EventActivity.class);
-            startActivity(intent);
+            if (!selected) {
+                selected = true;
+                Intent intent = new Intent(HomeActivity.this, EventActivity.class);
+                startActivity(intent);
+            }
         });
 
         initializeList("BQuiz", R.drawable.ic_event_bq, this.getString(R.string.color_bquiz), v -> {
-            AlertDialog dialog = null;
-            dialog = Utils.showDialog(this, null, true, "Sorry for the Inconvenience",
-                    "BQuiz will be online soon, Please checkout later",
-                    null, null, "Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+            if (!selected) {
+                AlertDialog dialog = null;
+                dialog = Utils.showDialog(this, null, true, "Sorry for the Inconvenience",
+                        "BQuiz will be online soon, Please checkout later",
+                        null, null, "Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+            }
         });
 
         initializeList("Sponsors", R.drawable.ic_hand_shake, this.getString(R.string.color_spons), v -> {
-            Intent intent = new Intent(HomeActivity.this, SponsorsActivity.class);
-            startActivity(intent);
+            if (!selected) {
+                selected = true;
+                Intent intent = new Intent(HomeActivity.this, SponsorsActivity.class);
+                startActivity(intent);
+            }
         });
 
         ImageButton hamburger_button = findViewById(R.id.hamburgerButton);
@@ -126,7 +137,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     void isVerifiedAPICall() {
-        AlertDialog dialog = Utils.showProgressBar(this,"Please wait for a moment");
+        AlertDialog dialog = Utils.showProgressBar(this, "Please wait for a moment");
         Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class)
                 .isVerified(getString(R.string.app_access_token), pref.getAccessToken(this));
         call.enqueue(new Callback<UserVerifiedModel>() {
@@ -134,13 +145,13 @@ public class HomeActivity extends BaseActivity {
             public void onResponse(@NonNull Call<UserVerifiedModel> call, @NonNull Response<UserVerifiedModel> response) {
                 dialog.dismiss();
                 if (getApplicationContext() != null) {
-                    if(response.isSuccessful()) {
-                        if(response.body() != null) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
                             pref.setMobileVerified(HomeActivity.this, response.body().getUserIsVerified());
                             Log.e("HomeActivity isVerified", "Response Successful! Response:"
                                     + response.body().getUserIsVerified());
                         } else
-                            Log.e("HomeActivity isVerified","Response Successful: Response Body NULL");
+                            Log.e("HomeActivity isVerified", "Response Successful: Response Body NULL");
                     } else {
                         if (response.errorBody() != null) {
                             try {
@@ -155,11 +166,11 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<UserVerifiedModel> call, @NonNull Throwable t) {
-                if(Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(getApplicationContext(),null,false,
-                            "No Internet Connection","Please connect to internet and try again",
-                            "Retry",retryListener,
-                            "Close App",closeListener);
+                if (Utils.isNetworkAvailable(getApplicationContext()))
+                    Utils.showDialog(getApplicationContext(), null, false,
+                            "No Internet Connection", "Please connect to internet and try again",
+                            "Retry", retryListener,
+                            "Close App", closeListener);
             }
         });
     }
@@ -214,5 +225,4 @@ public class HomeActivity extends BaseActivity {
         HomeRVData data = new HomeRVData(name, color, cardImage, listener);
         homeRVDataList.add(data);
     }
-
 }

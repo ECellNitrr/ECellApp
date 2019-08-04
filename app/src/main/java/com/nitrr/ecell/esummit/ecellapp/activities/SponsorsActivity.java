@@ -23,6 +23,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsViewPagerAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
@@ -247,6 +248,12 @@ public class SponsorsActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        HomeActivity.setSelected(false);
+        super.onDestroy();
     }
 
 }

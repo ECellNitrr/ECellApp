@@ -30,7 +30,7 @@ public interface APIServices {
     Call<SponsorsModel> getSponsData();
 
     @GET("events/list/2019/")
-    Call<EventModel> getEventDetails();
+    Call<EventModel> getEventDetails(@Header("Authorization") String token);
 
     //Auth
     @POST("users/register/")

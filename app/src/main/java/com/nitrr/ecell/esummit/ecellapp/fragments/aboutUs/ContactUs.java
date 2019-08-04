@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
 public class ContactUs extends Fragment implements View.OnClickListener {
 
@@ -89,11 +90,13 @@ public class ContactUs extends Fragment implements View.OnClickListener {
         String token = pref.getAccessToken(getContext());
         String email = pref.getEmail(getActivity());
         String mess = message.getText().toString();
+        message.setText("");
+        Utils.showShortToast(getContext(),"Feedback send");
 
 //        Call<> call =  AppClient.getInstance().createService(APIServices.class).methordName;
     }
 
-    void initialize(View view){
+    private void initialize(View view){
         linkedin = view.findViewById(R.id.linkedinlogo);
         twitter = view.findViewById(R.id.twitterlogo);
         facebook = view.findViewById(R.id.facebooklogo);

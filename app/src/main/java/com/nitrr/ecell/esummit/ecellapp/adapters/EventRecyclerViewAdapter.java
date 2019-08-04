@@ -27,11 +27,16 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
     private List<EventData> list;
     private Context context;
     private List<Float> floats;
+    private static boolean selected = false;
 
     public EventRecyclerViewAdapter(Context context, List<EventData> list, List<Float> floats) {
         this.context = context;
         this.list = list;
         this.floats = floats;
+    }
+
+    public static void setSelected(Boolean selected){
+        EventRecyclerViewAdapter.selected = selected;
     }
 
     @NonNull
@@ -56,7 +61,8 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         myViewHolder.eventbg.setAlpha(floats.get(i));
 
         myViewHolder.card.setOnClickListener(v -> {
-
+            if(!selected){
+                selected = true;
             Log.e("EventRecyclerView", "Event Card Index " + i + " is selected");
             if (data.isFlag()) {
                 Log.e("Flag is true", "Event Card Index " + i + " is selected");
@@ -69,6 +75,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
                 bundle.putString("event_time", data.getTime());
                 bundle.putString("event_details", data.getDetails());
                 bundle.putString("id", data.getId() + "");
+                bundle.putBoolean("registered",data.isRegistered());
                 EventFragment fragment = new EventFragment();
                 fragment.setArguments(bundle);
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -79,6 +86,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
                         .commit();
             } else {
                 Utils.showLongToast(context, "This Event hasn't been approved yet");
+            }
             }
         });
     }

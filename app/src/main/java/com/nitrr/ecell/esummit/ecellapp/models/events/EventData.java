@@ -40,6 +40,10 @@ public class EventData {
     @Expose
     private boolean flag;
 
+    @SerializedName("registered")
+    @Expose
+    private boolean registered;
+
     public int getId() {
         return id;
     }
@@ -76,5 +80,7 @@ public class EventData {
         return flag;
     }
 
-
+    public boolean isRegistered() {
+        return registered;
+    }
 }
