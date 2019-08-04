@@ -76,4 +76,6 @@ public interface APIServices {
 
     @POST("/events/register/{id}/")
     Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
+
+
 }
