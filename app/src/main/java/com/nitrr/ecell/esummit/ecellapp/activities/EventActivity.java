@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventModel;
@@ -56,10 +57,10 @@ public class EventActivity extends BaseActivity {
 
     void APICall() {
 
-        dialog = Utils.showProgressBar(this, "Loading Events..");
+        dialog = Utils.showProgressBar(this, "Loading Events...");
 
         APIServices services = AppClient.getInstance().createService(APIServices.class);
-        Call<EventModel> call = services.getEventDetails();
+        Call<EventModel> call = services.getEventDetails(new SharedPref().getAccessToken(EventActivity.this));
         call.enqueue(new Callback<EventModel>() {
             @Override
             public void onResponse(@NonNull Call<EventModel> call, @NonNull Response<EventModel> response) {
@@ -72,7 +73,9 @@ public class EventActivity extends BaseActivity {
                     } else {
                         Utils.showDialog(EventActivity.this, null, false, "Something went wrong", getApplicationContext().getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
                         try {
-                            Log.e("event body null====", "error body: " + response.errorBody().string());
+                            if (response.errorBody() != null) {
+                                Log.e("event body null====", "error body: " + response.errorBody().string());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

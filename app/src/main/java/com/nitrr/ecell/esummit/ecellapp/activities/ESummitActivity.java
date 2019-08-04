@@ -8,9 +8,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.ESummitRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
@@ -49,6 +51,8 @@ public class ESummitActivity extends BaseActivity {
         back.setOnClickListener(v -> finish());
         responseSpeakerObjectList = new ArrayList<>();
         findViewById(R.id.es_nested_sv).scrollTo(0,0);
+        TextView date = findViewById(R.id.e_summit_date);
+        date.setText(setESDate());
         callAPI();
     }
 
@@ -95,4 +99,44 @@ public class ESummitActivity extends BaseActivity {
         });
     }
 
+    public String setESDate() {
+        SharedPref pref = new SharedPref();
+        String startDate = pref.getDates(this)[0];
+        String endDate = pref.getDates(this)[1];
+        return startDate.split("-")[2] + " " + getMonth(startDate) +
+                " & " + endDate.split("-")[2] + " " + getMonth(endDate) +
+                ", " + startDate.split("-")[0] +
+                " | NIT Raipur";
+    }
+
+    private String getMonth(String date) {
+        switch (date.split("-")[1]) {
+            case "01":
+                return "Jan";
+            case "02":
+                return "Feb";
+            case "03":
+                return "March";
+            case "04":
+                return "April";
+            case "05":
+                return "May";
+            case "06":
+                return "June";
+            case "07":
+                return "July";
+            case "08":
+                return "Aug";
+            case "09":
+                return "Sept";
+            case "10":
+                return "Oct";
+            case "11":
+                return "Nov";
+            case "12":
+                return "Dec";
+            default:
+                return null;
+        }
+    }
 }

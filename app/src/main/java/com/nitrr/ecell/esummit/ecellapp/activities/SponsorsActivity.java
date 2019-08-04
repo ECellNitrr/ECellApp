@@ -1,20 +1,14 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
-import android.content.IntentFilter;
 import android.graphics.Color;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -24,7 +18,6 @@ import android.widget.ImageView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.SponsViewPagerAdapter;
-import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsorsModel;
@@ -34,7 +27,6 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -215,7 +207,7 @@ public class SponsorsActivity extends BaseActivity {
         dialog = Utils.showProgressBar(this, "Loading Sponsors..");
 
         APIServices service = AppClient.getInstance().createService(APIServices.class);
-        Call<SponsorsModel> call = service.getSponsData();
+        Call<SponsorsModel> call = service.getSponsorsData();
         call.enqueue(new Callback<SponsorsModel>() {
             @Override
             public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {

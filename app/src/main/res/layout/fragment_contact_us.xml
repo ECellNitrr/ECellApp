@@ -202,13 +202,14 @@
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         app:srcCompat="@drawable/about_us_feedback"
                         android:padding="10dp"
                         android:layout_weight="1"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="5"
                         android:hint="Message"
                         android:gravity="center_vertical">

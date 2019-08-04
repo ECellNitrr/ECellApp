@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.restapi;
 
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
+import com.nitrr.ecell.esummit.ecellapp.models.FeedbackModel;
 import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
 import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
@@ -27,10 +28,10 @@ import retrofit2.http.Path;
 public interface APIServices {
 
     @GET("/sponsors/list/2018/")
-    Call<SponsorsModel> getSponsData();
+    Call<SponsorsModel> getSponsorsData();
 
     @GET("events/list/2019/")
-    Call<EventModel> getEventDetails();
+    Call<EventModel> getEventDetails(@Header("Authorization") String auth);
 
     //Auth
     @POST("users/register/")
@@ -74,6 +75,9 @@ public interface APIServices {
     @GET("users/is_user_verified/")
     Call<UserVerifiedModel> isVerified(@Header("Access") String appAccessToken, @Header("Authorization") String userAccessToken); //only 200
 
-    @POST("/events/register/{id}/")
+    @POST("events/register/{id}/")
     Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
+
+    @POST("feedback/post/")
+    Call<GenericMessage> postFeedback(@Body FeedbackModel feedbackModel);
 }
