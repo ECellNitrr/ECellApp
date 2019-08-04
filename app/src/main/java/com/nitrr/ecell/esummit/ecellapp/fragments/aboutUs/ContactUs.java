@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +21,10 @@ import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 
 public class ContactUs extends Fragment implements View.OnClickListener {
 
-    private ImageView whatsapp, linkedin, twitter, facebook, instagram;
+    private ImageView linkedin, twitter, facebook, instagram;
+    private Button messagebutton;
     private TextView address, site, phonenumber;
+    private EditText message;
     SharedPref pref = new SharedPref();
 
     public ContactUs() {
@@ -85,6 +89,7 @@ public class ContactUs extends Fragment implements View.OnClickListener {
         String token = pref.getAccessToken(getContext());
         String email = pref.getEmail(getActivity());
         String name = pref.getFirstName(getActivity());
+        String mess = message.getText().toString();
 
 //        Call<> call =  AppClient.getInstance().createService(APIServices.class).methordName;
     }
@@ -97,6 +102,9 @@ public class ContactUs extends Fragment implements View.OnClickListener {
         address = view.findViewById(R.id.contactus_address);
         site = view.findViewById(R.id.contactus_website);
         phonenumber = view.findViewById(R.id.contactus_number);
+        messagebutton = view.findViewById(R.id.messagesubmit);
+        message = view.findViewById(R.id.message);
+        messagebutton.setOnClickListener(this);
         linkedin.setOnClickListener(this);
         twitter.setOnClickListener(this);
         facebook.setOnClickListener(this);

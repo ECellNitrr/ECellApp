@@ -18,6 +18,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.team.TeamList;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
+
 public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
@@ -64,7 +66,7 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             holder.post.setText(R.string.design);
         else
             holder.post.setText(data.getDomain());
-        Glide.with(context).load(data.getUrl()).into(holder.img);
+        Glide.with(context).load(data.getUrl()).transform(new CropSquareTransformation()).into(holder.img);
     }
 
     @Override

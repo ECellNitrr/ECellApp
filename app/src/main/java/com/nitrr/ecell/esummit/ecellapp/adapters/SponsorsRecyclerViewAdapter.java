@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
@@ -20,9 +21,12 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 
 
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder>{
@@ -84,6 +88,18 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
                 return false;
             }
         }).into(holder.image);
+
+        holder.card.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_spons_alertdialog,null);
+            builder.setView(view);
+            builder.setCancelable(true);
+            TextView sponsname = view.findViewById(R.id.sponors_name);
+            ImageView sponsimg = view.findViewById(R.id.sponsor_image);
+            sponsname.setText(data.getName());
+            Glide.with(context).load(data.getImg()).into(sponsimg);
+            builder.create().show();
+        });
 
     }
 
