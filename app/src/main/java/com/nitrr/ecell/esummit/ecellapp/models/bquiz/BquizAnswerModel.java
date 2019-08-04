@@ -14,5 +14,10 @@ public class BquizAnswerModel {
     public int answerID;
 
     @SerializedName("time")
+    @Expose
     public int time;
+
+    @SerializedName("score")
+    @Expose
+    public int score;
 }

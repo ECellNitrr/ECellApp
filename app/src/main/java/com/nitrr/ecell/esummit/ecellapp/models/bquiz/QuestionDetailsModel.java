@@ -61,7 +61,7 @@ public class QuestionDetailsModel {
     }
 
     @SerializedName("score")
-    public float score;
+    public int score;
 
     @SerializedName("options")
     List<String> options;
@@ -70,7 +70,7 @@ public class QuestionDetailsModel {
     @SerializedName("option_id")
     List<Integer> optionId;
 
-    public QuestionDetailsModel(int id, boolean show, String question, String description, String meta, int time_limit, float score, List<String> options, List<Integer> optionId) {
+    public QuestionDetailsModel(int id, boolean show, String question, String description, String meta, int time_limit, int score, List<String> options, List<Integer> optionId) {
         this.id = id;
         this.show = show;
         this.question = question;

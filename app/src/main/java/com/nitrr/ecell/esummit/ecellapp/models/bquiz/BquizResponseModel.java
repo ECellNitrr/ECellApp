@@ -7,11 +7,7 @@ public class BquizResponseModel {
 
     @SerializedName("score")
     @Expose
-    public float score;
-
-    @SerializedName("bonus")
-    @Expose
-    public float bonus;
+    public int score;
 
     @SerializedName("total_score")
     @Expose
@@ -25,7 +21,6 @@ public class BquizResponseModel {
     public String toString() {
         return "BquizResponseModel{" +
                 "score=" + score +
-                ", bonus=" + bonus +
                 ", totalScore=" + totalScore +
                 ", message='" + message + '\'' +
                 '}';

@@ -48,15 +48,18 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     private ImageView bquizLogo;
     private TextView tvBquizQuestion, timeAllotted;
-    public int timeGiven;
+
     private RecyclerView rvBquizOptions;
     private BquizOptionsAdapter bquizOptionsAdapter;
 
+    public int timeGiven;
     private List<Integer> optionID;
     private int answerId = 0, questionId = -1;
+    private int baseScore = 0;
     private int timeAtWhichAnswerWasSelected = 0;
 
     private BottomSheetFragmentBquiz fragmentBquiz;
+
 
     @Nullable
     @Override
@@ -179,6 +182,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                         optionID = model.getOptionId();
 
                         questionId = model.id;
+                        baseScore = model.score;
                         timer(model.timeLimit);
 
                         if (!model.meta.equals("") && getActivity() != null) {
@@ -216,6 +220,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
         answerModel.answerID = optionID == null || optionID.size() == 0 ? 0 : optionID.get(answerId);
         answerModel.questionID = questionId;
         answerModel.time = timeAtWhichAnswerWasSelected;
+        answerModel.score = getBonus(timeAtWhichAnswerWasSelected) + baseScore;
 
         Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJlcmVAZ21haWwuY29tIn0.a3HUpl8XWW4v-k-Sv2TNOg48nTWgPKZowVjTN6X15JY", answerModel);
         responseModelCall.enqueue(new Callback<BquizResponseModel>() {
@@ -234,5 +239,9 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                 Utils.showLongToast(getContext(), "Submission Failed.");
             }
         });
+    }
+
+    private int getBonus(int time){
+        return time >= 15 ? time * 2 : 0;
     }
 }
