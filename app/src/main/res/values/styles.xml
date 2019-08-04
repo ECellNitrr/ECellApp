@@ -107,4 +107,8 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:layout_margin">10dp</item>
     </style>
+
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">@color/colorWhite</item>
+    </style>
 </resources>

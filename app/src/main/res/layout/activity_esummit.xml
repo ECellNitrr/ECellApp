@@ -114,8 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="10dp"
-                app:layout_constraintTop_toTopOf="parent">
+                app:cardElevation="10dp">
 
                 <TextView
                     android:id="@+id/es_about_text"
@@ -142,24 +141,40 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/corben"
-                android:text="Speakers"
-                android:textAllCaps="true"
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="35sp" />
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
 
+                <ProgressBar
+                    android:id="@+id/es_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:theme="@style/AppTheme.WhiteAccent"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/speaker_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/corben"
+                    android:text="Speakers"
+                    android:textAllCaps="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="35sp"
+                    android:layout_weight="15"/>
+
+            </LinearLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/es_speaker_rv"
+                android:id="@+id/es_speaker_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/es_about_cardview" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

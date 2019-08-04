@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -31,6 +33,8 @@ public class ESummitActivity extends BaseActivity {
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
     private RecyclerView speakerRV;
+    TextView speakerText;
+    ProgressBar loadingSpeakers;
     ESummitRecyclerViewAdapter adapter;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
@@ -46,8 +50,10 @@ public class ESummitActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        speakerRV = findViewById(R.id.es_speaker_rv);
+        speakerRV = findViewById(R.id.es_speaker_recycler_view);
         ImageView back = findViewById(R.id.esummit_back);
+        speakerText = findViewById(R.id.speaker_text);
+        loadingSpeakers = findViewById(R.id.es_loading);
         back.setOnClickListener(v -> finish());
         responseSpeakerObjectList = new ArrayList<>();
         findViewById(R.id.es_nested_sv).scrollTo(0, 0);
@@ -75,6 +81,7 @@ public class ESummitActivity extends BaseActivity {
                         adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
                         speakerRV.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+                        loadingSpeakers.setVisibility(View.GONE);
                         Log.e("ESummitActivity Data", "list size is" + responseSpeakerObjectList.size());
                     }
                 } else {
