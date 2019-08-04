@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -37,7 +38,7 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(inflater.inflate(R.layout.layout_speaker_item, parent,false));
+        return new MyViewHolder(inflater.inflate(R.layout.layout_speaker_item, parent, false));
     }
 
     @Override
@@ -46,10 +47,17 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
         try {
             holder.year.setText(Integer.toString(data.getYear()));
             holder.name.setText(data.getName());
-            Glide.with(context)
-                    .load(data.getImage())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(holder.image);
+            if (data.getImage() != null) {
+                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(context);
+                progressDrawable.setStrokeWidth(10f);
+                progressDrawable.setCenterRadius(90f);
+                progressDrawable.start();
+                Glide.with(context)
+                        .load(data.getImage())
+                        .placeholder(progressDrawable)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(holder.image);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,7 +93,7 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
         return speakerDataList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
         TextView year;

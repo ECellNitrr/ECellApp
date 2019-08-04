@@ -1,6 +1,8 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,15 @@ public class HamburgerRecyclerViewAdapter extends RecyclerView.Adapter<Hamburger
         HamburgerItemModel data = list.get(position);
         holder.itemName.setText(data.getName());
         holder.img.setImageResource(data.getImg());
+        if(position!=0){
+                TypedValue outValue = new TypedValue();
+                context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground,outValue,true);
+                holder.item.setBackgroundResource(outValue.resourceId);
+            }
         holder.item.setOnClickListener(data.getListener());
+        if(position==list.size()-1)
+            holder.divisionLine.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -50,7 +60,7 @@ public class HamburgerRecyclerViewAdapter extends RecyclerView.Adapter<Hamburger
     class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView itemName;
-        private ImageView img;
+        private ImageView img, divisionLine;
         private LinearLayout item;
 
         public MyViewHolder(@NonNull View view) {
@@ -58,6 +68,7 @@ public class HamburgerRecyclerViewAdapter extends RecyclerView.Adapter<Hamburger
             item = view.findViewById(R.id.hamburger_item);
             itemName = view.findViewById(R.id.hamburger_itemtext);
             img = view.findViewById(R.id.hamburger_itemicon);
+            divisionLine = view.findViewById(R.id.hamburger_item_division_line);
         }
     }
 }

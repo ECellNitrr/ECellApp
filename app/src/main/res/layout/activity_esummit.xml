@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/esummit_back"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintHorizontal_bias="0.05"
@@ -143,8 +143,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lemon"
+                android:fontFamily="@font/corben"
                 android:text="Speakers"
+                android:textAllCaps="true"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="35sp" />

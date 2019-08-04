@@ -76,7 +76,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" : null);
 
 
-
             if (loginEmailLayout.getError() == null &&
                     loginPasswordLayout.getError() == null)
                 LoginApiCall();
@@ -197,7 +196,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                 lastName.getText().toString().trim(),
                 registerEmail.getText().toString().trim(),
                 registerPassword.getText().toString(),
-                registerNumber.getText().toString(),
+                registerNumber.getText().toString().trim(),
                 null, null, null);
 
         Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postRegisterUser(details);
@@ -221,12 +220,12 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                         details.getFirstName(),
                                         details.getLastName(),
                                         details.getEmail());
-                                pref.setIsLoggedIn(getApplicationContext(), true);
+                                pref.setIsLoggedIn(LoginActivity.this, true);
                                 pref.setGreeted(LoginActivity.this, false);
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                 finish();
                             } else {
-                                Utils.showLongToast(getApplicationContext(), "Something went wrong!");
+                                Utils.showLongToast(LoginActivity.this, "Something went wrong!");
                                 Log.e("LoginActivity Register", "Response Successful, Response Body NULL");
                             }
                         } else {
@@ -254,7 +253,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     private void LoginApiCall() {
         AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In...");
 
-        LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
+        LoginDetails details = new LoginDetails(loginEmail.getText().toString().trim(), loginPassword.getText().toString());
 
         Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
 
@@ -268,12 +267,12 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                             if (response.body() != null) {
                                 AuthResponse authResponse = response.body();
                                 SharedPref pref = new SharedPref();
-                                pref.setAccessToken(getApplicationContext(), authResponse.getToken());
-                                pref.setIsLoggedIn(getApplicationContext(), true);
+                                pref.setAccessToken(LoginActivity.this, authResponse.getToken());
+                                pref.setIsLoggedIn(LoginActivity.this, true);
                                 Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 Log.e("LoginActivity Login", response.body().getMessage());
                                 pref.setGreeted(LoginActivity.this,true);
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                startActivity(new Intent( LoginActivity.this, HomeActivity.class));
                                 finish();
                             } else {
                                 Log.e("LoginActivity Login", "Response Successful, Response Body NULL");
@@ -281,7 +280,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                         } else {
                             Log.e("LoginActivity Login", "Response Unsuccessful with code:" + response.code());
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                                Utils.showLongToast(LoginActivity.this, response.errorBody().string().split("\"")[7]);
                             } else
                                 Log.e("LoginActivity Login", "Response ErrorBody NULL");
                         }
@@ -294,7 +293,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 loginDialog.dismiss();
-                Utils.showLongToast(getApplicationContext(), "There was an error " + t.getMessage());
+                Utils.showLongToast(LoginActivity.this, "There was an error " + t.getMessage());
             }
         });
     }

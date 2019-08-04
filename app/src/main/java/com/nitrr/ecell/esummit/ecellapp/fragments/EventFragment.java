@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -83,7 +84,11 @@ public class EventFragment extends Fragment {
 
         try {
             if (image != null) {
-                Glide.with(Objects.requireNonNull(getContext())).load(image).into(eventImage);
+                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getContext());
+                progressDrawable.setStrokeWidth(15f);
+                progressDrawable.setCenterRadius(120f);
+                progressDrawable.start();
+                Glide.with(Objects.requireNonNull(getContext())).load(image).placeholder(progressDrawable).into(eventImage);
             }
         } catch (Exception e) {
             setData(name, image, details, time, date, venue);

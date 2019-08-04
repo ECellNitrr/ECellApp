@@ -19,9 +19,9 @@
 
             <ImageView
                 android:id="@+id/memberpic"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="16dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="10dp"
                 android:layout_gravity="center_vertical" />
 
             <LinearLayout
@@ -41,17 +41,17 @@
                     android:maxLines="1"
                     android:text="@string/name"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/memberpost"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:text="@string/post"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="12sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/memberpost"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_margin="5dp"-->
+                    <!--android:text="@string/post"-->
+                    <!--android:textColor="@color/colorWhite"-->
+                    <!--android:textSize="12sp" />-->
 
             </LinearLayout>
         </LinearLayout>
