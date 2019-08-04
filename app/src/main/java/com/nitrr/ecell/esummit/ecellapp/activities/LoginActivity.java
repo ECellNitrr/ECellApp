@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -71,7 +73,8 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         signIn.setOnClickListener((View v) -> {
             //Validation for Sign In
             loginEmailLayout.setError(checkEmail(loginEmail));
-            loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!":null);
+            loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" : null);
+
 
             if (loginEmailLayout.getError() == null &&
                     loginPasswordLayout.getError() == null)
@@ -186,10 +189,59 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         loginPassword.setOnFocusChangeListener(this);
     }
 
+    private void LoginApiCall() {
+        AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In...");
+
+        LoginDetails details = new LoginDetails(loginEmail.getText().toString().trim(), loginPassword.getText().toString());
+
+        Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
+
+        call.enqueue(new Callback<AuthResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+                loginDialog.dismiss();
+                try {
+                    if (getApplicationContext() != null) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                AuthResponse authResponse = response.body();
+                                SharedPref pref = new SharedPref();
+                                pref.setSharedPref(LoginActivity.this, authResponse.getToken(), authResponse.getFirstName(),
+                                        authResponse.getLastName(), loginEmail.getText().toString());
+                                pref.setIsLoggedIn(LoginActivity.this, true);
+                                Utils.showLongToast(LoginActivity.this, response.body().getMessage());
+                                Log.e("LoginActivity Login", response.body().getMessage());
+                                pref.setGreeted(LoginActivity.this,true);
+                                startActivity(new Intent( LoginActivity.this, HomeActivity.class));
+                                finish();
+                            } else {
+                                Log.e("LoginActivity Login", "Response Successful, Response Body NULL");
+                            }
+                        } else {
+                            Log.e("LoginActivity Login", "Response Unsuccessful with code:" + response.code());
+                            if (response.errorBody() != null) {
+                                Utils.showLongToast(LoginActivity.this, response.errorBody().string().split("\"")[7]);
+                            } else
+                                Log.e("LoginActivity Login", "Response ErrorBody NULL");
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
+                loginDialog.dismiss();
+                Utils.showLongToast(LoginActivity.this, "There was an error " + t.getMessage());
+            }
+        });
+    }
+
     private void RegisterApiCall() {
         AlertDialog registerDialog = Utils.showProgressBar(this, "Registering User...");
 
-        RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
+        RegisterDetails details = new RegisterDetails(firstName.getText().toString().trim(),
                 lastName.getText().toString().trim(),
                 registerEmail.getText().toString().trim(),
                 registerPassword.getText().toString(),
@@ -243,54 +295,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 registerDialog.dismiss();
                 Utils.showLongToast(getApplicationContext(), "Registration Failed" + t.getMessage());
-            }
-        });
-    }
-
-    private void LoginApiCall() {
-        AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In...");
-
-        LoginDetails details = new LoginDetails(loginEmail.getText().toString().trim(), loginPassword.getText().toString());
-
-        Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
-
-        call.enqueue(new Callback<AuthResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
-                loginDialog.dismiss();
-                try {
-                    if (getApplicationContext() != null) {
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                AuthResponse authResponse = response.body();
-                                SharedPref pref = new SharedPref();
-                                pref.setAccessToken(LoginActivity.this, authResponse.getToken());
-                                pref.setIsLoggedIn(LoginActivity.this, true);
-                                Utils.showLongToast(LoginActivity.this, response.body().getMessage());
-                                Log.e("LoginActivity Login", response.body().getMessage());
-                                pref.setGreeted(LoginActivity.this,true);
-                                startActivity(new Intent( LoginActivity.this, HomeActivity.class));
-                                finish();
-                            } else {
-                                Log.e("LoginActivity Login", "Response Successful, Response Body NULL");
-                            }
-                        } else {
-                            Log.e("LoginActivity Login", "Response Unsuccessful with code:" + response.code());
-                            if (response.errorBody() != null) {
-                                Utils.showLongToast(LoginActivity.this, response.errorBody().string().split("\"")[7]);
-                            } else
-                                Log.e("LoginActivity Login", "Response ErrorBody NULL");
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                loginDialog.dismiss();
-                Utils.showLongToast(LoginActivity.this, "There was an error " + t.getMessage());
             }
         });
     }
@@ -366,5 +370,24 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         is.close();
         return sb.toString();
+    }
+
+    private void clearErrorAcUserTypes(EditText edit, TextInputLayout layout) {
+        edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                layout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }

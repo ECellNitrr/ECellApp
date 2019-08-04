@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
-import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
@@ -33,7 +30,6 @@ import retrofit2.Response;
 public class EventActivity extends BaseActivity {
     private EventModel model;
     private List<EventData> list = new ArrayList<>();
-    private EventRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> APICall();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
@@ -57,12 +53,12 @@ public class EventActivity extends BaseActivity {
     }
 
     void APICall() {
+        dialog = Utils.showProgressBar(this, "Loading Events...");
 
-        dialog = Utils.showProgressBar(this, "Loading Events..");
-
-        APIServices services = AppClient.getInstance().createService(APIServices.class);
-        Call<EventModel> call = services.getEventDetails(new SharedPref().getAccessToken(EventActivity.this));
-        call.enqueue(new Callback<EventModel>() {
+        AppClient.getInstance()
+                .createService(APIServices.class)
+                .getEventDetails(new SharedPref().getAccessToken(EventActivity.this))
+                .enqueue(new Callback<EventModel>() {
             @Override
             public void onResponse(@NonNull Call<EventModel> call, @NonNull Response<EventModel> response) {
                 if (response.isSuccessful() && getApplicationContext() != null) {
@@ -74,7 +70,9 @@ public class EventActivity extends BaseActivity {
                     } else {
                         Utils.showDialog(EventActivity.this, null, false, "Something went wrong", getApplicationContext().getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
                         try {
-                            Log.e("event body null====", "error body: " + response.errorBody().string());
+                            if (response.errorBody() != null) {
+                                Log.e("event body null====", "error body: " + response.errorBody().string());
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -118,7 +116,7 @@ public class EventActivity extends BaseActivity {
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        adapter = new EventRecyclerViewAdapter(this, list, floats);
+        EventRecyclerViewAdapter adapter = new EventRecyclerViewAdapter(this, list, floats);
         recyclerView.setAdapter(adapter);
         dialog.dismiss();
     }

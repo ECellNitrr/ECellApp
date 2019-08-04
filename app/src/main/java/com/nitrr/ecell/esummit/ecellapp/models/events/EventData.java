@@ -44,6 +44,11 @@ public class EventData {
     @Expose
     private boolean registered;
 
+    @SerializedName("no_of_ppl_registered")
+    @Expose
+    private int noOfRegistrations;
+
+
     public int getId() {
         return id;
     }
@@ -82,5 +87,9 @@ public class EventData {
 
     public boolean isRegistered() {
         return registered;
+    }
+
+    public int getNoOfRegistrations() {
+        return noOfRegistrations;
     }
 }

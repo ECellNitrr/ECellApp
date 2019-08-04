@@ -38,12 +38,11 @@ import retrofit2.Response;
 
 public class EventFragment extends Fragment {
 
-    private TextView event;
     private TextView eventDetails;
-    private ImageView eventImage;
     private TextView venueField;
     private TextView timeField;
     private BroadcastReceiver receiver;
+    private ImageView eventImage;
     private String eventName, id;
     private Button register;
 
@@ -60,8 +59,10 @@ public class EventFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             initialize(view);
-            if(bundle.getBoolean("registered"))
-                register.setVisibility(View.GONE);
+            if(bundle.getBoolean("registered")) {
+                register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_registered));
+                register.setEnabled(false);
+            }
             eventName = bundle.getString("event_name");
             id = bundle.getString("id");
             setData(bundle.getString("event_name"),
@@ -75,7 +76,6 @@ public class EventFragment extends Fragment {
     }
 
     private void initialize(View v) {
-        event = v.findViewById(R.id.event_name);
         eventImage = v.findViewById(R.id.event_img);
         eventDetails = v.findViewById(R.id.event_text);
         venueField = v.findViewById(R.id.event_venue);
@@ -88,16 +88,18 @@ public class EventFragment extends Fragment {
 
         try {
             if (image != null) {
-                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getContext());
+                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(Objects.requireNonNull(getContext()));
                 progressDrawable.setStrokeWidth(15f);
                 progressDrawable.setCenterRadius(120f);
                 progressDrawable.start();
-                Glide.with(Objects.requireNonNull(getContext())).load(image).placeholder(progressDrawable).into(eventImage);
+                Glide.with(Objects.requireNonNull(getContext()))
+                        .load(image)
+                        .placeholder(progressDrawable)
+                        .into(eventImage);
             }
         } catch (Exception e) {
             setData(name, image, details, time, date, venue);
         }
-        event.setText(name);
         eventDetails.setText(details);
         timeField.setText(setTime(time, date));
         venueField.setText(venue);
@@ -142,6 +144,8 @@ public class EventFragment extends Fragment {
                         if (response.body() != null) {
                             Utils.showShortToast(getContext(), "You have been Successfully Registered for " + eventName + ".\nDo Come!");
                             Log.e("Event Registration","Response Successful! Registered Successful");
+                            register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_registered));
+                            register.setEnabled(false);
                         } else {
                             Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
                             Log.e("Event Registration", "Response Successful! Response body null");

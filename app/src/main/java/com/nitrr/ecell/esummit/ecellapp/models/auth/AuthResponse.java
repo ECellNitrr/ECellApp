@@ -1,7 +1,5 @@
 package com.nitrr.ecell.esummit.ecellapp.models.auth;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,10 +17,20 @@ public class AuthResponse implements Serializable {
     private
     String token;
 
-    @SerializedName("details")
+    @SerializedName("detail")
     @Expose
     private
     String details;
+
+    @SerializedName("first_name")
+    @Expose
+    private
+    String firstName;
+
+    @SerializedName("last_name")
+    @Expose
+    private
+    String lastName;
 
     public String getMessage() {
         return message;
@@ -36,13 +44,11 @@ public class AuthResponse implements Serializable {
         return details;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "AuthResponse{" +
-                "Message='" + message + '\'' +
-                ", token='" + token + '\'' +
-                ", details='" + details + '\'' +
-                '}';
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

@@ -7,22 +7,27 @@ public class AppDetails {
 
     @SerializedName("message")
     @Expose
+    private
     String log;
 
     @SerializedName("URL")
     @Expose
+    private
     String link;
 
     @SerializedName("version")
     @Expose
+    private
     Integer version;
 
     @SerializedName("i_date")
     @Expose
+    private
     String sdate;
 
     @SerializedName("f_date")
     @Expose
+    private
     String fdate;
 
     public String getLog() {
@@ -37,11 +42,11 @@ public class AppDetails {
         return version;
     }
 
-    public String getStartingdate() {
+    public String getStartingDate() {
         return sdate;
     }
 
-    public String getEndingdate() {
+    public String getEndingDate() {
         return fdate;
     }
 }

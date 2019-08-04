@@ -5,37 +5,32 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class SharedPref {
+import com.nitrr.ecell.esummit.ecellapp.R;
 
-    private SharedPreferences.Editor editor;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+public class SharedPref {
 
     public void setSharedPref(Context context, String access_token,
                               String firstName, String lastName,
                               String email) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        editor = prefs.edit();
-
-        editor.putString("access_token", access_token);
-        editor.putString("firstName", firstName);
-        editor.putString("lastName", lastName);
-        editor.putString("email", email);
-
-        editor.apply();
-        editor.commit();
+        getEditor(context).putString("access_token", access_token)
+                .putString("firstName", firstName)
+                .putString("lastName", lastName)
+                .putString("email", email)
+                .apply();
     }
 
 
     public void setIsLoggedIn(Context context, boolean isLoggedIn) {
         getEditor(context).putBoolean("isLoggedIn", isLoggedIn).apply();
-        getEditor(context).commit();
     }
 
     public void setMobileVerified(Context context, boolean isVerified) {
-        SharedPreferences.Editor editor = getEditor(context);
-        editor.putBoolean("mobileVerification", isVerified);
-        editor.apply();
-        editor.commit();
+        getEditor(context).putBoolean("mobileVerification", isVerified).apply();
     }
 
     public boolean getMobileVerified(Context context) {
@@ -56,7 +51,6 @@ public class SharedPref {
 
     public void setEmail(Context context, String email) {
         getEditor(context).putString("email", email).apply();
-        getEditor(context).commit();
     }
 
     public String getEmail(Context context) {
@@ -72,18 +66,11 @@ public class SharedPref {
     }
 
     public void clearPrefs(Activity activity) {
-        editor = getEditor(activity);
-        editor.clear();
-        editor.putBoolean("isLoggedIn", false);
-        editor.apply();
-        editor.commit();
+        getEditor(activity).clear().putBoolean("isLoggedIn", false).apply();
     }
 
     public void setAccessToken(Context context, String accessToken) {
-        editor = getEditor(context);
-        editor.putString("access_token",accessToken);
-        editor.apply();
-        editor.commit();
+        getEditor(context).putString("access_token",accessToken).apply();
     }
 
     public boolean isGreeted(Context context) {
@@ -91,9 +78,17 @@ public class SharedPref {
     }
 
     public void setGreeted(Activity activity, boolean isGreeted) {
-        SharedPreferences.Editor editor = getEditor(activity);
-        editor.putBoolean("greeted", isGreeted);
-        editor.apply();
-        editor.commit();
+        getEditor(activity).putBoolean("greeted", isGreeted).apply();
+    }
+
+    public void setDates(Context context, String startDate, String endDate) {
+        getEditor(context).putString("start_date", startDate)
+                .putString("end_date", endDate)
+                .apply();
+    }
+
+    public String[] getDates(Context context) {
+        return new String[]{PreferenceManager.getDefaultSharedPreferences(context).getString("start_date", context.getResources().getString(R.string.startDate)),
+                    PreferenceManager.getDefaultSharedPreferences(context).getString("end_date", context.getResources().getString(R.string.endDate))};
     }
 }

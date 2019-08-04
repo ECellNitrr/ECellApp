@@ -75,7 +75,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
                 bundle.putString("event_time", data.getTime());
                 bundle.putString("event_details", data.getDetails());
                 bundle.putString("id", data.getId() + "");
-                bundle.putBoolean("registered",data.isRegistered());
+                bundle.putBoolean("registered", data.isRegistered());
                 EventFragment fragment = new EventFragment();
                 fragment.setArguments(bundle);
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();

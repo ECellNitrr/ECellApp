@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
 import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Aim;
 import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.ContactUs;
 import com.nitrr.ecell.esummit.ecellapp.fragments.aboutUs.Team;

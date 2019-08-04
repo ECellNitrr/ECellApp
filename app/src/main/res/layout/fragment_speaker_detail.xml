@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.SpeakerFragment"
+    android:clickable="true"
+    android:focusable="true"
     android:background="#04202c">
 
     <androidx.constraintlayout.widget.Guideline

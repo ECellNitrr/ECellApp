@@ -1,7 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -18,13 +17,13 @@ import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
 
 import java.util.List;
 
-public class HomeRVAdapter extends RecyclerView.Adapter<HomeRVAdapter.MyViewHolder> {
+public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
     private List<HomeRVData> homeRVDataList;
 
-    public HomeRVAdapter(Context context, List<HomeRVData> list) {
+    public HomeRecyclerViewAdapter(Context context, List<HomeRVData> list) {
         this.context = context;
         this.homeRVDataList = list;
         inflater = LayoutInflater.from(context);

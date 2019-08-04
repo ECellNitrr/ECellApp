@@ -9,10 +9,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +30,7 @@ public class CustomHamburgerDialog {
     private AlertDialog alertDialog;
     private SharedPref pref = new SharedPref();
     private AppCompatActivity activity;
-    List<HamburgerItemModel> list = new ArrayList<>();
+    private List<HamburgerItemModel> list = new ArrayList<>();
     private AlertDialog.Builder builder;
     private RecyclerView recycler;
 
@@ -52,7 +50,7 @@ public class CustomHamburgerDialog {
         View alertView = activity.getLayoutInflater().inflate(R.layout.bottom_hamburger, null);
 
         recycler = alertView.findViewById(R.id.hamburger_recycler);
-        initalizeList();
+        initializeList();
         setRecycler();
 
         builder.setView(alertView);
@@ -73,31 +71,25 @@ public class CustomHamburgerDialog {
         alertDialog.show();
     }
 
-    void initalizeList(){
+    private void initializeList(){
 
-        String name = "ECellApp Visitor";
+        String name;
         SharedPref pref = new SharedPref();
         if (pref.getFirstName(activity).equals("")) {
-            String email = pref.getEmail(activity);
-            try {
-                name = email.split("@")[0];
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            if(name.contentEquals(""))
-                name = "Username";
-        }
+            name = pref.getEmail(activity).split("@")[0];
+        } else
+            name = pref.getFirstName(activity);
 
-        additem(name,R.drawable.ic_username,null);
+        addItem(name,R.drawable.ic_username,null);
         if(!pref.getMobileVerified(activity)){
-            additem(activity.getString(R.string.verify_number), R.drawable.ic_otp, v1 -> {
+            addItem(activity.getString(R.string.verify_number), R.drawable.ic_otp, v1 -> {
                 alertDialog.dismiss();
                 showOTPDialog();
                 builder.setOnDismissListener(DialogInterface::dismiss);
             });
         }
 
-        additem(activity.getString(R.string.change_number),R.drawable.ic_call,v1 -> {
+        addItem(activity.getString(R.string.change_number),R.drawable.ic_call, v1 -> {
             alertDialog.dismiss();
             activity.getSupportFragmentManager()
                     .beginTransaction()
@@ -105,12 +97,12 @@ public class CustomHamburgerDialog {
                     .addToBackStack(null)
                     .commit();});
 
-        additem(activity.getString(R.string.about_us),R.drawable.about_us_team,v1 -> {
+        addItem(activity.getString(R.string.about_us),R.drawable.about_us_team, v1 -> {
             alertDialog.dismiss();
             Intent intent = new Intent(activity, AboutUsActivity.class);
             activity.startActivity(intent);});
 
-        additem(activity.getString(R.string.log_out),R.drawable.ic_log_out,v1 -> {
+        addItem(activity.getString(R.string.log_out),R.drawable.ic_log_out, v1 -> {
             alertDialog.dismiss();
             pref.clearPrefs(activity);
             Utils.showLongToast(activity, "Logged Out Successfully!");
@@ -120,8 +112,8 @@ public class CustomHamburgerDialog {
             activity.startActivity(i);});
     }
 
-    void additem(String name, int img, View.OnClickListener listener){
-        list.add(new HamburgerItemModel(name,img,listener));
+    private void addItem(String name, int img, View.OnClickListener listener){
+        list.add(new HamburgerItemModel(name, img ,listener));
     }
 
 
@@ -130,7 +122,6 @@ public class CustomHamburgerDialog {
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(new HamburgerRecyclerViewAdapter(activity.getApplicationContext(),list));
     }
-
 
     private void showOTPDialog() {
         OTPDialogFragment fragment = new OTPDialogFragment();
