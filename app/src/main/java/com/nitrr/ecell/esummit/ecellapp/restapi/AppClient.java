@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static String BASE_URL = "https://ecell.nitrr.ac.in/";
+    private static String BASE_URL = "http://206.189.143.11:9000/";
     private static AppClient mInstance;
 
     private AppClient() {
@@ -30,6 +30,18 @@ public class AppClient {
     }
 
     public <S> S createService(Class<S> serviceClass) {
+        OkHttpClient.Builder httpClient = getOKHttpClient();
+        OkHttpClient client = httpClient.build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL).client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit.create(serviceClass);
+    }
+
+    public <S> S createBQuizService(Class<S> serviceClass) {
         OkHttpClient.Builder httpClient = getOKHttpClient();
         OkHttpClient client = httpClient.build();
 
@@ -57,7 +69,7 @@ public class AppClient {
         OkHttpClient okHttpClient = httpClient.build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

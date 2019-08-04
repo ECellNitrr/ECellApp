@@ -5,6 +5,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.nitrr.ecell.esummit.ecellapp"
+        buildConfigField("String", "BASE_URL", "\"https://ecell.nitrr.ac.in/\"")
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -19,6 +20,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
 
 
         debug {

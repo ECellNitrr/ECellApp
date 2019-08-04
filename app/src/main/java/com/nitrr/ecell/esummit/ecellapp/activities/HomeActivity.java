@@ -112,10 +112,9 @@ public class HomeActivity extends BaseActivity {
 
         initializeList("BQuiz", R.drawable.ic_event_bq, this.getString(R.string.color_bquiz), v -> {
             if (!selected) {
-                AlertDialog dialog = null;
-                dialog = Utils.showDialog(this, null, true, "Sorry for the Inconvenience",
-                        "BQuiz will be online soon, Please checkout later",
-                        null, null, "Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+                Intent intent = new Intent(HomeActivity.this, BQuizActivity.class);
+                startActivity(intent);
+                selected = true;
             }
         });
 
