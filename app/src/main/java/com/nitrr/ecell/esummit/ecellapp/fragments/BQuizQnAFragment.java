@@ -54,6 +54,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     public int timeGiven;
     private List<Integer> optionID;
+    private int rightAnswerId,selectedAnswerId;
     private int answerId = 0, questionId = -1;
     private int baseScore = 0;
     private int timeAtWhichAnswerWasSelected = 0;
@@ -143,7 +144,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     @SuppressLint("CheckResult")
     private void setUpWebSocket() {
-        webSocket = new WebSocket("wss://db6118d7.ngrok.io/bquiz/live/question/");
+        webSocket = new WebSocket("wss://17c331a6.ngrok.io/bquiz/live/question/");
 
         webSocket.onOpen()
                 .subscribeOn(Schedulers.io())
@@ -173,6 +174,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                         Log.e("Socket", "IF REACHED");
 
                     } else {
+                        Log.e("Socket1==", String.valueOf(model));
                         tvBquizQuestion.setText(model.question);
 
                         if (fragmentBquiz != null && fragmentBquiz.isVisible())
@@ -180,6 +182,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
                         bquizOptionsAdapter.setNewList(model.getOptions());
                         optionID = model.getOptionId();
+                        rightAnswerId = model.getRightAnswer();
 
                         questionId = model.id;
                         baseScore = model.score;
@@ -218,9 +221,14 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         BquizAnswerModel answerModel = new BquizAnswerModel();
         answerModel.answerID = optionID == null || optionID.size() == 0 ? 0 : optionID.get(answerId);
+        selectedAnswerId=answerModel.answerID;
         answerModel.questionID = questionId;
         answerModel.time = timeAtWhichAnswerWasSelected;
         answerModel.score = getBonus(timeAtWhichAnswerWasSelected) + baseScore;
+
+        if (fragmentBquiz != null && fragmentBquiz.isVisible()){
+            fragmentBquiz.setMessage(getAnswerSubmissionResponse(selectedAnswerId));
+        }
 
         Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJlcmVAZ21haWwuY29tIn0.a3HUpl8XWW4v-k-Sv2TNOg48nTWgPKZowVjTN6X15JY", answerModel);
         responseModelCall.enqueue(new Callback<BquizResponseModel>() {
@@ -236,12 +244,32 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
             @Override
             public void onFailure(@NonNull Call<BquizResponseModel> call, @NonNull Throwable t) {
-                Utils.showLongToast(getContext(), "Submission Failed.");
+
             }
         });
     }
 
     private int getBonus(int time){
-        return time >= 15 ? time * 2 : 0;
+        return time >= 5 ? time * 2 : 0;
+    }
+
+    private String getAnswerSubmissionResponse(int selectedAnswerId){
+        String response;
+        if (rightAnswerId==selectedAnswerId){
+            if (getBonus(timeAtWhichAnswerWasSelected)>0){
+                response="Your Answer is correct and time bounus of "+ getBonus(timeAtWhichAnswerWasSelected) + " points is given to you";
+            }
+            else
+            {
+                response="Your Answer is correct";
+            }
+        }
+        else
+        {
+            response="Your Answer is incorrect";
+        }
+
+        return response;
+
     }
 }

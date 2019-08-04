@@ -1,5 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.models.bquiz;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -23,6 +24,14 @@ public class QuestionDetailsModel {
 
     @SerializedName("time_limit")
     public int timeLimit;
+
+    @SerializedName("right_answer")
+    @Expose
+    public int rightAnswer;
+
+    public int getRightAnswer() {
+        return rightAnswer;
+    }
 
     public int getId() {
         return id;
@@ -70,13 +79,14 @@ public class QuestionDetailsModel {
     @SerializedName("option_id")
     List<Integer> optionId;
 
-    public QuestionDetailsModel(int id, boolean show, String question, String description, String meta, int time_limit, int score, List<String> options, List<Integer> optionId) {
+    public QuestionDetailsModel(int id, boolean show, String question, String description, String meta, int timeLimit, int rightAnswer, int score, List<String> options, List<Integer> optionId) {
         this.id = id;
         this.show = show;
         this.question = question;
         this.description = description;
         this.meta = meta;
-        this.timeLimit = time_limit;
+        this.timeLimit = timeLimit;
+        this.rightAnswer = rightAnswer;
         this.score = score;
         this.options = options;
         this.optionId = optionId;
@@ -90,7 +100,8 @@ public class QuestionDetailsModel {
                 ", question='" + question + '\'' +
                 ", description='" + description + '\'' +
                 ", meta='" + meta + '\'' +
-                ", time_limit=" + timeLimit +
+                ", timeLimit=" + timeLimit +
+                ", rightAnswer=" + rightAnswer +
                 ", score=" + score +
                 ", options=" + options +
                 ", optionId=" + optionId +
