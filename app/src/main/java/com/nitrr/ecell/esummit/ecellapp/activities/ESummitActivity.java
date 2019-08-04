@@ -50,7 +50,7 @@ public class ESummitActivity extends BaseActivity {
         ImageView back = findViewById(R.id.esummit_back);
         back.setOnClickListener(v -> finish());
         responseSpeakerObjectList = new ArrayList<>();
-        findViewById(R.id.es_nested_sv).scrollTo(0,0);
+        findViewById(R.id.es_nested_sv).scrollTo(0, 0);
         TextView date = findViewById(R.id.e_summit_date);
         date.setText(setESDate());
         callAPI();
@@ -72,7 +72,7 @@ public class ESummitActivity extends BaseActivity {
                         speakerRV.setAdapter(adapter);
                         speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
                         adapter.notifyDataSetChanged();
-                        Log.e("data ===========", "list size is" + responseSpeakerObjectList.size());
+                        Log.e("ESummitActivity Data", "list size is" + responseSpeakerObjectList.size());
                     }
                 } else {
                     try {
@@ -138,5 +138,11 @@ public class ESummitActivity extends BaseActivity {
             default:
                 return null;
         }
+    }
+
+    @Override
+    protected void onDestroy () {
+        HomeActivity.setSelected(false);
+        super.onDestroy();
     }
 }

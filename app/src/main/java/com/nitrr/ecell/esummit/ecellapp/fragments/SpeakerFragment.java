@@ -49,7 +49,6 @@ public class SpeakerFragment extends Fragment {
         return view;
     }
 
-
     private void initialize(View v) {
         name = v.findViewById(R.id.detail_speaker_name);
         image = v.findViewById(R.id.detail_speaker_image);
@@ -61,12 +60,13 @@ public class SpeakerFragment extends Fragment {
     private void setData(String image, String name, String company, int year, String email, String socialMedia) {
         try{
             if(image != null){
-                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getContext());
+                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(Objects.requireNonNull(getContext()));
                 progressDrawable.setStrokeWidth(10f);
                 progressDrawable.setCenterRadius(100f);
                 progressDrawable.start();
                 Glide.with(Objects.requireNonNull(getContext()))
                         .load(image)
+                        .placeholder(progressDrawable)
                         .transform(new CircleCrop())
                         .into(this.image);
             }

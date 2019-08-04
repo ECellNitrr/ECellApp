@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    private static String BASE_URL = "https://38abb3b7.ngrok.io/" /*"https://ecell.nitrr.ac.in/"*/;
+    private static String BASE_URL = "https://ecell.nitrr.ac.in/";
     private static AppClient mInstance;
 
     private AppClient() {
@@ -48,7 +48,6 @@ public class AppClient {
                     .header("Access", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ")
                     .header("authorization", new SharedPref().getAccessToken(activity))
                     .build();
-
             Log.e("Header====", pref.getAccessToken(activity));
             return chain.proceed(request);
         };

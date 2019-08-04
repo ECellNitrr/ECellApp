@@ -36,21 +36,23 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/guideline">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/event_bghills"
-        android:layout_marginLeft="-40dp"
-        android:layout_marginRight="-40dp"
-        android:layout_marginBottom="-5dp"
-        />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/event_bghills"
+            android:layout_marginLeft="-40dp"
+            android:layout_marginRight="-40dp"
+            android:layout_marginBottom="-5dp"
+            />
+
     </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event"
         android:textColor="#fff"
-        android:textSize="60sp"
+        android:textSize="40sp"
         android:textAllCaps="true"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="22dp"
@@ -63,22 +65,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25"/>
+        app:layout_constraintGuide_percent="0.2"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/event_guideline2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85"/>
+        app:layout_constraintGuide_percent="0.9"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/event_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/event_guideline1"
-            app:layout_constraintBottom_toBottomOf="@+id/event_guideline2"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/event_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/event_guideline1"
+        app:layout_constraintBottom_toBottomOf="@+id/event_guideline2"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,20 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.EventFragment"
     android:background="@color/transparent"
+    android:clickable="true"
     android:focusable="true">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="1.0" />
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.58" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -54,7 +50,8 @@
         android:textColor="@color/colorWhite"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16sp"
-        android:padding="4dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:focusable="true"
         android:clickable="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -63,7 +60,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/guideline">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:layout_width="match_parent"
@@ -71,46 +68,50 @@
             app:srcCompat="@drawable/event_bghills"
             android:layout_marginLeft="-40dp"
             android:layout_marginRight="-40dp"
-            android:layout_marginBottom="-5dp"
-            />
+            android:layout_marginBottom="-5dp" />
+
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/name"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/event_image_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:background="@color/black_overlay"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="24dp"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
 
     <ImageView
         android:id="@+id/event_img"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/ic_event_bq"/>
+        android:layout_width="180dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/event_image_guide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="15dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_event_bq"
+        app:layout_constraintBottom_toTopOf="@id/event_detail_guide"
+        android:background="@color/black_overlay"/>
 
-        <TextView
-            android:id="@+id/event_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/event_img"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/roboto"
-            android:text="@string/name"
-            android:textAllCaps="true"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+    <!--<TextView-->
+    <!--android:id="@+id/event_name"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/event_img"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:fontFamily="@font/roboto"-->
+    <!--android:text="@string/name"-->
+    <!--android:textAllCaps="true"-->
+    <!--android:textColor="@color/colorWhite"-->
+    <!--android:textSize="20sp" />-->
 
-</RelativeLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/event_detail_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/venue_card"
@@ -129,12 +130,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="40dp"
         android:padding="18dp"
         android:elevation="2dp"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/event_detail_guide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline1">
 
         <TextView
             android:id="@+id/date_time"
@@ -146,7 +147,7 @@
             android:maxLines="1"
             android:text="Date: 2019-07-29 | Time: 10:00am"
             android:textColor="@color/black"
-            android:textSize="22dp" />
+            android:textSize="22sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -165,7 +166,8 @@
                     android:fontFamily="@font/roboto"
                     android:text="Venue: "
                     android:textColor="@color/black"
-                    android:textSize="24sp" />
+                    android:textSize="22sp" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -180,36 +182,43 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:text="TBD"
+                    android:ellipsize="end"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="22sp" />
+
             </LinearLayout>
+
         </RelativeLayout>
+
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         app:layout_constraintTop_toBottomOf="@id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/guideline2">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="4dp">
-        <TextView
-            android:id="@+id/event_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/roboto"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/event_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
         </ScrollView>
 
     </androidx.cardview.widget.CardView>

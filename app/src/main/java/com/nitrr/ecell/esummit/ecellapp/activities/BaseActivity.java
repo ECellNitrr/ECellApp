@@ -37,12 +37,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         if (receiver != null) {
             unregisterReceiver(receiver);
             receiver = null;
         }
-        super.onStop();
+        super.onDestroy();
     }
 
     protected abstract int getLayoutResourceId();

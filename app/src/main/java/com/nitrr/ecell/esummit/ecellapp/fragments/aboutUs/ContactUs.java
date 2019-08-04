@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.FeedbackModel;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;

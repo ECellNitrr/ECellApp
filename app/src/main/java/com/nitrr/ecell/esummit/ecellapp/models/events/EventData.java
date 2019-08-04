@@ -48,6 +48,7 @@ public class EventData {
     @Expose
     private int noOfRegistrations;
 
+
     public int getId() {
         return id;
     }

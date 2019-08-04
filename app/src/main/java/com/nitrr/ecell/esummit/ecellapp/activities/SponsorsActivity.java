@@ -241,4 +241,10 @@ public class SponsorsActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        HomeActivity.setSelected(false);
+        super.onDestroy();
+    }
+
 }

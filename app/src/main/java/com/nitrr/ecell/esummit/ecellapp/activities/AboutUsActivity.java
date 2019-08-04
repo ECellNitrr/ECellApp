@@ -61,4 +61,11 @@ public class AboutUsActivity extends BaseActivity {
         transaction.disallowAddToBackStack();
         transaction.commit();
     }
+
+
+    @Override
+    protected void onDestroy() {
+        HomeActivity.setSelected(false);
+        super.onDestroy();
+    }
 }

@@ -83,8 +83,9 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             builder.setCancelable(true);
             TextView memberName = view.findViewById(R.id._name);
             ImageView memberImg = view.findViewById(R.id._image);
+            memberImg.setMaxHeight(view.getWidth());
             memberName.setText(data.getName());
-            Glide.with(context).load(data.getImg()).transform(new CropSquareTransformation()).into(memberImg);
+            Glide.with(context).load(data.getImg()).into(memberImg);
             builder.create().show();
         });
     }
