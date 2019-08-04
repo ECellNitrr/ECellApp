@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -71,8 +73,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         signIn.setOnClickListener((View v) -> {
             //Validation for Sign In
             loginEmailLayout.setError(checkEmail(loginEmail));
-            loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" :
-                    loginPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
+            loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" : null);
+
+
 
             if (loginEmailLayout.getError() == null &&
                     loginPasswordLayout.getError() == null)
@@ -190,9 +193,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     private void RegisterApiCall() {
         AlertDialog registerDialog = Utils.showProgressBar(this, "Registering User...");
 
-        RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
-                lastName.getText().toString(),
-                registerEmail.getText().toString(),
+        RegisterDetails details = new RegisterDetails(firstName.getText().toString().trim(),
+                lastName.getText().toString().trim(),
+                registerEmail.getText().toString().trim(),
                 registerPassword.getText().toString(),
                 registerNumber.getText().toString(),
                 null, null, null);
@@ -367,5 +370,24 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         is.close();
         return sb.toString();
+    }
+
+    private void clearErrorAcUserTypes(EditText edit, TextInputLayout layout) {
+        edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                layout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }

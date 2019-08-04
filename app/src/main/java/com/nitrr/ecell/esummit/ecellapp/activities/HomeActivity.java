@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRVAdapter;
+import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
@@ -38,7 +38,7 @@ import retrofit2.Response;
 public class HomeActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
-    private HomeRVAdapter adapter;
+    private HomeRecyclerViewAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
     private SharedPref pref = new SharedPref();
     private ImageView bgCircle1, bgCircle2, bgCircle3;
@@ -92,7 +92,7 @@ public class HomeActivity extends BaseActivity {
 
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
-        adapter = new HomeRVAdapter(this, homeRVDataList);
+        adapter = new HomeRecyclerViewAdapter(this, homeRVDataList);
         initializeList("E Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
             Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);
             startActivity(intent);
