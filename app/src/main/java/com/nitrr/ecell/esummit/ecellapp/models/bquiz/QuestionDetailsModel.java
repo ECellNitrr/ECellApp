@@ -25,9 +25,17 @@ public class QuestionDetailsModel {
     @SerializedName("time_limit")
     public int timeLimit;
 
+    public boolean isEnd() {
+        return end;
+    }
+
     @SerializedName("right_answer")
     @Expose
     public int rightAnswer;
+
+    @SerializedName("end")
+    @Expose
+    public boolean end;
 
     public int getRightAnswer() {
         return rightAnswer;
@@ -79,19 +87,6 @@ public class QuestionDetailsModel {
     @SerializedName("option_id")
     List<Integer> optionId;
 
-    public QuestionDetailsModel(int id, boolean show, String question, String description, String meta, int timeLimit, int rightAnswer, int score, List<String> options, List<Integer> optionId) {
-        this.id = id;
-        this.show = show;
-        this.question = question;
-        this.description = description;
-        this.meta = meta;
-        this.timeLimit = timeLimit;
-        this.rightAnswer = rightAnswer;
-        this.score = score;
-        this.options = options;
-        this.optionId = optionId;
-    }
-
     @Override
     public String toString() {
         return "QuestionDetailsModel{" +
@@ -102,9 +97,25 @@ public class QuestionDetailsModel {
                 ", meta='" + meta + '\'' +
                 ", timeLimit=" + timeLimit +
                 ", rightAnswer=" + rightAnswer +
+                ", end=" + end +
                 ", score=" + score +
                 ", options=" + options +
                 ", optionId=" + optionId +
                 '}';
     }
+
+    public QuestionDetailsModel(int id, boolean show, String question, String description, String meta, int timeLimit, int rightAnswer, boolean end, int score, List<String> options, List<Integer> optionId) {
+        this.id = id;
+        this.show = show;
+        this.question = question;
+        this.description = description;
+        this.meta = meta;
+        this.timeLimit = timeLimit;
+        this.rightAnswer = rightAnswer;
+        this.end = end;
+        this.score = score;
+        this.options = options;
+        this.optionId = optionId;
+    }
+
 }

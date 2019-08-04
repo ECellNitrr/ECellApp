@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -59,14 +60,17 @@ public class BQuizActivity extends BaseActivity {
 
     private void apiCall() {
         APIServices services = AppClient.getInstance().createService(APIServices.class);
-        Call<BquizLiveCheckResponse> responseCall = services.isLiveRequest(new SharedPref().getAccessToken(BQuizActivity.this));
+        Call<BquizLiveCheckResponse> responseCall = services.isLiveRequest("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJlcmVAZ21haWwuY29tIn0.a3HUpl8XWW4v-k-Sv2TNOg48nTWgPKZowVjTN6X15JY");
 
         responseCall.enqueue(new Callback<BquizLiveCheckResponse>() {
             @Override
             public void onResponse(Call<BquizLiveCheckResponse> call, Response<BquizLiveCheckResponse> response) {
+                Log.e("onresponse", String.valueOf(response));
                 if (response.body() != null && response.isSuccessful()) {
+                    Log.e("onresponse if ", String.valueOf(response));
 
                     if (response.body().live) {
+                        Log.e("onresponse live ", String.valueOf(response));
                         BQuizQnAFragment fragment = new BQuizQnAFragment();
                         fragment.show(getSupportFragmentManager(), "Bquiz");
 
@@ -80,6 +84,7 @@ public class BQuizActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<BquizLiveCheckResponse> call, Throwable t) {
+                Log.e("onfailure", String.valueOf(t));
 
             }
         });

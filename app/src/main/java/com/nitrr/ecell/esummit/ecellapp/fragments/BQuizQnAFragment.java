@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -19,8 +20,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.BquizOptionsAdapter;
@@ -54,7 +60,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     private int timeGiven;
     private List<Integer> optionID;
-    private int rightAnswerId,selectedAnswerId;
+    private int rightAnswerId, selectedAnswerId;
     private int answerId = 0, questionId = -1;
     private int baseScore = 0;
     private int timeAtWhichAnswerWasSelected = 0;
@@ -117,7 +123,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
             @Override
             public void onTick(long millisUntilFinished) {
-                timeAllotted.setText(String.valueOf(timeGiven));
+                timeAllotted.setText(timeGiven + "sec.");
                 timeGiven--;
             }
 
@@ -167,6 +173,12 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                 .subscribe(socketEventMessage -> {
                     QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
+                    if (model.end) {
+                        fragmentBquiz.setCancelable(true);
+                        fragmentBquiz.dismiss();
+                        onStop();
+                    }
+
                     if (!model.show) {
                         if (!fragmentBquiz.isVisible() && getFragmentManager() != null)
                             fragmentBquiz.show(getFragmentManager(), "Bquiz");
@@ -186,11 +198,19 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
                         questionId = model.id;
                         baseScore = model.score;
+
                         timer(model.timeLimit);
 
                         if (!model.meta.equals("") && getActivity() != null) {
                             bquizLogo.setVisibility(View.VISIBLE);
-                            Glide.with(getActivity()).load(model.meta).into(bquizLogo);
+
+                            CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getActivity());
+                            progressDrawable.setStrokeWidth(5f);
+                            progressDrawable.setCenterRadius(30f);
+                            progressDrawable.setBackgroundColor(R.color.colorWhite);
+                            progressDrawable.start();
+
+                            Glide.with(getActivity()).load(model.meta).placeholder(progressDrawable).into(bquizLogo);
 
                         } else {
                             bquizLogo.setVisibility(View.GONE);
@@ -221,55 +241,45 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         BquizAnswerModel answerModel = new BquizAnswerModel();
         answerModel.answerID = optionID == null || optionID.size() == 0 ? 0 : optionID.get(answerId);
-        selectedAnswerId=answerModel.answerID;
+        selectedAnswerId = answerModel.answerID;
         answerModel.questionID = questionId;
         answerModel.time = timeAtWhichAnswerWasSelected;
-        answerModel.score = getBonus(timeAtWhichAnswerWasSelected) + baseScore;
 
-        if (fragmentBquiz != null && fragmentBquiz.isVisible()){
+        if (fragmentBquiz != null && fragmentBquiz.isVisible()) {
             fragmentBquiz.setMessage(getAnswerSubmissionResponse(selectedAnswerId));
         }
+
+        answerModel.score = (rightAnswerId == selectedAnswerId) ? getBonus(timeAtWhichAnswerWasSelected) + baseScore : 0;
+
 
         Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJlcmVAZ21haWwuY29tIn0.a3HUpl8XWW4v-k-Sv2TNOg48nTWgPKZowVjTN6X15JY", answerModel);
         responseModelCall.enqueue(new Callback<BquizResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<BquizResponseModel> call, @NonNull Response<BquizResponseModel> response) {
-                if (fragmentBquiz != null && fragmentBquiz.isVisible() && response.body() != null)
-                    if (response.isSuccessful()) {
-                        fragmentBquiz.setMessage(response.body().message + " ");
-                        Utils.showLongToast(getContext(), "Answer Submitted Successfully.");
-                        Log.e("Socket78", response.body().toString() + " ");
-                    }
             }
 
             @Override
             public void onFailure(@NonNull Call<BquizResponseModel> call, @NonNull Throwable t) {
-
             }
         });
     }
 
-    private int getBonus(int time){
+    private int getBonus(int time) {
         return time >= 5 ? time * 2 : 0;
     }
 
-    private String getAnswerSubmissionResponse(int selectedAnswerId){
+    private String getAnswerSubmissionResponse(int selectedAnswerId) {
         String response;
-        if (rightAnswerId==selectedAnswerId){
-            if (getBonus(timeAtWhichAnswerWasSelected)>0){
-                response="Your Answer is correct and time bounus of "+ getBonus(timeAtWhichAnswerWasSelected) + " points is given to you";
+        if (rightAnswerId == selectedAnswerId) {
+            if (getBonus(timeAtWhichAnswerWasSelected) > 0) {
+                response = "Your Answer is correct and time bounus of " + getBonus(timeAtWhichAnswerWasSelected) + " points is given to you";
+            } else {
+                response = "Your Answer is correct";
             }
-            else
-            {
-                response="Your Answer is correct";
-            }
-        }
-        else
-        {
-            response="Your Answer is incorrect";
+        } else {
+            response = "Your Answer is incorrect";
         }
 
         return response;
-
     }
 }

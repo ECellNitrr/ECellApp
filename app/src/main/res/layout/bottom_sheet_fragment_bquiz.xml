@@ -5,13 +5,12 @@
     android:background="@drawable/bquiz_bottom_sheet_gradiant"
     android:orientation="vertical">
 
-    <ProgressBar
+    <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:padding="16dp"
         android:layout_gravity="center"
         android:layout_margin="24dp"
-        android:indeterminateDrawable="@drawable/anim_progress_icon"
+        android:padding="16dp"
         app:srcCompat="@drawable/hourglass" />
 
     <TextView
