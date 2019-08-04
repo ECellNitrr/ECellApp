@@ -32,6 +32,7 @@ import retrofit2.Response;
 public class SplashScreenActivity extends BaseActivity {
 
     private SharedPref pref;
+    private String startingDate, endingDate;
 
     private DialogInterface.OnClickListener retryListener = (dialog, which) -> {
         appVersionAPICall();
@@ -119,6 +120,9 @@ public class SplashScreenActivity extends BaseActivity {
                     "Update", updateListener, null, null);
         } else
             goInsideApp();
+
+        startingDate = details.getStartingdate();
+        endingDate = details.getEndingdate();
     }
 
     private void goInsideApp() {

@@ -190,10 +190,10 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         AlertDialog registerDialog = Utils.showProgressBar(this, "Registering User...");
 
         RegisterDetails details = new RegisterDetails(firstName.getText().toString(),
-                lastName.getText().toString(),
-                registerEmail.getText().toString(),
+                lastName.getText().toString().trim(),
+                registerEmail.getText().toString().trim(),
                 registerPassword.getText().toString(),
-                registerNumber.getText().toString(),
+                registerNumber.getText().toString().trim(),
                 null, null, null);
 
         Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postRegisterUser(details);
@@ -250,7 +250,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     private void LoginApiCall() {
         AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In...");
 
-        LoginDetails details = new LoginDetails(loginEmail.getText().toString(), loginPassword.getText().toString());
+        LoginDetails details = new LoginDetails(loginEmail.getText().toString().trim(), loginPassword.getText().toString());
 
         Call<AuthResponse> call = AppClient.getInstance().createService(APIServices.class).postLoginUser(details);
 

@@ -17,6 +17,14 @@ public class AppDetails {
     @Expose
     Integer version;
 
+    @SerializedName("idate")
+    @Expose
+    String sdate;
+
+    @SerializedName("fdate")
+    @Expose
+    String fdate;
+
     public String getLog() {
         return log;
     }
@@ -27,5 +35,13 @@ public class AppDetails {
 
     public Integer getVersion() {
         return version;
+    }
+
+    public String getStartingdate() {
+        return sdate;
+    }
+
+    public String getEndingdate() {
+        return fdate;
     }
 }

@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
 
@@ -59,10 +61,15 @@ public class SpeakerFragment extends Fragment {
     private void setData(String image, String name, String company, int year, String email, String socialMedia) {
         try{
             if(image != null){
+                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getContext());
+                progressDrawable.setStrokeWidth(10f);
+                progressDrawable.setCenterRadius(100f);
+                progressDrawable.start();
                 Glide.with(Objects.requireNonNull(getContext()))
                         .load(image)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(this.image);}
+                        .transform(new CircleCrop())
+                        .into(this.image);
+            }
         }
         catch(Exception e){
             setData(image, name, company, year, email, socialMedia);

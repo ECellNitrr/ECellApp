@@ -143,8 +143,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lemon"
+                android:fontFamily="@font/corben"
                 android:text="Speakers"
+                android:textAllCaps="true"
                 android:textAlignment="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="35sp" />

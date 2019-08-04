@@ -33,7 +33,7 @@ public class TeamList {
         return name;
     }
 
-    public String getUrl() {
+    public String getImg() {
         return image;
     }
 
