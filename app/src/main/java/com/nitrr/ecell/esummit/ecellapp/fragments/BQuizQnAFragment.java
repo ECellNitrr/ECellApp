@@ -52,7 +52,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     private RecyclerView rvBquizOptions;
     private BquizOptionsAdapter bquizOptionsAdapter;
 
-    public int timeGiven;
+    private int timeGiven;
     private List<Integer> optionID;
     private int rightAnswerId,selectedAnswerId;
     private int answerId = 0, questionId = -1;

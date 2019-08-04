@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.restapi;
 import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
 import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizAnswerModel;
+import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizLiveCheckResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizResponseModel;
 import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
 import com.nitrr.ecell.esummit.ecellapp.models.VerifyOTP;
@@ -81,4 +82,7 @@ public interface APIServices {
 
     @POST("/bquiz/answer/")
     Call<BquizResponseModel> submitAnswer(@Header("Authorization") String access, @Body BquizAnswerModel answerModel);
+
+    @GET("/bquiz/is_active/")
+    Call<BquizLiveCheckResponse> isLiveRequest(@Header("Authorization") String access);
 }
