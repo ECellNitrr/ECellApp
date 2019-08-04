@@ -31,6 +31,7 @@ public class ESummitActivity extends BaseActivity {
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
     private RecyclerView speakerRV;
+    ESummitRecyclerViewAdapter adapter;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI();
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
@@ -45,7 +46,6 @@ public class ESummitActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         speakerRV = findViewById(R.id.es_speaker_rv);
         ImageView back = findViewById(R.id.esummit_back);
         back.setOnClickListener(v -> finish());
@@ -53,6 +53,10 @@ public class ESummitActivity extends BaseActivity {
         findViewById(R.id.es_nested_sv).scrollTo(0, 0);
         TextView date = findViewById(R.id.e_summit_date);
         date.setText(setESDate());
+        adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
+        adapter.notifyDataSetChanged();
+        speakerRV.setAdapter(adapter);
+        speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
         callAPI();
     }
 
@@ -68,9 +72,8 @@ public class ESummitActivity extends BaseActivity {
                     else {
                         ResponseSpeaker data = response.body();
                         responseSpeakerObjectList = data.getList();
-                        ESummitRecyclerViewAdapter adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
+                        adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
                         speakerRV.setAdapter(adapter);
-                        speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
                         adapter.notifyDataSetChanged();
                         Log.e("ESummitActivity Data", "list size is" + responseSpeakerObjectList.size());
                     }

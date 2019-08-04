@@ -107,7 +107,7 @@ public class EventActivity extends BaseActivity {
         int increment = list.size()/2+2;
         float alpha=increment*2;
         List<Float> floats = new ArrayList<>();
-        for(int x = 0;x<list.size();x++){
+        for(int x = 0 ; x < list.size() ; x++){
             if(x%2==0)
                 alpha-=increment;
             else

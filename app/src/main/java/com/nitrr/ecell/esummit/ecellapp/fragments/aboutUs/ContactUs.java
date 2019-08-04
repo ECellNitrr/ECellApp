@@ -52,7 +52,7 @@ public class ContactUs extends Fragment implements View.OnClickListener {
         Log.e("AboutUs","Contact Us");
         switch (v.getId()){
             case R.id.linkedinlogo: {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.linkedin.com/company/entrepreneurship-cell-nit-raipur/"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/company/entrepreneurship-cell-nit-raipur/"));
                 startActivity(intent);
                 break;
             }

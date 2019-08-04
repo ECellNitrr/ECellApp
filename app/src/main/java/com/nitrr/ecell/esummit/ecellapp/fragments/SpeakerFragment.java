@@ -1,8 +1,10 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +45,7 @@ public class SpeakerFragment extends Fragment {
         ArrayList<String> data = this.getArguments() != null ? this.getArguments().getStringArrayList("data") : null;
         if (data != null) {
             initialize(view);
-            setData(data.get(0), data.get(1), data.get(2), this.getArguments().getInt("year"),
+            setData(data.get(0), data.get(1), data.get(2),
                     data.get(3), data.get(4));
         }
         return view;
@@ -57,27 +59,23 @@ public class SpeakerFragment extends Fragment {
         socialMedia = v.findViewById(R.id.speaker_social_media);
     }
 
-    private void setData(String image, String name, String company, int year, String email, String socialMedia) {
+    private void setData(String image, String name, String company, String email, String socialMedia) {
         try{
             if(image != null){
-                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(Objects.requireNonNull(getContext()));
-                progressDrawable.setStrokeWidth(10f);
-                progressDrawable.setCenterRadius(100f);
-                progressDrawable.start();
                 Glide.with(Objects.requireNonNull(getContext()))
                         .load(image)
-                        .placeholder(progressDrawable)
-                        .transform(new CircleCrop())
+                        .apply(RequestOptions.circleCropTransform())
                         .into(this.image);
             }
         }
         catch(Exception e){
-            setData(image, name, company, year, email, socialMedia);
+            setData(image, name, company, email, socialMedia);
         }
         this.name.setText(name);
         this.company.setText(company);
         this.email.setText(email);
         this.socialMedia.setText(socialMedia);
+        this.socialMedia.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(socialMedia))));
     }
 
     @Override
