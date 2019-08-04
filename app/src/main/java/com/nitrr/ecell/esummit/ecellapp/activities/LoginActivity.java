@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             firstNameLayout.setError(TextUtils.isEmpty(firstName.getText()) ? "Field Required!" : null);
             lastNameLayout.setError(TextUtils.isEmpty(lastName.getText()) ? "Field Required!" : null);
             registerEmailLayout.setError(checkEmail(registerEmail));
-            registerPasswordLayout.setError(TextUtils.isEmpty(registerPassword.getText())) ? "Field Required!" :
+            registerPasswordLayout.setError((TextUtils.isEmpty(registerPassword.getText())) ? "Field Required!" :
                     registerPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
             registerNumberLayout.setError(checkNumber(registerNumber));
 
