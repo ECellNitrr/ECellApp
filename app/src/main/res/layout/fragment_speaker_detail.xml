@@ -18,11 +18,26 @@
         app:layout_constraintGuide_percent="0.05"/>
 
     <ImageView
+        android:id="@+id/detail_speaker_image_gb"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/rect_evergreen"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg"/>
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"/>
+
+    <ImageView
+        android:id="@+id/speaker_detail_back"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintVertical_bias="0.18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"
+        app:srcCompat="@drawable/ic_back" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -31,10 +46,10 @@
         app:layout_constraintTop_toBottomOf="@id/detail_speaker_image_guide"
         app:layout_constraintStart_toStartOf="@id/detail_speaker_image"
         app:layout_constraintEnd_toEndOf="@id/detail_speaker_image"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg"/>
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/detail_speaker_image_bg"
+        android:id="@+id/detail_speaker_image_bg_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -65,7 +80,7 @@
         android:textSize="35sp"
         android:layout_margin="20dp"
         android:textAlignment="center"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/tint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detail_speaker_name_guide"
@@ -106,6 +121,7 @@
                 android:layout_height="wrap_content"
                 style="@style/ESummitSpeakerDetail"
                 android:layout_weight="10"
+                android:textColor="@color/tint"
                 android:textAlignment="textStart"/>
 
         </LinearLayout>
@@ -128,6 +144,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/ESummitSpeakerDetail"
+                android:textColor="@color/tint"
                 android:layout_weight="10"
                 android:textAlignment="textStart"/>
 
@@ -138,13 +155,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1.5"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_linkedin_outline"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/ic_linkedin_outline"
+                    android:layout_weight="1.5"
+                    tools:ignore="NestedWeights" />
 
             <TextView
                 android:id="@+id/speaker_social_media"
@@ -152,6 +169,7 @@
                 android:layout_height="wrap_content"
                 style="@style/ESummitSpeakerDetail"
                 android:layout_weight="10"
+                android:textColor="@color/link"
                 android:minLines="2"
                 android:maxLines="3"
                 android:textAlignment="textStart"/>

@@ -48,6 +48,7 @@ public class SpeakerFragment extends Fragment {
             setData(data.get(0), data.get(1), data.get(2),
                     data.get(3), data.get(4));
         }
+        view.findViewById(R.id.speaker_detail_back).setOnClickListener(view1 -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
     }
 

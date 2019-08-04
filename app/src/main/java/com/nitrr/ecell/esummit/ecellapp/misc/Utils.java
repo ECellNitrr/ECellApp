@@ -31,6 +31,8 @@ import androidx.core.app.NotificationCompat;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 
+import java.util.Objects;
+
 import retrofit2.http.HEAD;
 
 
@@ -126,6 +128,7 @@ public class Utils {
         View view = LayoutInflater.from(context).inflate(R.layout.alert_progress_layout, null);
         builder.setCancelable(false);
         AlertDialog dialog = builder.create();
+        Objects.requireNonNull(dialog.getWindow()).setLayout(200, 200);
 
         Animation animation = new AlphaAnimation(1.0f, 0.5f);
         animation.setDuration(500);

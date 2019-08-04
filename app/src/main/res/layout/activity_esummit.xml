@@ -26,8 +26,9 @@
     <ImageView
         android:id="@+id/e_summit_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintBottom_toTopOf="@id/upper_guide"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,9 +144,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ProgressBar
                     android:id="@+id/es_loading"
@@ -160,13 +160,13 @@
                     android:id="@+id/speaker_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/corben"
+                    android:fontFamily="@font/audiowide"
                     android:text="Speakers"
                     android:textAllCaps="true"
                     android:textAlignment="center"
                     android:textColor="@color/colorWhite"
                     android:textSize="35sp"
-                    android:layout_weight="15"/>
+                    android:layout_weight="20"/>
 
             </LinearLayout>
 

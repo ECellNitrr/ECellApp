@@ -142,20 +142,16 @@ public class EventFragment extends Fragment {
                 if (getContext() != null) {
                     if(response.isSuccessful()) {
                         if (response.body() != null) {
-                            Utils.showShortToast(getContext(), "You have been Successfully Registered for " + eventName + ".\nDo Come!");
-                            Log.e("Event Registration","Response Successful! Registered Successful");
+                            Utils.showLongToast(getContext(), "You have been Successfully Registered for " + eventName + ".\nDo Come!");
                             register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_registered));
                             register.setEnabled(false);
                         } else {
                             Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
-                            Log.e("Event Registration", "Response Successful! Response body null");
                         }
                     } else if(response.code() == 404) {
                         Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
-                        Log.e("Event Registration" ,"Response Unsuccessful! Code 404, Event not found. Event Id:" + id);
                     } else {
                         Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
-                        Log.e("Event Registration" ,"Response Unsuccessful. Error Code:" + response.code());
                     }
                 }
 

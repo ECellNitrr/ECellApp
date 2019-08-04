@@ -34,4 +34,6 @@
     <color name="dirt_blue">#416A87</color>
     <color name="dark_blue">#5275A1</color>
 
+    <color name="link">#7AA3CF</color>
+    <color name="tint">#A7A7A7</color>
 </resources>
