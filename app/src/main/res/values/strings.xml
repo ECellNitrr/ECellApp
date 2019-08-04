@@ -87,4 +87,8 @@
     <string name="endDate">01\-09\-19</string>
     <string name="startDate">31\-08\-19</string>
     <string name="user_registered">Registered</string>
+
+    <string name="proceed">PROCEED</string>
+    <string name="placeholder">MCQ. If App crashes in middle of Quiz. Dont panic, we know everything.</string>
+    <string name="business_quiz">BUSINESS QUIZ</string>
 </resources>

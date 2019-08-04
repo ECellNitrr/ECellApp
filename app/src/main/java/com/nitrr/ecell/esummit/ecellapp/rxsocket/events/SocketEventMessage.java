@@ -3,7 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.rxsocket.events;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizAnswerModel;
+import com.nitrr.ecell.esummit.ecellapp.models.bquiz.QuestionDetailsModel;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.SocketEventType;
 
 import okio.ByteString;
@@ -12,7 +12,7 @@ public class SocketEventMessage extends SocketEvent {
 
     private final String message;
     private final ByteString byteString;
-    private final BquizAnswerModel model;
+    private final QuestionDetailsModel model;
 
     public SocketEventMessage(@NonNull String message) {
         super(SocketEventType.MESSAGE);
@@ -22,7 +22,7 @@ public class SocketEventMessage extends SocketEvent {
         this.model = null;
     }
 
-    public SocketEventMessage(@NonNull BquizAnswerModel model){
+    public SocketEventMessage(@NonNull QuestionDetailsModel model){
         super(SocketEventType.MESSAGE);
 
         this.model = model;
@@ -44,7 +44,7 @@ public class SocketEventMessage extends SocketEvent {
     }
 
     @Nullable
-    public BquizAnswerModel getModel() {
+    public QuestionDetailsModel getModel() {
         return model;
     }
 

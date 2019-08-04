@@ -22,38 +22,49 @@
         android:layout_marginStart="32dp"
         android:layout_marginBottom="140dp"
         android:fontFamily="@font/bebas_neue"
-        android:text="BUSINESS QUIZ"
+        android:text="@string/business_quiz"
         android:textColor="@android:color/white"
-        android:textSize="48dp"
+        android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="Lorem ipsum dolor"
+        android:text="@string/placeholder"
         android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/bquiz_proceed"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_margin="24dp"
         android:layout_marginEnd="8dp"
-        android:text="Loading"
+        android:background="@drawable/bquiz_proceed_bg"
+        android:fontFamily="@font/bebas_neue"
+        android:paddingTop="8dp"
+        android:textAlignment="center"
+        android:paddingBottom="8dp"
+        android:text="@string/proceed"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/bquiz_intro_progress"
-        app:layout_constraintTop_toTopOf="@+id/bquiz_intro_progress" />
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
 
     <ProgressBar
-        android:id="@+id/bquiz_intro_progress"
+        android:id="@+id/bquiz_progess_bar"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="78dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/bquiz_proceed"
+        app:layout_constraintEnd_toEndOf="@+id/bquiz_proceed"
+        app:layout_constraintStart_toStartOf="@+id/bquiz_proceed"
+        app:layout_constraintTop_toTopOf="@+id/bquiz_proceed" />
 </androidx.constraintlayout.widget.ConstraintLayout>
