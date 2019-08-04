@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Sample Text"
         android:textSize="16sp" />
 
 </androidx.cardview.widget.CardView>
