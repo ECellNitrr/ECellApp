@@ -59,59 +59,59 @@ public class EventActivity extends BaseActivity {
                 .createService(APIServices.class)
                 .getEventDetails(new SharedPref().getAccessToken(EventActivity.this))
                 .enqueue(new Callback<EventModel>() {
-            @Override
-            public void onResponse(@NonNull Call<EventModel> call, @NonNull Response<EventModel> response) {
-                if (response.isSuccessful() && getApplicationContext() != null) {
-                    Log.e("response", response.toString());
-                    model = response.body();
-                    if (model != null) {
-                        list = model.getList();
-                        setRecycler();
-                    } else {
-                        Utils.showDialog(EventActivity.this, null, false, "Something went wrong", getApplicationContext().getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
-                        try {
-                            if (response.errorBody() != null) {
-                                Log.e("event body null====", "error body: " + response.errorBody().string());
+                    @Override
+                    public void onResponse(@NonNull Call<EventModel> call, @NonNull Response<EventModel> response) {
+                        if (response.isSuccessful() && getApplicationContext() != null) {
+                            Log.e("response", response.toString());
+                            model = response.body();
+                            if (model != null) {
+                                list = model.getList();
+                                setRecycler();
+                            } else {
+                                Utils.showDialog(EventActivity.this, null, false, "Something went wrong", getApplicationContext().getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
+                                try {
+                                    if (response.errorBody() != null) {
+                                        Log.e("event body null====", "error body: " + response.errorBody().string());
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        } else {
+                            try {
+                                if (response.errorBody() != null) {
+                                    Log.e("error body====::::", response.errorBody().string());
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Utils.showDialog(EventActivity.this, null, false, "Something Went wrong",
+                                    EventActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener,
+                                    "Cancel", cancelListener);
                         }
                     }
-                } else {
-                    try {
-                        if (response.errorBody() != null) {
-                            Log.e("error body====::::", response.errorBody().string());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Utils.showDialog(EventActivity.this, null, false, "Something Went wrong",
-                            EventActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener,
-                            "Cancel", cancelListener);
-                }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<EventModel> call, @NonNull Throwable t) {
-                if (getApplicationContext() != null) {
-                    Utils.showDialog(EventActivity.this, null, false, "Something Went wrong",
-                            EventActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener,
-                            "Cancel", cancelListener);
-                    Utils.showLongToast(getApplicationContext(), "Something went wrong.");
-                }
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Call<EventModel> call, @NonNull Throwable t) {
+                        if (getApplicationContext() != null) {
+                            Utils.showDialog(EventActivity.this, null, false, "Something Went wrong",
+                                    EventActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener,
+                                    "Cancel", cancelListener);
+                            Utils.showLongToast(getApplicationContext(), "Something went wrong.");
+                        }
+                    }
+                });
     }
 
     private void setRecycler() {
-        int increment = list.size()/2+2;
-        float alpha=increment*2;
+        int increment = list.size() / 2 + 2;
+        float alpha = increment * 2;
         List<Float> floats = new ArrayList<>();
-        for(int x = 0 ; x < list.size() ; x++){
-            if(x%2==0)
-                alpha-=increment;
+        for (int x = 0; x < list.size(); x++) {
+            if (x % 2 == 0)
+                alpha -= increment;
             else
-                alpha+=increment;
+                alpha += increment;
             floats.add(alpha);
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);

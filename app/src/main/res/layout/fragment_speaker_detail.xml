@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SpeakerFragment"
+    android:background="#04202c"
     android:clickable="true"
     android:focusable="true"
-    android:background="#04202c">
+    tools:context=".fragments.SpeakerFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/detail_speaker_image_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05"/>
+        app:layout_constraintGuide_percent="0.05" />
 
     <ImageView
         android:id="@+id/detail_speaker_image_gb"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/rect_evergreen"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"/>
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/speaker_detail_back"
@@ -31,29 +30,29 @@
         android:layout_height="32dp"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintVertical_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"
+        app:layout_constraintVertical_bias="0.18"
         app:srcCompat="@drawable/ic_back" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:src="@drawable/circle_pine"
-        app:layout_constraintTop_toBottomOf="@id/detail_speaker_image_guide"
-        app:layout_constraintStart_toStartOf="@id/detail_speaker_image"
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"
         app:layout_constraintEnd_toEndOf="@id/detail_speaker_image"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_image_bg_guide"/>
+        app:layout_constraintStart_toStartOf="@id/detail_speaker_image"
+        app:layout_constraintTop_toBottomOf="@id/detail_speaker_image_guide" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/detail_speaker_image_bg_guide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.21"/>
+        app:layout_constraintGuide_percent="0.21" />
 
     <ImageView
         android:id="@+id/detail_speaker_image"
@@ -61,118 +60,97 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="6dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_name_guide"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detail_speaker_image_guide"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_name_guide"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_speaker_image_guide" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/detail_speaker_name_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.37"/>
+        app:layout_constraintGuide_percent="0.37" />
 
     <TextView
         android:id="@+id/detail_speaker_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="35sp"
         android:layout_margin="20dp"
         android:textAlignment="center"
         android:textColor="@color/tint"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_guide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_speaker_name_guide"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_guide"/>
+        app:layout_constraintTop_toBottomOf="@+id/detail_speaker_name_guide" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/detail_speaker_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.53"/>
+        app:layout_constraintGuide_percent="0.53" />
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
+        android:layout_margin="10dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/detail_speaker_guide"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_bottom_guide">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/detail_speaker_bottom_guide"
+        app:layout_constraintTop_toBottomOf="@id/detail_speaker_guide">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="1.5"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_suitcase"/>
+                app:srcCompat="@drawable/ic_suitcase" />
 
             <TextView
                 android:id="@+id/speaker_company"
+                style="@style/ESummitSpeakerDetail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                style="@style/ESummitSpeakerDetail"
                 android:layout_weight="10"
-                android:textColor="@color/tint"
-                android:textAlignment="textStart"/>
+                android:textAlignment="textStart"
+                android:textColor="@color/tint" />
 
         </LinearLayout>
 
+
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="1.5"
-                app:srcCompat="@drawable/ic_mail"/>
-
-            <TextView
-                android:id="@+id/speaker_email"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                style="@style/ESummitSpeakerDetail"
-                android:textColor="@color/tint"
-                android:layout_weight="10"
-                android:textAlignment="textStart"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    app:srcCompat="@drawable/ic_linkedin_outline"
-                    android:layout_weight="1.5"
-                    tools:ignore="NestedWeights" />
+                app:srcCompat="@drawable/ic_linkedin_outline"
+                tools:ignore="NestedWeights" />
 
             <TextView
                 android:id="@+id/speaker_social_media"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                style="@style/ESummitSpeakerDetail"
                 android:layout_weight="10"
-                android:textColor="@color/link"
-                android:minLines="2"
-                android:maxLines="3"
-                android:textAlignment="textStart"/>
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_marginTop="12dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/link" />
 
         </LinearLayout>
 
@@ -183,6 +161,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95"/>
+        app:layout_constraintGuide_percent="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

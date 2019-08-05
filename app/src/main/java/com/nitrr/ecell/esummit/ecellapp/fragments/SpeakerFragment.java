@@ -31,7 +31,6 @@ public class SpeakerFragment extends Fragment {
     private ImageView image;
     private TextView name;
     private TextView company;
-    private TextView email;
     private TextView socialMedia;
     private BroadcastReceiver receiver;
 
@@ -56,25 +55,22 @@ public class SpeakerFragment extends Fragment {
         name = v.findViewById(R.id.detail_speaker_name);
         image = v.findViewById(R.id.detail_speaker_image);
         company = v.findViewById(R.id.speaker_company);
-        email = v.findViewById(R.id.speaker_email);
         socialMedia = v.findViewById(R.id.speaker_social_media);
     }
 
     private void setData(String image, String name, String company, String email, String socialMedia) {
-        try{
-            if(image != null){
+        try {
+            if (image != null) {
                 Glide.with(Objects.requireNonNull(getContext()))
                         .load(image)
                         .apply(RequestOptions.circleCropTransform())
                         .into(this.image);
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             setData(image, name, company, email, socialMedia);
         }
         this.name.setText(name);
         this.company.setText(company);
-        this.email.setText(email);
         this.socialMedia.setText(socialMedia);
         this.socialMedia.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(socialMedia))));
     }
@@ -85,15 +81,15 @@ public class SpeakerFragment extends Fragment {
         receiver = new NetworkChangeReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGED");
-        Objects.requireNonNull(getContext()).registerReceiver(receiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        Objects.requireNonNull(getContext()).registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
 
     @Override
     public void onDestroy() {
-        if(receiver !=null){
+        if (receiver != null) {
             Objects.requireNonNull(getContext()).unregisterReceiver(receiver);
-            receiver=null;
+            receiver = null;
         }
         super.onDestroy();
     }

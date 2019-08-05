@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
@@ -19,7 +20,6 @@ import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
-import com.nitrr.ecell.esummit.ecellapp.misc.MySnapHelper;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
@@ -180,7 +180,7 @@ public class HomeActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setPadding(100, 0, 100, 0);
 
-        SnapHelper snapHelper = new MySnapHelper();
+        SnapHelper snapHelper = new PagerSnapHelper();
         if (recyclerView.getOnFlingListener() == null)
             snapHelper.attachToRecyclerView(recyclerView);
 

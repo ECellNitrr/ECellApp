@@ -46,38 +46,33 @@
             android:name=".activities.LoginActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen">
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"/>
+
 
         <activity
             android:name=".activities.AboutUsActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen">
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"/>
 
         <activity
             android:name=".activities.SponsorsActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen">
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"/>
 
         <activity
             android:name=".activities.EventActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen">
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"/>
 
         <activity
             android:name=".activities.ESummitActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen">
-        </activity>
+            android:theme="@style/AppTheme.FullScreen"/>
 
         <meta-data
             android:name="preloaded_fonts"

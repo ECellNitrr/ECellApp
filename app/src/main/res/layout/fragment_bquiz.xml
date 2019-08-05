@@ -34,7 +34,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="16dp"
             android:src="@drawable/ic_ecell"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_bquiz_question"

@@ -52,6 +52,7 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
                 progressDrawable.setStrokeWidth(10f);
                 progressDrawable.setCenterRadius(90f);
                 progressDrawable.start();
+
                 Glide.with(context)
                         .load(data.getImage())
                         .placeholder(progressDrawable)
@@ -74,6 +75,7 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
                 arrayList.add(4, data.getSocialMedia());
                 bundle.putStringArrayList("data", arrayList);
                 bundle.putInt("year", 2019);
+
                 SpeakerFragment fragment = new SpeakerFragment();
                 fragment.setArguments(bundle);
                 AppCompatActivity activity = (AppCompatActivity) context;
@@ -82,6 +84,7 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
                         .replace(R.id.es_parent_layout, fragment)
                         .addToBackStack(null)
                         .commit();
+
             } catch (Exception e) {
                 Log.e("ESDetail", e.toString());
             }
