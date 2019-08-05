@@ -54,7 +54,7 @@ public class BQuizActivity extends BaseActivity {
 
 
     private void apiCall() {
-        APIServices services = AppClient.getInstance().createBQuizService(APIServices.class);
+        APIServices services = AppClient.getInstance().createService(APIServices.class);
         Call<BquizLiveCheckResponse> responseCall = services.isLiveRequest(new SharedPref().getAccessToken(BQuizActivity.this));
 
         responseCall.enqueue(new Callback<BquizLiveCheckResponse>() {
