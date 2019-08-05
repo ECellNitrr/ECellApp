@@ -57,14 +57,15 @@
 
     <ImageView
         android:id="@+id/sponsor_back"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_margin="24dp"
-        android:clickable="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:srcCompat="@drawable/ic_back"
         android:focusable="true"
+        android:clickable="true"
+        android:layout_marginTop="22dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_back" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -73,7 +74,7 @@
         android:text="@string/text_spons"
         android:textAllCaps="true"
         android:textColor="@color/colorWhite"
-        android:textSize="40sp"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
@@ -90,7 +91,7 @@
         app:tabIndicatorColor="@color/colorWhite"
         app:tabIndicatorHeight="2dp"
         app:tabMode="scrollable"
-        app:tabRippleColor="@color/common_google_signin_btn_text_dark_disabled"
+        app:tabRippleColor="@color/black"
         app:tabTextColor="@color/colorWhite"
         app:tabUnboundedRipple="true" />
 
