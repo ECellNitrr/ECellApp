@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -76,10 +77,11 @@
         android:id="@+id/detail_speaker_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
         android:textAlignment="center"
         android:textColor="@color/tint"
         android:textSize="35sp"
+        android:text="Speaker Name"
         app:layout_constraintBottom_toTopOf="@id/detail_speaker_guide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,77 +92,73 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.53" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/detail_speaker_bottom_guide"
-        app:layout_constraintTop_toBottomOf="@id/detail_speaker_guide">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="1.5"
-                app:srcCompat="@drawable/ic_suitcase" />
-
-            <TextView
-                android:id="@+id/speaker_company"
-                style="@style/ESummitSpeakerDetail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:textAlignment="textStart"
-                android:textColor="@color/tint" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1.5"
-                app:srcCompat="@drawable/ic_linkedin_outline"
-                tools:ignore="NestedWeights" />
-
-            <TextView
-                android:id="@+id/speaker_social_media"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:textSize="18sp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_marginTop="12dp"
-                android:textAlignment="textStart"
-                android:textColor="@color/link" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/detail_speaker_bottom_guide"
+        android:id="@+id/speaker_work_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintTop_toBottomOf="@id/detail_speaker_guide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/speaker_company"
+            style="@style/ESummitSpeakerDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Work Profile"
+            android:textAlignment="center"
+            android:textColor="@color/tint" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/speaker_work_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/speaker_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintTop_toBottomOf="@id/speaker_work_profile"
+                tools:targetApi="o" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/speaker_social_media"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/acme"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="Follow"
+                android:textAppearance="@style/Widget.MaterialComponents.Button"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                app:cornerRadius="30dp"
+                app:rippleColor="#5d65ff" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

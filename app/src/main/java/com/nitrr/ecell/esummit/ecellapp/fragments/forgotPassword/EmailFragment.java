@@ -54,9 +54,6 @@ public class EmailFragment extends Fragment {
         MaterialButton verify = v.findViewById(R.id.forgot_verify);
         verify.getBackground().setColorFilter(this.getResources()
                 .getColor(R.color.forgot_button), PorterDuff.Mode.MULTIPLY);
-
-        ((TextView)v.findViewById(R.id.forgot_title)).setTypeface(Typeface
-                .createFromAsset(Objects.requireNonNull(getContext()).getAssets(), "fonts/Oswald-Regular.ttf"));
         verify.setOnClickListener(view -> {
             apiCall();
         });

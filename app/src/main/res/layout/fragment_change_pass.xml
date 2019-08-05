@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFf"
-    tools:context=".fragments.forgotPassword.EmailFragment"
+    tools:context=".fragments.forgotPassword.ChangePasswordFragment"
     android:elevation="2dp"
     tools:targetApi="lollipop">
 
@@ -50,7 +50,7 @@
         android:id="@+id/forgot_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lato"
+        android:fontFamily="@font/roboto"
         android:text="Enter a New Password for your\nE-Cell account"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -140,7 +140,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lato"
+        android:fontFamily="@font/nova_round"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
         android:text="Reset Password"
@@ -149,7 +149,6 @@
         android:textSize="30sp"
         app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
         app:rippleColor="#5d65ff" />

@@ -26,6 +26,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -117,6 +119,11 @@ public class ContactUs extends Fragment implements View.OnClickListener {
                         messageEditText.setText(null);
                     } else {
                         Utils.showLongToast(getContext(), "Couldn't Send Feedback. Please Try Again after some time.");
+                        try {
+                            Log.e("AboutUs, ContactUs", response.errorBody().toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

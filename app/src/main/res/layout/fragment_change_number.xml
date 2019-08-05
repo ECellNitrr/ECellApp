@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ChangeNumberFragment"
-    android:background="#DD3377"
+    android:background="#fff"
     android:clickable="true"
     android:focusable="true">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/change_num_top_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.08"/>
 
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/icon_change_number"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/change_num_top_guide"
         app:layout_constraintBottom_toBottomOf="@id/change_num_image_guide"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -25,32 +31,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3"/>
+        app:layout_constraintGuide_percent="0.26"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/acme"
+        android:fontFamily="@font/bebas_neue"
+        android:padding="10dp"
         android:text="Change Number"
         android:textAlignment="center"
-        android:padding="10dp"
         android:textSize="35sp"
         android:textStyle="bold"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/change_num_image_guide" />
 
     <TextView
         android:id="@+id/forgot_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
         android:padding="10dp"
-        android:fontFamily="casual"
         android:text="Enter a New Number for your\nE-Cell account"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/change_num_edit_guide"/>
+        app:layout_constraintBottom_toTopOf="@id/change_num_edit_guide"
+        tools:layout_editor_absoluteX="30dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/change_num_edit_guide"
@@ -99,18 +106,20 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/acme"
+        android:fontFamily="@font/nova_round"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:text="Reset Number"
         android:textAppearance="@style/Widget.MaterialComponents.Button"
         android:textColor="@color/colorWhite"
         android:textSize="30sp"
         app:cornerRadius="30dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        app:rippleColor="#5d65ff"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintTop_toBottomOf="@id/change_num_button_guide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/change_num_button_guide"
+        app:rippleColor="#5d65ff" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--DD3377-->
