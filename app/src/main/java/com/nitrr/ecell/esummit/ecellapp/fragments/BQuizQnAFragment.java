@@ -248,7 +248,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     }
 
     private void apiCall() {
-        APIServices apiServices = AppClient.getInstance().createBQuizService(APIServices.class);
+        APIServices apiServices = AppClient.getInstance().createService(APIServices.class);
 
         BquizAnswerModel answerModel = new BquizAnswerModel();
         answerModel.answerID = optionID == null || optionID.size() == 0 ? 0 : optionID.get(answerId);
@@ -262,8 +262,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         answerModel.score = (rightAnswerId == selectedAnswerId) ? getBonus(timeAtWhichAnswerWasSelected) + baseScore : 0;
 
-
-        Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJlcmVAZ21haWwuY29tIn0.a3HUpl8XWW4v-k-Sv2TNOg48nTWgPKZowVjTN6X15JY", answerModel);
+        Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer(new SharedPref().getAccessToken(getContext()), answerModel);
         responseModelCall.enqueue(new Callback<BquizResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<BquizResponseModel> call, @NonNull Response<BquizResponseModel> response) {

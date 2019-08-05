@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppClient {
 
-    public static String BASE_URL = "http://206.189.143.11:9000/";
+    public static String BASE_URL = "https://206.189.143.11:9000/";
     private static AppClient mInstance;
 
     private AppClient() {
