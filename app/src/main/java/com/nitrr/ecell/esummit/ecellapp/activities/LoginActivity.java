@@ -215,7 +215,8 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                 Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 Log.e("LoginActivity Login", response.body().getMessage());
                                 pref.setGreeted(LoginActivity.this, true);
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                Intent intent =new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
                                 finish();
                             } else {
                                 Log.e("LoginActivity Login", "Response Successful, Response Body NULL");
@@ -274,7 +275,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                         details.getEmail());
                                 pref.setIsLoggedIn(LoginActivity.this, true);
                                 pref.setGreeted(LoginActivity.this, false);
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                intent.putExtra("loginfristime",true);
+                                startActivity(intent);
                                 finish();
                             } else {
                                 Utils.showLongToast(LoginActivity.this, "Something went wrong!");

@@ -73,18 +73,20 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (!pref.isGreeted(this)) {
-            Utils.showDialog(this,
-                    null,
-                    false,
-                    "Welcome " + pref.getFirstName(this) + " " + pref.getLastName(this),
-                    "Do u wish to verify Your Mobile Number?",
-                    "Yes",
-                    yesListener,
-                    "NO",
-                    noListener);
-        }
+        if (getIntent().getExtras() != null)
+            if (getIntent().getExtras().getBoolean("loginfristime")) {
+                if (!pref.isGreeted(this)) {
+                    Utils.showDialog(this,
+                            null,
+                            false,
+                            "Welcome " + pref.getFirstName(this) + " " + pref.getLastName(this),
+                            "Do u wish to verify Your Mobile Number?",
+                            "Yes",
+                            yesListener,
+                            "NO",
+                            noListener);
+                }
+            }
 
         recyclerView = findViewById(R.id.home_recycler);
         bgCircle1 = findViewById(R.id.homebg_circle1);
