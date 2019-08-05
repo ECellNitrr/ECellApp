@@ -15,8 +15,7 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="CircularButton" parent="Widget.AppCompat.Button">
-    </style>
+    <style name="CircularButton" parent="Widget.AppCompat.Button"></style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottomsheet_bg</item>
@@ -49,7 +48,7 @@
         <item name="android:windowEnterAnimation">@anim/pop_in</item>
         <item name="android:windowExitAnimation">@anim/pop_out</item>
     </style>
-    
+
     <style name="HamburgerAlertCardViewStyle">
         <item name="android:layout_marginStart">28dp</item>
         <item name="android:layout_marginEnd">28dp</item>
@@ -103,7 +102,8 @@
     </style>
 
     <style name="ESummitSpeakerDetail">
-        <item name="android:textSize">19sp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:layout_margin">10dp</item>
     </style>

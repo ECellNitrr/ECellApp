@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.EventFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
@@ -55,8 +58,13 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             progressDrawable.setStrokeWidth(10f);
             progressDrawable.setCenterRadius(100f);
             progressDrawable.start();
-            Glide.with(context).load(data.getImage()).placeholder(progressDrawable).into(myViewHolder.eventImage);
+
+            Glide.with(context)
+                    .load(data.getImage())
+                    .placeholder(progressDrawable)
+                    .into(myViewHolder.eventImage);
         }
+
         myViewHolder.event.setText(data.getName());
         myViewHolder.eventbg.setAlpha(floats.get(i));
 

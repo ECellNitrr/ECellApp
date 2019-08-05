@@ -25,10 +25,13 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
+import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.BquizOptionsAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
@@ -151,7 +154,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     @SuppressLint("CheckResult")
     private void setUpWebSocket() {
-        webSocket = new WebSocket("wss://17c331a6.ngrok.io/bquiz/live/question/");
+        webSocket = new WebSocket(BuildConfig.BQUIZ_URL);
 
         webSocket.onOpen()
                 .subscribeOn(Schedulers.io())
@@ -212,7 +215,13 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                             progressDrawable.setBackgroundColor(R.color.colorWhite);
                             progressDrawable.start();
 
-                            Glide.with(getActivity()).load(model.meta).apply(new RequestOptions().centerCrop()).placeholder(progressDrawable).into(bquizLogo);
+                            Glide.with(getActivity())
+                                    .load(model.meta)
+                                    .apply(new RequestOptions().transform(
+                                            new CenterCrop(),
+                                            new RoundedCorners(8)))
+                                    .placeholder(progressDrawable)
+                                    .into(bquizLogo);
 
                         } else {
                             bquizLogo.setVisibility(View.GONE);
