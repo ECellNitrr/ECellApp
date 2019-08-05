@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -192,9 +193,10 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                         if (fragmentBquiz != null && fragmentBquiz.isVisible())
                             fragmentBquiz.dismiss();
 
-                        bquizOptionsAdapter.setNewList(model.getOptions());
-                        optionID = model.getOptionId();
-                        rightAnswerId = model.getRightAnswer();
+                        rightAnswerId = model.rightAnswer;
+
+                        bquizOptionsAdapter.setNewList(model.options);
+                        optionID = model.optionId;
 
                         questionId = model.id;
                         baseScore = model.score;
@@ -210,7 +212,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                             progressDrawable.setBackgroundColor(R.color.colorWhite);
                             progressDrawable.start();
 
-                            Glide.with(getActivity()).load(model.meta).placeholder(progressDrawable).into(bquizLogo);
+                            Glide.with(getActivity()).load(model.meta).apply(new RequestOptions().centerCrop()).placeholder(progressDrawable).into(bquizLogo);
 
                         } else {
                             bquizLogo.setVisibility(View.GONE);
