@@ -59,7 +59,7 @@ public class SpeakerFragment extends Fragment {
         image = v.findViewById(R.id.detail_speaker_image);
         company = v.findViewById(R.id.speaker_company);
         socialMedia = v.findViewById(R.id.speaker_social_media);
-//        description = v.findViewById(R.id.speaker_description);
+        description = v.findViewById(R.id.speaker_description);
     }
 
     private void setData(String image, String name, String company, String email, String socialMedia, String description) {

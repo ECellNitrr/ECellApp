@@ -127,12 +127,13 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
             @Override
             public void onTick(long millisUntilFinished) {
-                timeAllotted.setText(timeGiven + "sec.");
+                timeAllotted.setText(timeGiven + " sec.");
                 timeGiven--;
             }
 
             @Override
             public void onFinish() {
+                timeAllotted.setText("finished");
                 //TODO: API CALL
                 apiCall();
             }
