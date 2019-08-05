@@ -166,6 +166,11 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                 .subscribe(socketEventMessage -> {
                     QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
+                    if (model.end) {
+                        fragmentBquiz.dismiss();
+                        onStop();
+                    }
+
                     if (!model.show) {
                         if (!fragmentBquiz.isVisible() && getFragmentManager() != null)
                             fragmentBquiz.show(getFragmentManager(), "Bquiz");
@@ -178,8 +183,8 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                         if (fragmentBquiz != null && fragmentBquiz.isVisible())
                             fragmentBquiz.dismiss();
 
-                        bquizOptionsAdapter.setNewList(model.getOptions());
-                        optionID = model.getOptionId();
+                        bquizOptionsAdapter.setNewList(model.options);
+                        optionID = model.optionId;
 
                         questionId = model.id;
                         baseScore = model.score;
