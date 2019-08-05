@@ -110,7 +110,7 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
             name = itemView.findViewById(R.id.speaker_name);
             image = itemView.findViewById(R.id.speaker_image);
             speakerCardItem = itemView.findViewById(R.id.speaker_item_card);
-            description = itemView.findViewById(R.id.speaker_description);
+//            description = itemView.findViewById(R.id.speaker_description);
         }
     }
 }

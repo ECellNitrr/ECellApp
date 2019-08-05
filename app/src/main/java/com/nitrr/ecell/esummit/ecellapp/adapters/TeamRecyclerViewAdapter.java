@@ -48,26 +48,8 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             holder.bg.setBackgroundColor(Color.parseColor("#AAAAAA"));
         TeamList data = list.get(i);
         holder.name.setText(data.getName());
-//        if (data.getType().equalsIgnoreCase("DIR"))
-//            holder.post.setText(R.string.dir);
-//        else if (data.getType().equalsIgnoreCase("HCD"))
-//            holder.post.setText(R.string.hcd);
-//        else if (data.getType().equalsIgnoreCase("FCT"))
-//            holder.post.setText(R.string.fct);
-//        else if (data.getType().equalsIgnoreCase("OCO"))
-//            holder.post.setText(R.string.oco);
-//        else if (data.getDomain().equalsIgnoreCase("spons"))
-//            holder.post.setText(R.string.text_spons);
-//        else if (data.getDomain().equalsIgnoreCase("doc"))
-//            holder.post.setText(R.string.doc);
-//        else if (data.getDomain().equalsIgnoreCase("pr"))
-//            holder.post.setText(R.string.pr);
-//        else if (data.getDomain().equalsIgnoreCase("tech"))
-//            holder.post.setText(R.string.tech);
-//        else if(data.getDomain().equalsIgnoreCase("design"))
-//            holder.post.setText(R.string.design);
-//        else
-//            holder.post.setText(data.getDomain());
+        if(data.getName().equalsIgnoreCase("MNG") || data.getName().equalsIgnoreCase("EXC"))
+            holder.img.setVisibility(View.GONE);
         if(data.getImg()!=null){
             CircularProgressDrawable progressDrawable = new CircularProgressDrawable(context);
             progressDrawable.setStrokeWidth(5f);
