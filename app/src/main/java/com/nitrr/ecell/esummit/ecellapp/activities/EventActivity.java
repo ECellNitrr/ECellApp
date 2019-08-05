@@ -105,12 +105,11 @@ public class EventActivity extends BaseActivity {
 
     private void setRecycler() {
         float increment = ((float)list.size())/100;
-        float alpha = increment * 2;
+        float alpha = increment;
         List<Float> floats = new ArrayList<>();
         for (int x = 0; x < list.size(); x++) {
             if (x % 2 == 1)
-                alpha += increment;
-
+                alpha += increment*2;
             floats.add(alpha);
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
