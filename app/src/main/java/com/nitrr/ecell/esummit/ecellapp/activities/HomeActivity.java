@@ -80,7 +80,7 @@ public class HomeActivity extends BaseActivity {
                             null,
                             false,
                             "Welcome " + pref.getFirstName(this) + " " + pref.getLastName(this),
-                            "Do u wish to verify Your Mobile Number?",
+                            "Do you wish to verify Your Mobile Number?",
                             "Yes",
                             yesListener,
                             "NO",
