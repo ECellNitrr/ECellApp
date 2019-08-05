@@ -129,7 +129,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                 loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" :
                         loginPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
                 if(!loginPassword.hasFocus())
-
                     break;
 
             case R.id.register_first_name:
@@ -187,6 +186,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         registerNumber.setOnFocusChangeListener(this);
         loginEmail.setOnFocusChangeListener(this);
         loginPassword.setOnFocusChangeListener(this);
+
+        clearErrorAcUserTypes(firstName, firstNameLayout);
+        clearErrorAcUserTypes(lastName, lastNameLayout);
+        clearErrorAcUserTypes(registerEmail, registerEmailLayout);
+
     }
 
     private void LoginApiCall() {
@@ -389,5 +393,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
             }
         });
+    }
+
+    public void addECellIcons() {
+
     }
 }

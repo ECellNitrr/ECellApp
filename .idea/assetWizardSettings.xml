@@ -14,11 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="332" />
-                            <entry key="outputName" value="ic_linkedin_outline" />
+                            <entry key="height" value="295" />
+                            <entry key="outputName" value="ic_next_page" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Viren Khatri\Downloads\linkedin.svg" />
-                            <entry key="width" value="330" />
+                            <entry key="sourceFile" value="C:\Users\Viren Khatri\Downloads\next-page.svg" />
+                            <entry key="width" value="295" />
                           </map>
                         </option>
                       </PersistentState>

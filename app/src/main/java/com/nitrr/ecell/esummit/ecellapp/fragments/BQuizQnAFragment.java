@@ -237,7 +237,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     }
 
     private void apiCall() {
-        APIServices apiServices = AppClient.getInstance().createService(APIServices.class);
+        APIServices apiServices = AppClient.getInstance().createBQuizService(APIServices.class);
 
         BquizAnswerModel answerModel = new BquizAnswerModel();
         answerModel.answerID = optionID == null || optionID.size() == 0 ? 0 : optionID.get(answerId);

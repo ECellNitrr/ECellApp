@@ -5,7 +5,7 @@
     android:id="@+id/email_frag_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFCFA2"
+    android:background="#FFf"
     tools:context=".fragments.forgotPassword.EmailFragment"
     android:elevation="2dp"
     tools:targetApi="lollipop">
@@ -37,7 +37,7 @@
         android:id="@+id/forgot_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/acme"
+        android:fontFamily="@font/bebasneueregular"
         android:text="Set New Password"
         android:textAlignment="center"
         android:textSize="35sp"
@@ -50,13 +50,13 @@
         android:id="@+id/forgot_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:fontFamily="casual"
+        android:fontFamily="@font/lato"
         android:text="Enter a New Password for your\nE-Cell account"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/forgot_edit_guide"/>
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/forgot_edit_guide"
+        app:layout_constraintTop_toBottomOf="@id/forgot_title" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/forgot_edit_guide"
@@ -140,18 +140,18 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/acme"
+        android:fontFamily="@font/lato"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:text="Reset Password"
         android:textAppearance="@style/Widget.MaterialComponents.Button"
         android:textColor="@color/colorWhite"
         android:textSize="30sp"
         app:cornerRadius="30dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        app:rippleColor="#5d65ff"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/forgot_button_guide"
+        app:rippleColor="#5d65ff" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
