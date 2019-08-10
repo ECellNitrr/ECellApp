@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.ESummitRecyclerViewAdapter;
@@ -23,6 +24,9 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +40,8 @@ public class ESummitActivity extends BaseActivity {
     TextView speakerText;
     ProgressBar loadingSpeakers;
     ESummitRecyclerViewAdapter adapter;
-    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI();
+    int noOfYears, endYear;
+    private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI(endYear);
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
         ESummitActivity.this.finish();
@@ -50,6 +55,8 @@ public class ESummitActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        endYear = 2018;
+        noOfYears = 4;
         speakerRV = findViewById(R.id.es_speaker_recycler_view);
         ImageView back = findViewById(R.id.esummit_back);
         speakerText = findViewById(R.id.speaker_text);
@@ -60,14 +67,28 @@ public class ESummitActivity extends BaseActivity {
         TextView date = findViewById(R.id.e_summit_date);
         date.setText(setESDate());
         adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
-        adapter.notifyDataSetChanged();
         speakerRV.setAdapter(adapter);
         speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
-        callAPI();
+        speakerRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    if(noOfYears>1) {
+                        endYear -= 1;
+                        noOfYears-=1;
+                        callAPI(endYear);
+                    }
+
+                }
+            }
+        });
+        callAPI(2018);
     }
 
-    public void callAPI() {
-        Call<ResponseSpeaker> call = AppClient.getInstance().createService(APIServices.class).getSpeakerList(getString(R.string.app_access_token));
+    public void callAPI(int year) {
+        Call<ResponseSpeaker> call = AppClient.getInstance().createService(APIServices.class).getSpeakerList(getString(R.string.app_access_token), Integer.toString(year));
         call.enqueue(new Callback<ResponseSpeaker>() {
             @Override
             public void onResponse(@NonNull Call<ResponseSpeaker> call, @NonNull Response<ResponseSpeaker> response) {
@@ -77,8 +98,7 @@ public class ESummitActivity extends BaseActivity {
                         Log.e("ES Speaker List", "response body null");
                     else {
                         ResponseSpeaker data = response.body();
-                        responseSpeakerObjectList = data.getList();
-                        adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
+                        responseSpeakerObjectList.addAll(data.getList());
                         speakerRV.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                         loadingSpeakers.setVisibility(View.GONE);

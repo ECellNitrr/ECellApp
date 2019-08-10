@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/es_parent_layout"
@@ -10,17 +11,19 @@
 
     <ImageView
         android:id="@+id/esummit_back"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:clickable="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:srcCompat="@drawable/ic_back"
         android:focusable="true"
+        android:clickable="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toTopOf="@id/upper_guide"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18"
-        app:srcCompat="@drawable/ic_back" />
+        app:layout_constraintVertical_bias="0" />
 
     <ImageView
         android:id="@+id/e_summit_icon"
@@ -46,11 +49,10 @@
         android:id="@+id/e_summit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/audiowide"
+        android:fontFamily="@font/bebas_neue"
         android:text="@string/e_summit_19"
         android:textColor="#FFF"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:textSize="45sp"
         app:layout_constraintBottom_toTopOf="@+id/e_summit_tagline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,11 +62,12 @@
         android:id="@+id/e_summit_tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/lato"
         android:lines="1"
         android:text="@string/esummit_tagline"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/e_summit_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +77,7 @@
         android:id="@+id/e_summit_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans_bold"
+        android:fontFamily="@font/roboto"
         android:lines="1"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
@@ -144,7 +147,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_margin="10dp"
                 android:orientation="horizontal">
 
                 <ProgressBar
@@ -152,21 +155,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:padding="10dp"
-                    android:theme="@style/AppTheme.WhiteAccent" />
+                    android:indeterminate="true"
+                    android:theme="@style/AppTheme.WhiteAccent"
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/speaker_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="20"
-                    android:fontFamily="@font/audiowide"
+                    android:fontFamily="@font/bebas_neue"
                     android:text="Speakers"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@color/colorWhite"
-                    android:textSize="35sp" />
+                    android:textSize="40sp" />
 
             </LinearLayout>
 
@@ -174,7 +178,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/es_speaker_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

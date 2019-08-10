@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.button.MaterialButton;
 import com.nitrr.ecell.esummit.ecellapp.R;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class SpeakerFragment extends Fragment {
     private ImageView image;
     private TextView name;
     private TextView company;
+    TextView description;
     private TextView socialMedia;
     private BroadcastReceiver receiver;
 
@@ -45,7 +48,7 @@ public class SpeakerFragment extends Fragment {
         if (data != null) {
             initialize(view);
             setData(data.get(0), data.get(1), data.get(2),
-                    data.get(3), data.get(4));
+                    data.get(3), data.get(4), data.get(5));
         }
         view.findViewById(R.id.speaker_detail_back).setOnClickListener(view1 -> Objects.requireNonNull(getActivity()).onBackPressed());
         return view;
@@ -56,9 +59,10 @@ public class SpeakerFragment extends Fragment {
         image = v.findViewById(R.id.detail_speaker_image);
         company = v.findViewById(R.id.speaker_company);
         socialMedia = v.findViewById(R.id.speaker_social_media);
+        description = v.findViewById(R.id.speaker_description);
     }
 
-    private void setData(String image, String name, String company, String email, String socialMedia) {
+    private void setData(String image, String name, String company, String email, String socialMedia, String description) {
         try {
             if (image != null) {
                 Glide.with(Objects.requireNonNull(getContext()))
@@ -67,12 +71,12 @@ public class SpeakerFragment extends Fragment {
                         .into(this.image);
             }
         } catch (Exception e) {
-            setData(image, name, company, email, socialMedia);
+            setData(image, name, company, email, socialMedia, description);
         }
         this.name.setText(name);
         this.company.setText(company);
-        this.socialMedia.setText(socialMedia);
         this.socialMedia.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(socialMedia))));
+        this.description.setText(description);
     }
 
     @Override

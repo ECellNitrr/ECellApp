@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.BQuizQnAFragment;
+import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizLiveCheckResponse;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
@@ -53,8 +54,8 @@ public class BQuizActivity extends BaseActivity {
 
 
     private void apiCall() {
-        APIServices services = AppClient.getInstance().createBQuizService(APIServices.class);
-        Call<BquizLiveCheckResponse> responseCall = services.isLiveRequest(getString(R.string.app_access_token));
+        APIServices services = AppClient.getInstance().createService(APIServices.class);
+        Call<BquizLiveCheckResponse> responseCall = services.isLiveRequest(new SharedPref().getAccessToken(BQuizActivity.this));
 
         responseCall.enqueue(new Callback<BquizLiveCheckResponse>() {
             @Override
@@ -68,8 +69,11 @@ public class BQuizActivity extends BaseActivity {
                         BQuizQnAFragment fragment = new BQuizQnAFragment();
                         fragment.show(getSupportFragmentManager(), "Bquiz");
 
-                    } else
+                    } else{
+                        Log.e("islive response","else");
                         Utils.showLongToast(BQuizActivity.this, "Bquiz isn't live right now.");
+                    }
+
 
                     progressBar.setVisibility(View.GONE);
                     proceedTextView.setText(getResources().getText(R.string.proceed));

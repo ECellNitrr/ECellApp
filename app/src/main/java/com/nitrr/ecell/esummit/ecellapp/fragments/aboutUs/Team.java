@@ -109,33 +109,6 @@ public class Team extends Fragment {
 
     List<TeamList> sortList(List<TeamList> list){
 
-//        List<TeamList> faculty = new ArrayList<>(),
-//                oc = new ArrayList<>(),
-//                tech = new ArrayList<>(),
-//                pr = new ArrayList<>(),
-//                spons = new ArrayList<>(),
-//                design = new ArrayList<>(),
-//                doc = new ArrayList<>();
-//        //Sorting as per domain
-//        for(int x=0; x<list.size();x++){
-//            TeamList member = list.get(x);
-//            if(member.getDomain().contentEquals("none"))
-//                if(member.getType().contentEquals("OCO"))
-//                    oc.add(member);
-//                else
-//                    faculty.add(member);
-//            else if(member.getDomain().contentEquals("tech"))
-//                tech.add(member);
-//            else if(member.getDomain().contentEquals("doc"))
-//                doc.add(member);
-//            else if(member.getDomain().contentEquals("pr"))
-//                pr.add(member);
-//            else if(member.getDomain().contentEquals("spons"))
-//                spons.add(member);
-//            else if(member.getDomain().contentEquals("design"))
-//                design.add(member);
-//        }
-
         List<TeamList> DIR = new ArrayList<>(),
                 HCD  = new ArrayList<>(),/*(Head of Career Dapartment)*/
                 FCT  = new ArrayList<>(),/*(faculty incharge)*/

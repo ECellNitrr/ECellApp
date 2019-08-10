@@ -60,8 +60,9 @@ public interface APIServices {
     Call<GenericMessage> changeNumber(@Header("Access") String access, @Header("Authorization") String token, @Body ChangeNumber number);
 
 
-    @GET("speakers/list/2018/")
-    Call<ResponseSpeaker> getSpeakerList(@Header("Access") String access);
+    //Speakers
+    @GET("speakers/list/{year}/")
+    Call<ResponseSpeaker> getSpeakerList(@Header("Access") String access, @Path("year") String year);
 
     @GET("team/list/{year}/")
     Call<TeamData> getTeamData(@Path("year") String year);

@@ -127,12 +127,13 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
             @Override
             public void onTick(long millisUntilFinished) {
-                timeAllotted.setText(timeGiven + "sec.");
+                timeAllotted.setText(timeGiven + " sec.");
                 timeGiven--;
             }
 
             @Override
             public void onFinish() {
+                timeAllotted.setText("finished");
                 //TODO: API CALL
                 apiCall();
             }
@@ -262,8 +263,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         answerModel.score = (rightAnswerId == selectedAnswerId) ? getBonus(timeAtWhichAnswerWasSelected) + baseScore : 0;
 
-
-        Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJlcmVAZ21haWwuY29tIn0.a3HUpl8XWW4v-k-Sv2TNOg48nTWgPKZowVjTN6X15JY", answerModel);
+        Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer(new SharedPref().getAccessToken(getContext()), answerModel);
         responseModelCall.enqueue(new Callback<BquizResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<BquizResponseModel> call, @NonNull Response<BquizResponseModel> response) {

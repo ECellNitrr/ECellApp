@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -14,46 +13,31 @@
             android:id="@+id/team_member_backround"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="2dp">
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/memberpic"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_marginStart="10dp"
-                android:layout_gravity="center_vertical" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/membername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:orientation="vertical">
+                android:layout_gravity="start"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/name"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/membername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="5dp"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:text="@string/name"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="20sp" />
-
-                <!--<TextView-->
-                    <!--android:id="@+id/memberpost"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_margin="5dp"-->
-                    <!--android:text="@string/post"-->
-                    <!--android:textColor="@color/colorWhite"-->
-                    <!--android:textSize="12sp" />-->
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

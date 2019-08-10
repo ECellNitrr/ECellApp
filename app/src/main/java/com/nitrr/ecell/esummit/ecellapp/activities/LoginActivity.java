@@ -127,8 +127,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
             case R.id.login_password:
                 loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" :
                         loginPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
-                if (!loginPassword.hasFocus())
-
+                if(!loginPassword.hasFocus())
                     break;
 
             case R.id.register_first_name:
@@ -186,6 +185,11 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         registerNumber.setOnFocusChangeListener(this);
         loginEmail.setOnFocusChangeListener(this);
         loginPassword.setOnFocusChangeListener(this);
+
+        clearErrorAcUserTypes(firstName, firstNameLayout);
+        clearErrorAcUserTypes(lastName, lastNameLayout);
+        clearErrorAcUserTypes(registerEmail, registerEmailLayout);
+
     }
 
     private void LoginApiCall() {
@@ -211,7 +215,8 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                 Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 Log.e("LoginActivity Login", response.body().getMessage());
                                 pref.setGreeted(LoginActivity.this, true);
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                Intent intent =new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
                                 finish();
                             } else {
                                 Log.e("LoginActivity Login", "Response Successful, Response Body NULL");
@@ -270,7 +275,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                         details.getEmail());
                                 pref.setIsLoggedIn(LoginActivity.this, true);
                                 pref.setGreeted(LoginActivity.this, false);
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                intent.putExtra("loginfristime",true);
+                                startActivity(intent);
                                 finish();
                             } else {
                                 Utils.showLongToast(LoginActivity.this, "Something went wrong!");
@@ -366,5 +373,28 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         is.close();
         return sb.toString();
+    }
+
+    private void clearErrorAcUserTypes(EditText edit, TextInputLayout layout) {
+        edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                layout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    public void addECellIcons() {
+
     }
 }

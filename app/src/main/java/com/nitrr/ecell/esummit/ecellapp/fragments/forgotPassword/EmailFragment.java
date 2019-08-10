@@ -2,7 +2,6 @@ package com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -12,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
 import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
@@ -54,28 +54,8 @@ public class EmailFragment extends Fragment {
         MaterialButton verify = v.findViewById(R.id.forgot_verify);
         verify.getBackground().setColorFilter(this.getResources()
                 .getColor(R.color.forgot_button), PorterDuff.Mode.MULTIPLY);
-
-//        MaterialButton back = v.findViewById(R.id.forgot_back);
-
-//        back.setOnClickListener(view -> {
-//            startActivity(new Intent(getContext(), LoginActivity.class));
-//        });
-
-        ((TextView)v.findViewById(R.id.forgot_title)).setTypeface(Typeface
-                .createFromAsset(Objects.requireNonNull(getContext()).getAssets(), "fonts/Oswald-Regular.ttf"));
         verify.setOnClickListener(view -> {
-
             apiCall();
-//            OTPDialogFragment fragment = new OTPDialogFragment();
-//            Bundle b = new Bundle();
-//            b.putString("email", email.getText().toString());
-//            fragment.setArguments(b);
-//
-//            Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.login_outer_constraint, fragment, "otp")
-//                    .addToBackStack("verify_email")
-//                    .commit();
         });
         return v;
     }
@@ -137,7 +117,10 @@ public class EmailFragment extends Fragment {
                     DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> {
                         Fragment fragment = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentByTag("verify_email");
                         if (fragment != null) {
-                            getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
                         }
                         dialogInterface.dismiss();
                     };

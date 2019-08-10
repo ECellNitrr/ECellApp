@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/team_element"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -30,7 +31,7 @@
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/team_member_dropdown"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -38,6 +39,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+                    android:transformPivotY="12dp"
+                    android:transformPivotX="12dp"
                     android:background="@drawable/ic_dropdown_arrow"
                     android:rotation="-90"/>
             </RelativeLayout>

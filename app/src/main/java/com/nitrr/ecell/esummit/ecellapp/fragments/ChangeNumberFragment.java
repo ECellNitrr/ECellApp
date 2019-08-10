@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,6 @@ public class ChangeNumberFragment extends Fragment {
 
     private EditText number;
     private TextInputLayout numberLayout;
-    private MaterialButton changeNumber;
 
     private DialogInterface.OnClickListener successfulYes = (dialogInterface, i) -> {
         dialogInterface.dismiss();
@@ -66,7 +66,9 @@ public class ChangeNumberFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_change_number, container, false);
         number = v.findViewById(R.id.new_number);
         numberLayout = v.findViewById(R.id.new_number_layout);
-        changeNumber = v.findViewById(R.id.change_num_button);
+        MaterialButton changeNumber = v.findViewById(R.id.change_num_button);
+        changeNumber.getBackground().setColorFilter(this.getResources()
+                .getColor(R.color.forgot_button), PorterDuff.Mode.MULTIPLY);
         changeNumber.setOnClickListener(view -> {
             if(checkPhone(number, numberLayout))
                 apiCall();

@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,9 +61,9 @@ public class TeamRecyclerHeadingAdapter extends RecyclerView.Adapter<TeamRecycle
             holder.heading.setText(R.string.exc);
 
         if (context != null) {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
-            holder.teamRecycler.setLayoutManager(linearLayoutManager);
-            holder.dropdown.setOnClickListener(v -> {
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2, RecyclerView.VERTICAL, false);
+            holder.teamRecycler.setLayoutManager(gridLayoutManager);
+            holder.teamElement.setOnClickListener(v -> {
 
                 if (holder.teamRecycler.getVisibility() == View.GONE) {
                     holder.dropdown.setRotation(90);
@@ -84,12 +87,15 @@ public class TeamRecyclerHeadingAdapter extends RecyclerView.Adapter<TeamRecycle
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private CardView teamElement;
         private TextView heading;
-        private ImageButton dropdown;
+        private ImageView dropdown;
         private RecyclerView teamRecycler;
 
         MyViewHolder(@NonNull View view) {
             super(view);
+            teamElement = view.findViewById(R.id.team_element);
             heading = view.findViewById(R.id.team_member_type);
             dropdown = view.findViewById(R.id.team_member_dropdown);
             teamRecycler = view.findViewById(R.id.team_inner_recycler);
