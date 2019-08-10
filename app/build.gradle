@@ -22,7 +22,7 @@ android {
             manifestPlaceholders = [usesCleartextTraffic:"true"]
 
             buildConfigField "String", "BASE_URL", "\"https://ecell.nitrr.ac.in/\""
-            buildConfigField "String", "BQUIZ_URL", "\"wss://206.189.143.11:9000/bquiz/live/question/\""
+            buildConfigField "String", "BQUIZ_URL", "\"ws://206.189.143.11:9000/bquiz/live/question/\""
         }
 
         debug {
@@ -33,7 +33,7 @@ android {
             manifestPlaceholders = [usesCleartextTraffic:"true"]
 
             buildConfigField "String", "BASE_URL", "\"https://ecell.nitrr.ac.in/\""
-            buildConfigField "String", "BQUIZ_URL", "\"wss://206.189.143.11:9000/bquiz/live/question/\""
+            buildConfigField "String", "BQUIZ_URL", "\"ws://206.189.143.11:9000/bquiz/live/question/\""
         }
     }
 
