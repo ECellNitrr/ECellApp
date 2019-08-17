@@ -81,7 +81,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         gson = new Gson();
         fragmentBquiz = BottomSheetFragmentBquiz.newInstance();
-        fragmentBquiz.setCancelable(false);
+      //  fragmentBquiz.setCancelable(false);
         fragmentBquiz.show(getFragmentManager(), "Bquiz");
 
         initview(view);
@@ -155,7 +155,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     @SuppressLint("CheckResult")
     private void setUpWebSocket() {
-        webSocket = new WebSocket(BuildConfig.BQUIZ_URL);
+        webSocket = new WebSocket(BuildConfig.BQUIZ_SOCKET_URL);
 
         webSocket.onOpen()
                 .subscribeOn(Schedulers.io())
@@ -283,7 +283,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
         String response;
         if (rightAnswerId == selectedAnswerId) {
             if (getBonus(timeAtWhichAnswerWasSelected) > 0) {
-                response = "Your Answer is correct and time bounus of " + getBonus(timeAtWhichAnswerWasSelected) + " points is given to you";
+                response = "Your Answer is correct and time bonus of " + getBonus(timeAtWhichAnswerWasSelected) + " points is given to you.";
             } else {
                 response = "Your Answer is correct";
             }

@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword.EmailFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
+import com.nitrr.ecell.esummit.ecellapp.misc.CustomTextWatcher;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.auth.AuthResponse;
@@ -43,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends BaseActivity implements View.OnFocusChangeListener {
+public class LoginActivity extends BaseActivity{
 
     private Button signIn, register;
     private TextView toSignIn, toRegister, forgotPassword;
@@ -72,13 +73,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         loginEmail.clearFocus();
 
         signIn.setOnClickListener((View v) -> {
-            //Validation for Sign In
-            loginEmailLayout.setError(checkEmail(loginEmail));
-            loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" : null);
-
-
-            if (loginEmailLayout.getError() == null &&
-                    loginPasswordLayout.getError() == null)
+            if (loginEmailLayout.getError() == null && loginPasswordLayout.getError() == null)
                 LoginApiCall();
         });
 
@@ -94,10 +89,9 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         register.setOnClickListener((View v) -> {
             firstNameLayout.setError(TextUtils.isEmpty(firstName.getText()) ? "Field Required!" : null);
             lastNameLayout.setError(TextUtils.isEmpty(lastName.getText()) ? "Field Required!" : null);
-            registerEmailLayout.setError(checkEmail(registerEmail));
-            registerPasswordLayout.setError((TextUtils.isEmpty(registerPassword.getText())) ? "Field Required!" :
-                    registerPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
-            registerNumberLayout.setError(checkNumber(registerNumber));
+            registerEmailLayout.setError(TextUtils.isEmpty(lastName.getText()) ? "Field Required!" : null);
+            registerPasswordLayout.setError((TextUtils.isEmpty(registerPassword.getText())) ? "Field Required!" : null);
+            registerNumberLayout.setError(TextUtils.isEmpty(lastName.getText()) ? "Field Required!" : null);
 
             if (firstNameLayout.getError() == null &&
                     lastNameLayout.getError() == null &&
@@ -115,42 +109,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         toRegister.setOnClickListener((View v) -> loginanimation.toRegisterScreen());
         toSignIn.setOnClickListener((View v) -> loginanimation.toSignInScreen());
-    }
-
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        switch (v.getId()) {
-            case R.id.login_email:
-                loginEmailLayout.setError(checkEmail(loginEmail));
-                break;
-
-            case R.id.login_password:
-                loginPasswordLayout.setError((TextUtils.isEmpty(loginPassword.getText())) ? "Field Required!" :
-                        loginPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
-                if(!loginPassword.hasFocus())
-                    break;
-
-            case R.id.register_first_name:
-                firstNameLayout.setError(TextUtils.isEmpty(firstName.getText()) ? "Field Required!" : null);
-                break;
-
-            case R.id.register_last_name:
-                lastNameLayout.setError(TextUtils.isEmpty(lastName.getText()) ? "Field Required!" : null);
-                break;
-
-            case R.id.register_email:
-                registerEmailLayout.setError(checkEmail(registerEmail));
-                break;
-
-            case R.id.register_password:
-                registerPasswordLayout.setError((TextUtils.isEmpty(registerPassword.getText())) ? "Field Required!" :
-                        registerPassword.getText().toString().length() > 7 ? null : "Required Min 8 Characters!");
-                break;
-
-            case R.id.register_number:
-                registerNumberLayout.setError(checkNumber(registerNumber));
-                break;
-        }
     }
 
     private void initializeViews() {
@@ -178,19 +136,15 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
 
-        firstName.setOnFocusChangeListener(this);
-        lastName.setOnFocusChangeListener(this);
-        registerEmail.setOnFocusChangeListener(this);
-        registerPassword.setOnFocusChangeListener(this);
-        registerNumber.setOnFocusChangeListener(this);
-        loginEmail.setOnFocusChangeListener(this);
-        loginPassword.setOnFocusChangeListener(this);
+        firstName.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, firstName, firstNameLayout, CustomTextWatcher.FIRST_NAME));
+        lastName.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, lastName, lastNameLayout, CustomTextWatcher.LAST_NAME));
+        loginEmail.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, loginEmail, loginEmailLayout, CustomTextWatcher.EMAIL));
+        loginPassword.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, loginPassword, loginPasswordLayout, CustomTextWatcher.PASSWORD));
+        registerNumber.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerNumber, registerNumberLayout, CustomTextWatcher.MOBILE_NO));
+        registerEmail.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerEmail, registerEmailLayout, CustomTextWatcher.EMAIL));
+        registerPassword.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerPassword, registerPasswordLayout, CustomTextWatcher.PASSWORD));
 
-        clearErrorAcUserTypes(firstName, firstNameLayout);
-        clearErrorAcUserTypes(lastName, lastNameLayout);
-        clearErrorAcUserTypes(registerEmail, registerEmailLayout);
-
-    }
+   }
 
     private void LoginApiCall() {
         AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In...");
@@ -215,18 +169,15 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                 Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 Log.e("LoginActivity Login", response.body().getMessage());
                                 pref.setGreeted(LoginActivity.this, true);
-                                Intent intent =new Intent(LoginActivity.this, HomeActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
-                            } else {
-                                Log.e("LoginActivity Login", "Response Successful, Response Body NULL");
                             }
+
                         } else {
-                            Log.e("LoginActivity Login", "Response Unsuccessful with code:" + response.code());
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(LoginActivity.this, response.errorBody().string().split("\"")[7]);
-                            } else
-                                Log.e("LoginActivity Login", "Response ErrorBody NULL");
+                                Utils.showLongToast(LoginActivity.this, "Login Failed. Please try again.");
+                            }
                         }
                     }
                 } catch (Exception e) {
@@ -276,7 +227,7 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                                 pref.setIsLoggedIn(LoginActivity.this, true);
                                 pref.setGreeted(LoginActivity.this, false);
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                intent.putExtra("loginfristime",true);
+                                intent.putExtra("loginfristime", true);
                                 startActivity(intent);
                                 finish();
                             } else {
@@ -303,24 +254,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
                 Utils.showLongToast(getApplicationContext(), "Registration Failed" + t.getMessage());
             }
         });
-    }
-
-    private String checkNumber(EditText editText) {
-        if (TextUtils.isEmpty(editText.getText()))
-            return "Field Required!";
-        String phoneNo = editText.getText().toString();
-        if (phoneNo.length() == 10) {
-            return (phoneNo.charAt(0) == '6' || phoneNo.charAt(0) == '7' || phoneNo.charAt(0) == '8' || phoneNo.charAt(0) == '9')
-                    ? null : "Invalid Number";
-        }
-
-        return "Enter a 10 digit number";
-    }
-
-    private String checkEmail(EditText editText) {
-        return Pattern.compile("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+", Pattern.CASE_INSENSITIVE)
-                .matcher(editText.getText().toString())
-                .matches() ? null : "Invalid Email.";
     }
 
     private void showAlertDialog() throws Exception {
@@ -373,28 +306,5 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
         is.close();
         return sb.toString();
-    }
-
-    private void clearErrorAcUserTypes(EditText edit, TextInputLayout layout) {
-        edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                layout.setError(null);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-    }
-
-    public void addECellIcons() {
-
     }
 }

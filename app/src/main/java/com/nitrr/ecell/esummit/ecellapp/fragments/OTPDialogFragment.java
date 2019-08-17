@@ -102,13 +102,16 @@ public class OTPDialogFragment extends Fragment{
             if(bundle.getString("email", null) != null) {
                 email = bundle.getString("email");
                 Log.e("OTPFrag", "Email has been received, Changing Password");
+
             } else {
                 Log.e("OTPFrag", "Null has been received, Verifying OTP");
                 if(!bundle.getBoolean("greeted"))
                     verifyResendOTP();
             }
+
         } else {
             Utils.showShortToast(getContext(), "An Error occurred. Please Try Again");
+
             if(new SharedPref().isLoggedIn(getActivity())) {
                 startActivity(new Intent(getActivity(), HomeActivity.class));
             } else {
@@ -192,7 +195,8 @@ public class OTPDialogFragment extends Fragment{
             otp2.setText("_");
             otp3.setText("_");
             otp4.setText("_");
-            Utils.showShortToast(getContext(),"Please enter OTP correctly");
+
+            Utils.showShortToast(getContext(),"Wrong OTP.");
         }
     }
 
@@ -225,6 +229,7 @@ public class OTPDialogFragment extends Fragment{
                     forgotPasswordResendOTP();
                     dialogInterface.dismiss();
                 };
+
                 DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> {
                     Fragment fragment = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentByTag("verify_email");
                     if (fragment != null) {
@@ -232,6 +237,7 @@ public class OTPDialogFragment extends Fragment{
                     }
                     dialogInterface.dismiss();
                 };
+
                 if(!Utils.isNetworkAvailable(getContext())){
                     Utils.showDialog(getContext(), null, false, "Network Error",
                             "There was a Connection Error. Make sure you have a stable connection", "Retry",
