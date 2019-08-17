@@ -133,7 +133,7 @@ public class EventFragment extends Fragment {
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Registering you for " + eventName);
         SharedPref pref = new SharedPref();
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
-                .registerForEvent(getContext().getString(R.string.app_access_token), pref.getAccessToken(getContext()), id);
+                .registerForEvent(Objects.requireNonNull(getContext()).getString(R.string.app_access_token), pref.getAccessToken(getContext()), id);
 
         call.enqueue(new Callback<GenericMessage>() {
             @Override

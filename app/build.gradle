@@ -98,6 +98,7 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
+    implementation 'org.jetbrains:annotations:15.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

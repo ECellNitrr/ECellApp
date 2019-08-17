@@ -82,6 +82,9 @@ public interface APIServices {
     @POST("events/register/{id}/")
     Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
 
+    @POST("events/unregister/{id}/")
+    Call<GenericMessage> unregisterForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
+
     @POST("feedback/post/")
     Call<GenericMessage> postFeedback(@Body FeedbackModel feedbackModel);
 

@@ -43,6 +43,8 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.WebSocket;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -72,9 +74,9 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     private BottomSheetFragmentBquiz fragmentBquiz;
 
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bquiz, container, false);
 
         setUpWebSocket();
