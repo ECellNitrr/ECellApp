@@ -113,15 +113,6 @@
                 app:tabRippleColor="@color/colorLightBlack"
                 app:tabUnboundedRipple="false" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/black_overlay"
-                app:layout_constraintTop_toBottomOf="@id/event_tab" />
-
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/event_pager"
                 android:layout_width="match_parent"
