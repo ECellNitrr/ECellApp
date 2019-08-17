@@ -17,14 +17,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 
 import java.io.IOException;
 import java.util.Objects;
 
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.adapters.EventViewPagerAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
@@ -38,13 +41,11 @@ import retrofit2.Response;
 
 public class EventFragment extends Fragment {
 
-    private TextView eventDetails;
-    private TextView venueField;
-    private TextView timeField;
     private BroadcastReceiver receiver;
     private ImageView eventImage;
-    private String eventName, id;
-    private Button register;
+    private String eventName;
+    private ViewPager pager;
+    private TabLayout tab;
 
     public EventFragment() {
     }
@@ -59,32 +60,22 @@ public class EventFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             initialize(view);
-            if(bundle.getBoolean("registered")) {
-                register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_registered));
-                register.setEnabled(false);
-            }
             eventName = bundle.getString("event_name");
-            id = bundle.getString("id");
             setData(bundle.getString("event_name"),
-                    bundle.getString("event_img"),
-                    bundle.getString("event_details"),
-                    bundle.getString("event_time"),
-                    bundle.getString("event_date"),
-                    bundle.getString("event_venue"));
+                    bundle.getString("event_img"));
         }
+        tab = view.findViewById(R.id.event_tab);
+        pager = view.findViewById(R.id.event_pager);
+        pager.setAdapter(new EventViewPagerAdapter(getActivity().getSupportFragmentManager(), bundle));
+        tab.setupWithViewPager(pager);
         return view;
     }
 
     private void initialize(View v) {
         eventImage = v.findViewById(R.id.event_img);
-        eventDetails = v.findViewById(R.id.event_text);
-        venueField = v.findViewById(R.id.event_venue);
-        timeField = v.findViewById(R.id.date_time);
-        register = v.findViewById(R.id.event_register_button);
-        register.setOnClickListener(v1 -> registerAPI(id));
     }
 
-    private void setData(String name, String image, String details, String time, String date, String venue) {
+    private void setData(String name, String image) {
 
         try {
             if (image != null) {
@@ -98,17 +89,10 @@ public class EventFragment extends Fragment {
                         .into(eventImage);
             }
         } catch (Exception e) {
-            setData(name, image, details, time, date, venue);
+            setData(name, image);
         }
-        eventDetails.setText(details);
-        timeField.setText(setTime(time, date));
-        venueField.setText(venue);
     }
 
-    private String setTime(String time, String date) {
-        time = "Date: " + date + " | Time: " + time;
-        return time;
-    }
 
     @Override
     public void onResume() {
@@ -129,43 +113,4 @@ public class EventFragment extends Fragment {
         super.onDestroy();
     }
 
-    private void registerAPI( String id) {
-        AlertDialog dialog = Utils.showProgressBar(getContext(),"Registering you for " + eventName);
-        SharedPref pref = new SharedPref();
-        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
-                .registerForEvent(getContext().getString(R.string.app_access_token), pref.getAccessToken(getContext()), id);
-
-        call.enqueue(new Callback<GenericMessage>() {
-            @Override
-            public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
-                dialog.dismiss();
-                if (getContext() != null) {
-                    if(response.isSuccessful()) {
-                        if (response.body() != null) {
-                            Utils.showLongToast(getContext(), "You have been Successfully Registered for " + eventName + ".\nDo Come!");
-                            register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_registered));
-                            register.setEnabled(false);
-                        } else {
-                            Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
-                        }
-                    } else if(response.code() == 404) {
-                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
-                    } else {
-                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
-                dialog.dismiss();
-                if(!Utils.isNetworkAvailable(getContext()))
-                    Utils.showShortToast(getContext(),"No Internet Connection");
-                else
-                    Utils.showShortToast(getContext(),"Something went Wrong");
-                Log.e("Event Registration","API call Failure :" + t.getMessage());
-            }
-        });
-    }
 }

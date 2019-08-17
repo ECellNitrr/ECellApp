@@ -8,33 +8,38 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.nitrr.ecell.esummit.ecellapp.fragments.SponsorsFragment;
-import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
 public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
-    private String tabname[] = { "Associate","Platinum", "Gold","Title","Partner"};
+    private String tabName[];
     private Bundle[] bundle;
     private int[] index;
 
-    public SponsViewPagerAdapter(FragmentManager fm, Bundle[] bundle,int[] index) {
+    public SponsViewPagerAdapter(FragmentManager fm, Bundle[] bundle,String[] tabsName,int[] index) {
         super(fm);
         this.bundle = bundle;
         this.index = index;
+        this.tabName = tabsName;
     }
 
     @Override
     public Fragment getItem(int i) {
-        return new SponsorsFragment().newInstance(bundle[i],index[i],i);
+        if(tabName.length == 4)
+            if(i == 0)
+            return new SponsorsFragment().getInstance(bundle[i], index[i], i);
+            else
+                return new SponsorsFragment().getInstance(bundle[i], index[i],i+1);
+        return new SponsorsFragment().getInstance(bundle[i], index[i], i);
     }
 
     @Override
     public int getCount() {
-        return tabname.length;
+        return tabName.length;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabname[position];
+        return tabName[position];
     }
 }
