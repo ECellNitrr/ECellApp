@@ -54,6 +54,7 @@ repositories {
 dependencies {
     final RETROFIT_VERSION = '2.5.0'
     final OK_HTTP_VERSION = '3.14.2'
+    final lottieVersion = '3.0.7'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -101,6 +102,9 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

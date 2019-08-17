@@ -27,6 +27,7 @@ public class BQuizActivity extends BaseActivity {
 
     private ProgressBar progressBar;
     private TextView proceedTextView;
+    private BQuizQnAFragment fragment;
 
     @Override
     protected int getLayoutResourceId() {
@@ -65,10 +66,10 @@ public class BQuizActivity extends BaseActivity {
                 if (response.body() != null && response.isSuccessful()) {
 
                     if (response.body().live) {
-                        BQuizQnAFragment fragment = new BQuizQnAFragment();
+                        fragment = new BQuizQnAFragment();
                         fragment.show(getSupportFragmentManager(), "Bquiz");
 
-                    } else{
+                    } else {
                         Utils.showLongToast(BQuizActivity.this, "Bquiz isn't live right now.");
                     }
 

@@ -5,6 +5,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import com.nitrr.ecell.esummit.ecellapp.R;
+
 import java.io.IOException;
 
 public class MediaPlayerHelper {
@@ -16,13 +18,11 @@ public class MediaPlayerHelper {
         this.context = context;
     }
 
-    public void play(Uri uri) throws IOException {
+    public void play() {
         if (mediaPlayer == null)
-            mediaPlayer = new MediaPlayer();
+            mediaPlayer = MediaPlayer.create(context, R.raw.music);
 
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mediaPlayer.setDataSource(context, uri);
-        mediaPlayer.prepare();
+        mediaPlayer.reset();
         mediaPlayer.start();
     }
 

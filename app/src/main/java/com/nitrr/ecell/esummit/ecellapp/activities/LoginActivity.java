@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -256,7 +259,7 @@ public class LoginActivity extends BaseActivity{
         });
     }
 
-    private void showAlertDialog() throws Exception {
+    private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.alert_dialog_privacy_policy, null);
 
@@ -276,16 +279,17 @@ public class LoginActivity extends BaseActivity{
                 dialog.dismiss();
         });
 
-        InputStream inputStream = getAssets().open("tnc.html");
-        String result = convertStreamToString(inputStream);
+        TextView privacyText = view.findViewById(R.id.text_privacy);
+        Spanned policy;
 
-        TextView tncText = view.findViewById(R.id.alert_privacy_text);
-        tncText.setMovementMethod(ScrollingMovementMethod.getInstance());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+             policy = Html.fromHtml(getString(R.string.agree_terms_privacy), Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            policy = Html.fromHtml(getString(R.string.agree_terms_privacy));
+        }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-            tncText.setText(Html.fromHtml(result, Html.FROM_HTML_MODE_LEGACY));
-        else
-            tncText.setText(Html.fromHtml(result));
+        privacyText.setText(policy);
+        privacyText.setMovementMethod(LinkMovementMethod.getInstance());
 
         dialog.setCancelable(false);
 
@@ -293,18 +297,5 @@ public class LoginActivity extends BaseActivity{
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         dialog.show();
-    }
-
-    private String convertStreamToString(InputStream is) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            sb.append(line).append('\n');
-        }
-
-        is.close();
-        return sb.toString();
     }
 }

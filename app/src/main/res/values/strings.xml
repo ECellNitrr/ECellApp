@@ -100,4 +100,7 @@
     <string name="error_common">Empty fields not allowed.</string>
     <string name="error_pass">Password\'s length should at least be six.</string>
     <string name="error_mobile">Enter a valid mobile number.</string>
+
+
+    <string name="agree_terms_privacy">By continuing, you agree to our &lt;a href=https://ecell.nitrr.ac.in/terms>Terms and Conditions&lt;/a> and &lt;a href=https://ecell.nitrr.ac.in/policy>Privacy Policy&lt;/a></string>
 </resources>

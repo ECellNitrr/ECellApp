@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -165,6 +166,17 @@ public class Utils {
         dialog.show();
 
         return dialog;
+    }
+
+
+    public static void setMusicPlayEnabled(Context context, boolean play){
+        SharedPreferences preferences = context.getSharedPreferences("music", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit().putBoolean("music", play);
+        editor.apply();
+    }
+
+    public static boolean getMusicPlayEnabled(Context context){
+        return context.getSharedPreferences("music", Context.MODE_PRIVATE).getBoolean("music", true);
     }
 }
 
