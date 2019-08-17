@@ -40,13 +40,8 @@ public class AppClient {
     }
 
     public <S> S createServiceWithAuth(Class<S> serviceClass, Activity activity) {
-        SharedPref pref = new SharedPref();
         Interceptor interceptorReq = chain -> {
-            Request request = chain.request().newBuilder()
-                    .header("Access", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ")
-                    .header("authorization", new SharedPref().getAccessToken(activity))
-                    .build();
-            Log.e("Header====", pref.getAccessToken(activity));
+            Request request = chain.request().newBuilder().build();
             return chain.proceed(request);
         };
 
@@ -62,6 +57,26 @@ public class AppClient {
 
         return retrofit.create(serviceClass);
     }
+
+    public <S> S createService(Class<S> serviceClass, String URL){
+        Interceptor interceptorReq = chain -> {
+            Request request = chain.request().newBuilder().build();
+            return chain.proceed(request);
+        };
+
+        OkHttpClient.Builder httpClient = getOKHttpClient();
+        httpClient.addInterceptor(interceptorReq);
+        OkHttpClient okHttpClient = httpClient.build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.BQUIZ_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit.create(serviceClass);
+    }
+
 
     private OkHttpClient.Builder getOKHttpClient() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

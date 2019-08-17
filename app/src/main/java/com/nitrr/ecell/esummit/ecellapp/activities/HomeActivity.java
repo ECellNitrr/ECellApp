@@ -80,8 +80,8 @@ public class HomeActivity extends BaseActivity {
                             null,
                             false,
                             "Welcome " + pref.getFirstName(this) + " " + pref.getLastName(this),
-                            "Do you wish to verify Your Mobile Number?",
-                            "Yes",
+                            "Do you want to enter OTP now?",
+                            "YES",
                             yesListener,
                             "NO",
                             noListener);

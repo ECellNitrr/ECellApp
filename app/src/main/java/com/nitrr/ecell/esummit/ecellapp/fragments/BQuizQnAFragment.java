@@ -155,7 +155,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     @SuppressLint("CheckResult")
     private void setUpWebSocket() {
-        webSocket = new WebSocket(BuildConfig.BQUIZ_URL);
+        webSocket = new WebSocket(BuildConfig.BQUIZ_SOCKET_URL);
 
         webSocket.onOpen()
                 .subscribeOn(Schedulers.io())

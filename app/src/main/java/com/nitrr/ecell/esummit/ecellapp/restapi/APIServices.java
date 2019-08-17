@@ -68,7 +68,7 @@ public interface APIServices {
     Call<TeamData> getTeamData(@Path("year") String year);
 
     @GET("is_update_available/")
-    Call<AppDetails> getIsUpdateAvailable();//200 available, 404 not
+    Call<AppDetails> getIsUpdateAvailable();
 
     @POST("users/verify_otp/")
     Call<OTPVerification> verifyOtp(@Header("Access") String access, @Header("Authorization") String token, @Body VerifyOTP verifyOTP);

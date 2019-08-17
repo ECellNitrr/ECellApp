@@ -306,8 +306,6 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
     }
 
     private String checkNumber(EditText editText) {
-        if (TextUtils.isEmpty(editText.getText()))
-            return "Field Required!";
         String phoneNo = editText.getText().toString();
         if (phoneNo.length() == 10) {
             return (phoneNo.charAt(0) == '6' || phoneNo.charAt(0) == '7' || phoneNo.charAt(0) == '8' || phoneNo.charAt(0) == '9')
@@ -392,9 +390,5 @@ public class LoginActivity extends BaseActivity implements View.OnFocusChangeLis
 
             }
         });
-    }
-
-    public void addECellIcons() {
-
     }
 }
