@@ -106,15 +106,14 @@ public class Utils {
         return dialog;
     }
 
-    public static void showNotification(Context context, @NonNull String title, @NonNull String message, Boolean allowIntent) {
+    public static void showNotification(Context context, String title, String message, Boolean allowIntent) {
         if (context != null) {
             int notificationId = 0;
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_ecell)
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_close))
-                    .setContentTitle(title)
-                    .setContentText(message)
+                    .setSmallIcon(R.mipmap.ic_ecell_icon_round_new)
+                    .setContentTitle(title == null ? " " : title)
+                    .setContentText(message == null ? " " : message)
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setDefaults(NotificationCompat.DEFAULT_ALL);

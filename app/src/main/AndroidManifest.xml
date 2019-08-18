@@ -4,15 +4,27 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_ecell_icon_round_new"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="${usesCleartextTraffic}"
-        android:theme="@style/AppTheme.FullScreen">
+        android:theme="@style/AppTheme.FullScreen"
+        android:usesCleartextTraffic="${usesCleartextTraffic}">
+
+        <service
+            android:name=".misc.fcm.MyFireBaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/notification_icon" />
 
         <receiver
             android:name=".misc.NetworkChangeReceiver"
@@ -22,16 +34,14 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.BQuizActivity"
-            android:screenOrientation="nosensor">
-        </activity>
-
-        <activity android:name=".activities.SplashScreenActivity"
+        <activity
+            android:name=".activities.SplashScreenActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,33 +50,36 @@
             android:name=".activities.LoginActivity"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.FullScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
 
+        <activity
+            android:name=".activities.BQuizActivity"
+            android:screenOrientation="nosensor"/>
 
         <activity
             android:name=".activities.AboutUsActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
 
         <activity
             android:name=".activities.SponsorsActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
 
         <activity
             android:name=".activities.EventActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
 
         <activity
             android:name=".activities.ESummitActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
 
         <meta-data
             android:name="preloaded_fonts"
