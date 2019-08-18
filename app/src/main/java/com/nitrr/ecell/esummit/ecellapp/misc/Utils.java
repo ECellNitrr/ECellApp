@@ -42,7 +42,6 @@ import retrofit2.http.HEAD;
 public class Utils {
 
     private static AlertDialog dialog;
-    private static String NOTIFICATION_CHANNEL_ID = "e_cell_notif_channel_id_0";
 
     public static void showLongToast(Context context, String message) {
         if (context != null)
@@ -104,40 +103,6 @@ public class Utils {
         }
 
         return dialog;
-    }
-
-    public static void showNotification(Context context, String title, String message, Boolean allowIntent) {
-        if (context != null) {
-            int notificationId = 0;
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_ecell_icon_round_new)
-                    .setContentTitle(title == null ? " " : title)
-                    .setContentText(message == null ? " " : message)
-                    .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL);
-
-            if (allowIntent) {
-                Intent intent = new Intent(context, HomeActivity.class);
-                PendingIntent pendingintent = PendingIntent.getActivity(context, 0, intent, 0);
-                builder.setContentIntent(pendingintent);
-            }
-
-            Uri path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            builder.setSound(path);
-
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "E-Cell Notifications", NotificationManager.IMPORTANCE_DEFAULT);
-
-                notificationManager.createNotificationChannel(channel);
-                builder.setChannelId(NOTIFICATION_CHANNEL_ID);
-            }
-
-            notificationManager.notify(notificationId, builder.build());
-        }
     }
 
     public static AlertDialog showProgressBar(Context context, String text) {
