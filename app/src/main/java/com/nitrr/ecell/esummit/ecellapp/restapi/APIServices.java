@@ -30,11 +30,14 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
+    //Sponsors
     @GET("/sponsors/list/2018/")
     Call<SponsorsModel> getSponsorsData();
 
+    //Events
     @GET("events/list/2019/")
     Call<EventModel> getEventDetails(@Header("Authorization") String auth);
+
 
     //Auth
     @POST("users/register/")

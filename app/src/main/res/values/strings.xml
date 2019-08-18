@@ -84,11 +84,21 @@
     <string name="about_us_website">ecell@nitrr.ac.in</string>
 
     <!--ESummit Dates-->
-    <string name="endDate">01\-09\-19</string>
-    <string name="startDate">31\-08\-19</string>
-    <string name="user_registered">Registered</string>
+    <string name="startDate">2019\-08\31</string>
+    <string name="endDate">2019\-09\-01</string>
+
+    <string name="user_unregister">UNREGISTER</string>
+    <string name="user_register">Register</string>
 
     <string name="proceed">PROCEED</string>
     <string name="placeholder">MCQ. If App crashes in middle of Quiz. Dont panic, we know everything. Use time wisely.</string>
     <string name="business_quiz">BUSINESS QUIZ</string>
+
+    <!-- Error Codes. -->
+    <string name="error_last_name">Last Name should not contain digits or empty field.</string>
+    <string name="error_email">Invalid Email Address.</string>
+    <string name="error_first_name">First Name should not contain digits or empty field.</string>
+    <string name="error_common">Empty fields not allowed.</string>
+    <string name="error_pass">Password\'s length should at least be six.</string>
+    <string name="error_mobile">Enter a valid mobile number.</string>
 </resources>
