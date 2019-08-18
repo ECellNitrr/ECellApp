@@ -335,7 +335,7 @@ public class OTPDialogFragment extends Fragment{
     //Forgot Password OTP Verification API Call
     private void forgotOTPAPICall() {
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Verifying ...");
-        Call<GenericMessage> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).postForgotOPTVerify(new ForgotVerifyOTP(otp, email));
+        Call<GenericMessage> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).postForgotOPTVerify(getActivity().getString(R.string.app_access_token), new ForgotVerifyOTP(otp, email));
         call.enqueue(new Callback<GenericMessage>() {
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
@@ -351,7 +351,11 @@ public class OTPDialogFragment extends Fragment{
                         startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                 } else {
-                    Log.e("ForgotOTPVerify", "response unsuccessful");
+                    try {
+                        Log.e("ForgotOTPVerify", "response unsuccessful: "+response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Utils.showLongToast(getContext(), "OTP didn't match");
                 }
             }

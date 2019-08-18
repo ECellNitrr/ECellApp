@@ -46,10 +46,10 @@ public interface APIServices {
 
     //ForgotPassword
     @POST("users/forgot_password/")
-    Call<GenericMessage> postEmailVerify(@Header("Access") String access,@Body ForgotPassword password);
+    Call<GenericMessage> postEmailVerify(@Header("Access") String access, @Body ForgotPassword password);
 
     @POST("users/check_otp/")
-    Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
+    Call<GenericMessage> postForgotOPTVerify(@Header("Access") String access, @Body ForgotVerifyOTP verifyOTP);
 
     @POST("users/change_password/")
     Call<GenericMessage> postPasswordChange(@Header("Access") String access, @Body ChangePassword password);
