@@ -81,15 +81,15 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
         bottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
-                if(i == BottomSheetBehavior.STATE_DRAGGING)
+                if (i == BottomSheetBehavior.STATE_DRAGGING)
                     bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
 
-                else if (i == BottomSheetBehavior.STATE_EXPANDED){
+                else if (i == BottomSheetBehavior.STATE_EXPANDED) {
                     bquizLogo.setAlpha(0.f);
                     tvBquizQuestion.setAlpha(0.f);
                     rvBquizOptions.setAlpha(0.f);
 
-                } else if (i == BottomSheetBehavior.STATE_COLLAPSED){
+                } else if (i == BottomSheetBehavior.STATE_COLLAPSED) {
                     bquizLogo.setAlpha(1.f);
                     tvBquizQuestion.setAlpha(1.f);
                     rvBquizOptions.setAlpha(1.f);
@@ -200,57 +200,61 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socketEventMessage -> {
-                    answerIndex = -7;
 
-                    QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
+                    if (bquizLogo != null && rvBquizOptions != null && tvBquizQuestion != null) {
+                        answerIndex = -7;
 
-                    if (model.end && getFragmentManager() != null) {
-                        onStop();
-                    }
+                        QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
-                    if (!model.show) {
-                        bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        if (model.end && getFragmentManager() != null) {
+                            onStop();
+                        }
 
-                    } else {
-                        message.setText("Please Wait..");
-
-                        animationView.setAnimation(R.raw.timer);
-                        animationView.playAnimation();
-
-                        tvBquizQuestion.setText(model.question);
-
-                        bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-                        rightAnswerId = model.rightAnswer;
-
-                        bquizOptionsAdapter.setNewList(model.options);
-                        optionID = model.optionId;
-
-                        questionId = model.id;
-                        baseScore = model.score;
-
-                        timer(model.timeLimit);
-
-                        if (!model.meta.equals("") && getActivity() != null) {
-                            bquizLogo.setVisibility(View.VISIBLE);
-
-                            CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getActivity());
-                            progressDrawable.setStrokeWidth(5f);
-                            progressDrawable.setCenterRadius(30f);
-                            progressDrawable.setBackgroundColor(R.color.colorWhite);
-                            progressDrawable.start();
-
-                            Glide.with(getActivity())
-                                    .load(model.meta)
-                                    .apply(new RequestOptions().transform(
-                                            new CenterCrop(),
-                                            new RoundedCorners(8)))
-                                    .placeholder(progressDrawable)
-                                    .into(bquizLogo);
+                        if (!model.show) {
+                            bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                         } else {
-                            bquizLogo.setVisibility(View.GONE);
+                            message.setText("Please Wait..");
+
+                            animationView.setAnimation(R.raw.timer);
+                            animationView.playAnimation();
+
+                            tvBquizQuestion.setText(model.question);
+
+                            bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+                            rightAnswerId = model.rightAnswer;
+
+                            bquizOptionsAdapter.setNewList(model.options);
+                            optionID = model.optionId;
+
+                            questionId = model.id;
+                            baseScore = model.score;
+
+                            timer(model.timeLimit);
+
+                            if (!model.meta.equals("") && getActivity() != null) {
+                                bquizLogo.setVisibility(View.VISIBLE);
+
+                                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getActivity());
+                                progressDrawable.setStrokeWidth(5f);
+                                progressDrawable.setCenterRadius(30f);
+                                progressDrawable.setBackgroundColor(R.color.colorWhite);
+                                progressDrawable.start();
+
+                                Glide.with(getActivity())
+                                        .load(model.meta)
+                                        .apply(new RequestOptions().transform(
+                                                new CenterCrop(),
+                                                new RoundedCorners(8)))
+                                        .placeholder(progressDrawable)
+                                        .into(bquizLogo);
+
+                            } else {
+                                bquizLogo.setVisibility(View.GONE);
+                            }
                         }
+
                     }
 
                 }, Throwable::printStackTrace);
@@ -273,7 +277,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     private void apiCall() {
         BquizAnswerModel answerModel = new BquizAnswerModel();
-        answerModel.answerID = optionID == null || optionID.size() == 0  || answerIndex == -7 ? 0 : optionID.get(answerIndex);
+        answerModel.answerID = optionID == null || optionID.size() == 0 || answerIndex == -7 ? 0 : optionID.get(answerIndex);
         answerModel.questionID = questionId;
         answerModel.time = timeAtWhichAnswerWasSelected;
 
