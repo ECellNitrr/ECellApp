@@ -2,34 +2,28 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.gson.Gson;
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.R;
@@ -67,26 +61,53 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     private int timeGiven;
     private List<Integer> optionID;
     private int rightAnswerId, selectedAnswerId;
-    private int answerId = 0, questionId = -1;
+    private int answerIndex = -7, questionId = -1;
     private int baseScore = 0;
     private int timeAtWhichAnswerWasSelected = 0;
 
-    private BottomSheetFragmentBquiz fragmentBquiz;
-
+    private BottomSheetBehavior bottomSheet;
+    private TextView message;
+    private LottieAnimationView animationView;
 
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bquiz, container, false);
 
-        setUpWebSocket();
-
         gson = new Gson();
-        fragmentBquiz = BottomSheetFragmentBquiz.newInstance();
-        fragmentBquiz.setCancelable(false);
-        fragmentBquiz.show(getFragmentManager(), "Bquiz");
 
-        initview(view);
+        bottomSheet = BottomSheetBehavior.from(view.findViewById(R.id.bquiz_bottom_sheet));
+        message = view.findViewById(R.id.bquiz_bottom_sheet_message);
+        animationView = view.findViewById(R.id.bquiz_animation);
+
+        bottomSheet.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                if (i == BottomSheetBehavior.STATE_DRAGGING)
+                    bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+                else if (i == BottomSheetBehavior.STATE_EXPANDED) {
+                    bquizLogo.setAlpha(0.f);
+                    tvBquizQuestion.setAlpha(0.f);
+                    rvBquizOptions.setAlpha(0.f);
+
+                } else if (i == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bquizLogo.setAlpha(1.f);
+                    tvBquizQuestion.setAlpha(1.f);
+                    rvBquizOptions.setAlpha(1.f);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+            }
+        });
+
+        bottomSheet.setHideable(false);
+        bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        setUpWebSocket();
+        initView(view);
         return view;
     }
 
@@ -96,18 +117,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setLayout(width, height);
-        }
-    }
-
-    private void initview(View view) {
+    private void initView(View view) {
         bquizLogo = view.findViewById(R.id.iv_bquiz_logo);
         tvBquizQuestion = view.findViewById(R.id.tv_bquiz_question);
         timeAllotted = view.findViewById(R.id.bquiz_timer);
@@ -121,6 +131,9 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         bquizOptionsAdapter.setOnClickListener(this);
 
+        bquizLogo.setAlpha(0.f);
+        tvBquizQuestion.setAlpha(0.f);
+        rvBquizOptions.setAlpha(0.f);
     }
 
     private void timer(int time) {
@@ -136,12 +149,23 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
             @Override
             public void onFinish() {
                 timeAllotted.setText("finished");
-                //TODO: API CALL
                 apiCall();
             }
 
         }.start();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 
     @Override
@@ -157,78 +181,82 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     @SuppressLint("CheckResult")
     private void setUpWebSocket() {
-        webSocket = new WebSocket(BuildConfig.BQUIZ_URL);
+        webSocket = new WebSocket(BuildConfig.BQUIZ_SOCKET_URL);
 
         webSocket.onOpen()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventOpen -> Utils.showLongToast(getContext(), "B-Quiz is live."), Throwable::printStackTrace);
+                .subscribe(socketEventOpen -> Log.e("BQ", "Live."), Throwable::printStackTrace);
 
         webSocket.onClosed()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventClosed -> Utils.showLongToast(getContext(), "B-Quiz closed."), Throwable::printStackTrace);
+                .subscribe(socketEventClosed -> Log.e("BQ", "Closed."), Throwable::printStackTrace);
 
         webSocket.onClosing()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventClosing -> Utils.showLongToast(getContext(), "B-Quiz is closing."), Throwable::printStackTrace);
+                .subscribe(socketEventClosing -> Log.e("BQ", "Closing"), Throwable::printStackTrace);
 
         webSocket.onMessage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socketEventMessage -> {
-                    QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
-                    if (model.end) {
-                        fragmentBquiz.setCancelable(true);
-                        fragmentBquiz.dismiss();
-                        onStop();
-                    }
+                    if (bquizLogo != null && rvBquizOptions != null && tvBquizQuestion != null) {
+                        answerIndex = -7;
 
-                    if (!model.show) {
-                        if (!fragmentBquiz.isVisible() && getFragmentManager() != null)
-                            fragmentBquiz.show(getFragmentManager(), "Bquiz");
+                        QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
-                        Log.e("Socket", "IF REACHED");
+                        if (model.end && getFragmentManager() != null) {
+                            onStop();
+                        }
 
-                    } else {
-                        Log.e("Socket1==", String.valueOf(model));
-                        tvBquizQuestion.setText(model.question);
-
-                        if (fragmentBquiz != null && fragmentBquiz.isVisible())
-                            fragmentBquiz.dismiss();
-
-                        rightAnswerId = model.rightAnswer;
-
-                        bquizOptionsAdapter.setNewList(model.options);
-                        optionID = model.optionId;
-
-                        questionId = model.id;
-                        baseScore = model.score;
-
-                        timer(model.timeLimit);
-
-                        if (!model.meta.equals("") && getActivity() != null) {
-                            bquizLogo.setVisibility(View.VISIBLE);
-
-                            CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getActivity());
-                            progressDrawable.setStrokeWidth(5f);
-                            progressDrawable.setCenterRadius(30f);
-                            progressDrawable.setBackgroundColor(R.color.colorWhite);
-                            progressDrawable.start();
-
-                            Glide.with(getActivity())
-                                    .load(model.meta)
-                                    .apply(new RequestOptions().transform(
-                                            new CenterCrop(),
-                                            new RoundedCorners(8)))
-                                    .placeholder(progressDrawable)
-                                    .into(bquizLogo);
+                        if (!model.show) {
+                            bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
 
                         } else {
-                            bquizLogo.setVisibility(View.GONE);
+                            message.setText("Please Wait..");
+
+                            animationView.setAnimation(R.raw.timer);
+                            animationView.playAnimation();
+
+                            tvBquizQuestion.setText(model.question);
+
+                            bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+                            rightAnswerId = model.rightAnswer;
+
+                            bquizOptionsAdapter.setNewList(model.options);
+                            optionID = model.optionId;
+
+                            questionId = model.id;
+                            baseScore = model.score;
+
+                            timer(model.timeLimit);
+
+                            if (!model.meta.equals("") && getActivity() != null) {
+                                bquizLogo.setVisibility(View.VISIBLE);
+
+                                CircularProgressDrawable progressDrawable = new CircularProgressDrawable(getActivity());
+                                progressDrawable.setStrokeWidth(5f);
+                                progressDrawable.setCenterRadius(30f);
+                                progressDrawable.setBackgroundColor(R.color.colorWhite);
+                                progressDrawable.start();
+
+                                Glide.with(getActivity())
+                                        .load(model.meta)
+                                        .apply(new RequestOptions().transform(
+                                                new CenterCrop(),
+                                                new RoundedCorners(8)))
+                                        .placeholder(progressDrawable)
+                                        .into(bquizLogo);
+
+                            } else {
+                                bquizLogo.setVisibility(View.GONE);
+                            }
                         }
+
                     }
 
                 }, Throwable::printStackTrace);
@@ -236,36 +264,34 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
         webSocket.onFailure()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(socketEventFailure -> Utils.showLongToast(getContext(), "Some exception occurred. Contact Technical TeamList."), Throwable::printStackTrace);
+                .subscribe(socketEventFailure -> Utils.showLongToast(getContext(), "Some exception occurred. Please restart B-Quiz."), Throwable::printStackTrace);
 
         webSocket.setupConnection();
     }
 
     @Override
     public void onClick(int position) {
-        if (fragmentBquiz != null && !fragmentBquiz.isVisible() && getFragmentManager() != null) {
-            fragmentBquiz.show(getFragmentManager(), "Bquiz");
-            answerId = position;
-            timeAtWhichAnswerWasSelected = timeGiven;
-        }
+        bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+        answerIndex = position;
+        timeAtWhichAnswerWasSelected = timeGiven;
+
     }
 
     private void apiCall() {
-        APIServices apiServices = AppClient.getInstance().createService(APIServices.class);
-
         BquizAnswerModel answerModel = new BquizAnswerModel();
-        answerModel.answerID = optionID == null || optionID.size() == 0 ? 0 : optionID.get(answerId);
-        selectedAnswerId = answerModel.answerID;
+        answerModel.answerID = optionID == null || optionID.size() == 0 || answerIndex == -7 ? 0 : optionID.get(answerIndex);
         answerModel.questionID = questionId;
         answerModel.time = timeAtWhichAnswerWasSelected;
 
-        if (fragmentBquiz != null && fragmentBquiz.isVisible()) {
-            fragmentBquiz.setMessage(getAnswerSubmissionResponse(selectedAnswerId));
-        }
+        selectedAnswerId = answerModel.answerID;
+
+        message.setText(getAnswerSubmissionResponse(selectedAnswerId));
 
         answerModel.score = (rightAnswerId == selectedAnswerId) ? getBonus(timeAtWhichAnswerWasSelected) + baseScore : 0;
 
+        APIServices apiServices = AppClient.getInstance().createService(APIServices.class);
         Call<BquizResponseModel> responseModelCall = apiServices.submitAnswer(new SharedPref().getAccessToken(getContext()), answerModel);
+
         responseModelCall.enqueue(new Callback<BquizResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<BquizResponseModel> call, @NonNull Response<BquizResponseModel> response) {
@@ -278,19 +304,23 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     }
 
     private int getBonus(int time) {
-        return time >= 5 ? time * 2 : 0;
+        return time >= 6 ? time * 2 : 0;
     }
 
     private String getAnswerSubmissionResponse(int selectedAnswerId) {
         String response;
+
         if (rightAnswerId == selectedAnswerId) {
-            if (getBonus(timeAtWhichAnswerWasSelected) > 0) {
-                response = "Your Answer is correct and time bounus of " + getBonus(timeAtWhichAnswerWasSelected) + " points is given to you";
-            } else {
-                response = "Your Answer is correct";
-            }
+            animationView.setAnimation(R.raw.right);
+            animationView.playAnimation();
+
+            response = (getBonus(timeAtWhichAnswerWasSelected) > 0) ? "Correct Answer (+"
+                    + getBonus(timeAtWhichAnswerWasSelected) + " points)" : "Correct Answer.";
         } else {
-            response = "Your Answer is incorrect";
+            animationView.setAnimation(R.raw.wrong);
+            animationView.playAnimation();
+
+            response = (answerIndex != -7) ? "Incorrect Answer." : "No Option was chosen.";
         }
 
         return response;

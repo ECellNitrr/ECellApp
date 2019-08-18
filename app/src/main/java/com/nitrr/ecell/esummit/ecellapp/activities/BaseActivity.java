@@ -4,11 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
 
 import io.fabric.sdk.android.Fabric;
@@ -22,9 +29,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
 
-        Fabric.with(this, new Crashlytics());
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        init();
     }
 
+    private void init() {
+        Fabric.with(this, new Crashlytics());
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> Log.e("Firebase", "Firebase Init."));
+    }
 
     @Override
     protected void onResume() {

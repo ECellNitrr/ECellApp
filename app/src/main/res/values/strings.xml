@@ -76,7 +76,7 @@
 
 
     <string name="app_access_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnQiOiJhbmRyb2lkIiwib3JnYW5pemF0aW9uIjoiRUNlbGwifQ.H2aaDJuOxK44D2kwRCWwv9s5rzJGCNYKT3thtQqN-hQ</string>
-    <string name="resend_otp">Resend OTP ?</string>
+    <string name="resend_otp">Resend OTP?</string>
 
     <!--About Us-->
     <string name="about_es_19">About E Summit \'19</string>
@@ -91,7 +91,7 @@
     <string name="user_register">Register</string>
 
     <string name="proceed">PROCEED</string>
-    <string name="placeholder">MCQ. If App crashes in middle of Quiz. Dont panic, we know everything. Use time wisely.</string>
+    <string name="placeholder">MCQ. Quick Answer, more points.</string>
     <string name="business_quiz">BUSINESS QUIZ</string>
 
     <!-- Error Codes. -->
@@ -99,6 +99,8 @@
     <string name="error_email">Invalid Email Address.</string>
     <string name="error_first_name">First Name should not contain digits or empty field.</string>
     <string name="error_common">Empty fields not allowed.</string>
-    <string name="error_pass">Password\'s length should at least be six.</string>
+    <string name="error_pass">Password\'s length should at least be eight.</string>
     <string name="error_mobile">Enter a valid mobile number.</string>
+
+    <string name="agree_terms_privacy">By continuing, you agree to our &lt;a href=https://ecell.nitrr.ac.in/terms>Terms and Conditions&lt;/a> and &lt;a href=https://ecell.nitrr.ac.in/policy>Privacy Policy&lt;/a></string>
 </resources>

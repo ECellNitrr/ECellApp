@@ -22,7 +22,8 @@ android {
             manifestPlaceholders = [usesCleartextTraffic:"true"]
 
             buildConfigField "String", "BASE_URL", "\"https://ecell.nitrr.ac.in/\""
-            buildConfigField "String", "BQUIZ_URL", "\"ws://206.189.143.11:9000/bquiz/live/question/\""
+            buildConfigField "String", "BQUIZ_URL", "\"http://206.189.143.11:9000/\""
+            buildConfigField "String", "BQUIZ_SOCKET_URL", "\"ws://206.189.143.11:9000/bquiz/live/question/\""
         }
 
         debug {
@@ -33,7 +34,8 @@ android {
             manifestPlaceholders = [usesCleartextTraffic:"true"]
 
             buildConfigField "String", "BASE_URL", "\"https://ecell.nitrr.ac.in/\""
-            buildConfigField "String", "BQUIZ_URL", "\"ws://206.189.143.11:9000/bquiz/live/question/\""
+            buildConfigField "String", "BQUIZ_URL", "\"http://206.189.143.11:9000/\""
+            buildConfigField "String", "BQUIZ_SOCKET_URL", "\"ws://206.189.143.11:9000/bquiz/live/question/\""
         }
     }
 
@@ -52,6 +54,7 @@ repositories {
 dependencies {
     final RETROFIT_VERSION = '2.5.0'
     final OK_HTTP_VERSION = '3.14.2'
+    final lottieVersion = '3.0.7'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -61,6 +64,7 @@ dependencies {
     implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "androidx.work:work-runtime:2.2.0"
 
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
@@ -94,12 +98,16 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
     //Fabric
-    implementation 'com.google.firebase:firebase-core:17.0.1'
+    implementation 'com.google.firebase:firebase-core:17.1.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     //Firebase
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
+
     implementation 'org.jetbrains:annotations:15.0'
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +38,10 @@ public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String text = list.get(position);
-        holder.materialButton.setText(text);
+        if(text.equalsIgnoreCase("back"))
+            holder.back.setVisibility(View.VISIBLE);
+        else
+            holder.materialButton.setText(text);
         holder.materialButton.setBackgroundColor(context.getResources().getColor(R.color.transparent));
     }
 
@@ -48,10 +52,13 @@ public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         MaterialButton materialButton;
+        ImageView back;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
             materialButton = itemView.findViewById(R.id.dialpad_item);
+            back = itemView.findViewById(R.id.otp_back);
+            back.setVisibility(View.GONE);
             materialButton.setOnClickListener(this);
         }
 
@@ -60,7 +67,7 @@ public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
             MaterialButton button = v.findViewById(v.getId());
             String text = button.getText().toString();
             int n;
-            if(text.equalsIgnoreCase("back"))
+            if(text.equalsIgnoreCase(""))
                 n=-1;
             else if (text.equalsIgnoreCase("confirm"))
                 n=-2;

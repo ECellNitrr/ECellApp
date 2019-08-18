@@ -49,10 +49,10 @@ public interface APIServices {
 
     //ForgotPassword
     @POST("users/forgot_password/")
-    Call<GenericMessage> postEmailVerify(@Header("Access") String access,@Body ForgotPassword password);
+    Call<GenericMessage> postEmailVerify(@Header("Access") String access, @Body ForgotPassword password);
 
     @POST("users/check_otp/")
-    Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
+    Call<GenericMessage> postForgotOPTVerify(@Header("Access") String access, @Body ForgotVerifyOTP verifyOTP);
 
     @POST("users/change_password/")
     Call<GenericMessage> postPasswordChange(@Header("Access") String access, @Body ChangePassword password);
@@ -71,7 +71,7 @@ public interface APIServices {
     Call<TeamData> getTeamData(@Path("year") String year);
 
     @GET("is_update_available/")
-    Call<AppDetails> getIsUpdateAvailable();//200 available, 404 not
+    Call<AppDetails> getIsUpdateAvailable();
 
     @POST("users/verify_otp/")
     Call<OTPVerification> verifyOtp(@Header("Access") String access, @Header("Authorization") String token, @Body VerifyOTP verifyOTP);

@@ -19,7 +19,6 @@ import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
 public class LoginAnimation {
 
     private LinearLayout upperLinearLayout, lowerLinearLayout;
-//    private ImageView google, facebook;
     private ImageView upperPoly, lowerECell, upperECell,lowerPoly ;
     private TextView toRegister, toSignIn, forgot;
     private TextView toRegisterText, toSignInText;
@@ -29,7 +28,6 @@ public class LoginAnimation {
     private TextInputLayout loginEmailLayout, loginPasswordLayout, registerEmailLayout, registerPasswordLayout,
             firstNameLayout , lastNameLayout, registerNumberLayout;
 
-    //Constructor to initialize all the objects that are to be animated
     public LoginAnimation(LoginActivity activity){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -74,7 +72,6 @@ public class LoginAnimation {
         constraintSet.connect(upperPoly.getId(), ConstraintSet.START, layout.getId(), ConstraintSet.START, (int)((displayMetrics.density * 20f) + 0.5f));
         constraintSet.connect(upperPoly.getId(), ConstraintSet.END, layout.getId(), ConstraintSet.END, (int)((displayMetrics.density * 20f) + 0.5f));
         constraintSet.connect(upperPoly.getId(), ConstraintSet.BOTTOM, R.id.login_guide_17, ConstraintSet.TOP);
-//        constraintSet.constrainDefaultHeight();
         constraintSet.constrainHeight(upperPoly.getId(), (int)(displayMetrics.heightPixels * 0.78));
         constraintSet.applyTo(layout);
 
@@ -180,13 +177,11 @@ public class LoginAnimation {
             ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1f);
             animator.setDuration(700);
             animator.start();
-        } //Appear = true
-
-        else {
+        } else {
             ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0);
             animator.setDuration(700);
             animator.start();
-        } //Disappear = false
+        }
     }
 
     private void clearAll(EditText text, TextInputLayout layout) {

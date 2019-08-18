@@ -102,13 +102,16 @@ public class OTPDialogFragment extends Fragment{
             if(bundle.getString("email", null) != null) {
                 email = bundle.getString("email");
                 Log.e("OTPFrag", "Email has been received, Changing Password");
+
             } else {
                 Log.e("OTPFrag", "Null has been received, Verifying OTP");
                 if(!bundle.getBoolean("greeted"))
                     verifyResendOTP();
             }
+
         } else {
             Utils.showShortToast(getContext(), "An Error occurred. Please Try Again");
+
             if(new SharedPref().isLoggedIn(getActivity())) {
                 startActivity(new Intent(getActivity(), HomeActivity.class));
             } else {
@@ -149,7 +152,7 @@ public class OTPDialogFragment extends Fragment{
         if(getContext() != null) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
             recyclerView.setLayoutManager(gridLayoutManager);
-            OTPAdapter adapter = new OTPAdapter(getContext(), list,fragment);
+            OTPAdapter adapter = new OTPAdapter(getContext(), list, fragment);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -192,7 +195,8 @@ public class OTPDialogFragment extends Fragment{
             otp2.setText("_");
             otp3.setText("_");
             otp4.setText("_");
-            Utils.showShortToast(getContext(),"Please enter OTP correctly");
+
+            Utils.showShortToast(getContext(),"Wrong OTP.");
         }
     }
 
@@ -225,6 +229,7 @@ public class OTPDialogFragment extends Fragment{
                     forgotPasswordResendOTP();
                     dialogInterface.dismiss();
                 };
+
                 DialogInterface.OnClickListener cancelListener = (dialogInterface, i) -> {
                     Fragment fragment = Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentByTag("verify_email");
                     if (fragment != null) {
@@ -232,6 +237,7 @@ public class OTPDialogFragment extends Fragment{
                     }
                     dialogInterface.dismiss();
                 };
+
                 if(!Utils.isNetworkAvailable(getContext())){
                     Utils.showDialog(getContext(), null, false, "Network Error",
                             "There was a Connection Error. Make sure you have a stable connection", "Retry",
@@ -329,7 +335,7 @@ public class OTPDialogFragment extends Fragment{
     //Forgot Password OTP Verification API Call
     private void forgotOTPAPICall() {
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Verifying ...");
-        Call<GenericMessage> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).postForgotOPTVerify(new ForgotVerifyOTP(otp, email));
+        Call<GenericMessage> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).postForgotOPTVerify(getActivity().getString(R.string.app_access_token), new ForgotVerifyOTP(otp, email));
         call.enqueue(new Callback<GenericMessage>() {
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
@@ -345,7 +351,11 @@ public class OTPDialogFragment extends Fragment{
                         startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                 } else {
-                    Log.e("ForgotOTPVerify", "response unsuccessful");
+                    try {
+                        Log.e("ForgotOTPVerify", "response unsuccessful: "+response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Utils.showLongToast(getContext(), "OTP didn't match");
                 }
             }

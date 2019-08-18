@@ -16,9 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.EventFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
@@ -27,10 +24,10 @@ import com.nitrr.ecell.esummit.ecellapp.models.events.EventData;
 import java.util.List;
 
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.MyViewHolder> {
+    private static boolean selected = false;
     private List<EventData> list;
     private Context context;
     private List<Float> floats;
-    private static boolean selected = false;
 
     public EventRecyclerViewAdapter(Context context, List<EventData> list, List<Float> floats) {
         this.context = context;
@@ -38,7 +35,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         this.floats = floats;
     }
 
-    public static void setSelected(Boolean selected){
+    public static void setSelected(Boolean selected) {
         EventRecyclerViewAdapter.selected = selected;
     }
 
@@ -69,32 +66,32 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         myViewHolder.eventbg.setAlpha(floats.get(i));
 
         myViewHolder.card.setOnClickListener(v -> {
-            if(!selected){
+            if (!selected) {
                 selected = true;
-            Log.e("EventRecyclerView", "Event Card Index " + i + " is selected");
-            if (data.isFlag()) {
-                Log.e("Flag is true", "Event Card Index " + i + " is selected");
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", i);
-                bundle.putString("event_img", data.getImage());
-                bundle.putString("event_name", data.getName());
-                bundle.putString("event_venue", data.getVenue());
-                bundle.putString("event_data", data.getDate());
-                bundle.putString("event_time", data.getTime());
-                bundle.putString("event_details", data.getDetails());
-                bundle.putString("id", data.getId() + "");
-                bundle.putBoolean("registered", data.isRegistered());
-                EventFragment fragment = new EventFragment();
-                fragment.setArguments(bundle);
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.event_layout, fragment)
-                        .addToBackStack(null)
-                        .commit();
-            } else {
-                Utils.showLongToast(context, "This Event hasn't been approved yet");
-            }
+                Log.e("EventRecyclerView", "Event Card Index " + i + " is selected");
+                if (data.isFlag()) {
+                    Log.e("Flag is true", "Event Card Index " + i + " is selected");
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("position", i);
+                    bundle.putString("event_img", data.getImage());
+                    bundle.putString("event_name", data.getName());
+                    bundle.putString("event_venue", data.getVenue());
+                    bundle.putString("event_data", data.getDate());
+                    bundle.putString("event_time", data.getTime());
+                    bundle.putString("event_details", data.getDetails());
+                    bundle.putString("id", data.getId() + "");
+                    bundle.putBoolean("registered", data.isRegistered());
+                    EventFragment fragment = new EventFragment();
+                    fragment.setArguments(bundle);
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    activity.getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.event_layout, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                } else {
+                    Utils.showLongToast(context, "This Event hasn't been approved yet");
+                }
             }
         });
     }
