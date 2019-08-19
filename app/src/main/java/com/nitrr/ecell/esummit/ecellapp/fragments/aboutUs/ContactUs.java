@@ -120,7 +120,9 @@ public class ContactUs extends Fragment implements View.OnClickListener {
                     } else {
                         Utils.showLongToast(getContext(), "Couldn't Send Feedback. Please Try Again after some time.");
                         try {
-                            Log.e("AboutUs, ContactUs", response.errorBody().toString());
+                            if (response.errorBody() != null) {
+                                Log.e("AboutUs, ContactUs", response.errorBody().toString());
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

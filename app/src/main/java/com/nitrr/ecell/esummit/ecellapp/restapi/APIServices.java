@@ -31,11 +31,14 @@ import retrofit2.http.Path;
 
 public interface APIServices {
 
+    //Sponsors
     @GET("/sponsors/list/2018/")
     Call<SponsorsModel> getSponsorsData();
 
+    //Events
     @GET("events/list/2019/")
     Call<EventModel> getEventDetails(@Header("Authorization") String auth);
+
 
     //Auth
     @POST("users/register/")
@@ -47,10 +50,10 @@ public interface APIServices {
 
     //ForgotPassword
     @POST("users/forgot_password/")
-    Call<GenericMessage> postEmailVerify(@Header("Access") String access,@Body ForgotPassword password);
+    Call<GenericMessage> postEmailVerify(@Header("Access") String access, @Body ForgotPassword password);
 
     @POST("users/check_otp/")
-    Call<GenericMessage> postForgotOPTVerify(@Body ForgotVerifyOTP verifyOTP);
+    Call<GenericMessage> postForgotOPTVerify(@Header("Access") String access, @Body ForgotVerifyOTP verifyOTP);
 
     @POST("users/change_password/")
     Call<GenericMessage> postPasswordChange(@Header("Access") String access, @Body ChangePassword password);
@@ -82,6 +85,9 @@ public interface APIServices {
 
     @POST("events/register/{id}/")
     Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
+
+    @POST("events/unregister/{id}/")
+    Call<GenericMessage> unregisterForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
 
     @POST("feedback/post/")
     Call<GenericMessage> postFeedback(@Body FeedbackModel feedbackModel);

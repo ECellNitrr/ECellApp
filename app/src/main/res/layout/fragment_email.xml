@@ -105,7 +105,7 @@
         android:fontFamily="@font/nova_round"
         android:paddingStart="35dp"
         android:paddingEnd="35dp"
-        android:text="Verify"
+        android:text="Verify User"
         android:textAppearance="@style/Widget.MaterialComponents.Button"
         android:textColor="@color/colorWhite"
         android:textSize="30sp"

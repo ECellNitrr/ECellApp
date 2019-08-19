@@ -31,6 +31,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotVerifyOTP;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +113,6 @@ public class OTPDialogFragment extends Fragment{
 
         } else {
             Utils.showShortToast(getContext(), "An Error occurred. Please Try Again");
-
             if(new SharedPref().isLoggedIn(getActivity())) {
                 startActivity(new Intent(getActivity(), HomeActivity.class));
             } else {
@@ -152,7 +153,7 @@ public class OTPDialogFragment extends Fragment{
         if(getContext() != null) {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
             recyclerView.setLayoutManager(gridLayoutManager);
-            OTPAdapter adapter = new OTPAdapter(getContext(), list,fragment);
+            OTPAdapter adapter = new OTPAdapter(getContext(), list, fragment);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -202,7 +203,7 @@ public class OTPDialogFragment extends Fragment{
 
     private void forgotPasswordResendOTP() {
         ForgotPassword emailObject = new ForgotPassword(email);
-        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(getContext().getString(R.string.app_access_token),emailObject);
+        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class).postEmailVerify(getContext().getString(R.string.app_access_token), emailObject);
         call.enqueue(new Callback<GenericMessage>() {
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
@@ -215,9 +216,11 @@ public class OTPDialogFragment extends Fragment{
                 } else {
                     try {
                         if (response.errorBody() != null) {
-                            Utils.showShortToast(getContext(), response.errorBody().string());
+                            JSONObject object = new JSONObject(response.errorBody().string());
+                            if(object.getString("message") != null)
+                                Utils.showShortToast(getContext(), object.getString("message"));
                         }
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -307,16 +310,19 @@ public class OTPDialogFragment extends Fragment{
                             Utils.showDialog(getContext(), null, true, "Verification Failed.", "", "Retry", retryListener, "Cancel", cancelListener);
                     } else {
                         try {
-                            String message = response.errorBody().string();
-                            if(message.contentEquals("{\"message\":\"Invalid otp\"}"))
-                                Utils.showDialog(getContext(), null, false, message.substring(12,23), null, "Retry", retryListener, "Cancel", cancelListener);
+                            if (response.errorBody() != null) {
+                                String message = response.errorBody().string();
+                                if(message.contentEquals("{\"message\":\"Invalid otp\"}"))
+                                    Utils.showDialog(getContext(), null, false, message.substring(12,23),
+                                            null, "Retry", retryListener, "Cancel", cancelListener);
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
             }
             @Override
-            public void onFailure(Call<OTPVerification> call, Throwable t) {
+            public void onFailure(@NonNull Call<OTPVerification> call, @NonNull Throwable t) {
                 dialog.cancel();
                 if (getContext() != null) {
                     {
@@ -324,7 +330,7 @@ public class OTPDialogFragment extends Fragment{
                             Utils.showDialog(getContext(), null, false, "No Internet Connection", "Please try again", "Retry", retryListener, "Cancel", cancelListener);
                         else {
                             Utils.showShortToast(getContext(), "Something went wrong");
-                            getActivity().onBackPressed();
+                            Objects.requireNonNull(getActivity()).onBackPressed();
                         }
                     }
                 }
@@ -335,7 +341,7 @@ public class OTPDialogFragment extends Fragment{
     //Forgot Password OTP Verification API Call
     private void forgotOTPAPICall() {
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Verifying ...");
-        Call<GenericMessage> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).postForgotOPTVerify(new ForgotVerifyOTP(otp, email));
+        Call<GenericMessage> call = AppClient.getInstance().createServiceWithAuth(APIServices.class, getActivity()).postForgotOPTVerify(Objects.requireNonNull(getActivity()).getString(R.string.app_access_token), new ForgotVerifyOTP(otp, email));
         call.enqueue(new Callback<GenericMessage>() {
             @Override
             public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
@@ -351,7 +357,13 @@ public class OTPDialogFragment extends Fragment{
                         startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                 } else {
-                    Log.e("ForgotOTPVerify", "response unsuccessful");
+                    try {
+                        if (response.errorBody() != null) {
+                            Log.e("ForgotOTPVerify", "response unsuccessful: " + response.errorBody().string());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Utils.showLongToast(getContext(), "OTP didn't match");
                 }
             }

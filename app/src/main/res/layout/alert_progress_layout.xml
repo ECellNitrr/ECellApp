@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
             android:text="Loading Data."
             android:textColor="@android:color/black"
             android:textSize="16sp"
