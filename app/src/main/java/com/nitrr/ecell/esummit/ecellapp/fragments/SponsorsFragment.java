@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,24 +36,25 @@ public class SponsorsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         list.clear();
         Bundle arg = this.getArguments();
-        if (arg != null) {
-            intialiselist(arg);
-        }
         View view = inflater.inflate(R.layout.fragment_sponsors, container, false);
         recycler = view.findViewById(R.id.spons_recycler);
-        setRecyclerView(arg.getInt("position"));
+        if (arg != null) {
+            setRecyclerView(arg.getInt("position"));
+            intialiseList(arg);
+        }
         return view;
     }
 
-    private void intialiselist(Bundle arguments) {
+    private void intialiseList(Bundle arguments) {
         String name;
         String img;
         String type;
         String id;
+        String website;
         int index = arguments.getInt("index");
         int pos = arguments.getInt("position");
         while (index > 0) {
@@ -60,7 +62,8 @@ public class SponsorsFragment extends Fragment {
             id = arguments.getString("id" + index);
             type = arguments.getString("type" + index);
             img = arguments.getString("image" + index);
-            list.add(new SponsRVData(name, id, type, img));
+            website = arguments.getString("website"+index);
+            list.add(new SponsRVData(name, id, type, img, website));
             index--;
         }
     }

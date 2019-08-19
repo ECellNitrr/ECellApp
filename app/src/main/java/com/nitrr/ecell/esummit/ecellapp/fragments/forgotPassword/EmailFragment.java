@@ -28,6 +28,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ForgotPassword;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -72,11 +74,11 @@ public class EmailFragment extends Fragment {
             call.enqueue(new Callback<GenericMessage>() {
                 @Override
                 public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
+                    bar.dismiss();
                     if(response.isSuccessful() && getContext() != null) {
                         Log.e(forgot, "response successful");
                         if(response.body() != null) {
                             Log.e(forgot, "response body received and toasted");
-                            bar.dismiss();
                             Utils.showShortToast(getContext(), response.body().getMessage());
 
                             OTPDialogFragment fragment = new OTPDialogFragment();
@@ -92,16 +94,16 @@ public class EmailFragment extends Fragment {
 
                         } else {
                             Log.e(forgot, "Response Body Null");
-                            bar.dismiss();
                         }
                     } else {
                         try {
                             if (response.errorBody() != null) {
                                 Log.e(forgot, "ErrorBodyPrinted");
-                                Utils.showShortToast(getContext(), response.errorBody().string().split("\"")[3]);
-                                bar.dismiss();
+                                JSONObject object = new JSONObject(response.errorBody().string());
+                                if(object.getString("message") != null)
+                                    Utils.showShortToast(getContext(), object.getString("message"));
                             }
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

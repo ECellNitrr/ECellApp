@@ -35,7 +35,6 @@ public class SponsorsActivity extends BaseActivity {
     private ImageView circle1, circle2, circle3, circle4, circle5;
     private Bundle[] bundle = new Bundle[5];
     private int[] index = {0,0,0,0,0};
-    private String[] tabName;
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
         SponsorsActivity.this.finish();
@@ -81,6 +80,7 @@ public class SponsorsActivity extends BaseActivity {
                 bundle[0].putString("name" + index[0], data.getName());
                 bundle[0].putString("image" + index[0], data.getImg());
                 bundle[0].putString("id" + index[0], data.getId());
+                bundle[0].putString("website"+index[0], data.getWebsite());
 
             } else if (data.getType().contentEquals("PTS")) {
                 if (tab.size() == 0 || !tab.contains("Platinum"))
@@ -90,6 +90,7 @@ public class SponsorsActivity extends BaseActivity {
                 bundle[1].putString("name" + index[1], data.getName());
                 bundle[1].putString("image" + index[1], data.getImg());
                 bundle[1].putString("id" + index[1], data.getId());
+                bundle[1].putString("website"+index[1], data.getWebsite());
 
             } else if (data.getType().contentEquals("GDS")) {
                 if (tab.size() == 0 || !tab.contains("Gold"))
@@ -99,6 +100,7 @@ public class SponsorsActivity extends BaseActivity {
                 bundle[2].putString("name" + index[2], data.getName());
                 bundle[2].putString("image" + index[2], data.getImg());
                 bundle[2].putString("id" + index[2], data.getId());
+                bundle[2].putString("website"+index[2], data.getWebsite());
 
             } else if (data.getType().contentEquals("TLS")) {
                 if (tab.size() == 0 || !tab.contains("Title"))
@@ -108,6 +110,7 @@ public class SponsorsActivity extends BaseActivity {
                 bundle[3].putString("name" + index[3], data.getName());
                 bundle[3].putString("image" + index[3], data.getImg());
                 bundle[3].putString("id" + index[3], data.getId());
+                bundle[3].putString("website"+index[3], data.getWebsite());
 
             } else if (data.getType().contentEquals("PRS")) {
                 if (tab.size() == 0 || !tab.contains("Partner"))
@@ -117,6 +120,7 @@ public class SponsorsActivity extends BaseActivity {
                 bundle[4].putString("name" + index[4], data.getName());
                 bundle[4].putString("image" + index[4], data.getImg());
                 bundle[4].putString("id" + index[4], data.getId());
+                bundle[4].putString("website"+index[4], data.getWebsite());
             }
         }
 
@@ -129,7 +133,7 @@ public class SponsorsActivity extends BaseActivity {
         bundle = new Bundle[bundleList.size()];
         index = new int[indexList.size()];
 
-        tabName = new String[tab.size()];
+        String[] tabName = new String[tab.size()];
         for (int x = 0; x < tab.size(); x++) {
             tabName[x] = tab.get(x);
             bundle[x] = bundleList.get(x);
@@ -144,16 +148,8 @@ public class SponsorsActivity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 pager.setCurrentItem(tab.getPosition());
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            @Override public void onTabUnselected(TabLayout.Tab tab) { }
+            @Override public void onTabReselected(TabLayout.Tab tab) { }
         });
 
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
@@ -287,7 +283,6 @@ public class SponsorsActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<SponsorsModel> call, @NonNull Throwable t) {
                 dialog.cancel();
-
                 if (getApplicationContext() != null) {
                     Utils.showDialog(SponsorsActivity.this, null, false, "Something went wrong.", SponsorsActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener, "Cancel", cancelListener);
                 }

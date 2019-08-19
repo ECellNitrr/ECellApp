@@ -46,14 +46,14 @@ public class CustomTextWatcher implements TextWatcher {
         if (text_content.equals("")) {
             layout.setError(activity.getResources().getString(R.string.error_common));
         } else {
-            layout.setErrorEnabled(false);
+            layout.setError(null);
         }
 
         if (field_name.equals(FIRST_NAME)) {
             Pattern pattern = Pattern.compile("[a-zA-Z]+");
 
             if (pattern.matcher(text_content).matches()) {
-                layout.setErrorEnabled(false);
+                layout.setError(null);
                 text.requestFocus();
             } else {
                 layout.setError(activity.getResources().getString(R.string.error_first_name));
@@ -66,7 +66,7 @@ public class CustomTextWatcher implements TextWatcher {
             Pattern pattern = Pattern.compile("[a-zA-Z]+");
 
             if (pattern.matcher(text_content).matches()) {
-                layout.setErrorEnabled(false);
+                layout.setError(null);
             } else {
                 layout.setError(activity.getResources().getString(R.string.error_last_name));
                 text.requestFocus();
@@ -79,7 +79,7 @@ public class CustomTextWatcher implements TextWatcher {
                 text.requestFocus();
 
             } else {
-                layout.setErrorEnabled(false);
+                layout.setError(null);
             }
         }
 
@@ -89,7 +89,7 @@ public class CustomTextWatcher implements TextWatcher {
                 text.requestFocus();
 
             } else {
-                layout.setErrorEnabled(false);
+                layout.setError(null);
             }
         }
 
@@ -99,13 +99,12 @@ public class CustomTextWatcher implements TextWatcher {
                 text.requestFocus();
 
             } else {
-                layout.setErrorEnabled(false);
+                layout.setError(null);
             }
         }
     }
 
     private boolean checkPhoneNumber(String phone) {
-
         Pattern pattern = Pattern.compile("[0-9]+");
 
         if (!pattern.matcher(phone).matches() || phone.length() != 10)
@@ -117,7 +116,6 @@ public class CustomTextWatcher implements TextWatcher {
             if (first.equals(Integer.toString(i)))
                 return false;
         }
-
         return true;
     }
 }

@@ -101,7 +101,6 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
         ImageView image;
         TextView name;
         TextView year;
-        TextView description;
         LinearLayout speakerCardItem;
 
         MyViewHolder(@NonNull View itemView) {
@@ -110,7 +109,6 @@ public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecy
             name = itemView.findViewById(R.id.speaker_name);
             image = itemView.findViewById(R.id.speaker_image);
             speakerCardItem = itemView.findViewById(R.id.speaker_item_card);
-//            description = itemView.findViewById(R.id.speaker_description);
         }
     }
 }

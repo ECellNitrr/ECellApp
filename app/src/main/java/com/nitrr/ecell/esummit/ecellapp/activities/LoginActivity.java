@@ -38,6 +38,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -151,7 +153,6 @@ public class LoginActivity extends BaseActivity {
         registerNumber.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerNumber, registerNumberLayout, CustomTextWatcher.MOBILE_NO));
         registerEmail.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerEmail, registerEmailLayout, CustomTextWatcher.EMAIL));
         registerPassword.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerPassword, registerPasswordLayout, CustomTextWatcher.PASSWORD));
-
     }
 
     private void LoginApiCall() {
@@ -174,17 +175,16 @@ public class LoginActivity extends BaseActivity {
                                 pref.setSharedPref(LoginActivity.this, authResponse.getToken(), authResponse.getFirstName(),
                                         authResponse.getLastName(), loginEmail.getText().toString());
                                 pref.setIsLoggedIn(LoginActivity.this, true);
-                                Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 Log.e("LoginActivity Login", response.body().getMessage());
                                 pref.setGreeted(LoginActivity.this, true);
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
-                            }
-
+                            } else
+                                Utils.showLongToast(LoginActivity.this, "Couldn't log you in. Please try again.");
                         } else {
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(LoginActivity.this, "Login Failed. Please try again.");
+                                Utils.showLongToast(LoginActivity.this, "Couldn't log you in. Please try again.");
                             }
                         }
                     }
@@ -196,7 +196,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 loginDialog.dismiss();
-                Utils.showLongToast(LoginActivity.this, "There was an error " + t.getMessage());
+                Utils.showLongToast(LoginActivity.this, "An Error occurred while logging you in. Please try again in a while!");
             }
         });
     }
@@ -239,12 +239,14 @@ public class LoginActivity extends BaseActivity {
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Utils.showLongToast(LoginActivity.this, "Something went wrong!");
+                                Utils.showLongToast(LoginActivity.this, "Something went wrong! Please try again");
                                 Log.e("LoginActivity Register", "Response Successful, Response Body NULL");
                             }
                         } else {
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                                JSONObject object = new JSONObject(response.errorBody().string());
+                                if(object.getString("detail") != null)
+                                    Utils.showLongToast(getApplicationContext(), object.getString("detail"));
                             } else {
                                 Log.e("LoginActivity Register", "Response Unsuccessful, Response Error Body NULL");
                             }
@@ -259,7 +261,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 registerDialog.dismiss();
-                Utils.showLongToast(getApplicationContext(), "Registration Failed" + t.getMessage());
+                Utils.showLongToast(getApplicationContext(), "Registration Failed! Please try again in some time...");
             }
         });
     }

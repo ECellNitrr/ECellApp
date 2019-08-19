@@ -84,10 +84,8 @@ public class EventRegister extends Fragment {
                         } else {
                             Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
                         }
-                    } else if(response.code() == 404) {
-                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
                     } else {
-                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
+                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event. Try again after some time.");
                     }
                 }
 
@@ -96,7 +94,7 @@ public class EventRegister extends Fragment {
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                if(!Utils.isNetworkAvailable(getContext()))
+                if(!Utils.isNetworkAvailable(Objects.requireNonNull(getContext())))
                     Utils.showShortToast(getContext(),"No Internet Connection");
                 else
                     Utils.showShortToast(getContext(),"Something went Wrong");
@@ -124,8 +122,6 @@ public class EventRegister extends Fragment {
                         } else {
                             Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
                         }
-                    } else if(response.code() == 404) {
-                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
                     } else {
                         Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
                     }
