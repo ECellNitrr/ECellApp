@@ -318,7 +318,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
             animationView.setAnimation(R.raw.wrong);
             animationView.playAnimation();
 
-            response = (answerIndex != -7) ? "Incorrect Answer." : "No Option was chosen.";
+            response = (answerIndex == -7) ? "No Option was chosen."  : "Incorrect Answer.";
         }
 
         return response;

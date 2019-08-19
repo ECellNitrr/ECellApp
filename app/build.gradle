@@ -19,7 +19,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [usesCleartextTraffic:"true"]
+            manifestPlaceholders = [usesCleartextTraffic: "true"]
 
             buildConfigField "String", "BASE_URL", "\"https://ecell.nitrr.ac.in/\""
             buildConfigField "String", "BQUIZ_URL", "\"http://206.189.143.11:9000/\""
@@ -31,7 +31,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [usesCleartextTraffic:"true"]
+            manifestPlaceholders = [usesCleartextTraffic: "true"]
 
             buildConfigField "String", "BASE_URL", "\"https://ecell.nitrr.ac.in/\""
             buildConfigField "String", "BQUIZ_URL", "\"http://206.189.143.11:9000/\""
