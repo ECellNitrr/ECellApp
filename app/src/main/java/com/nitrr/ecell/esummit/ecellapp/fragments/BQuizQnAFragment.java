@@ -200,14 +200,17 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(socketEventMessage -> {
+                    answerIndex = -7;
 
                     if (bquizLogo != null && rvBquizOptions != null && tvBquizQuestion != null) {
-                        answerIndex = -7;
 
                         QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
                         if (model.end && getFragmentManager() != null) {
-                            onStop();
+                            for (int i = 0; i < getFragmentManager().getBackStackEntryCount(); i++)
+                                getFragmentManager().popBackStack();
+
+
                         }
 
                         if (!model.show) {
@@ -277,7 +280,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
     private void apiCall() {
         BquizAnswerModel answerModel = new BquizAnswerModel();
-        answerModel.answerID = optionID == null || optionID.size() == 0 || answerIndex == -7 ? 0 : optionID.get(answerIndex);
+        answerModel.answerID = (optionID == null || optionID.size() == 0 || answerIndex == -7) ? 0 : optionID.get(answerIndex);
         answerModel.questionID = questionId;
         answerModel.time = timeAtWhichAnswerWasSelected;
 
@@ -318,7 +321,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
             animationView.setAnimation(R.raw.wrong);
             animationView.playAnimation();
 
-            response = (answerIndex != -7) ? "Incorrect Answer." : "No Option was chosen.";
+            response = (answerIndex == -7) ? "No Option was chosen." : "Incorrect Answer.";
         }
 
         return response;
