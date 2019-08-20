@@ -8,22 +8,30 @@ import com.google.gson.annotations.SerializedName;
 public class SponsRVData{
     @SerializedName("name")
     @Expose
-    String name;
+    private String name;
     @SerializedName("id")
     @Expose
-    String id;
+    private String id;
     @SerializedName("spons_type")
     @Expose
-    String type;
+    private String type;
     @SerializedName("pic_url")
     @Expose
-    String img;
+    private String img;
+    @SerializedName("year")
+    @Expose
+    private int year;
+    @SerializedName("website")
+    @Expose
+    private String website;
 
-    public SponsRVData(String name, String id, String type, String img) {
+    public SponsRVData(String name, String id, String type, String img, int year, String website) {
         this.name = name;
         this.id = id;
         this.type = type;
         this.img = img;
+        this.year = year;
+        this.website = website;
     }
 
     public String getName(){
@@ -37,5 +45,11 @@ public class SponsRVData{
     }
     public String getImg(){
         return img;
+    }
+    public int getYear() {
+        return year;
+    }
+    public String getWebsite() {
+        return website;
     }
 }

@@ -44,7 +44,8 @@ public class SponsorsFragment extends Fragment {
         }
         View view = inflater.inflate(R.layout.fragment_sponsors, container, false);
         recycler = view.findViewById(R.id.spons_recycler);
-        setRecyclerView(arg.getInt("position"));
+        if(arg!=null)
+            setRecyclerView(arg.getInt("position"));
         return view;
     }
 
@@ -53,6 +54,8 @@ public class SponsorsFragment extends Fragment {
         String img;
         String type;
         String id;
+        int year;
+        String website;
         int index = arguments.getInt("index");
         int pos = arguments.getInt("position");
         while (index > 0) {
@@ -60,7 +63,9 @@ public class SponsorsFragment extends Fragment {
             id = arguments.getString("id" + index);
             type = arguments.getString("type" + index);
             img = arguments.getString("image" + index);
-            list.add(new SponsRVData(name, id, type, img));
+            year = arguments.getInt("year" + index);
+            website = arguments.getString("website" + index);
+            list.add(new SponsRVData(name, id, type, img, year, website));
             index--;
         }
     }
