@@ -26,6 +26,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.fragments.forgotPassword.EmailFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.Animation.LoginAnimation;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomTextWatcher;
@@ -37,6 +38,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.auth.RegisterDetails;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,7 +50,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends BaseActivity{
+public class LoginActivity extends BaseActivity {
 
     private Button signIn, register;
     private TextView toSignIn, toRegister, forgotPassword;
@@ -76,6 +79,10 @@ public class LoginActivity extends BaseActivity{
         loginEmail.clearFocus();
 
         signIn.setOnClickListener((View v) -> {
+            if(TextUtils.isEmpty(loginEmail.getText()))
+                loginEmailLayout.setError("Required Field!");
+            if (TextUtils.isEmpty(loginPassword.getText()))
+                loginPasswordLayout.setError("Required Field!");
             if (loginEmailLayout.getError() == null && loginPasswordLayout.getError() == null)
                 LoginApiCall();
         });
@@ -146,8 +153,7 @@ public class LoginActivity extends BaseActivity{
         registerNumber.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerNumber, registerNumberLayout, CustomTextWatcher.MOBILE_NO));
         registerEmail.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerEmail, registerEmailLayout, CustomTextWatcher.EMAIL));
         registerPassword.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerPassword, registerPasswordLayout, CustomTextWatcher.PASSWORD));
-
-   }
+    }
 
     private void LoginApiCall() {
         AlertDialog loginDialog = Utils.showProgressBar(this, "Signing In...");
@@ -169,17 +175,16 @@ public class LoginActivity extends BaseActivity{
                                 pref.setSharedPref(LoginActivity.this, authResponse.getToken(), authResponse.getFirstName(),
                                         authResponse.getLastName(), loginEmail.getText().toString());
                                 pref.setIsLoggedIn(LoginActivity.this, true);
-                                Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 Log.e("LoginActivity Login", response.body().getMessage());
                                 pref.setGreeted(LoginActivity.this, true);
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
-                            }
-
+                            } else
+                                Utils.showLongToast(LoginActivity.this, "Couldn't log you in. Please try again.");
                         } else {
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(LoginActivity.this, "Login Failed. Please try again.");
+                                Utils.showLongToast(LoginActivity.this, "Couldn't log you in. Please try again.");
                             }
                         }
                     }
@@ -191,7 +196,7 @@ public class LoginActivity extends BaseActivity{
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 loginDialog.dismiss();
-                Utils.showLongToast(LoginActivity.this, "There was an error " + t.getMessage());
+                Utils.showLongToast(LoginActivity.this, "An Error occurred while logging you in. Please try again in a while!");
             }
         });
     }
@@ -234,12 +239,14 @@ public class LoginActivity extends BaseActivity{
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Utils.showLongToast(LoginActivity.this, "Something went wrong!");
+                                Utils.showLongToast(LoginActivity.this, "Something went wrong! Please try again");
                                 Log.e("LoginActivity Register", "Response Successful, Response Body NULL");
                             }
                         } else {
                             if (response.errorBody() != null) {
-                                Utils.showLongToast(getApplicationContext(), response.errorBody().string().split("\"")[7]);
+                                JSONObject object = new JSONObject(response.errorBody().string());
+                                if(object.getString("detail") != null)
+                                    Utils.showLongToast(getApplicationContext(), object.getString("detail"));
                             } else {
                                 Log.e("LoginActivity Register", "Response Unsuccessful, Response Error Body NULL");
                             }
@@ -254,12 +261,12 @@ public class LoginActivity extends BaseActivity{
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 registerDialog.dismiss();
-                Utils.showLongToast(getApplicationContext(), "Registration Failed" + t.getMessage());
+                Utils.showLongToast(getApplicationContext(), "Registration Failed! Please try again in some time...");
             }
         });
     }
 
-    private void showAlertDialog() {
+    private void showAlertDialog() throws Exception {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.alert_dialog_privacy_policy, null);
 
@@ -283,7 +290,7 @@ public class LoginActivity extends BaseActivity{
         Spanned policy;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-             policy = Html.fromHtml(getString(R.string.agree_terms_privacy), Html.FROM_HTML_MODE_LEGACY);
+            policy = Html.fromHtml(getString(R.string.agree_terms_privacy), Html.FROM_HTML_MODE_LEGACY);
         } else {
             policy = Html.fromHtml(getString(R.string.agree_terms_privacy));
         }

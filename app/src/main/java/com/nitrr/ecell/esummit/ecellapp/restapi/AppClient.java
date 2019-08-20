@@ -4,6 +4,7 @@ package com.nitrr.ecell.esummit.ecellapp.restapi;
 import android.app.Activity;
 import android.util.Log;
 
+import com.google.gson.GsonBuilder;
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 
@@ -71,7 +72,7 @@ public class AppClient {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BQUIZ_URL)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
 
         return retrofit.create(serviceClass);

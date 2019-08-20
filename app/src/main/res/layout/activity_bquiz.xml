@@ -19,8 +19,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="192dp"
         android:fontFamily="@font/bebas_neue"
         android:text="@string/business_quiz"
         android:textColor="@android:color/white"
@@ -67,4 +67,27 @@
         app:layout_constraintEnd_toEndOf="@+id/bquiz_proceed"
         app:layout_constraintStart_toStartOf="@+id/bquiz_proceed"
         app:layout_constraintTop_toTopOf="@+id/bquiz_proceed" />
+
+
+    <TextView
+        android:id="@+id/bquiz_leader_board"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bquiz_proceed_bg"
+        android:fontFamily="@font/bebas_neue"
+        android:paddingTop="8dp"
+        android:textAlignment="center"
+        android:paddingBottom="8dp"
+        android:text="LEADERBOARD"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.987" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

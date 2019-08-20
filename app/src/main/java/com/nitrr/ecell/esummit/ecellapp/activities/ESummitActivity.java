@@ -80,7 +80,6 @@ public class ESummitActivity extends BaseActivity {
                         noOfYears-=1;
                         callAPI(endYear);
                     }
-
                 }
             }
         });

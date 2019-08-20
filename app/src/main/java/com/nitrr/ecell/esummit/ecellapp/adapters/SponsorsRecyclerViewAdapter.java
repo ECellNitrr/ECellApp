@@ -2,6 +2,8 @@ package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +66,11 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
                 break;
             }
         }
+
         holder.name.setText(data.getName());
-        holder.category.setText(data.getType());
+        holder.category.setText("" + data.getYear());
+
+
         if (data.getImg() != null) {
             CircularProgressDrawable progressDrawable = new CircularProgressDrawable(context);
             progressDrawable.setStrokeWidth(5f);
@@ -74,7 +79,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             Glide.with(context).load(data.getImg()).placeholder(progressDrawable).transform(new CircleCrop()).into(holder.image);
         }
 
-        holder.card.setOnClickListener(v -> {
+        holder.image.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = LayoutInflater.from(context).inflate(R.layout.layout_spons_alertdialog, null);
             builder.setView(view);
@@ -82,9 +87,17 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             view.setMinimumHeight(view.getWidth());
             TextView sponsName = view.findViewById(R.id._name);
             ImageView sponsImg = view.findViewById(R.id._image);
+            if (data.getWebsite() != null && !data.getWebsite().contentEquals("null"))
+                sponsImg.setOnClickListener(v1 -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.getWebsite()));
+                    context.startActivity(intent);
+                });
             sponsName.setText(data.getName());
             Glide.with(context).load(data.getImg()).into(sponsImg);
             builder.create().show();
+        });
+        holder.card.setOnClickListener(view -> {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.getWebsite())));
         });
 
     }

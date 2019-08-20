@@ -28,6 +28,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.ChangeNumber;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -106,8 +108,10 @@ public class ChangeNumberFragment extends Fragment {
                     } else {
                         if(response.errorBody() != null) {
                             try {
-                                Utils.showLongToast(getContext(), response.errorBody().string().split("\"")[2]);
-                            } catch (IOException e) {
+                                JSONObject object = new JSONObject(response.errorBody().string());
+                                if(object.getString("message") != null)
+                                    Utils.showShortToast(getContext(), object.getString("message"));
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         } else {

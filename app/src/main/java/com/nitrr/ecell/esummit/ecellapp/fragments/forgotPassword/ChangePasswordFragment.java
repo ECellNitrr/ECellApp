@@ -27,6 +27,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.forgotPassword.ChangePassword;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -74,7 +76,7 @@ public class ChangePasswordFragment extends Fragment {
                 AlertDialog bar = Utils.showProgressBar(getContext(), "Changing Password...");
 
                 Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
-                        .postPasswordChange(getContext().getString(R.string.app_access_token),
+                        .postPasswordChange(Objects.requireNonNull(getContext()).getResources().getString(R.string.app_access_token),
                                 new ChangePassword(email, password, otp));
 
                 call.enqueue(new Callback<GenericMessage>() {
@@ -94,9 +96,11 @@ public class ChangePasswordFragment extends Fragment {
                             try {
                                 if (response.errorBody() != null) {
                                     Log.e(change, "ErrorBodyToasted");
-                                    Utils.showShortToast(getContext(), response.errorBody().string());
+                                    JSONObject object = new JSONObject(response.errorBody().string());
+                                    if(object.getString("message") != null)
+                                        Utils.showLongToast(getContext(), object.getString("message"));
                                 }
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }

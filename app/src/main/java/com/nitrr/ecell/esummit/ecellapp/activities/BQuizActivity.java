@@ -8,11 +8,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.BuildConfig;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.fragments.BQuizQnAFragment;
+import com.nitrr.ecell.esummit.ecellapp.fragments.LeaderBoardFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizLiveCheckResponse;
@@ -26,8 +30,9 @@ import retrofit2.Response;
 public class BQuizActivity extends BaseActivity {
 
     private ProgressBar progressBar;
-    private TextView proceedTextView;
+    private TextView proceedTextView,leaderBoardTextview;
     private BQuizQnAFragment fragment;
+    private LeaderBoardFragment leaderBoardFragment;
 
     @Override
     protected int getLayoutResourceId() {
@@ -46,12 +51,21 @@ public class BQuizActivity extends BaseActivity {
 
         proceedTextView = findViewById(R.id.bquiz_proceed);
         progressBar = findViewById(R.id.bquiz_progess_bar);
+        leaderBoardTextview=findViewById(R.id.bquiz_leader_board);
 
         proceedTextView.setOnClickListener(v -> {
             proceedTextView.setText("");
             progressBar.setVisibility(View.VISIBLE);
 
             apiCall();
+        });
+
+        leaderBoardTextview.setOnClickListener(v -> {
+
+            leaderBoardFragment = new LeaderBoardFragment();
+           leaderBoardFragment.show(getSupportFragmentManager(), "LeaderBoard");
+
+
         });
     }
 
@@ -72,7 +86,6 @@ public class BQuizActivity extends BaseActivity {
                     } else {
                         Utils.showLongToast(BQuizActivity.this, "Bquiz isn't live right now.");
                     }
-
 
                     progressBar.setVisibility(View.GONE);
                     proceedTextView.setText(getResources().getText(R.string.proceed));

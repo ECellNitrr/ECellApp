@@ -39,38 +39,38 @@ public class EventRegister extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Bundle arg = this.getArguments();
+        Bundle bundle = this.getArguments();
         View view = inflater.inflate(R.layout.layout_event_register, container, false);
 
         TextView venueField = view.findViewById(R.id.event_venue);
-        TextView timeField = view.findViewById(R.id.date_time);
+        TextView timeField = view.findViewById(R.id.event_time), dateField = view.findViewById(R.id.event_date);
         register = view.findViewById(R.id.event_register_button);
         register.setOnClickListener(v1 -> registerAPI(id));
-        if(arg!=null){
-            if(arg.getBoolean("registered")) {
-                register.setText(Objects.requireNonNull(getActivity()).getString(R.string.register));
-                register.setEnabled(false);
+        if(bundle != null) {
+            if(bundle.getBoolean("registered")) {
+                register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_unregister));
+                register.setOnClickListener(v1 -> unregisterAPI(id));
             }
-            eventName = arg.getString("event_name");
-            id = arg.getString("id");
-            timeField.setText(setTime(arg.getString("event_time"), arg.getString("event_date")));
-            venueField.setText(arg.getString("event_venue"));
+            else {
+                register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_register));
+                register.setOnClickListener(v1 -> registerAPI(id));
+            }
+            eventName = bundle.getString("event_name");
+            id = bundle.getString("id");
+            dateField.setText(String.format("%s", "Date: " + bundle.getString("event_date")));
+            timeField.setText(String.format("%s", "Date: " + bundle.getString("event_time")));
+            venueField.setText(bundle.getString("event_venue"));
         }
         return view;
-    }
-
-    private String setTime(String time, String date) {
-        time = "Date: " + date + " | Time: " + time;
-        return time;
     }
 
     private void registerAPI( String id) {
         AlertDialog dialog = Utils.showProgressBar(getContext(),"Registering you for " + eventName);
         SharedPref pref = new SharedPref();
         Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
-                .registerForEvent(getContext().getString(R.string.app_access_token), pref.getAccessToken(getContext()), id);
+                .registerForEvent(Objects.requireNonNull(getContext()).getString(R.string.app_access_token), pref.getAccessToken(getContext()), id);
 
         call.enqueue(new Callback<GenericMessage>() {
             @Override
@@ -80,15 +80,12 @@ public class EventRegister extends Fragment {
                     if(response.isSuccessful()) {
                         if (response.body() != null) {
                             Utils.showLongToast(getContext(), "You have been Successfully Registered for " + eventName + ".\nDo Come!");
-                            register.setText(Objects.requireNonNull(getActivity()).getString(R.string.register));
-                            register.setEnabled(false);
+                            register.setText(Objects.requireNonNull(getActivity()).getString(R.string.user_unregister));
                         } else {
                             Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
                         }
-                    } else if(response.code() == 404) {
-                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
                     } else {
-                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
+                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event. Try again after some time.");
                     }
                 }
 
@@ -97,7 +94,44 @@ public class EventRegister extends Fragment {
             @Override
             public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
                 dialog.dismiss();
-                if(!Utils.isNetworkAvailable(getContext()))
+                if(!Utils.isNetworkAvailable(Objects.requireNonNull(getContext())))
+                    Utils.showShortToast(getContext(),"No Internet Connection");
+                else
+                    Utils.showShortToast(getContext(),"Something went Wrong");
+                Log.e("Event Registration","API call Failure :" + t.getMessage());
+            }
+        });
+    }
+
+    private void unregisterAPI(String id) {
+        AlertDialog dialog = Utils.showProgressBar(getContext(),"Unregistering you from " + eventName);
+        SharedPref pref = new SharedPref();
+        Call<GenericMessage> call = AppClient.getInstance().createService(APIServices.class)
+                .unregisterForEvent(Objects.requireNonNull(getContext()).getString(R.string.app_access_token), pref.getAccessToken(getContext()), id);
+
+        call.enqueue(new Callback<GenericMessage>() {
+            @Override
+            public void onResponse(@NonNull Call<GenericMessage> call, @NonNull Response<GenericMessage> response) {
+                dialog.dismiss();
+                if (getContext() != null) {
+                    if(response.isSuccessful()) {
+                        if (response.body() != null) {
+                            Utils.showLongToast(getContext(), "You have been Successfully Unregistered for " + eventName);
+                            register.setText(Objects.requireNonNull(getActivity()).getResources().getString(R.string.user_register));
+                            register.setOnClickListener(v1 -> registerAPI(id));
+                        } else {
+                            Utils.showShortToast(getContext(), "There was an error on our side. PLease try again later.");
+                        }
+                    } else {
+                        Utils.showLongToast(getContext(), "Couldn't Register you for this Event.");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GenericMessage> call, @NonNull Throwable t) {
+                dialog.dismiss();
+                if(!Utils.isNetworkAvailable(Objects.requireNonNull(getContext())))
                     Utils.showShortToast(getContext(),"No Internet Connection");
                 else
                     Utils.showShortToast(getContext(),"Something went Wrong");

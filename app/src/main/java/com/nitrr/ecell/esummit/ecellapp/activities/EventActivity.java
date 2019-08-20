@@ -97,7 +97,6 @@ public class EventActivity extends BaseActivity {
                             Utils.showDialog(EventActivity.this, null, false, "Something Went wrong",
                                     EventActivity.this.getString(R.string.wasnt_able_to_load), "Retry", refreshListener,
                                     "Cancel", cancelListener);
-                            Utils.showLongToast(getApplicationContext(), "Something went wrong.");
                         }
                     }
                 });
