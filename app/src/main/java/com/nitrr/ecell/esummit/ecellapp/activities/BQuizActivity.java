@@ -51,7 +51,7 @@ public class BQuizActivity extends BaseActivity {
 
         proceedTextView = findViewById(R.id.bquiz_proceed);
         progressBar = findViewById(R.id.bquiz_progess_bar);
-        leaderBoardTextview=findViewById(R.id.bquiz_leader_board);
+        leaderBoardTextview = findViewById(R.id.bq_leader_text);
 
         proceedTextView.setOnClickListener(v -> {
             proceedTextView.setText("");
@@ -81,7 +81,7 @@ public class BQuizActivity extends BaseActivity {
 
                     if (response.body().live) {
                         fragment = new BQuizQnAFragment();
-                        fragment.show(getSupportFragmentManager(), "Bquiz");
+                        fragment.show(getSupportFragmentManager(), "BQnA");
 
                     } else {
                         Utils.showLongToast(BQuizActivity.this, "Bquiz isn't live right now.");
