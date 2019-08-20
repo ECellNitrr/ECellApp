@@ -46,11 +46,11 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         SponsRVData data = list.get(i);
         switch (pos) {
             case 0: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
                 break;
             }
             case 1: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_2);
                 break;
             }
             case 2: {
@@ -58,11 +58,11 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
                 break;
             }
             case 3: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
                 break;
             }
             case 4: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_2);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
                 break;
             }
         }
@@ -96,10 +96,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             Glide.with(context).load(data.getImg()).into(sponsImg);
             builder.create().show();
         });
-        holder.card.setOnClickListener(view -> {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.getWebsite())));
-        });
-
     }
 
     @Override
