@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,9 +20,11 @@ import java.util.List;
 
 public class SponsorsFragment extends Fragment {
 
-    private RecyclerView recycler;
+    private RecyclerView recycler, prevRecycler;
     private SponsorsRecyclerViewAdapter adapter;
-    private List<SponsRVData> list = new ArrayList<>();
+    private List<SponsRVData> list2019 = new ArrayList<>();
+    private List<SponsRVData> prevlist = new ArrayList<>();
+    private TextView prevSponsors;
 
     public SponsorsFragment() {
         // Required empty public constructor
@@ -38,13 +41,17 @@ public class SponsorsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        list.clear();
+        list2019.clear();
+        prevlist.clear();
         Bundle arg = this.getArguments();
         View view = inflater.inflate(R.layout.fragment_sponsors, container, false);
-        recycler = view.findViewById(R.id.spons_recycler);
+        recycler = view.findViewById(R.id.recycler_spons);
+        prevRecycler = view.findViewById(R.id.recycler_prev_spons);
+        prevSponsors = view.findViewById(R.id.prev_sponors);
         if (arg != null) {
-            setRecyclerView(arg.getInt("position"));
             intialiseList(arg);
+            set2019SponsorsRecyclerView(arg.getInt("position"));
+            setPrevSponsorsRecyclerView(arg.getInt("position"));
         }
         return view;
     }
@@ -64,18 +71,51 @@ public class SponsorsFragment extends Fragment {
             type = arguments.getString("type" + index);
             img = arguments.getString("image" + index);
             year = arguments.getInt("year" + index);
+
             website = arguments.getString("website" + index);
-            list.add(new SponsRVData(name, id, type, img, year, website));
+            if(year == 2019)
+                list2019.add(new SponsRVData(name, id, type, img, year, website));
+            else
+                prevlist.add(new SponsRVData(name, id, type, img, year, website));
             index--;
+        }
+        switch (pos) {
+            case 0: {
+                prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_1);
+                break;
+            }
+            case 1: {
+                prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_2);
+                break;
+            }
+            case 2: {
+                prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_3);
+                break;
+            }
+            case 3: {
+                prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_4);
+                break;
+            }
+            case 4: {
+                prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_5);
+                break;
+            }
         }
     }
 
 
-    private void setRecyclerView(int i) {
+    private void set2019SponsorsRecyclerView(int i) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new SponsorsRecyclerViewAdapter(getContext(), list, i);
+        adapter = new SponsorsRecyclerViewAdapter(getContext(), list2019, i);
         recycler.setAdapter(adapter);
+    }
+
+    private void setPrevSponsorsRecyclerView(int i){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        prevRecycler.setLayoutManager(linearLayoutManager);
+        adapter = new SponsorsRecyclerViewAdapter(getContext(), prevlist, i);
+        prevRecycler.setAdapter(adapter);
     }
 
 }

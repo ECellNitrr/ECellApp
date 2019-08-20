@@ -37,10 +37,10 @@ public class ESummitActivity extends BaseActivity {
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
     private RecyclerView speakerRV;
-    TextView speakerText;
-    ProgressBar loadingSpeakers;
-    ESummitRecyclerViewAdapter adapter;
-    int noOfYears, endYear;
+    private TextView speakerText;
+    private ProgressBar loadingSpeakers;
+    private ESummitRecyclerViewAdapter adapter;
+    private int noOfYears, endYear;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI(endYear);
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();

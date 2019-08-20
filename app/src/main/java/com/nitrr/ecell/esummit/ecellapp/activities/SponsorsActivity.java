@@ -35,6 +35,12 @@ public class SponsorsActivity extends BaseActivity {
     private ImageView circle1, circle2, circle3, circle4, circle5;
     private Bundle[] bundle = new Bundle[5];
     private int[] index = {0,0,0,0,0};
+    private int[][] toolbarColor = {{1, 12, 84}, {129, 129, 129}, {130, 87, 0}, {213, 74, 74}, {58, 167, 163}};
+    private int[][] circle1Color = {{203, 239, 255}, {250, 250, 250}, {255, 228, 164}, {252, 216, 216}, {210, 255, 253}};
+    private int[][] circle2Color = {{173, 218, 238}, {239, 239, 239}, {255, 222, 129}, {251, 191, 191}, {166, 245, 241}};
+    private int[][] circle3Color = {{147, 203, 227}, {225, 225, 225}, {255, 212, 110}, {249, 170, 170}, {116, 241, 235}};
+    private int[][] circle4Color = {{119, 196, 230}, {209, 209, 209}, {255, 191, 109}, {251, 147, 147}, {103, 230, 225}};
+    private int[][] circle5Color = {{90, 177, 216}, {188, 188, 188}, {255, 174, 86}, {249, 116, 116}, {53, 220, 214}};
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
         SponsorsActivity.this.finish();
@@ -138,7 +144,7 @@ public class SponsorsActivity extends BaseActivity {
     private void setTabs() {
         SponsRVData data;
         List<String> tab = new ArrayList<>();
-        int tabtitle[] = new int[5];
+        int[] tabtitle = new int[5];
         List<Bundle> bundleList = new ArrayList<>();
         List<Integer> indexList = new ArrayList<>();
         bundle[0] = new Bundle();
@@ -267,36 +273,36 @@ public class SponsorsActivity extends BaseActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (bundle.length == 5) {
                     if (position == 0) {
-                        toolbar.setBackgroundColor(color(1, 12, 84, 129, 129, 129, positionOffset));
-                        circle1.setColorFilter(color(203, 239, 255, 255, 255, 255, positionOffset));
-                        circle2.setColorFilter(color(173, 218, 238, 239, 239, 239, positionOffset));
-                        circle3.setColorFilter(color(147, 203, 227, 225, 225, 225, positionOffset));
-                        circle4.setColorFilter(color(119, 196, 230, 209, 209, 209, positionOffset));
-                        circle5.setColorFilter(color(90, 177, 216, 188, 188, 188, positionOffset));
+                        toolbar.setBackgroundColor(color(toolbarColor[0][0], toolbarColor[0][1], toolbarColor[0][2], toolbarColor[1][0], toolbarColor[1][1], toolbarColor[1][2], positionOffset));
+                        circle1.setColorFilter(color(circle1Color[0][0], circle1Color[0][1], circle1Color[0][2], circle1Color[1][0], circle1Color[1][1], circle1Color[1][2], positionOffset));
+                        circle2.setColorFilter(color(circle2Color[0][0], circle3Color[0][1], circle2Color[0][2], circle2Color[1][0], circle1Color[1][1], circle1Color[1][2], positionOffset));
+                        circle3.setColorFilter(color(circle3Color[0][0], circle4Color[0][1], circle3Color[0][2], circle3Color[1][0], circle1Color[1][1], circle1Color[1][2], positionOffset));
+                        circle4.setColorFilter(color(circle4Color[0][0], circle4Color[0][1], circle4Color[0][2], circle4Color[1][0], circle1Color[1][1], circle1Color[1][2], positionOffset));
+                        circle5.setColorFilter(color(circle5Color[0][0], circle5Color[0][1], circle5Color[0][2], circle5Color[1][0], circle1Color[1][1], circle1Color[1][2], positionOffset));
 
                     } else if (position == 1) {
-                        toolbar.setBackgroundColor(color(129, 129, 129, 130, 87, 0, positionOffset));
-                        circle1.setColorFilter(color(255, 255, 255, 255, 228, 164, positionOffset));
-                        circle2.setColorFilter(color(239, 239, 239, 255, 222, 129, positionOffset));
-                        circle3.setColorFilter(color(225, 225, 225, 255, 212, 110, positionOffset));
-                        circle4.setColorFilter(color(209, 209, 209, 255, 191, 109, positionOffset));
-                        circle5.setColorFilter(color(188, 188, 188, 255, 174, 86, positionOffset));
+                        toolbar.setBackgroundColor(color(toolbarColor[1][0], toolbarColor[1][1], toolbarColor[1][2], toolbarColor[2][0], toolbarColor[2][1], toolbarColor[2][2], positionOffset));
+                        circle1.setColorFilter(color(circle1Color[1][0], circle1Color[1][1], circle1Color[1][2], circle1Color[2][0], circle1Color[2][1], circle1Color[2][2], positionOffset));
+                        circle2.setColorFilter(color(circle2Color[1][0], circle3Color[1][1], circle2Color[1][2], circle2Color[2][0], circle1Color[2][1], circle1Color[2][2], positionOffset));
+                        circle3.setColorFilter(color(circle3Color[1][0], circle4Color[1][1], circle3Color[1][2], circle3Color[2][0], circle1Color[2][1], circle1Color[2][2], positionOffset));
+                        circle4.setColorFilter(color(circle4Color[1][0], circle4Color[1][1], circle4Color[1][2], circle4Color[2][0], circle1Color[2][1], circle1Color[2][2], positionOffset));
+                        circle5.setColorFilter(color(circle5Color[1][0], circle5Color[1][1], circle5Color[1][2], circle5Color[2][0], circle1Color[2][1], circle1Color[2][2], positionOffset));
+
 
                     } else if (position == 2) {
-                        toolbar.setBackgroundColor(color(130, 87, 0, 213, 74, 74, positionOffset));
-                        circle1.setColorFilter(color(255, 228, 164, 252, 216, 216, positionOffset));
-                        circle2.setColorFilter(color(255, 222, 129, 251, 191, 191, positionOffset));
-                        circle3.setColorFilter(color(255, 212, 110, 249, 170, 170, positionOffset));
-                        circle4.setColorFilter(color(255, 191, 109, 251, 147, 147, positionOffset));
-                        circle5.setColorFilter(color(255, 174, 86, 249, 116, 116, positionOffset));
-
+                        toolbar.setBackgroundColor(color(toolbarColor[2][0], toolbarColor[2][1], toolbarColor[2][2], toolbarColor[3][0], toolbarColor[3][1], toolbarColor[3][2], positionOffset));
+                        circle1.setColorFilter(color(circle1Color[2][0], circle1Color[2][1], circle1Color[2][2], circle1Color[3][0], circle1Color[3][1], circle1Color[3][2], positionOffset));
+                        circle2.setColorFilter(color(circle2Color[2][0], circle3Color[2][1], circle2Color[2][2], circle2Color[3][0], circle1Color[3][1], circle1Color[3][2], positionOffset));
+                        circle3.setColorFilter(color(circle3Color[2][0], circle4Color[2][1], circle3Color[2][2], circle3Color[3][0], circle1Color[3][1], circle1Color[3][2], positionOffset));
+                        circle4.setColorFilter(color(circle4Color[2][0], circle4Color[2][1], circle4Color[2][2], circle4Color[3][0], circle1Color[3][1], circle1Color[3][2], positionOffset));
+                        circle5.setColorFilter(color(circle5Color[2][0], circle5Color[2][1], circle5Color[2][2], circle5Color[3][0], circle1Color[3][1], circle1Color[3][2], positionOffset));
                     } else if (position == 3) {
-                        toolbar.setBackgroundColor(color(213, 74, 74, 58, 167, 163, positionOffset));
-                        circle1.setColorFilter(color(252, 216, 216, 210, 255, 253, positionOffset));
-                        circle2.setColorFilter(color(251, 191, 191, 166, 245, 241, positionOffset));
-                        circle3.setColorFilter(color(249, 170, 170, 116, 241, 235, positionOffset));
-                        circle4.setColorFilter(color(251, 147, 147, 103, 230, 225, positionOffset));
-                        circle5.setColorFilter(color(249, 116, 116, 53, 220, 214, positionOffset));
+                        toolbar.setBackgroundColor(color(toolbarColor[3][0], toolbarColor[3][1], toolbarColor[3][2], toolbarColor[4][0], toolbarColor[4][1], toolbarColor[4][2], positionOffset));
+                        circle1.setColorFilter(color(circle1Color[3][0], circle1Color[3][1], circle1Color[3][2], circle1Color[4][0], circle1Color[4][1], circle1Color[4][2], positionOffset));
+                        circle2.setColorFilter(color(circle2Color[3][0], circle3Color[3][1], circle2Color[3][2], circle2Color[4][0], circle1Color[4][1], circle1Color[4][2], positionOffset));
+                        circle3.setColorFilter(color(circle3Color[3][0], circle4Color[3][1], circle3Color[3][2], circle3Color[4][0], circle1Color[4][1], circle1Color[4][2], positionOffset));
+                        circle4.setColorFilter(color(circle4Color[3][0], circle4Color[3][1], circle4Color[3][2], circle4Color[4][0], circle1Color[4][1], circle1Color[4][2], positionOffset));
+                        circle5.setColorFilter(color(circle5Color[3][0], circle5Color[3][1], circle5Color[3][2], circle5Color[4][0], circle1Color[4][1], circle1Color[4][2], positionOffset));
                     }
                 }
                 else if (bundle.length == 4) {
