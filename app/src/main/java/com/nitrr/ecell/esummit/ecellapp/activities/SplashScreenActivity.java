@@ -20,6 +20,9 @@ import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,9 +88,13 @@ public class SplashScreenActivity extends BaseActivity {
                     } else {
                         if (response.errorBody() != null) {
                             try {
+                                JSONObject object = new JSONObject(response.errorBody().string());
+                                pref.setDates(SplashScreenActivity.this, object.getString("i_date"), object.getString("f_date"));
                                 Log.e("SplashScreen AppUpdate", "Response Unsuccessful: " + response.errorBody().string());
                                 goInsideApp();
                             } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -120,7 +127,6 @@ public class SplashScreenActivity extends BaseActivity {
         } else
             goInsideApp();
 
-        pref.setDates(this, details.getStartingDate(), details.getEndingDate());
     }
 
     private void goInsideApp() {

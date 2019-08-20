@@ -37,6 +37,8 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.WebSocket;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -67,9 +69,9 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     private TextView message;
     private LottieAnimationView animationView;
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bquiz, container, false);
 
         gson = new Gson();
@@ -318,7 +320,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
             animationView.setAnimation(R.raw.wrong);
             animationView.playAnimation();
 
-            response = (answerIndex != -7) ? "Incorrect Answer." : "No Option was chosen.";
+            response = (answerIndex == -7) ? "No Option was chosen."  : "Incorrect Answer.";
         }
 
         return response;

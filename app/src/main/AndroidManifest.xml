@@ -74,7 +74,7 @@
         <activity
             android:name=".activities.EventActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/AppTheme.FullScreen" />
+    android:theme="@style/AppTheme.FullScreen" />
 
         <activity
             android:name=".activities.ESummitActivity"

@@ -38,14 +38,13 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.HEAD;
 
 public class EventFragment extends Fragment {
 
     private BroadcastReceiver receiver;
     private ImageView eventImage;
-    private String eventName;
-    private ViewPager pager;
-    private TabLayout tab;
+    private Bundle bundle;
 
     public EventFragment() {
     }
@@ -57,26 +56,22 @@ public class EventFragment extends Fragment {
 
         ImageView back = view.findViewById(R.id.eventfrag_back);
         back.setOnClickListener(v -> Objects.requireNonNull(getActivity()).getSupportFragmentManager().popBackStack());
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            initialize(view);
-            eventName = bundle.getString("event_name");
-            setData(bundle.getString("event_name"),
-                    bundle.getString("event_img"));
-        }
-        tab = view.findViewById(R.id.event_tab);
-        pager = view.findViewById(R.id.event_pager);
-        pager.setAdapter(new EventViewPagerAdapter(getActivity().getSupportFragmentManager(), bundle));
+        bundle = this.getArguments();
+        initialize(view);
+        TabLayout tab = view.findViewById(R.id.event_tab);
+        ViewPager pager = view.findViewById(R.id.event_pager);
+        pager.setAdapter(new EventViewPagerAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager(), bundle));
         tab.setupWithViewPager(pager);
         return view;
     }
 
     private void initialize(View v) {
         eventImage = v.findViewById(R.id.event_img);
+        setData(bundle.getString("event_name"),
+                bundle.getString("event_img"));
     }
 
     private void setData(String name, String image) {
-
         try {
             if (image != null) {
                 CircularProgressDrawable progressDrawable = new CircularProgressDrawable(Objects.requireNonNull(getContext()));
@@ -112,5 +107,4 @@ public class EventFragment extends Fragment {
         }
         super.onDestroy();
     }
-
 }

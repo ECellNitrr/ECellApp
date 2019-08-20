@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,21 +36,20 @@ public class SponsorsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         list.clear();
         Bundle arg = this.getArguments();
-        if (arg != null) {
-            intialiselist(arg);
-        }
         View view = inflater.inflate(R.layout.fragment_sponsors, container, false);
         recycler = view.findViewById(R.id.spons_recycler);
-        if(arg!=null)
+        if (arg != null) {
             setRecyclerView(arg.getInt("position"));
+            intialiseList(arg);
+        }
         return view;
     }
 
-    private void intialiselist(Bundle arguments) {
+    private void intialiseList(Bundle arguments) {
         String name;
         String img;
         String type;

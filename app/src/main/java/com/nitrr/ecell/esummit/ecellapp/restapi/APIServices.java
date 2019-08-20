@@ -4,6 +4,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.AppDetails;
 import com.nitrr.ecell.esummit.ecellapp.models.FeedbackModel;
 import com.nitrr.ecell.esummit.ecellapp.models.OTPVerification;
 import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizAnswerModel;
+import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizLeaderBoardResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizLiveCheckResponse;
 import com.nitrr.ecell.esummit.ecellapp.models.bquiz.BquizResponseModel;
 import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
@@ -33,8 +34,10 @@ public interface APIServices {
     @GET("/sponsors/list/{year}/")
     Call<SponsorsModel> getSponsorsData(@Path("year") String year);
 
+    //Events
     @GET("events/list/2019/")
     Call<EventModel> getEventDetails(@Header("Authorization") String auth);
+
 
     //Auth
     @POST("users/register/")
@@ -82,6 +85,9 @@ public interface APIServices {
     @POST("events/register/{id}/")
     Call<GenericMessage> registerForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
 
+    @POST("events/unregister/{id}/")
+    Call<GenericMessage> unregisterForEvent(@Header("Access") String access, @Header("Authorization") String token, @Path("id") String id);
+
     @POST("feedback/post/")
     Call<GenericMessage> postFeedback(@Body FeedbackModel feedbackModel);
 
@@ -90,4 +96,7 @@ public interface APIServices {
 
     @GET("/bquiz/is_active/")
     Call<BquizLiveCheckResponse> isLiveRequest(@Header("Authorization") String access);
+
+    @GET("/bquiz/daily_leaderboard/")
+    Call<BquizLeaderBoardResponse> getLeaderBoard(@Header("Authorization") String access);
 }

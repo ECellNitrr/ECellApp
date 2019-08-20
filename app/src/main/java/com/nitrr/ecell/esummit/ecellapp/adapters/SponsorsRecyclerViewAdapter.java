@@ -3,7 +3,6 @@ package com.nitrr.ecell.esummit.ecellapp.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +79,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             Glide.with(context).load(data.getImg()).placeholder(progressDrawable).transform(new CircleCrop()).into(holder.image);
         }
 
-        holder.card.setOnClickListener(v -> {
+        holder.image.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = LayoutInflater.from(context).inflate(R.layout.layout_spons_alertdialog, null);
             builder.setView(view);
@@ -96,6 +95,9 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             sponsName.setText(data.getName());
             Glide.with(context).load(data.getImg()).into(sponsImg);
             builder.create().show();
+        });
+        holder.card.setOnClickListener(view -> {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.getWebsite())));
         });
 
     }
