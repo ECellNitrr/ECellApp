@@ -3,6 +3,8 @@ package com.nitrr.ecell.esummit.ecellapp.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.models.team.TeamList;
 
@@ -26,6 +33,7 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
 
     private Context context;
     private List<TeamList> list;
+    private boolean loaded = false;
 
     TeamRecyclerViewAdapter(Context context, List<TeamList> list) {
         this.context = context;
@@ -50,14 +58,30 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
         holder.name.setText(data.getName());
         if(data.getName().equalsIgnoreCase("MNG") || data.getName().equalsIgnoreCase("EXC"))
             holder.img.setVisibility(View.GONE);
+
         if(data.getImg()!=null){
+
+            holder.img.getLayoutParams().height = holder.img.getLayoutParams().width;
+
             CircularProgressDrawable progressDrawable = new CircularProgressDrawable(context);
             progressDrawable.setStrokeWidth(5f);
             progressDrawable.setCenterRadius(30f);
             progressDrawable.start();
-            Glide.with(context).load(data.getImg()).placeholder(progressDrawable).transform(new CropSquareTransformation()).into(holder.img);
+            Glide.with(context).load(data.getImg()).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    loaded = true;
+                    return false;
+                }
+            }).placeholder(progressDrawable).transform(new CropSquareTransformation()).into(holder.img);
 
         holder.bg.setOnClickListener(v -> {
+            if(loaded){
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = LayoutInflater.from(context).inflate(R.layout.layout_spons_alertdialog, null);
             builder.setView(view);
@@ -68,6 +92,7 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             memberName.setText(data.getName());
             Glide.with(context).load(data.getImg()).into(memberImg);
             builder.create().show();
+            }
         });
         }
     }

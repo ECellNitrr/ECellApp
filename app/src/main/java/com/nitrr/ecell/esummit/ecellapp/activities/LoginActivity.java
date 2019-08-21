@@ -159,7 +159,6 @@ public class LoginActivity extends BaseActivity {
         firstName.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, firstName, firstNameLayout, CustomTextWatcher.FIRST_NAME));
         lastName.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, lastName, lastNameLayout, CustomTextWatcher.LAST_NAME));
         loginEmail.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, loginEmail, loginEmailLayout, CustomTextWatcher.EMAIL));
-        loginPassword.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, loginPassword, loginPasswordLayout, CustomTextWatcher.PASSWORD));
         registerNumber.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerNumber, registerNumberLayout, CustomTextWatcher.MOBILE_NO));
         registerEmail.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerEmail, registerEmailLayout, CustomTextWatcher.EMAIL));
         registerPassword.addTextChangedListener(new CustomTextWatcher(LoginActivity.this, registerPassword, registerPasswordLayout, CustomTextWatcher.PASSWORD));

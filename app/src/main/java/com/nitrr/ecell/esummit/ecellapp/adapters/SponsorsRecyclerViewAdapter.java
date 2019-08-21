@@ -22,7 +22,6 @@ import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
 import java.util.List;
 
-
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder> {
     private List<SponsRVData> list;
     private Context context;
@@ -44,13 +43,13 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         SponsRVData data = list.get(i);
-        switch (pos) {
+        switch (pos%4) {
             case 0: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
                 break;
             }
             case 1: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_2);
                 break;
             }
             case 2: {
@@ -58,17 +57,12 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
                 break;
             }
             case 3: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
-                break;
-            }
-            case 4: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_2);
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
                 break;
             }
         }
 
         holder.name.setText(data.getName());
-        holder.category.setText("" + data.getYear());
 
 
         if (data.getImg() != null) {
@@ -96,10 +90,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             Glide.with(context).load(data.getImg()).into(sponsImg);
             builder.create().show();
         });
-        holder.card.setOnClickListener(view -> {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(data.getWebsite())));
-        });
-
     }
 
     @Override
@@ -110,7 +100,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     public class MyViewHolder extends RecyclerView.ViewHolder {
         CardView card;
         TextView name;
-        TextView category;
         ImageView image;
 
         public MyViewHolder(@NonNull View view) {
@@ -118,7 +107,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             card = view.findViewById(R.id.spons_card);
             image = view.findViewById(R.id.spons_img);
             name = view.findViewById(R.id.spons_name);
-            category = view.findViewById(R.id.spons_type);
         }
     }
 }

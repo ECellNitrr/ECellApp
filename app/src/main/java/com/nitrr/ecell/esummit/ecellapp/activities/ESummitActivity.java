@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,10 +38,10 @@ public class ESummitActivity extends BaseActivity {
 
     private List<ResponseSpeakerData> responseSpeakerObjectList;
     private RecyclerView speakerRV;
-    TextView speakerText;
-    ProgressBar loadingSpeakers;
-    ESummitRecyclerViewAdapter adapter;
-    int noOfYears, endYear;
+    private TextView speakerText;
+    private ProgressBar loadingSpeakers;
+    private ESummitRecyclerViewAdapter adapter;
+    private int noOfYears, endYear;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI(endYear);
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
         dialog.cancel();
@@ -68,7 +69,7 @@ public class ESummitActivity extends BaseActivity {
         date.setText(setESDate());
         adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
         speakerRV.setAdapter(adapter);
-        speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
+        speakerRV.setLayoutManager(new GridLayoutManager(ESummitActivity.this, 2, RecyclerView.VERTICAL, false));
         speakerRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {

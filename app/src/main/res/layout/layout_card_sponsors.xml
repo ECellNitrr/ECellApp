@@ -5,8 +5,8 @@
     android:id="@+id/spons_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="15dp"
     android:layout_marginTop="10dp"
+    android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
     android:layout_marginBottom="5dp"
     android:background="@color/colorPrimaryDark"
@@ -18,41 +18,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageView
+        <com.nitrr.ecell.esummit.ecellapp.misc.SquareImageView
             android:id="@+id/spons_img"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"/>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/spons_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/spons_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="SponsorA"
-                android:textColor="@color/colorWhite"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/spons_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginTop="5dp"
-                android:text="Sponsor Type"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
-
-        </LinearLayout>
+            android:layout_margin="4dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:text="SponsorA"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

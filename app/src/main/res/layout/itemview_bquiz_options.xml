@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:gravity="end"
+                android:fontFamily="@font/merriweather_sans"
                 android:text="1. "
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
@@ -36,6 +37,7 @@
                 android:layout_marginLeft="8dp"
                 android:gravity="end"
                 android:text="Option"
+                android:fontFamily="@font/merriweather_sans"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 

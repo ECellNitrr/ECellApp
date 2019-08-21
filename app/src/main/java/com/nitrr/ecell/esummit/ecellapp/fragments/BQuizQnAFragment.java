@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
@@ -36,8 +38,8 @@ import com.nitrr.ecell.esummit.ecellapp.models.bquiz.QuestionDetailsModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.WebSocket;
+import com.nitrr.ecell.esummit.ecellapp.fragments.LeaderBoardFragment;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     private RecyclerView rvBquizOptions;
     private BquizOptionsAdapter bquizOptionsAdapter;
 
-    private int timeGiven;
+    private int timeGiven = -1;
     private List<Integer> optionID;
     private int rightAnswerId, selectedAnswerId;
     private int answerIndex = -7, questionId = -1;
@@ -71,7 +73,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bquiz, container, false);
 
         gson = new Gson();
@@ -108,6 +110,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
         setUpWebSocket();
         initView(view);
+
         return view;
     }
 
@@ -148,7 +151,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
             @Override
             public void onFinish() {
-                timeAllotted.setText("finished");
+                timeAllotted.setText("Next question coming soon");
                 apiCall();
             }
 
@@ -204,12 +207,21 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                 .subscribe(socketEventMessage -> {
 
                     if (bquizLogo != null && rvBquizOptions != null && tvBquizQuestion != null) {
-                        answerIndex = -7;
-
                         QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
                         if (model.end && getFragmentManager() != null) {
-                            onStop();
+                            for (int i = 1; i < getFragmentManager().getBackStackEntryCount(); i++)
+                                getFragmentManager().popBackStack();
+
+                            timeAllotted.setText("Finished");
+
+                            message.setText("Today's BQuiz completed. Stay tuned for next BQuiz.");
+
+
+                            LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
+                            leaderBoardFragment.show(getFragmentManager(), "LeaderBoard");
+
+
                         }
 
                         if (!model.show) {
@@ -274,12 +286,11 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
         bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
         answerIndex = position;
         timeAtWhichAnswerWasSelected = timeGiven;
-
     }
 
     private void apiCall() {
         BquizAnswerModel answerModel = new BquizAnswerModel();
-        answerModel.answerID = optionID == null || optionID.size() == 0 || answerIndex == -7 ? 0 : optionID.get(answerIndex);
+        answerModel.answerID = (optionID == null || optionID.size() == 0 || answerIndex == -7) ? 0 : optionID.get(answerIndex);
         answerModel.questionID = questionId;
         answerModel.time = timeAtWhichAnswerWasSelected;
 
@@ -295,6 +306,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
         responseModelCall.enqueue(new Callback<BquizResponseModel>() {
             @Override
             public void onResponse(@NonNull Call<BquizResponseModel> call, @NonNull Response<BquizResponseModel> response) {
+                answerIndex = -7;
             }
 
             @Override
@@ -304,7 +316,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     }
 
     private int getBonus(int time) {
-        return time >= 6 ? time * 2 : 0;
+        return time >= 10 / 2 ? time * 2 : 0;
     }
 
     private String getAnswerSubmissionResponse(int selectedAnswerId) {

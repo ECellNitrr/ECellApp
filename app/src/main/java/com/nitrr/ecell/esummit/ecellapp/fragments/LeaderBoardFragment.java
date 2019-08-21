@@ -6,10 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +30,7 @@ import retrofit2.Response;
 
 public class LeaderBoardFragment extends DialogFragment {
 
+    private ProgressBar progressBar;
     private RecyclerView recyclerViewLeaderBoard;
     private BquizLeaderBoardRecyclerViewAdapter leaderBoardAdapter;
 
@@ -51,8 +55,11 @@ public class LeaderBoardFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leader_board, container, false);
         recyclerViewLeaderBoard = view.findViewById(R.id.rv_leader_board);
+        progressBar = view.findViewById(R.id.leader_progress_bar);
+
         setUpLeaderboardRecyclerView();
         apiCallForBquizLeaderboard();
+
         return view;
     }
 
@@ -61,7 +68,7 @@ public class LeaderBoardFragment extends DialogFragment {
         super.onStart();
         Dialog dialog = getDialog();
 
-        if (dialog != null) {
+        if (dialog.getWindow() != null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
@@ -72,7 +79,6 @@ public class LeaderBoardFragment extends DialogFragment {
         leaderBoardAdapter = new BquizLeaderBoardRecyclerViewAdapter(getContext());
         recyclerViewLeaderBoard.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewLeaderBoard.setAdapter(leaderBoardAdapter);
-
     }
 
     private void apiCallForBquizLeaderboard() {
@@ -87,22 +93,22 @@ public class LeaderBoardFragment extends DialogFragment {
 
                     if (jsonResponse != null) {
                         Log.e("BQ", jsonResponse.toString() + " ");
+                        progressBar.setVisibility(View.GONE);
 
                         leaderBoardAdapter.setLeaderboardUserDetailsList(jsonResponse.getLeaderboard());
                         leaderBoardAdapter.notifyDataSetChanged();
                     }
                 } else if (getContext() != null) {
-                    Toast.makeText(getContext(), "Something went wrong, Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Leaderboard isn't available at this moment.", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<BquizLeaderBoardResponse> call, Throwable t) {
                 if (getContext() != null) {
-
-                    Toast.makeText(getContext(), "Something went wrong, Please try again", Toast.LENGTH_LONG).show();
-
-
+                    Toast.makeText(getContext(), "Something went wrong, Please try again.", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });

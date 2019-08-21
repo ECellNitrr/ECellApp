@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bquiz_gradient">
+    android:background="@drawable/bquiz_gradient"
+    android:orientation="vertical"
+    tools:context=".fragments.LeaderBoardFragment">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/leaderboard_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".fragments.LeaderBoardFragment">
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/roboto"
+        android:padding="8dp"
+        android:text="Leaderboard"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:id="@+id/user_rank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bquiz_question_bg"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:weightSum="2">
 
         <TextView
-            android:id="@+id/leaderboard_title"
-            android:layout_width="match_parent"
+            android:id="@+id/user_name_leaderboard"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/roboto"
-            android:padding="8dp"
-            android:text="Leaderboard"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-condensed"
+            android:maxLines="1"
+            android:text="NAME"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="30sp" />
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_margin="8dp"
-            android:id="@+id/user_rank"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/user_rank_leaderboard"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/bquiz_question_bg"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/user_name_leaderboard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="NAME"
-                android:fontFamily="sans-serif-condensed"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="22sp" />
-
-            <TextView
-                android:id="@+id/user_rank_leaderboard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="SCORE"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-condensed"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="22sp" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_leader_board"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-condensed"
+            android:text="SCORE"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-</ScrollView>
+
+    <ProgressBar
+        android:id="@+id/leader_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_leader_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp" />
+
+</LinearLayout>
