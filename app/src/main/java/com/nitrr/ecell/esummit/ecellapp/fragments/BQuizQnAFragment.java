@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
@@ -36,6 +38,7 @@ import com.nitrr.ecell.esummit.ecellapp.models.bquiz.QuestionDetailsModel;
 import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
 import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import com.nitrr.ecell.esummit.ecellapp.rxsocket.WebSocket;
+import com.nitrr.ecell.esummit.ecellapp.fragments.LeaderBoardFragment;
 
 
 import java.util.List;
@@ -148,7 +151,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
             @Override
             public void onFinish() {
-                timeAllotted.setText("finished");
+                timeAllotted.setText("Next question coming soon");
                 apiCall();
             }
 
@@ -210,8 +213,15 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                             for (int i = 1; i < getFragmentManager().getBackStackEntryCount(); i++)
                                 getFragmentManager().popBackStack();
 
+                            timeAllotted.setText("Finished");
+
+                            message.setText("Today's BQuiz completed. Stay tuned for next BQuiz.");
+
+
                             LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
                             leaderBoardFragment.show(getFragmentManager(), "LeaderBoard");
+
+
                         }
 
                         if (!model.show) {
