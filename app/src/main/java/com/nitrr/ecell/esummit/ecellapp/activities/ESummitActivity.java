@@ -1,6 +1,7 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,7 +69,7 @@ public class ESummitActivity extends BaseActivity {
         date.setText(setESDate());
         adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
         speakerRV.setAdapter(adapter);
-        speakerRV.setLayoutManager(new LinearLayoutManager(ESummitActivity.this));
+        speakerRV.setLayoutManager(new GridLayoutManager(ESummitActivity.this, 2, RecyclerView.VERTICAL, false));
         speakerRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
