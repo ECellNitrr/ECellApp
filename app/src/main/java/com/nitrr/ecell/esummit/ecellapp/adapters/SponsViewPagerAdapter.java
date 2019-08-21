@@ -24,11 +24,6 @@ public class SponsViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        if(tabName.length == 4)
-            if(i == 0)
-            return new SponsorsFragment().getInstance(bundle[i], index[i], i);
-            else
-                return new SponsorsFragment().getInstance(bundle[i], index[i],i+1);
         return new SponsorsFragment().getInstance(bundle[i], index[i], i);
     }
 

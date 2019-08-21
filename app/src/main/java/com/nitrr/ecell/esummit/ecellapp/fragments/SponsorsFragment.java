@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,11 +76,11 @@ public class SponsorsFragment extends Fragment {
             website = arguments.getString("website" + index);
             if(year == 2019)
                 list2019.add(new SponsRVData(name, id, type, img, year, website));
-            else
+            else if(year != 0)
                 prevlist.add(new SponsRVData(name, id, type, img, year, website));
             index--;
         }
-        switch (pos) {
+        switch (pos%4) {
             case 0: {
                 prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_1);
                 break;
@@ -96,24 +97,22 @@ public class SponsorsFragment extends Fragment {
                 prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_4);
                 break;
             }
-            case 4: {
-                prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_5);
-                break;
-            }
         }
     }
 
 
     private void set2019SponsorsRecyclerView(int i) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        recycler.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2, RecyclerView.VERTICAL, false);
+        recycler.setLayoutManager(gridLayoutManager);
+        recycler.setNestedScrollingEnabled(false);
         adapter = new SponsorsRecyclerViewAdapter(getContext(), list2019, i);
         recycler.setAdapter(adapter);
     }
 
     private void setPrevSponsorsRecyclerView(int i){
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        prevRecycler.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2, RecyclerView.VERTICAL, false);
+        prevRecycler.setLayoutManager(gridLayoutManager);
+        prevRecycler.setNestedScrollingEnabled(false);
         adapter = new SponsorsRecyclerViewAdapter(getContext(), prevlist, i);
         prevRecycler.setAdapter(adapter);
     }

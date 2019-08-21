@@ -22,7 +22,6 @@ import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
 import java.util.List;
 
-
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.MyViewHolder> {
     private List<SponsRVData> list;
     private Context context;
@@ -44,7 +43,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         SponsRVData data = list.get(i);
-        switch (pos) {
+        switch (pos%4) {
             case 0: {
                 holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
                 break;
@@ -61,14 +60,9 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
                 holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
                 break;
             }
-            case 4: {
-                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
-                break;
-            }
         }
 
         holder.name.setText(data.getName());
-        holder.category.setText("" + data.getYear());
 
 
         if (data.getImg() != null) {
@@ -106,7 +100,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     public class MyViewHolder extends RecyclerView.ViewHolder {
         CardView card;
         TextView name;
-        TextView category;
         ImageView image;
 
         public MyViewHolder(@NonNull View view) {
@@ -114,7 +107,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             card = view.findViewById(R.id.spons_card);
             image = view.findViewById(R.id.spons_img);
             name = view.findViewById(R.id.spons_name);
-            category = view.findViewById(R.id.spons_type);
         }
     }
 }

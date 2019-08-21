@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:overScrollMode="never">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/event_text"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:layout_margin="10dp"
+        android:overScrollMode="never">
 
-</ScrollView>
+        <TextView
+            android:id="@+id/event_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </ScrollView>
+</androidx.cardview.widget.CardView>
