@@ -255,7 +255,6 @@ public class SponsorsActivity extends BaseActivity {
             for (int x = 0; x < list.size(); x++) {
                 data = list.get(x);
                 if (setlist.get(y).contentEquals(data.getType())) {
-                    bundle[y].putString("type" + tabindex, "Associate Sponsors");
                     bundle[y].putString("name" + tabindex, data.getName());
                     bundle[y].putString("image" + tabindex, data.getImg());
                     bundle[y].putString("id" + tabindex, data.getId());

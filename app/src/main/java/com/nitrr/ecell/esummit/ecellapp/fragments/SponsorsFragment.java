@@ -67,18 +67,19 @@ public class SponsorsFragment extends Fragment {
         int index = arguments.getInt("index");
         int pos = arguments.getInt("position");
         while (index > 0) {
+            index--;
             name = arguments.getString("name" + index);
             id = arguments.getString("id" + index);
-            type = arguments.getString("type" + index);
+            type = arguments.getString("type" + index,"");
             img = arguments.getString("image" + index);
             year = arguments.getInt("year" + index);
 
             website = arguments.getString("website" + index);
             if(year == 2019)
                 list2019.add(new SponsRVData(name, id, type, img, year, website));
-            else if(year != 0)
+            else
                 prevlist.add(new SponsRVData(name, id, type, img, year, website));
-            index--;
+
         }
         switch (pos%4) {
             case 0: {
