@@ -130,7 +130,7 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void goInsideApp() {
-        if (pref.isLoggedIn(this)) {
+        if (pref.isLoggedIn(this) && pref.getMobileVerified(this)) {
             startActivity(new Intent(this, HomeActivity.class));
             Log.e("SplashScreen onSuccess", "User is Logged In");
         } else {

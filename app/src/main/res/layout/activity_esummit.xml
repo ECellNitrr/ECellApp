@@ -62,14 +62,14 @@
         android:id="@+id/e_summit_tagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lato"
+        android:fontFamily="@font/merriweather_sans_light"
         android:lines="1"
         android:text="@string/esummit_tagline"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/e_summit_date"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/e_summit_text" />
 

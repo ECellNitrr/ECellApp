@@ -64,16 +64,29 @@ public class LoginAnimation {
 
         //adding upper poly
         ConstraintLayout layout = activity.findViewById(R.id.login_outer_constraint);
+        ConstraintSet constraintSet = new ConstraintSet();
         layout.removeView(upperPoly);
         layout.addView(upperPoly);
-
-        ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
         constraintSet.connect(upperPoly.getId(), ConstraintSet.START, layout.getId(), ConstraintSet.START, (int)((displayMetrics.density * 20f) + 0.5f));
         constraintSet.connect(upperPoly.getId(), ConstraintSet.END, layout.getId(), ConstraintSet.END, (int)((displayMetrics.density * 20f) + 0.5f));
-        constraintSet.connect(upperPoly.getId(), ConstraintSet.BOTTOM, R.id.login_guide_17, ConstraintSet.TOP);
+        constraintSet.connect(upperPoly.getId(), ConstraintSet.BOTTOM, R.id.login_guide_16, ConstraintSet.TOP);
         constraintSet.constrainHeight(upperPoly.getId(), (int)(displayMetrics.heightPixels * 0.78));
+
+        //adding ecell upper logo
+        layout.removeView(lowerECell);
+        layout.addView(lowerECell);
+        constraintSet.connect(lowerECell.getId(), ConstraintSet.START, lowerPoly.getId(), ConstraintSet.START);
+        constraintSet.connect(lowerECell.getId(), ConstraintSet.END, lowerPoly.getId(), ConstraintSet.END);
+        constraintSet.connect(lowerECell.getId(), ConstraintSet.TOP, R.id.login_guide_16, ConstraintSet.BOTTOM);
+        constraintSet.connect(lowerECell.getId(), ConstraintSet.BOTTOM, R.id.login_guide_40, ConstraintSet.TOP);
+        constraintSet.constrainHeight(lowerECell.getId(), (int)(displayMetrics.heightPixels * 0.2f));
+        constraintSet.constrainWidth(lowerECell.getId(), (int)(displayMetrics.heightPixels * 0.2f));
+        constraintSet.setHorizontalBias(lowerECell.getId(), 0.1f);
+        constraintSet.setVerticalBias(lowerECell.getId(), 0.7f);
         constraintSet.applyTo(layout);
+
+
 
         upperLinearLayout.bringToFront();
         upperECell.bringToFront();

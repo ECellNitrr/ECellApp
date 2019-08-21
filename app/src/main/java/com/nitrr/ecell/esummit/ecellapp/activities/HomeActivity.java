@@ -1,11 +1,8 @@
 package com.nitrr.ecell.esummit.ecellapp.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,22 +15,13 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.adapters.HomeRecyclerViewAdapter;
-import com.nitrr.ecell.esummit.ecellapp.fragments.OTPDialogFragment;
 import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.HomeRVData;
-import com.nitrr.ecell.esummit.ecellapp.models.verifyNumber.UserVerifiedModel;
-import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
-import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity {
 
@@ -41,23 +29,7 @@ public class HomeActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private HomeRecyclerViewAdapter adapter;
     private List<HomeRVData> homeRVDataList = new ArrayList<>();
-    private SharedPref pref = new SharedPref();
     private ImageView bgCircle1, bgCircle2, bgCircle3;
-    private DialogInterface.OnClickListener yesListener = (dialog, which) -> {
-        pref.setGreeted(HomeActivity.this, true);
-        OTPDialogFragment fragment = new OTPDialogFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("prevfrag", "Home Activity");
-        fragment.setArguments(bundle);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_parent_layout, fragment)
-                .addToBackStack(null)
-                .commit();
-    };
-    private DialogInterface.OnClickListener noListener = (dialog, which) -> dialog.cancel();
-    private DialogInterface.OnClickListener closeListener = (dialog, which) -> finish();
-    private DialogInterface.OnClickListener retryListener = (dialog, which) -> isVerifiedAPICall();
     private int distance = 0, offset;
     private float displacement = 0;
 
@@ -73,21 +45,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent().getExtras() != null)
-            if (getIntent().getExtras().getBoolean("loginfristime")) {
-                if (!pref.isGreeted(this)) {
-                    Utils.showDialog(this,
-                            null,
-                            false,
-                            "Welcome " + pref.getFirstName(this) + " " + pref.getLastName(this),
-                            "Do you want to enter OTP now?",
-                            "YES",
-                            yesListener,
-                            "NO",
-                            noListener);
-                }
-            }
-
         recyclerView = findViewById(R.id.home_recycler);
         bgCircle1 = findViewById(R.id.homebg_circle1);
         bgCircle2 = findViewById(R.id.homebg_circle2);
@@ -134,46 +91,6 @@ public class HomeActivity extends BaseActivity {
         recyclerView.hasFixedSize();
 
         setUpRV();
-        isVerifiedAPICall();
-    }
-
-    void isVerifiedAPICall() {
-        AlertDialog dialog = Utils.showProgressBar(this, "Please wait for a moment");
-        Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class)
-                .isVerified(getString(R.string.app_access_token), pref.getAccessToken(this));
-        call.enqueue(new Callback<UserVerifiedModel>() {
-            @Override
-            public void onResponse(@NonNull Call<UserVerifiedModel> call, @NonNull Response<UserVerifiedModel> response) {
-                dialog.dismiss();
-                if (getApplicationContext() != null) {
-                    if (response.isSuccessful()) {
-                        if (response.body() != null) {
-                            pref.setMobileVerified(HomeActivity.this, response.body().getUserIsVerified());
-                            Log.e("HomeActivity isVerified", "Response Successful! Response:"
-                                    + response.body().getUserIsVerified());
-                        } else
-                            Log.e("HomeActivity isVerified", "Response Successful: Response Body NULL");
-                    } else {
-                        if (response.errorBody() != null) {
-                            try {
-                                Log.e("HomeActivity isVerified", "Response Unsuccessful: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<UserVerifiedModel> call, @NonNull Throwable t) {
-                if (Utils.isNetworkAvailable(getApplicationContext()))
-                    Utils.showDialog(getApplicationContext(), null, false,
-                            "No Internet Connection", "Please connect to internet and try again",
-                            "Retry", retryListener,
-                            "Close App", closeListener);
-            }
-        });
     }
 
     public void setUpRV() {
@@ -226,4 +143,79 @@ public class HomeActivity extends BaseActivity {
         HomeRVData data = new HomeRVData(name, color, cardImage, listener);
         homeRVDataList.add(data);
     }
+
+    @Override
+    public void onBackPressed() {
+        if(new SharedPref().getIsVerifying(this))
+            Utils.showLongToast(this, "Please verify mobile number to proceed.");
+        else
+            super.onBackPressed();
+    }
 }
+
+//============================== VERIFY OTP API ============================
+
+//    private SharedPref pref = new SharedPref();
+//
+//    private DialogInterface.OnClickListener verifyOTPListener = (dialog, which) -> {
+//        pref.setGreeted(HomeActivity.this, true);
+//        OTPDialogFragment fragment = new OTPDialogFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("prevfrag", "Home Activity");
+//        fragment.setArguments(bundle);
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.home_parent_layout, fragment)
+//                .addToBackStack(null)
+//                .commit();
+//    };
+//    private DialogInterface.OnClickListener changeNumberListener = (dialog, which) -> {
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.home_parent_layout, new ChangeNumberFragment())
+//                .addToBackStack(null)
+//                .commit();
+//    };
+
+//    private DialogInterface.OnClickListener closeListener = (dialog, which) -> finish();
+//    private DialogInterface.OnClickListener retryListener = (dialog, which) -> isVerifiedAPICall();
+
+//    isVerifiedAPICall();
+
+//    void isVerifiedAPICall() {
+//        AlertDialog dialog = Utils.showProgressBar(this, "Please wait for a moment");
+//        Call<UserVerifiedModel> call = AppClient.getInstance().createService(APIServices.class)
+//                .isVerified(getString(R.string.app_access_token), pref.getAccessToken(this));
+//        call.enqueue(new Callback<UserVerifiedModel>() {
+//            @Override
+//            public void onResponse(@NonNull Call<UserVerifiedModel> call, @NonNull Response<UserVerifiedModel> response) {
+//                dialog.dismiss();
+//                if (getApplicationContext() != null) {
+//                    if (response.isSuccessful()) {
+//                        if (response.body() != null) {
+//                            pref.setMobileVerified(HomeActivity.this, response.body().getUserIsVerified());
+//                            Log.e("HomeActivity isVerified", "Response Successful! Response:"
+//                                    + response.body().getUserIsVerified());
+//                        } else
+//                            Log.e("HomeActivity isVerified", "Response Successful: Response Body NULL");
+//                    } else {
+//                        if (response.errorBody() != null) {
+//                            try {
+//                                Log.e("HomeActivity isVerified", "Response Unsuccessful: " + response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<UserVerifiedModel> call, @NonNull Throwable t) {
+//                if (Utils.isNetworkAvailable(getApplicationContext()))
+//                    Utils.showDialog(getApplicationContext(), null, false,
+//                            "No Internet Connection", "Please connect to internet and try again",
+//                            "Retry", retryListener,
+//                            "Close App", closeListener);
+//            }
+//        });
+//    }

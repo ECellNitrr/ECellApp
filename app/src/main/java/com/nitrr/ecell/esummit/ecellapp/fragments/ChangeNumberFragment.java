@@ -1,8 +1,6 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -14,13 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
@@ -30,7 +26,6 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -41,23 +36,6 @@ public class ChangeNumberFragment extends Fragment {
 
     private EditText number;
     private TextInputLayout numberLayout;
-
-    private DialogInterface.OnClickListener successfulYes = (dialogInterface, i) -> {
-        dialogInterface.dismiss();
-        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_parent_layout, new OTPDialogFragment())
-                .addToBackStack(null)
-                .commit();
-    };
-    private DialogInterface.OnClickListener successfulNo = (dialogInterface, i) -> {
-        dialogInterface.dismiss();
-        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                .beginTransaction()
-                .remove(this)
-                .addToBackStack(null)
-                .commit();
-    };
 
     public ChangeNumberFragment() {
     }
@@ -97,31 +75,29 @@ public class ChangeNumberFragment extends Fragment {
                     if(response.isSuccessful()) {
                         if(response.body() != null) {
                             Utils.showLongToast(getContext(), "Mobile Number Changed Successfully");
+                            pref.setMobileNumber(getContext(), num);
                             pref.setMobileVerified(getActivity(), false);
-                            pref.setGreeted(getActivity(), false);
-                            Intent i = new Intent(getActivity(), HomeActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(i);
-                        } else {
-                            Log.e("ChangeNumber", "Response Successful, Response Body NULL");
-                        }
-                    } else {
-                        if(response.errorBody() != null) {
-                            try {
-                                JSONObject object = new JSONObject(response.errorBody().string());
-                                if(object.getString("message") != null)
-                                    Utils.showShortToast(getContext(), object.getString("message"));
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            if(pref.getIsVerifying(getContext()))
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                                        .popBackStack();
+                            else {
+                                pref.setIsVerifying(getContext(), true);
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.home_parent_layout, new OTPDialogFragment())
+                                        .commit();
                             }
-                        } else {
-                            Log.e("ChangeNumber", "Response Unsuccessful, Response Error Body NULL");
+                        } else Log.e("ChangeNumber", "Response Successful, Response Body NULL");
+                    } else if (response.errorBody() != null)
+                        try {
+                            JSONObject object = new JSONObject(response.errorBody().string());
+                            if (object.getString("message") != null)
+                                Utils.showShortToast(getContext(), object.getString("message"));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    }
-                } else {
-                    Utils.showLongToast(getContext(), "Something went wrong!");
-                }
-
+                    else Log.e("ChangeNumber", "Response Unsuccessful, Response Error Body NULL");
+                } else Utils.showLongToast(getContext(), "Something went wrong!");
             }
 
             @Override
@@ -155,9 +131,3 @@ public class ChangeNumberFragment extends Fragment {
         return false;
     }
 }
-
-//                            Utils.showLongToast(getContext(), response.body().getMessage());
-//                                    Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-//                                    .beginTransaction()
-//                                    .remove(ChangeNumberFragment.this)
-//                                    .commit();

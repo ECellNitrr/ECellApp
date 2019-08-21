@@ -26,7 +26,7 @@
     <string name="color_spons">#F39B15</string>
 
     <!--ESUMMIT STRINGS-->
-    <string name="e_summit_19">E SUMMIT \'19</string>
+    <string name="e_summit_19">E - SUMMIT \'19</string>
     <string name="eventdenied">This Event is not approved yet.Sorry for the inconvenience</string>
 
     <string name="es_intro">The Entrepreneurship Summit is not just and name to provide platform where the students, faculty, investors, participants, speakers and start-ups can interact with each other and gain traction to improve them. We believe in a growth where everyone grows together and hence is this summit. The bright minds shall gain the motivation, resources and the pathway to realise their potential and convert their ideas to innovative start-ups.</string>
@@ -42,7 +42,7 @@
     <string name="vision_text">Vision</string>
     <string name="name_college">National Institute of Technology, GE Road, Raipur [492001]</string>
     <string name="mobile_number">Mobile Number</string>
-    <string name="otp">Verification Code</string>
+    <string name="otp_verification">OTP Verification</string>
     <string name="wasnt_able_to_load">Oops! data wasn\'t able to load</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
@@ -84,7 +84,7 @@
     <string name="about_us_website">ecell@nitrr.ac.in</string>
 
     <!--ESummit Dates-->
-    <string name="startDate">2019\-08\31</string>
+    <string name="startDate">2019\-08\-31</string>
     <string name="endDate">2019\-09\-01</string>
 
     <string name="user_unregister">UNREGISTER</string>

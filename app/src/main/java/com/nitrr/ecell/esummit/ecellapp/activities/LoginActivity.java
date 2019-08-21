@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -61,6 +62,7 @@ public class LoginActivity extends BaseActivity {
     private LoginAnimation loginanimation;
     private AuthResponse authResponse;
     private EmailFragment emailFragment;
+    SharedPref pref;
 
     @Override
     protected int getLayoutResourceId() {
@@ -119,9 +121,17 @@ public class LoginActivity extends BaseActivity {
 
         toRegister.setOnClickListener((View v) -> loginanimation.toRegisterScreen());
         toSignIn.setOnClickListener((View v) -> loginanimation.toSignInScreen());
+
+        if(pref.getIsVerifying(LoginActivity.this))
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.login_outer_constraint, new OTPDialogFragment())
+                    .commit();
     }
 
     private void initializeViews() {
+        pref = new SharedPref();
+
         toSignIn = findViewById(R.id.to_sign_in);
         toRegister = findViewById(R.id.to_register);
         forgotPassword = findViewById(R.id.forgot);
@@ -171,22 +181,19 @@ public class LoginActivity extends BaseActivity {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
                                 AuthResponse authResponse = response.body();
-                                SharedPref pref = new SharedPref();
                                 pref.setSharedPref(LoginActivity.this, authResponse.getToken(), authResponse.getFirstName(),
                                         authResponse.getLastName(), loginEmail.getText().toString());
                                 pref.setIsLoggedIn(LoginActivity.this, true);
                                 Log.e("LoginActivity Login", response.body().getMessage());
-                                pref.setGreeted(LoginActivity.this, true);
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else
                                 Utils.showLongToast(LoginActivity.this, "Couldn't log you in. Please try again.");
-                        } else {
-                            if (response.errorBody() != null) {
-                                Utils.showLongToast(LoginActivity.this, "Couldn't log you in. Please try again.");
-                            }
-                        }
+                        } else if(response.code() == 400){
+                            Utils.showLongToast(LoginActivity.this, "Invalid Credentials!");
+                        } else
+                            Utils.showLongToast(LoginActivity.this, "Couldn't log you in. Please try again later.");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -221,10 +228,7 @@ public class LoginActivity extends BaseActivity {
                     if (getApplicationContext() != null) {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
-
-                                Utils.showLongToast(LoginActivity.this, response.body().getMessage());
                                 authResponse = response.body();
-
                                 SharedPref pref = new SharedPref();
                                 pref.clearPrefs(LoginActivity.this);
                                 pref.setSharedPref(LoginActivity.this,
@@ -232,27 +236,21 @@ public class LoginActivity extends BaseActivity {
                                         details.getFirstName(),
                                         details.getLastName(),
                                         details.getEmail());
-                                pref.setIsLoggedIn(LoginActivity.this, true);
-                                pref.setGreeted(LoginActivity.this, false);
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                intent.putExtra("loginfristime", true);
-                                startActivity(intent);
-                                finish();
+                                pref.setMobileNumber(LoginActivity.this, details.getContact());
+                                pref.setIsVerifying(LoginActivity.this, true);
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.login_outer_constraint, new OTPDialogFragment(), "otp_register")
+                                        .addToBackStack(null)
+                                        .commit();
                             } else {
-                                Utils.showLongToast(LoginActivity.this, "Something went wrong! Please try again");
+                                Utils.showLongToast(LoginActivity.this, "Sorry! Couldn't Register You. Please try again.");
                                 Log.e("LoginActivity Register", "Response Successful, Response Body NULL");
                             }
-                        } else {
-                            if (response.errorBody() != null) {
-                                JSONObject object = new JSONObject(response.errorBody().string());
-                                if(object.getString("detail") != null)
-                                    Utils.showLongToast(getApplicationContext(), object.getString("detail"));
-                            } else {
-                                Log.e("LoginActivity Register", "Response Unsuccessful, Response Error Body NULL");
-                            }
-                        }
+                        } else if (response.code() == 400) {
+                            Utils.showLongToast(getApplicationContext(), "User with this email already exists.");
+                        } else
+                            Utils.showLongToast(LoginActivity.this, "Sorry! Couldn't Register You. Please try again in some time.");
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -266,7 +264,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void showAlertDialog() throws Exception {
+    private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
         View view = LayoutInflater.from(LoginActivity.this).inflate(R.layout.alert_dialog_privacy_policy, null);
 
@@ -304,5 +302,14 @@ public class LoginActivity extends BaseActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(pref.getIsVerifying(this)) {
+            Utils.showLongToast(this, "Please complete the registration process to proceed.");
+        }
+        else
+            super.onBackPressed();
     }
 }

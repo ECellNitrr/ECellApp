@@ -37,6 +37,22 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("mobileVerification", false);
     }
 
+    public void setIsVerifying(Context context, boolean isVerifying) {
+        getEditor(context).putBoolean("verifying", isVerifying).apply();
+    }
+
+    public boolean getIsVerifying(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("verifying", false);
+    }
+
+    public void setMobileNumber(Context context, String number) {
+        getEditor(context).putString("mobile_number", number).apply();
+    }
+
+    public String getMobileNumber(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString("mobile_number", "");
+    }
+
     public String getAccessToken(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString("access_token", "");
     }
@@ -47,10 +63,6 @@ public class SharedPref {
 
     public String getLastName(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString("lastName", "");
-    }
-
-    public void setEmail(Context context, String email) {
-        getEditor(context).putString("email", email).apply();
     }
 
     public String getEmail(Context context) {
@@ -67,18 +79,6 @@ public class SharedPref {
 
     public void clearPrefs(Activity activity) {
         getEditor(activity).clear().putBoolean("isLoggedIn", false).apply();
-    }
-
-    public void setAccessToken(Context context, String accessToken) {
-        getEditor(context).putString("access_token",accessToken).apply();
-    }
-
-    public boolean isGreeted(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("greeted",false);
-    }
-
-    public void setGreeted(Activity activity, boolean isGreeted) {
-        getEditor(activity).putBoolean("greeted", isGreeted).apply();
     }
 
     public void setDates(Context context, String startDate, String endDate) {
