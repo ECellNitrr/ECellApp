@@ -45,6 +45,14 @@ public class SharedPref {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("verifying", false);
     }
 
+    public void setIsBquizCancelable(Context context, boolean isBquizCancelable) {
+        getEditor(context).putBoolean("cancelBquiz", isBquizCancelable).apply();
+    }
+
+    public boolean getIsBquizCancelable(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("cancelBquiz", false);
+    }
+
     public void setMobileNumber(Context context, String number) {
         getEditor(context).putString("mobile_number", number).apply();
     }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.OTPDialogFragment"
-    android:elevation="2dp"
+    android:elevation="6dp"
     tools:targetApi="lollipop"
     android:background="@color/colorWhite"
     android:clickable="true"

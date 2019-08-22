@@ -3,7 +3,9 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,11 +46,12 @@ import retrofit2.Response;
 
 public class OTPDialogFragment extends Fragment{
 
-    private TextView otp1, otp2, otp3, otp4;
+    private TextView otp1, otp2, otp3, otp4,resend;
     private String otp = "";
     private String email;
     private GenericMessage msg;
     private SharedPref pref;
+    private int retryAfter=30;
 
     private DialogInterface.OnClickListener resendOTPListener = ((dialog, which) -> verifyResendOTP());
 
@@ -139,6 +142,7 @@ public class OTPDialogFragment extends Fragment{
             Log.e("OTPFrag", "Null has been received, Verifying OTP");
             pref.setIsVerifying(getActivity(), true);
         }
+
         return view;
     }
 
@@ -148,12 +152,14 @@ public class OTPDialogFragment extends Fragment{
         otp2 = v.findViewById(R.id.otp2);
         otp3 = v.findViewById(R.id.otp3);
         otp4 = v.findViewById(R.id.otp4);
-        TextView resend = v.findViewById(R.id.resend_otp);
+        resend = v.findViewById(R.id.resend_otp);
         resend.setOnClickListener(view -> {
             if(email==null)
                 verifyResendOTP();
             else
                 forgotPasswordResendOTP();
+            timer();
+
         });
         TextView mobileNumber = v.findViewById(R.id.otp_mobile_number);
         mobileNumber.setText(pref.getMobileNumber(getContext()));
@@ -399,6 +405,33 @@ public class OTPDialogFragment extends Fragment{
                 }
             }
         });
+    }
+
+    private void timer() {
+
+        new CountDownTimer(retryAfter*1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                resend.setClickable(false);
+            //    resend.setTypeface(null, Typeface.NORMAL);
+                resend.setText("Resend OTP after "+ retryAfter + " sec.");
+                resend.setAlpha((float) 0.5);
+                retryAfter--;
+            }
+
+            @Override
+            public void onFinish() {
+                retryAfter=30;
+                resend.setText("Resend OTP ?");
+           //     resend.setTypeface(null, Typeface.BOLD);
+                resend.setAlpha(1);
+                resend.setClickable(true);
+
+            }
+
+        }.start();
+
     }
 
     private void setConfirmed() {
