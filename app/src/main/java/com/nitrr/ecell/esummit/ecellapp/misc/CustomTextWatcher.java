@@ -56,7 +56,7 @@ public class CustomTextWatcher implements TextWatcher {
                 layout.setError(null);
                 text.requestFocus();
             } else {
-                layout.setError(activity.getResources().getString(R.string.error_first_name));
+                layout.setError(activity.getResources().getString(R.string.error_common));
             }
 
         }
@@ -68,7 +68,7 @@ public class CustomTextWatcher implements TextWatcher {
             if (pattern.matcher(text_content).matches()) {
                 layout.setError(null);
             } else {
-                layout.setError(activity.getResources().getString(R.string.error_last_name));
+                layout.setError(activity.getResources().getString(R.string.error_common));
                 text.requestFocus();
             }
         }

@@ -17,6 +17,8 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
@@ -70,7 +72,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             progressDrawable.setStrokeWidth(5f);
             progressDrawable.setCenterRadius(70f);
             progressDrawable.start();
-            Glide.with(context).load(data.getImg()).placeholder(progressDrawable).transform(new CircleCrop()).into(holder.image);
+            Glide.with(context).load(data.getImg()).placeholder(progressDrawable).apply(new RequestOptions().transform(new RoundedCorners(50))).into(holder.image);
         }
 
         holder.image.setOnClickListener(v -> {

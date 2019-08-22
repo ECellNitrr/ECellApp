@@ -53,7 +53,7 @@ public class HomeActivity extends BaseActivity {
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
         adapter = new HomeRecyclerViewAdapter(this, homeRVDataList);
-        initializeList("E Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
+        initializeList("E - Summit", R.drawable.ic_esummit, this.getString(R.string.color_esummit), v -> {
             if (!selected) {
                 selected = true;
                 Intent intent = new Intent(HomeActivity.this, ESummitActivity.class);

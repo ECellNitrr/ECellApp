@@ -59,17 +59,17 @@ public class ContactUs extends Fragment implements View.OnClickListener {
                 break;
             }
             case R.id.twitterlogo: {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://twitter.com/ecell_nitrr"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/ecell_nitrr"));
                 startActivity(intent);
                 break;
             }
             case R.id.facebooklogo: {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.facebook.com/ecellnitrr/"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/ecellnitrr/"));
                 startActivity(intent);
                 break;
             }
             case R.id.instagramlogo: {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.instagram.com/ecell.nitraipur/"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/ecell.nitraipur/"));
                 startActivity(intent);
                 break;
             }
@@ -80,17 +80,17 @@ public class ContactUs extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.contactus_address: {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("geo: 21.2479,81.6039"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=21.249872,81.604933"));
                 startActivity(intent);
                 break;
             }
             case R.id.contactus_website: {
-                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://ecell.nitrr.ac.in"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:ecell@nitrr.ac.in"));
                 startActivity(intent);
                 break;
             }
             case R.id.contactus_number: {
-                Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel: 09406220952"));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel: 09406220952"));
                 startActivity(intent);
                 break;
             }

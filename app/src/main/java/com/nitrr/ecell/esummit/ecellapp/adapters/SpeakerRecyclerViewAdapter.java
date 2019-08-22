@@ -24,12 +24,12 @@ import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeakerData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ESummitRecyclerViewAdapter extends RecyclerView.Adapter<ESummitRecyclerViewAdapter.MyViewHolder> {
+public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<SpeakerRecyclerViewAdapter.MyViewHolder> {
     private List<ResponseSpeakerData> speakerDataList;
     private Context context;
     private LayoutInflater inflater;
 
-    public ESummitRecyclerViewAdapter(List<ResponseSpeakerData> speakerDataList, Context context) {
+    public SpeakerRecyclerViewAdapter(List<ResponseSpeakerData> speakerDataList, Context context) {
         this.speakerDataList = speakerDataList;
         this.context = context;
         inflater = LayoutInflater.from(context);

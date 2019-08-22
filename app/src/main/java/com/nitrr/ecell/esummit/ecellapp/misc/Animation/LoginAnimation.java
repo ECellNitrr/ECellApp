@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import com.google.android.material.textfield.TextInputLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
 import com.nitrr.ecell.esummit.ecellapp.activities.LoginActivity;
+import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 
 public class LoginAnimation {
 
@@ -73,7 +74,7 @@ public class LoginAnimation {
         constraintSet.connect(upperPoly.getId(), ConstraintSet.BOTTOM, R.id.login_guide_16, ConstraintSet.TOP);
         constraintSet.constrainHeight(upperPoly.getId(), (int)(displayMetrics.heightPixels * 0.78));
 
-        //adding ecell upper logo
+        //adding ecell lower logo
         layout.removeView(lowerECell);
         layout.addView(lowerECell);
         constraintSet.connect(lowerECell.getId(), ConstraintSet.START, lowerPoly.getId(), ConstraintSet.START);
@@ -86,6 +87,17 @@ public class LoginAnimation {
         constraintSet.setVerticalBias(lowerECell.getId(), 0.7f);
         constraintSet.applyTo(layout);
 
+        //adding upper ecell icon
+//        float height = displayMetrics.heightPixels / 2030f; //made wrt Redmi Note 5 pro
+//        layout.removeView(upperECell);
+//        layout.addView(upperECell);
+//        constraintSet.connect(upperECell.getId(), ConstraintSet.BOTTOM, upperPoly.getId(), ConstraintSet.BOTTOM, (int)(530f*height*displayMetrics.density + 0.5));
+//        constraintSet.connect(upperECell.getId(), ConstraintSet.END, upperPoly.getId(), ConstraintSet.END, (int)(70f*height*displayMetrics.density + 0.5));
+//        constraintSet.connect(upperECell.getId(), ConstraintSet.START, upperPoly.getId(), ConstraintSet.START, (int)(70f*height*displayMetrics.density + 0.5));
+//        constraintSet.connect(upperECell.getId(), ConstraintSet.TOP, upperPoly.getId(), ConstraintSet.TOP, (int)(40f*height*displayMetrics.density + 0.5));
+//        constraintSet.constrainHeight(upperECell.getId(), 0);
+//        constraintSet.constrainWidth(upperECell.getId(), 0);
+//        constraintSet.applyTo(layout);
 
 
         upperLinearLayout.bringToFront();

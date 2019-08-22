@@ -50,6 +50,7 @@
                     android:text="Speaker Name"
                     android:ellipsize="end"
                     android:lines="2"
+
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textAlignment="center"/>

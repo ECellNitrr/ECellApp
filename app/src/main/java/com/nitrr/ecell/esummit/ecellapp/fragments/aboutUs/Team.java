@@ -116,6 +116,7 @@ public class Team extends Fragment {
                 HCO  = new ArrayList<>(),
                 OCO  = new ArrayList<>(),
                 EXC  = new ArrayList<>();
+
         for(int x=0; x<list.size();x++){
             TeamList member = list.get(x);
             if(member.getType().contentEquals("HCD"))
