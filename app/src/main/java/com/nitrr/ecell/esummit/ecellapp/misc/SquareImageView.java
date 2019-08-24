@@ -1,9 +1,14 @@
 package com.nitrr.ecell.esummit.ecellapp.misc;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
+import com.nitrr.ecell.esummit.ecellapp.R;
+
 public class SquareImageView extends androidx.appcompat.widget.AppCompatImageView {
+
+    String heightSquare;
 
     public SquareImageView(Context context) {
         super(context);
@@ -11,6 +16,9 @@ public class SquareImageView extends androidx.appcompat.widget.AppCompatImageVie
 
     public SquareImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SquareImageView);
+        heightSquare = a.getString(R.styleable.SquareImageView_heightSquare);
+        a.recycle();
     }
 
     public SquareImageView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -22,9 +30,9 @@ public class SquareImageView extends androidx.appcompat.widget.AppCompatImageVie
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
-//        if(width == 0)
-//            setMeasuredDimension(height, height);
-//        else
+        if(heightSquare.equals("true"))
+            setMeasuredDimension(height, height);
+        else
             setMeasuredDimension(width, width);
     }
 }

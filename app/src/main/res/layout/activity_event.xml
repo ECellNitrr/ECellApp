@@ -22,15 +22,18 @@
 
     <ImageView
         android:id="@+id/event_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:srcCompat="@drawable/ic_back"
         android:focusable="true"
         android:clickable="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="24dp"
+        app:layout_constraintHeight_percent="0.04"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/event_guideline1"/>
 
     <LinearLayout
         android:layout_width="match_parent"

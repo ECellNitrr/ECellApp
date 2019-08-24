@@ -1,18 +1,13 @@
 package com.nitrr.ecell.esummit.ecellapp.fragments;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,23 +17,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.nitrr.ecell.esummit.ecellapp.R;
-
-import java.io.IOException;
-import java.util.Objects;
-
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.adapters.EventViewPagerAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.NetworkChangeReceiver;
-import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
-import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
-import com.nitrr.ecell.esummit.ecellapp.models.GenericMessage;
-import com.nitrr.ecell.esummit.ecellapp.restapi.APIServices;
-import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.http.HEAD;
+import java.util.Objects;
 
 public class EventFragment extends Fragment {
 

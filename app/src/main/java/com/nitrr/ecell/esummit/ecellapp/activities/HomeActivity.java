@@ -3,6 +3,7 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ public class HomeActivity extends BaseActivity {
     private ImageView bgCircle1, bgCircle2, bgCircle3;
     private int distance = 0, offset;
     private float displacement = 0;
+    private long hamburgerLastClickedTime = 0;
 
     public static void setSelected(Boolean selected) {
         HomeActivity.selected = selected;
@@ -86,7 +88,12 @@ public class HomeActivity extends BaseActivity {
         });
 
         ImageButton hamburger_button = findViewById(R.id.hamburgerButton);
-        hamburger_button.setOnClickListener((View view) -> new CustomHamburgerDialog().with(HomeActivity.this).build());
+        hamburger_button.setOnClickListener(view -> {
+            if (SystemClock.elapsedRealtime() - hamburgerLastClickedTime < 1000)
+                return;
+            hamburgerLastClickedTime = SystemClock.elapsedRealtime();
+            new CustomHamburgerDialog().with(HomeActivity.this).build();
+        });
         recyclerView = findViewById(R.id.home_recycler);
         recyclerView.hasFixedSize();
 

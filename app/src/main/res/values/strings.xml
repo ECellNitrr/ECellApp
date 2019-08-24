@@ -88,7 +88,7 @@
     <string name="endDate">2019\-09\-01</string>
 
     <string name="user_unregister">UNREGISTER</string>
-    <string name="user_register">Register</string>
+    <string name="user_register">REGISTER</string>
 
     <string name="proceed">PROCEED</string>
     <string name="leaderboard">LeaderBoard</string>
