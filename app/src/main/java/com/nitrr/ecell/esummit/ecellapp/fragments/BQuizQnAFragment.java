@@ -70,6 +70,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     private BottomSheetBehavior bottomSheet;
     private TextView message;
     private LottieAnimationView animationView;
+    SharedPref pref;
 
 
     @Override
@@ -121,6 +122,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
     }
 
     private void initView(View view) {
+        pref = new SharedPref();
         bquizLogo = view.findViewById(R.id.iv_bquiz_logo);
         tvBquizQuestion = view.findViewById(R.id.tv_bquiz_question);
         timeAllotted = view.findViewById(R.id.bquiz_timer);
@@ -209,6 +211,7 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                     if (bquizLogo != null && rvBquizOptions != null && tvBquizQuestion != null) {
                         QuestionDetailsModel model = gson.fromJson(socketEventMessage.getMessage(), QuestionDetailsModel.class);
 
+                        Log.e("checking response", String.valueOf(model));
                         if (model.end && getFragmentManager() != null) {
                             for (int i = 1; i < getFragmentManager().getBackStackEntryCount(); i++)
                                 getFragmentManager().popBackStack();
@@ -217,7 +220,6 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
 
                             message.setText("Today's BQuiz completed. Stay tuned for next BQuiz.");
 
-
                             LeaderBoardFragment leaderBoardFragment = new LeaderBoardFragment();
                             leaderBoardFragment.show(getFragmentManager(), "LeaderBoard");
 
@@ -225,10 +227,13 @@ public class BQuizQnAFragment extends DialogFragment implements BquizOptionsAdap
                         }
 
                         if (!model.show) {
+
                             bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+                            pref.setIsBquizCancelable(getContext(),true);
 
                         } else {
                             message.setText("Please Wait..");
+                            pref.setIsBquizCancelable(getContext(),false);
 
                             animationView.setAnimation(R.raw.timer);
                             animationView.playAnimation();
