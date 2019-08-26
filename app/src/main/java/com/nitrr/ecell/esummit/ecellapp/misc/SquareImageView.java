@@ -23,6 +23,9 @@ public class SquareImageView extends androidx.appcompat.widget.AppCompatImageVie
 
     public SquareImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SquareImageView);
+        heightSquare = a.getString(R.styleable.SquareImageView_heightSquare);
+        a.recycle();
     }
 
     @Override
@@ -30,7 +33,7 @@ public class SquareImageView extends androidx.appcompat.widget.AppCompatImageVie
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
-        if(heightSquare.equals("true"))
+        if(heightSquare!= null && heightSquare.equals("true"))
             setMeasuredDimension(height, height);
         else
             setMeasuredDimension(width, width);

@@ -229,7 +229,6 @@ public class LoginActivity extends BaseActivity {
                             if (response.body() != null) {
                                 authResponse = response.body();
                                 SharedPref pref = new SharedPref();
-                                pref.clearPrefs(LoginActivity.this);
                                 pref.setSharedPref(LoginActivity.this,
                                         authResponse.getToken(),
                                         details.getFirstName(),

@@ -57,7 +57,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         final Boolean[] loader = {false};
         SponsRVData data = list.get(i);
-        switch (pos%4) {
+        switch (pos%5) {
             case 0: {
                 holder.card.setBackgroundResource(R.drawable.spons_cardbg_1);
                 break;
@@ -72,6 +72,10 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             }
             case 3: {
                 holder.card.setBackgroundResource(R.drawable.spons_cardbg_4);
+                break;
+            }
+            case 4:{
+                holder.card.setBackgroundResource(R.drawable.spons_cardbg_5);
                 break;
             }
         }

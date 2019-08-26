@@ -7,10 +7,6 @@ import android.preference.PreferenceManager;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 public class SharedPref {
 
     public void setSharedPref(Context context, String access_token,
