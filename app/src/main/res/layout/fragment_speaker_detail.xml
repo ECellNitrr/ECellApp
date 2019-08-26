@@ -81,6 +81,8 @@
         android:textAlignment="center"
         android:textColor="@color/tint"
         android:textSize="35sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="Speaker Name"
         app:layout_constraintBottom_toTopOf="@id/detail_speaker_guide"
         app:layout_constraintEnd_toEndOf="parent"

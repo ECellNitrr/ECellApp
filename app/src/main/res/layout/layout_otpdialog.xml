@@ -5,17 +5,19 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/dialpad_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@color/colorWhite"
-        app:rippleColor="#e40d21"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:padding="15dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textAppearance="@style/Widget.MaterialComponents.Button"/>
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/otp_back"

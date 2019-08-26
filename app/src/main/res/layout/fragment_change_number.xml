@@ -7,6 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ChangeNumberFragment"
     android:background="#fff"
+    android:elevation="2dp"
+    tools:targetApi="lollipop"
     android:clickable="true"
     android:focusable="true">
 
@@ -18,7 +20,7 @@
         app:layout_constraintGuide_percent="0.08"/>
 
     <ImageView
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:src="@drawable/icon_change_number"
         app:layout_constraintTop_toTopOf="@id/change_num_top_guide"
@@ -51,7 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/roboto"
-        android:textStyle="bold"
         android:padding="10dp"
         android:text="Enter a New Number for your\nE-Cell account"
         android:textAlignment="center"
@@ -80,7 +81,7 @@
             android:layout_height="wrap_content"
             android:digits="1234568790"
             android:hint="New Mobile Number"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:inputType="number"
             android:maxLength="10"
             android:nextFocusDown="@id/confirm_pass"
@@ -106,7 +107,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nova_round"
+        android:fontFamily="@font/merriweather_sans_light"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
         android:text="Reset Number"

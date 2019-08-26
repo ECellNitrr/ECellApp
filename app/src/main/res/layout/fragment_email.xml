@@ -102,7 +102,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nova_round"
+        android:fontFamily="@font/merriweather_sans_light"
         android:paddingStart="35dp"
         android:paddingEnd="35dp"
         android:text="Verify User"

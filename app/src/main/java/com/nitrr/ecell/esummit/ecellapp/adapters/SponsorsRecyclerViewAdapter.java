@@ -3,7 +3,9 @@ package com.nitrr.ecell.esummit.ecellapp.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +13,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.nitrr.ecell.esummit.ecellapp.R;
+import com.nitrr.ecell.esummit.ecellapp.activities.HomeActivity;
+import com.nitrr.ecell.esummit.ecellapp.misc.CustomHamburgerDialog;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
 import java.util.List;
@@ -26,6 +38,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     private List<SponsRVData> list;
     private Context context;
     private int pos;
+    private long hamburgerLastClickedTime = 0;
 
     public SponsorsRecyclerViewAdapter(Context context, List<SponsRVData> list, int i) {
         this.context = context;
@@ -42,6 +55,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+        final Boolean[] loader = {false};
         SponsRVData data = list.get(i);
         switch (pos%4) {
             case 0: {
@@ -70,10 +84,26 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             progressDrawable.setStrokeWidth(5f);
             progressDrawable.setCenterRadius(70f);
             progressDrawable.start();
-            Glide.with(context).load(data.getImg()).placeholder(progressDrawable).transform(new CircleCrop()).into(holder.image);
+            Glide.with(context).load(data.getImg()).placeholder(progressDrawable).apply(new RequestOptions().transform(new RoundedCorners(50))).listener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    loader[0] = true;
+                    return false;
+                }
+            }).into(holder.image);
         }
 
+
         holder.image.setOnClickListener(v -> {
+            if (SystemClock.elapsedRealtime() - hamburgerLastClickedTime < 500)
+                return;
+            hamburgerLastClickedTime = SystemClock.elapsedRealtime();
+            if(loader[0]){
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = LayoutInflater.from(context).inflate(R.layout.layout_spons_alertdialog, null);
             builder.setView(view);
@@ -89,6 +119,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             sponsName.setText(data.getName());
             Glide.with(context).load(data.getImg()).into(sponsImg);
             builder.create().show();
+            }
         });
     }
 

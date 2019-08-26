@@ -81,13 +81,6 @@ public class CustomHamburgerDialog {
             name = pref.getFirstName(activity);
 
         addItem(name,R.drawable.ic_username,null);
-        if(!pref.getMobileVerified(activity)){
-            addItem(activity.getString(R.string.verify_number), R.drawable.ic_otp, v1 -> {
-                alertDialog.dismiss();
-                showOTPDialog();
-                builder.setOnDismissListener(DialogInterface::dismiss);
-            });
-        }
 
         addItem(activity.getString(R.string.change_number),R.drawable.ic_call, v1 -> {
             alertDialog.dismiss();
@@ -122,20 +115,20 @@ public class CustomHamburgerDialog {
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(new HamburgerRecyclerViewAdapter(activity.getApplicationContext(),list));
     }
-
-    private void showOTPDialog() {
-        OTPDialogFragment fragment = new OTPDialogFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("prevfrag", "Home Activity");
-        fragment.setArguments(bundle);
-
-        if (activity != null) {
-            activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.home_parent_layout, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
-        alertDialog.dismiss();
-    }
+//
+//    private void showOTPDialog() {
+//        OTPDialogFragment fragment = new OTPDialogFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("prevfrag", "Home Activity");
+//        fragment.setArguments(bundle);
+//
+//        if (activity != null) {
+//            activity.getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.home_parent_layout, fragment)
+//                    .addToBackStack(null)
+//                    .commit();
+//        }
+//        alertDialog.dismiss();
+//    }
 }

@@ -144,7 +144,7 @@ public class ChangePasswordFragment extends Fragment {
         }
         if (editText.getText().length() >= 8)
             return true;
-        editText.setError("Required Min 8 Characters!");
+        layout.setError("Required Min 8 Characters!");
         return false;
     }
 

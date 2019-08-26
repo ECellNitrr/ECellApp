@@ -2,7 +2,6 @@ package com.nitrr.ecell.esummit.ecellapp.activities;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
@@ -12,10 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nitrr.ecell.esummit.ecellapp.R;
-import com.nitrr.ecell.esummit.ecellapp.adapters.ESummitRecyclerViewAdapter;
+import com.nitrr.ecell.esummit.ecellapp.adapters.SpeakerRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.misc.SharedPref;
 import com.nitrr.ecell.esummit.ecellapp.misc.Utils;
 import com.nitrr.ecell.esummit.ecellapp.models.speakers.ResponseSpeaker;
@@ -25,9 +23,6 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,7 +35,7 @@ public class ESummitActivity extends BaseActivity {
     private RecyclerView speakerRV;
     private TextView speakerText;
     private ProgressBar loadingSpeakers;
-    private ESummitRecyclerViewAdapter adapter;
+    private SpeakerRecyclerViewAdapter adapter;
     private int noOfYears, endYear;
     private DialogInterface.OnClickListener refreshListener = (dialog, which) -> callAPI(endYear);
     private DialogInterface.OnClickListener cancelListener = (dialog, which) -> {
@@ -56,8 +51,8 @@ public class ESummitActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        endYear = 2018;
-        noOfYears = 4;
+        endYear = 2019;
+        noOfYears = 5;
         speakerRV = findViewById(R.id.es_speaker_recycler_view);
         ImageView back = findViewById(R.id.esummit_back);
         speakerText = findViewById(R.id.speaker_text);
@@ -67,28 +62,15 @@ public class ESummitActivity extends BaseActivity {
         findViewById(R.id.es_nested_sv).scrollTo(0, 0);
         TextView date = findViewById(R.id.e_summit_date);
         date.setText(setESDate());
-        adapter = new ESummitRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
+        adapter = new SpeakerRecyclerViewAdapter(responseSpeakerObjectList, ESummitActivity.this);
         speakerRV.setAdapter(adapter);
         speakerRV.setLayoutManager(new GridLayoutManager(ESummitActivity.this, 2, RecyclerView.VERTICAL, false));
-        speakerRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (!recyclerView.canScrollVertically(1)) {
-                    if(noOfYears>1) {
-                        endYear -= 1;
-                        noOfYears-=1;
-                        callAPI(endYear);
-                    }
-                }
-            }
-        });
-        callAPI(2018);
+        callAPI(endYear);
     }
 
     public void callAPI(int year) {
-        Call<ResponseSpeaker> call = AppClient.getInstance().createService(APIServices.class).getSpeakerList(getString(R.string.app_access_token), Integer.toString(year));
+        Call<ResponseSpeaker> call = AppClient.getInstance().createService(APIServices.class)
+                .getSpeakerList(getString(R.string.app_access_token), Integer.toString(year));
         call.enqueue(new Callback<ResponseSpeaker>() {
             @Override
             public void onResponse(@NonNull Call<ResponseSpeaker> call, @NonNull Response<ResponseSpeaker> response) {
@@ -101,8 +83,14 @@ public class ESummitActivity extends BaseActivity {
                         responseSpeakerObjectList.addAll(data.getList());
                         speakerRV.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
-                        loadingSpeakers.setVisibility(View.GONE);
                         Log.e("ESummitActivity Data", "list size is" + responseSpeakerObjectList.size());
+                        if(endYear == 2018)
+                            loadingSpeakers.setVisibility(View.GONE);
+                        if(noOfYears>1) {
+                            endYear--;
+                            noOfYears--;
+                            callAPI(endYear);
+                        }
                     }
                 } else {
                     try {

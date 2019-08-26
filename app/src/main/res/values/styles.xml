@@ -15,8 +15,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="CircularButton" parent="Widget.AppCompat.Button"></style>
-
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottomsheet_bg</item>
     </style>

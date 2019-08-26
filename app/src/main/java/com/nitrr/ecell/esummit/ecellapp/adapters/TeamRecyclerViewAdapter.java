@@ -60,9 +60,6 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             holder.img.setVisibility(View.GONE);
 
         if(data.getImg()!=null){
-
-            holder.img.getLayoutParams().height = holder.img.getLayoutParams().width;
-
             CircularProgressDrawable progressDrawable = new CircularProgressDrawable(context);
             progressDrawable.setStrokeWidth(5f);
             progressDrawable.setCenterRadius(30f);
@@ -104,14 +101,12 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-//        TextView post;
         ImageView img;
         LinearLayout bg;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.membername);
-//            post = itemView.findViewById(R.id.memberpost);
             img = itemView.findViewById(R.id.memberpic);
             bg = itemView.findViewById(R.id.team_member_backround);
 

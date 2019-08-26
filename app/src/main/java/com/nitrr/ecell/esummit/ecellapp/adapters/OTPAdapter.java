@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,7 @@ public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        MaterialButton materialButton;
+        Button materialButton;
         ImageView back;
 
         MyViewHolder(@NonNull View itemView) {
@@ -64,7 +65,7 @@ public class OTPAdapter extends RecyclerView.Adapter<OTPAdapter.MyViewHolder>{
 
         @Override
         public void onClick(View v) {
-            MaterialButton button = v.findViewById(v.getId());
+            Button button = v.findViewById(v.getId());
             String text = button.getText().toString();
             int n;
             if(text.equalsIgnoreCase(""))

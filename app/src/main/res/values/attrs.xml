@@ -9,4 +9,8 @@
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="SquareImageView">
+        <attr name="heightSquare" format="string"/>
+    </declare-styleable>
+
 </resources>

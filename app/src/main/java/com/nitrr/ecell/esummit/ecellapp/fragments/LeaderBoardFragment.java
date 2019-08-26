@@ -99,14 +99,16 @@ public class LeaderBoardFragment extends DialogFragment {
                         leaderBoardAdapter.notifyDataSetChanged();
                     }
                 } else if (getContext() != null) {
-                    Toast.makeText(getContext(), "Something went wrong, Please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Leaderboard isn't available at this moment.", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<BquizLeaderBoardResponse> call, Throwable t) {
                 if (getContext() != null) {
-                    Toast.makeText(getContext(), "Leaderboard isn't available at this moment.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Something went wrong, Please try again.", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });

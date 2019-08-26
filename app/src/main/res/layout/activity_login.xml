@@ -30,7 +30,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/login_upper_poly"
-        app:layout_constraintBottom_toTopOf="@id/login_guide_17"
+        app:layout_constraintBottom_toTopOf="@id/login_guide_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -165,7 +165,7 @@
         android:text="@string/to_sign_in"
         android:textSize="25sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@id/login_guide_17"
+        app:layout_constraintBottom_toTopOf="@id/login_guide_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +180,7 @@
         app:layout_constraintGuide_percent="0.09" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/login_guide_17"
+        android:id="@+id/login_guide_16"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -224,7 +224,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_guide_17"
+        app:layout_constraintTop_toBottomOf="@+id/login_guide_16"
         app:layout_constraintVertical_bias="0.35" />
 
     <ImageView
@@ -236,7 +236,7 @@
         app:layout_constraintEnd_toEndOf="@id/lower_poly"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="@+id/lower_poly"
-        app:layout_constraintTop_toBottomOf="@+id/login_guide_17"
+        app:layout_constraintTop_toBottomOf="@+id/login_guide_16"
         app:layout_constraintVertical_bias="0.7" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -244,7 +244,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="293dp" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <LinearLayout
         android:id="@+id/register_linear_layout"
@@ -279,10 +279,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="First Name"
+                    android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM "
                     android:inputType="textPersonName|textCapWords"
                     android:nextFocusDown="@id/register_last_name"
                     android:singleLine="true"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -299,10 +300,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Last Name"
+                    android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM "
                     android:inputType="textPersonName|textCapWords"
                     android:nextFocusDown="@id/register_email"
                     android:singleLine="true"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -323,7 +325,7 @@
                 android:inputType="textEmailAddress"
                 android:nextFocusDown="@id/register_password"
                 android:singleLine="true"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -345,7 +347,8 @@
                 android:inputType="textPassword"
                 android:nextFocusDown="@id/register_number"
                 android:singleLine="true"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -365,7 +368,7 @@
                 android:inputType="phone"
                 android:maxLength="10"
                 android:maxLines="1"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

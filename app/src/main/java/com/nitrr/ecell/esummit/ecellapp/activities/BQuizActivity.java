@@ -33,6 +33,7 @@ public class BQuizActivity extends BaseActivity {
     private TextView proceedTextView,leaderBoardTextview;
     private BQuizQnAFragment fragment;
     private LeaderBoardFragment leaderBoardFragment;
+    SharedPref pref;
 
     @Override
     protected int getLayoutResourceId() {
@@ -49,6 +50,7 @@ public class BQuizActivity extends BaseActivity {
                 .apply(new RequestOptions().centerCrop())
                 .into(bQuizBG);
 
+        pref = new SharedPref();
         proceedTextView = findViewById(R.id.bquiz_proceed);
         progressBar = findViewById(R.id.bquiz_progess_bar);
         leaderBoardTextview = findViewById(R.id.bq_leader_text);
@@ -99,6 +101,15 @@ public class BQuizActivity extends BaseActivity {
             }
         });
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        if(pref.getIsBquizCancelable(this)) {
+//            Utils.showLongToast(this, "Please wait for ruuning time to finish to quit Bquiz.");
+//        }
+//        else
+//            super.onBackPressed();
+//    }
 
     @Override
     protected void onDestroy() {
