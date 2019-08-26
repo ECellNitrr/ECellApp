@@ -81,7 +81,7 @@ public class SponsorsFragment extends Fragment {
                 prevlist.add(new SponsRVData(name, id, type, img, year, website));
 
         }
-        switch (pos%4) {
+        switch (pos%5) {
             case 0: {
                 prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_1);
                 break;
@@ -97,6 +97,9 @@ public class SponsorsFragment extends Fragment {
             case 3: {
                 prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_4);
                 break;
+            }
+            case 4: {
+                prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_5);
             }
         }
     }

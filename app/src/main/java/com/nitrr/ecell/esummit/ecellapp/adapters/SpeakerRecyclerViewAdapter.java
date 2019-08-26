@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<SpeakerRecy
     private List<ResponseSpeakerData> speakerDataList;
     private Context context;
     private LayoutInflater inflater;
+    private long hamburgerLastClickedTime = 0;
 
     public SpeakerRecyclerViewAdapter(List<ResponseSpeakerData> speakerDataList, Context context) {
         this.speakerDataList = speakerDataList;
@@ -65,6 +67,8 @@ public class SpeakerRecyclerViewAdapter extends RecyclerView.Adapter<SpeakerRecy
         }
 
         holder.speakerCardItem.setOnClickListener(view -> {
+            if (SystemClock.elapsedRealtime() - hamburgerLastClickedTime < 300)
+                return;
             try {
                 Bundle bundle = new Bundle();
                 ArrayList<String> arrayList = new ArrayList<>();
