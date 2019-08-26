@@ -102,14 +102,14 @@ public class BQuizActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if(pref.getIsBquizCancelable(this)) {
-            Utils.showLongToast(this, "Please wait for ruuning time to finish to quit Bquiz.");
-        }
-        else
-            super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(pref.getIsBquizCancelable(this)) {
+//            Utils.showLongToast(this, "Please wait for ruuning time to finish to quit Bquiz.");
+//        }
+//        else
+//            super.onBackPressed();
+//    }
 
     @Override
     protected void onDestroy() {
