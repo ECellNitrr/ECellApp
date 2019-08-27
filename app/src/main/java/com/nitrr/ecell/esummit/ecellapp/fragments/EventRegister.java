@@ -2,6 +2,7 @@ package com.nitrr.ecell.esummit.ecellapp.fragments;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,10 +62,10 @@ public class EventRegister extends Fragment {
             }
             eventName = bundle.getString("event_name");
             id = bundle.getString("id");
-            dateField.setText(String.format("%s", "Date: " + bundle.getString("event_date")));
-            timeField.setText(String.format("%s", "Time: " + bundle.getString("event_time")));
+            dateField.setText(Html.fromHtml("<b>Date:</b> " + bundle.getString("event_date")));
+            timeField.setText(Html.fromHtml("<b>Time:</b> " + bundle.getString("event_time")));
             noOfRegistrations = bundle.getInt("event_registrations");
-            registrationsField.setText(String.format("%s", "No. of Registrations: " + noOfRegistrations));
+            registrationsField.setText(Html.fromHtml("<b>No. of Registrations:</b> " + noOfRegistrations));
             venueField.setText(bundle.getString("event_venue"));
         }
         return view;

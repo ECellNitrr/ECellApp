@@ -28,7 +28,6 @@ import java.util.List;
 public class CustomHamburgerDialog {
 
     private AlertDialog alertDialog;
-    private SharedPref pref = new SharedPref();
     private AppCompatActivity activity;
     private List<HamburgerItemModel> list = new ArrayList<>();
     private AlertDialog.Builder builder;

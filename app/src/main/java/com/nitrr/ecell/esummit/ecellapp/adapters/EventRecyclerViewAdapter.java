@@ -76,7 +76,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
                     bundle.putString("event_img", data.getImage());
                     bundle.putString("event_name", data.getName());
                     bundle.putString("event_venue", data.getVenue());
-                    bundle.putString("event_data", data.getDate());
+                    bundle.putString("event_date", data.getDate());
                     bundle.putString("event_time", data.getTime());
                     bundle.putString("event_details", data.getDetails());
                     bundle.putString("id", data.getId() + "");

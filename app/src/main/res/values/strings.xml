@@ -29,7 +29,11 @@
     <string name="e_summit_19">E - SUMMIT \'19</string>
     <string name="eventdenied">This Event is not approved yet.Sorry for the inconvenience</string>
 
-    <string name="es_intro">The Entrepreneurship Summit is not just and name to provide platform where the students, faculty, investors, participants, speakers and start-ups can interact with each other and gain traction to improve them. We believe in a growth where everyone grows together and hence is this summit. The bright minds shall gain the motivation, resources and the pathway to realise their potential and convert their ideas to innovative start-ups.</string>
+    <string name="es_intro">Entrepreneurship cell NIT Raipur consists of a bunch of self-driven folks who strive hard to convert dreamers into doers. Henceforth we
+        provide a platform to budding entrepreneurs for pursuing entrepreneurship. E-Cell as an organization aims at manifesting the essence of entrepreneurship in the
+        convoluting gray matters of the young force coming up. This delegation gives wings to ideas and support in the form of investments and seed funding along with mentorship
+        to the budding entrepreneurs. With aspirations to produce the greatest pioneers of the century, we provide step by step support to budding entrepreneurs to take the
+        startup culture in Chhattisgarh to the next level.</string>
     <string name="speakers">SPEAKERS</string>
     <string name="es_date"><![CDATA[31 Aug & 1 Sept, 2019 | NIT Raipur]]></string>
     <string name="post">Post</string>
@@ -38,7 +42,9 @@
     <string name="aim_text">Aim</string>
     <string name="team">Team</string>
     <string name="contact_us">Contact Us</string>
-    <string name="about_us_aim">At ESummit \'19, we aspire to create a melange of eminent speakers who have proved themselves in diverse fields and are at zenith of glory. ESummit \'19 will not be a conclave of innovative minds and epistemic elocutionists, but it will bea place where ideas not only thrive but become the greatest revelation in century.</string>
+    <string name="about_us_aim">For an idea to thrive and be taken toward, it needs a platform to be promoted. That’s why at E-Summit ’19 we aspire to create a mélange
+        of eminent speakers who have proved themselves in diverse fields and are at the zenith of glory. E-Summit ’19 will be a platform where ideas from such innovative
+        minds will not only thrive but also become the greatest revelations of the century.</string>
     <string name="vision_text">Vision</string>
     <string name="name_college">National Institute of Technology, GE Road, Raipur</string>
     <string name="mobile_number">Mobile Number</string>
@@ -105,4 +111,7 @@
 
     <string name="agree_terms_privacy">By continuing, you agree to our &lt;a href=https://ecell.nitrr.ac.in/terms>Terms and Conditions&lt;/a> and &lt;a href=https://ecell.nitrr.ac.in/policy>Privacy Policy&lt;/a></string>
     <string name="prev_sponsors">Previous Sponsors</string>
+
+    <!--Event Data-->
+
 </resources>
