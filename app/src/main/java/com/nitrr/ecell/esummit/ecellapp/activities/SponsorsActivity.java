@@ -22,6 +22,7 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -235,7 +236,6 @@ public class SponsorsActivity extends BaseActivity {
             tabName[tabindex++] = str;
         tabindex = 0;
 
-        Arrays.sort(tabName);
 
         bundle = new Bundle[set.size()];
         index = new int[set.size()];
@@ -249,7 +249,11 @@ public class SponsorsActivity extends BaseActivity {
         List<Bundle> bundleList = new ArrayList<>();
         List<Integer> indexList = new ArrayList<>();
         List<String> setlist = new ArrayList<>();
+
         setlist.addAll(set);
+
+        Arrays.sort(tabName);
+        Collections.sort(setlist);
 
         for (int y = 0; y < set.size(); y++) {
             for (int x = 0; x < list.size(); x++) {

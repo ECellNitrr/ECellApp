@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
     private Context context;
     private List<TeamList> list;
     private boolean loaded = false;
+    private long hamburgerLastClickedTime = 0;
 
     TeamRecyclerViewAdapter(Context context, List<TeamList> list) {
         this.context = context;
@@ -78,6 +80,9 @@ public class TeamRecyclerViewAdapter extends RecyclerView.Adapter<TeamRecyclerVi
             }).placeholder(progressDrawable).transform(new CropSquareTransformation()).into(holder.img);
 
         holder.bg.setOnClickListener(v -> {
+
+            if (SystemClock.elapsedRealtime() - hamburgerLastClickedTime < 300)
+                return;
             if(loaded){
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = LayoutInflater.from(context).inflate(R.layout.layout_spons_alertdialog, null);
