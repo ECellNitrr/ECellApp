@@ -23,6 +23,7 @@ import com.nitrr.ecell.esummit.ecellapp.restapi.AppClient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +41,7 @@ public class SponsorsActivity extends BaseActivity {
     private Bundle[] bundle;
     private String[] tabName;
     private int[] index;
+    private Pair pair[][];
     private int[][] toolbarColor = {{1, 12, 84}, {129, 129, 129}, {130, 87, 0}, {213, 74, 74}, {58, 167, 163}};
     private int[][] circle1Color = {{203, 239, 255}, {250, 250, 250}, {255, 228, 164}, {252, 216, 216}, {210, 255, 253}};
     private int[][] circle2Color = {{173, 218, 238}, {239, 239, 239}, {255, 222, 129}, {251, 191, 191}, {166, 245, 241}};
@@ -75,7 +77,7 @@ public class SponsorsActivity extends BaseActivity {
             @Override
             public void onResponse(Call<SponsorsModel> call, Response<SponsorsModel> response) {
                 if (getApplicationContext() != null) {
-                    Log.e("response", response.toString());
+                    Log.e("response", response.raw().toString());
                     if (response.isSuccessful()) {
                         model = response.body();
                         if (model != null) {
@@ -225,57 +227,49 @@ public class SponsorsActivity extends BaseActivity {
     }
 
     void reformatList() {
-        Set<String> set = new HashSet<>();
+        Set<Integer> set = new HashSet<>();
+
         for (int x = 0; x < list.size(); x++) {
-            set.add(list.get(x).getType());
+            set.add(list.get(x).getCtgImp());
         }
-
-        tabName = new String[set.size()];
-        int tabindex = 0;
-        for (String str : set)
-            tabName[tabindex++] = str;
-        tabindex = 0;
-
 
         bundle = new Bundle[set.size()];
         index = new int[set.size()];
-
+        tabName = new String[set.size()];
         for (int x = 0; x < set.size(); x++) {
             bundle[x] = new Bundle();
             index[x] = 0;
+            tabName[x] = "";
         }
+
+        List<Integer> setList = new ArrayList<>(set);
+        setList.clear();
+        setList.addAll(set);
+        Collections.sort(setList);
+        Collections.reverse(setList);
+
+        pair = new Pair[setList.size()][list.size()];
 
         SponsRVData data;
-        List<Bundle> bundleList = new ArrayList<>();
-        List<Integer> indexList = new ArrayList<>();
-        List<String> setlist = new ArrayList<>();
-
-        setlist.addAll(set);
-
-        Arrays.sort(tabName);
-        Collections.sort(setlist);
-
-        for (int y = 0; y < set.size(); y++) {
+        int i = 0;
+        for (int y = 0; y < setList.size(); y++) {
             for (int x = 0; x < list.size(); x++) {
                 data = list.get(x);
-                if (setlist.get(y).contentEquals(data.getType())) {
-                    bundle[y].putString("name" + tabindex, data.getName());
-                    bundle[y].putString("image" + tabindex, data.getImg());
-                    bundle[y].putString("id" + tabindex, data.getId());
-                    bundle[y].putInt("year" + tabindex, data.getYear());
-                    bundle[y].putString("website" + tabindex, data.getWebsite());
-                    tabindex++;
+                if (setList.get(y) == data.getCtgImp()) {
+                    bundle[y].putString("name" + i, data.getName());
+                    bundle[y].putString("image" + i, data.getImg());
+                    bundle[y].putString("id" + i, data.getId());
+                    bundle[y].putInt("year" + i, data.getYear());
+                    bundle[y].putString("website" + i, data.getWebsite());
+                    bundle[y].putString("type"+i,data.getType());
+                    bundle[y].putInt("imp" + i, data.getImp());
+                    i++;
+                    if(tabName[y].isEmpty())
+                        tabName[y] = data.getType();
                 }
             }
-            index[y] = tabindex;
-            tabindex = 0;
-        }
-
-        for (int x = 0; x < 5; x++) {
-            if (!bundle[x].isEmpty())
-                bundleList.add(bundle[x]);
-            if (index[x] != 0)
-                indexList.add(index[x]);
+            index[y] = i;
+            i = 0;
         }
     }
 
@@ -305,6 +299,37 @@ public class SponsorsActivity extends BaseActivity {
     protected void onDestroy() {
         HomeActivity.setSelected(false);
         super.onDestroy();
+    }
+
+    class Compare {
+
+        void compare(Pair arr[], int n)
+        {
+            // Comparator to sort the pair according to second element
+            Arrays.sort(arr, new Comparator<Pair>() {
+                @Override public int compare(Pair p1, Pair p2)
+                {
+                    return p1.y - p2.y;
+                }
+            });
+
+            for (int i = 0; i < n; i++) {
+                System.out.print(arr[i].x + " " + arr[i].y + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    class Pair {
+        int x;
+        int y;
+
+        // Constructor
+        Pair(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
     }
 
 }

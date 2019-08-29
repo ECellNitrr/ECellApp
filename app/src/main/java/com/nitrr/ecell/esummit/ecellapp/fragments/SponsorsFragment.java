@@ -17,6 +17,8 @@ import com.nitrr.ecell.esummit.ecellapp.adapters.SponsorsRecyclerViewAdapter;
 import com.nitrr.ecell.esummit.ecellapp.models.sponsors.SponsRVData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SponsorsFragment extends Fragment {
@@ -63,6 +65,7 @@ public class SponsorsFragment extends Fragment {
         String type;
         String id;
         int year;
+        int imp;
         String website;
         int index = arguments.getInt("index");
         int pos = arguments.getInt("position");
@@ -73,13 +76,12 @@ public class SponsorsFragment extends Fragment {
             type = arguments.getString("type" + index,"");
             img = arguments.getString("image" + index);
             year = arguments.getInt("year" + index);
-
             website = arguments.getString("website" + index);
+            imp = arguments.getInt("imp"+index);
             if(year == 2019)
-                list2019.add(new SponsRVData(name, id, type, img, year, website));
+                list2019.add(new SponsRVData(name, id, type, img, year, website, imp));
             else
-                prevlist.add(new SponsRVData(name, id, type, img, year, website));
-
+                prevlist.add(new SponsRVData(name, id, type, img, year, website, imp));
         }
         switch (pos%5) {
             case 0: {
@@ -102,6 +104,25 @@ public class SponsorsFragment extends Fragment {
                 prevSponsors.setBackgroundResource(R.drawable.spons_cardbg_5);
             }
         }
+        if(prevlist.size() == 0)
+            prevSponsors.setVisibility(View.GONE);
+
+        Collections.sort(list2019, (o1, o2) -> {
+            if(o1.getImp() == o2.getImp())
+                return 0;
+            else if(o1.getImp() >= o2.getImp())
+                return 1;
+            return -1;
+        });
+        Collections.reverse(list2019);
+        Collections.sort(prevlist, (o1, o2) -> {
+            if(o1.getImp() == o2.getImp())
+                return 0;
+            else if(o1.getImp() >= o2.getImp())
+                return 1;
+            return -1;
+        });
+        Collections.reverse(prevlist);
     }
 
 

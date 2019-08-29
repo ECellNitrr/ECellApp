@@ -15,6 +15,9 @@ public class SponsorsModel {
     @Expose
     List<SponsRVData> list;
 
+    @SerializedName("spons_categories")
+    @Expose
+    String[] sponstype;
     public String getMessage() {
         return message;
     }
