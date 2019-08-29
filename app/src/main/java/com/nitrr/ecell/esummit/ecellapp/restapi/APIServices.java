@@ -38,14 +38,12 @@ public interface APIServices {
     @GET("events/list/2019/")
     Call<EventModel> getEventDetails(@Header("Authorization") String auth);
 
-
     //Auth
     @POST("users/register/")
     Call<AuthResponse> postRegisterUser(@Body RegisterDetails registerDetails);
 
     @POST("users/login/")
     Call<AuthResponse> postLoginUser(@Body LoginDetails loginDetails);
-
 
     //ForgotPassword
     @POST("users/forgot_password/")
@@ -56,7 +54,6 @@ public interface APIServices {
 
     @POST("users/change_password/")
     Call<GenericMessage> postPasswordChange(@Header("Access") String access, @Body ChangePassword password);
-
 
     //Change Number
     @POST("users/change_contact/")

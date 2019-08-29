@@ -111,6 +111,7 @@
 
     <string name="agree_terms_privacy">By continuing, you agree to our &lt;a href=https://ecell.nitrr.ac.in/terms>Terms and Conditions&lt;/a> and &lt;a href=https://ecell.nitrr.ac.in/policy>Privacy Policy&lt;/a></string>
     <string name="prev_sponsors">Previous Sponsors</string>
+    <string name="read_more"><![CDATA[<a href=https://ecell.nitrr.ac.in/terms>Read more…</a>]]></string>
 
     <!--Event Data-->
 

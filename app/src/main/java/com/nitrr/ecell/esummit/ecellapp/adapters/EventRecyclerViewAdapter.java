@@ -81,6 +81,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
                     bundle.putString("event_details", data.getDetails());
                     bundle.putString("id", data.getId() + "");
                     bundle.putBoolean("registered", data.isRegistered());
+                    bundle.putString("url",data.getUrl());
                     bundle.putInt("event_registrations", data.getNoOfRegistrations());
                     EventFragment fragment = new EventFragment();
                     fragment.setArguments(bundle);

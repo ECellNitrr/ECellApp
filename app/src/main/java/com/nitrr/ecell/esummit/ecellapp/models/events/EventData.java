@@ -48,6 +48,10 @@ public class EventData {
     @Expose
     private int noOfRegistrations;
 
+    @SerializedName("website_url")
+    @Expose
+    private String url;
+
 
     public int getId() {
         return id;
@@ -91,5 +95,9 @@ public class EventData {
 
     public int getNoOfRegistrations() {
         return noOfRegistrations;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }
