@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.SystemClock;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     private Context context;
     private int pos;
     private long hamburgerLastClickedTime = 0;
-
     public SponsorsRecyclerViewAdapter(Context context, List<SponsRVData> list, int i) {
         this.context = context;
         this.list = list;
@@ -103,7 +104,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         }
 
 
-        holder.image.setOnClickListener(v -> {
+        holder.card.setOnClickListener(v -> {
             if (SystemClock.elapsedRealtime() - hamburgerLastClickedTime < 500)
                 return;
             hamburgerLastClickedTime = SystemClock.elapsedRealtime();
@@ -115,12 +116,13 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
             view.setMinimumHeight(view.getWidth());
             TextView sponsName = view.findViewById(R.id._name);
             ImageView sponsImg = view.findViewById(R.id._image);
+            TextView website = view.findViewById(R.id._website);
             if (data.getWebsite() != null && !data.getWebsite().contentEquals("null"))
-                sponsImg.setOnClickListener(v1 -> {
+                website.setOnClickListener(v1 -> {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(data.getWebsite()));
                     context.startActivity(intent);
                 });
-            sponsName.setText(data.getName());
+                sponsName.setText(Html.fromHtml(data.getName()));
             Glide.with(context).load(data.getImg()).into(sponsImg);
             builder.create().show();
             }

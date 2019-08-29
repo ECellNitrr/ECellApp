@@ -74,7 +74,6 @@ public class ChangeNumberFragment extends Fragment {
                 if (getContext() != null) {
                     if(response.isSuccessful()) {
                         if(response.body() != null) {
-                            Utils.showLongToast(getContext(), "Mobile Number Changed Successfully");
                             pref.setMobileNumber(getContext(), num);
                             pref.setMobileVerified(getActivity(), false);
                             if(pref.getIsVerifying(getContext()))

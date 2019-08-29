@@ -17,6 +17,14 @@ public class SponsRVData{
     @Expose
     private String type;
 
+    @SerializedName("importance")
+    @Expose
+    private int imp;
+
+    @SerializedName("category_importance")
+    @Expose
+    private int ctgImp;
+
     @SerializedName("pic_url")
     @Expose
     private String img;
@@ -29,13 +37,14 @@ public class SponsRVData{
     @Expose
     private String website;
 
-    public SponsRVData(String name, String id, String type, String img, int year, String website) {
+    public SponsRVData(String name, String id, String type, String img, int year, String website,int imp) {
         this.name = name;
         this.id = id;
         this.type = type;
         this.img = img;
         this.year = year;
         this.website = website;
+        this.imp = imp;
     }
 
     public String getName(){
@@ -60,5 +69,13 @@ public class SponsRVData{
 
     public String getWebsite() {
         return website;
+    }
+
+    public int getImp() {
+        return imp;
+    }
+
+    public int getCtgImp() {
+        return ctgImp;
     }
 }
